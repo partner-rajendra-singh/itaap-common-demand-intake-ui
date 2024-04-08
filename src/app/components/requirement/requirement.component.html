@@ -1,0 +1,100 @@
+<div class="grid">
+    <div class="col-12 xs:col-12 sm:col-12 lg:col-12 xl:col-12">
+        <form [formGroup]="requestorDetailsForm"(ngSubmit)="onSubmit()">
+            <div>
+                <h4>Requestor Details</h4>
+                <div>
+                    <label>Program</label>
+                    <input type="text" id="program" formControlName="program">
+                </div>
+                <div>
+                    <label>Domain</label>
+                    <input type="text" id="domain" formControlName="domain">
+                </div>
+                <div>
+                    <label>Program SPOC</label>
+                    <input type="text" id="programSPOC" formControlName="programSPOC">
+                </div>
+                <div>
+                    <label>Request Date</label>
+                    <input type="text"  id="requestDate" formControlName="requestDate">
+                </div>
+            </div>
+                
+            <div>
+                <h4>Requirements</h4>
+                <div>
+                    <label>Problem Statement</label>
+                    <textarea formControlName="problemStatement"  id="problemStatement"></textarea>
+                </div>
+                <div>
+                    <label>Demand Scope</label>
+                    <textarea formControlName="demandScope" id="demandScope"></textarea>
+                </div>
+                <div>
+                    <label>Business Value</label>
+                    <textarea formControlName="businessValue" id="businessValue"></textarea>
+                </div>
+                <div>
+                    <label>Go Live Approach</label>
+                    <input type="date" formControlName="goLiveApproach" id="goLiveApproach">
+                </div>
+                <div>
+                    <label>Tentative Go Live</label>
+                    <input type="date" formControlName="tentativeGoLive" id="tentativeGoLive">
+                </div>
+            </div>
+                
+            <div>
+                <h4>Solution Directions</h4>
+                <div >
+                    <input type="radio" (change)="setSolution($event)" id="integration" name="solutionDirection" value="Integration/ITaaP">
+                    <label for="integration">Integration/ITaaP</label><br>
+                    
+                    <input type="radio" (change)="setSolution($event)" id="dataModel" name="solutionDirection" value="Data Modelling">
+                    <label for="dataModel">Data Modelling</label><br>
+
+                    <input type="radio" (change)="setSolution($event)" id="dataModel" name="solutionDirection" value="ADL SL1">
+                    <label for="dataModel">ADL SL1</label><br>
+
+                    <input type="radio" (change)="setSolution($event)" id="dataModel" name="solutionDirection" value="ADL SL2">
+                    <label for="dataModel">ADL SL2</label><br>
+
+                    <input type="radio" (change)="setSolution($event)" id="dataModel" name="solutionDirection" value="Gold">
+                    <label for="dataModel">Gold</label><br>
+
+                    <input type="radio" (change)="setSolution($event)" id="mdm" name="solutionDirection" value="MDM">
+                    <label for="mdm">MDM</label><br>
+
+                    <input type="radio" (change)="setSolution($event)" id="i&a" name="solutionDirection" value="I&A">
+                    <label for="i&a">I&A</label><br>
+                </div>
+                
+            </div><br>
+
+            <button type="submit">Submit</button>
+
+        </form>
+    </div><br><br>
+           
+    <div class="col-12 xs:col-12 sm:col-12 lg:col-12 xl:col-12">
+        <p-tabView [(activeIndex)]="activeTabIndex">
+            <p-tabPanel header="ITaap & Data Model">
+                <p>Screen 1</p>
+            </p-tabPanel>
+            <p-tabPanel header="||| ADL SL1 & Data Model">
+                <p>Screen 2</p>
+            </p-tabPanel>
+            <p-tabPanel header="||| ADL SL2 & Data Model">
+                <p>Screen 3</p>
+            </p-tabPanel>
+            <p-tabPanel header="||| ADL Gold & Data Model">
+                <p>Screen 4</p>
+            </p-tabPanel>
+            <p-tabPanel header="||| MDM & Data Model">
+                <p>Screen 5</p>
+            </p-tabPanel>
+        </p-tabView>
+    </div>
+</div>  
+        
