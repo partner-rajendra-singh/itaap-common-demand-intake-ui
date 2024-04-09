@@ -28,7 +28,7 @@ export class RequirementComponent  {
 
   screen1Form = new FormGroup ({
 
-        apiFunctionalReq : new FormControl(false),
+        adlFunctionalReq : new FormControl(false),
         platformsCapabilityDef : new FormControl(false),
         pAndCSystems : new FormControl(false),
         philipsCapabilityApis : new FormControl(false),
@@ -49,7 +49,7 @@ export class RequirementComponent  {
 
   screen2Form = new FormGroup ({
 
-      apiFunctionalReq : new FormControl(false),
+      adlSl2FunctionalReq : new FormControl(false),
       fr1 : new FormControl(false),
       fr2 : new FormControl(false),
       fr3 : new FormControl(false),
@@ -68,6 +68,26 @@ export class RequirementComponent  {
       additionalInfo : new FormControl(false)
   });
 
+  screen3Form = new FormGroup ({
+
+    apiFunctionalReq : new FormControl(false),
+    fr1 : new FormControl(false),
+    fr2 : new FormControl(false),
+    fr3 : new FormControl(false),
+    dataModelDefinition : new FormControl(false),
+    nonFunctionalReq : new FormControl(false),
+    peakVolume : new FormControl(false),
+    avgVolume : new FormControl(false),
+    throughputTime : new FormControl(false),
+    msgClassification : new FormControl(false),
+    peakMessageSize : new FormControl(false),
+    avgMessageSize : new FormControl(false),
+    businessCriticality : new FormControl(false),
+    messageTimings : new FormControl(false),
+    maxLatency : new FormControl(false),
+    demandDocAttached : new FormControl(false),
+    additionalInfo : new FormControl(false)
+});
 
   onActiveItemChange(event: MenuItem) {
     console.log("event -> ",event)
