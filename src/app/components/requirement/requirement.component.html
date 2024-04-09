@@ -77,24 +77,184 @@
         </form>
     </div><br><br>
            
-    <div class="col-12 xs:col-12 sm:col-12 lg:col-12 xl:col-12">
-        <p-tabView [(activeIndex)]="activeTabIndex">
-            <p-tabPanel header="ITaap & Data Model">
-                <p>Screen 1</p>
-            </p-tabPanel>
-            <p-tabPanel header="||| ADL SL1 & Data Model">
-                <p>Screen 2</p>
-            </p-tabPanel>
-            <p-tabPanel header="||| ADL SL2 & Data Model">
-                <p>Screen 3</p>
-            </p-tabPanel>
-            <p-tabPanel header="||| ADL Gold & Data Model">
-                <p>Screen 4</p>
-            </p-tabPanel>
-            <p-tabPanel header="||| MDM & Data Model">
-                <p>Screen 5</p>
-            </p-tabPanel>
-        </p-tabView>
-    </div>
-</div>  
-        
+<div class="col-12 xs:col-12 sm:col-12 lg:col-12 xl:col-12">
+    <p-tabView [(activeIndex)]="activeTabIndex">
+        <p-tabPanel header="ITaap & Data Model">
+            <div>
+                <form [formGroup]="screen1Form">
+                    <div>
+                        <label >
+                            <input type="checkbox" formControlName="apiFunctionalReq"> API Functional Requirement
+                            <input type="checkbox"  formControlName="platformsCapabilityDef"> Platforms Capability-definition
+                            <input type="checkbox"   formControlName="pAndCSystems"> Producer and Consumer systems
+                            <input type="checkbox"   formControlName="philipsCapabilityApis"> Philips Capability APIS
+                        </label>
+                    </div>
+                    <div>
+                        <label >
+                            <input type="checkbox" formControlName="dataModelDefinition"> Data Model Definition
+                        </label>
+                    </div>
+                    <div>
+                        <label >
+                            <input type="checkbox" formControlName="nonFunctionalReq"> Non Functional Requirement
+                            <input type="checkbox" formControlName="peakVolume"> Peak Volume
+                            <input type="checkbox" formControlName="avgVolume"> Average Volume
+                            <input type="checkbox" formControlName="throughputTime"> Throughput Time
+                            <input type="checkbox" formControlName="msgClassification"> Message Classification
+                            <input type="checkbox" formControlName="peakMessageSize"> Peak Message Size
+                            <input type="checkbox" formControlName="avgMessageSize"> Average Message Size
+                            <input type="checkbox" formControlName="businessCriticality"> Business Criticality
+                            <input type="checkbox" formControlName="messageTimings"> Message Timings, Frequency
+                            <input type="checkbox" formControlName="maxLatency"> Max Latency
+                        </label>
+                    </div>
+                    <div>
+                        <label >
+                            <input type="checkbox" formControlName="demandDocAttached"> Demand Additional Document Attached
+                        </label>
+                    </div>
+                    <div>
+                        <label >
+                            <input type="checkbox" formControlName="additionalInfo"> Additional Info
+                        </label>
+                    </div>
+                    <button type="submit">Submit</button>
+            </form>  
+            </div>            
+        </p-tabPanel>
+        <p-tabPanel header="||| ADL SL1 & Data Model">
+            <div>
+                <form [formGroup]="screen2Form">
+                    <div>
+                        <label >
+                            <input type="checkbox" formControlName="apiFunctionalReq"> API Functional Requirement
+                            <input type="checkbox"  formControlName="fr1"> FR1
+                            <input type="checkbox"   formControlName="fr2"> FR2
+                            <input type="checkbox"   formControlName="fr3"> FR3
+                        </label>
+                    </div>
+                    <div>
+                        <label >
+                            <input type="checkbox" formControlName="dataModelDefinition"> Data Model Definition
+                        </label>
+                    </div>
+                    <div>
+                        <label >
+                            <input type="checkbox" formControlName="nonFunctionalReq"> Non Functional Requirement
+                            <input type="checkbox" formControlName="peakVolume"> Peak Volume
+                            <input type="checkbox" formControlName="avgVolume"> Average Volume
+                            <input type="checkbox" formControlName="throughputTime"> Throughput Time
+                            <input type="checkbox" formControlName="msgClassification"> Message Classification
+                            <input type="checkbox" formControlName="peakMessageSize"> Peak Message Size
+                            <input type="checkbox" formControlName="avgMessageSize"> Average Message Size
+                            <input type="checkbox" formControlName="businessCriticality"> Business Criticality
+                            <input type="checkbox" formControlName="messageTimings"> Message Timings, Frequency
+                            <input type="checkbox" formControlName="maxLatency"> Max Latency
+                        </label>
+                    </div>
+                    <div>
+                        <label >
+                            <input type="checkbox" formControlName="demandDocAttached"> Demand Additional Document Attached
+                        </label>
+                    </div>
+                    <div>
+                        <label >
+                            <input type="checkbox" formControlName="additionalInfo"> Additional Info
+                        </label>
+                    </div>
+                    <button type="submit">Submit</button>
+            </form>  
+            </div>           
+        </p-tabPanel>
+        <p-tabPanel header="||| If ADL Gold and Data Modelling">
+            <div>
+                <form [formGroup]="screen2Form">
+                    <div>
+                        <label >
+                            <input type="checkbox" formControlName="apiFunctionalReq"> API Functional Requirement
+                            <input type="checkbox"  formControlName="fr1"> FR1
+                            <input type="checkbox"   formControlName="fr2"> FR2
+                            <input type="checkbox"   formControlName="fr3"> FR3
+                        </label>
+                    </div>
+                    <div>
+                        <label >
+                            <input type="checkbox" formControlName="dataModelDefinition"> Data Model Definition
+                        </label>
+                    </div>
+                    <div>
+                        <label >
+                            <input type="checkbox" formControlName="nonFunctionalReq"> Non Functional Requirement
+                            <input type="checkbox" formControlName="peakVolume"> Peak Volume
+                            <input type="checkbox" formControlName="avgVolume"> Average Volume
+                            <input type="checkbox" formControlName="throughputTime"> Throughput Time
+                            <input type="checkbox" formControlName="msgClassification"> Message Classification
+                            <input type="checkbox" formControlName="peakMessageSize"> Peak Message Size
+                            <input type="checkbox" formControlName="avgMessageSize"> Average Message Size
+                            <input type="checkbox" formControlName="businessCriticality"> Business Criticality
+                            <input type="checkbox" formControlName="messageTimings"> Message Timings, Frequency
+                            <input type="checkbox" formControlName="maxLatency"> Max Latency
+                        </label>
+                    </div>
+                    <div>
+                        <label >
+                            <input type="checkbox" formControlName="demandDocAttached"> Demand Additional Document Attached
+                        </label>
+                    </div>
+                    <div>
+                        <label >
+                            <input type="checkbox" formControlName="additionalInfo"> Additional Info
+                        </label>
+                    </div>
+                    <button type="submit">Submit</button>
+            </form>  
+            </div>    
+        </p-tabPanel>
+        <p-tabPanel header="||| If MDM & Data Modelling">
+            <div>
+                <form [formGroup]="screen2Form">
+                    <div>
+                        <label >
+                            <input type="checkbox" formControlName="apiFunctionalReq"> API Functional Requirement
+                            <input type="checkbox"  formControlName="fr1"> FR1
+                            <input type="checkbox"   formControlName="fr2"> FR2
+                            <input type="checkbox"   formControlName="fr3"> FR3
+                        </label>
+                    </div>
+                    <div>
+                        <label >
+                            <input type="checkbox" formControlName="dataModelDefinition"> Data Model Definition
+                        </label>
+                    </div>
+                    <div>
+                        <label >
+                            <input type="checkbox" formControlName="nonFunctionalReq"> Non Functional Requirement
+                            <input type="checkbox" formControlName="peakVolume"> Peak Volume
+                            <input type="checkbox" formControlName="avgVolume"> Average Volume
+                            <input type="checkbox" formControlName="throughputTime"> Throughput Time
+                            <input type="checkbox" formControlName="msgClassification"> Message Classification
+                            <input type="checkbox" formControlName="peakMessageSize"> Peak Message Size
+                            <input type="checkbox" formControlName="avgMessageSize"> Average Message Size
+                            <input type="checkbox" formControlName="businessCriticality"> Business Criticality
+                            <input type="checkbox" formControlName="messageTimings"> Message Timings, Frequency
+                            <input type="checkbox" formControlName="maxLatency"> Max Latency
+                        </label>
+                    </div>
+                    <div>
+                        <label >
+                            <input type="checkbox" formControlName="demandDocAttached"> Demand Additional Document Attached
+                        </label>
+                    </div>
+                    <div>
+                        <label >
+                            <input type="checkbox" formControlName="additionalInfo"> Additional Info
+                        </label>
+                    </div>
+                    <button type="submit">Submit</button>
+            </form>  
+            </div>    
+        </p-tabPanel>
+    </p-tabView>
+</div>
+</div>

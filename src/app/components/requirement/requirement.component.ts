@@ -25,12 +25,34 @@ export class RequirementComponent  {
     tentativeGoLive : new FormControl(''),
   });
 
+
   screen1Form = new FormGroup ({
- 
+
+        apiFunctionalReq : new FormControl(false),
+        platformsCapabilityDef : new FormControl(false),
+        pAndCSystems : new FormControl(false),
+        philipsCapabilityApis : new FormControl(false),
+        dataModelDefinition : new FormControl(false),
+        nonFunctionalReq : new FormControl(false),
+        peakVolume : new FormControl(false),
+        avgVolume : new FormControl(false),
+        throughputTime : new FormControl(false),
+        msgClassification : new FormControl(false),
+        peakMessageSize : new FormControl(false),
+        avgMessageSize : new FormControl(false),
+        businessCriticality : new FormControl(false),
+        messageTimings : new FormControl(false),
+        maxLatency : new FormControl(false),
+        demandDocAttached : new FormControl(false),
+        additionalInfo : new FormControl(false)
+    });
+
+  screen2Form = new FormGroup ({
+
       apiFunctionalReq : new FormControl(false),
-      platformsCapabilityDef : new FormControl(false),
-      pAndCSystems : new FormControl(false),
-      philipsCapabilityApis : new FormControl(false),
+      fr1 : new FormControl(false),
+      fr2 : new FormControl(false),
+      fr3 : new FormControl(false),
       dataModelDefinition : new FormControl(false),
       nonFunctionalReq : new FormControl(false),
       peakVolume : new FormControl(false),
@@ -44,7 +66,7 @@ export class RequirementComponent  {
       maxLatency : new FormControl(false),
       demandDocAttached : new FormControl(false),
       additionalInfo : new FormControl(false)
-    });
+  });
 
 
   onActiveItemChange(event: MenuItem) {
