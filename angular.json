@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/itaap-demand-intake-ui",
+            "outputPath": "build",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": [
@@ -147,16 +147,13 @@
               "browserTarget": "itaap-demand-intake-ui:build:production"
             },
             "development": {
-              "buildTarget": "itaap-demand-intake-ui:build:dev"
-            },
-            "dev": {
-              "buildTarget": "itaap-demand-intake-ui:build:dev"
+              "browserTarget": "itaap-demand-intake-ui:build:dev"
             },
             "test": {
-              "buildTarget": "itaap-demand-intake-ui:build:test"
+              "browserTarget": "itaap-demand-intake-ui:build:test"
             },
             "local": {
-              "buildTarget": "itaap-demand-intake-ui:build:local"
+              "browserTarget": "itaap-demand-intake-ui:build:local"
             }
           },
           "defaultConfiguration": "development"
@@ -164,7 +161,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "itaap-demand-intake-ui:build"
+            "buildTarget": "itaap-demand-intake-ui:build"
           }
         },
         "test": {
@@ -188,5 +185,8 @@
         }
       }
     }
-  }
+  },
+	"cli": {
+		"analytics": false
+	}
 }
