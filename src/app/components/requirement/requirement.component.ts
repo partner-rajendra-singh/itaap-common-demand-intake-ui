@@ -28,7 +28,7 @@ export class RequirementComponent  {
 
   screen1Form = new FormGroup ({
 
-        adlFunctionalReq : new FormControl(false),
+        apiFunctionalReq : new FormControl(false),
         platformsCapabilityDef : new FormControl(false),
         pAndCSystems : new FormControl(false),
         philipsCapabilityApis : new FormControl(false),
@@ -49,7 +49,7 @@ export class RequirementComponent  {
 
   screen2Form = new FormGroup ({
 
-      adlSl2FunctionalReq : new FormControl(false),
+      adlFunctionalReq : new FormControl(false),
       fr1 : new FormControl(false),
       fr2 : new FormControl(false),
       fr3 : new FormControl(false),
@@ -70,7 +70,7 @@ export class RequirementComponent  {
 
   screen3Form = new FormGroup ({
 
-    apiFunctionalReq : new FormControl(false),
+    adlSl2FunctionalReq : new FormControl(false),
     fr1 : new FormControl(false),
     fr2 : new FormControl(false),
     fr3 : new FormControl(false),
