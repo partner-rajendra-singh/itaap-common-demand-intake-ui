@@ -3,6 +3,7 @@ variables:
     value: 1
   - name: Version.Revision
     value: $[counter(variables['Version.MajorMinor'], 0)]
+  - group: DEV_COMMON_DEMAND_INTAKE_UI
   - group: AWS_Credentials
   - group: environment-itaap-dev
 name: $(Version.MajorMinor).$(Version.Revision)
