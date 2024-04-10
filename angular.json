@@ -35,27 +35,6 @@
             "scripts": []
           },
           "configurations": {
-            "production": {
-              "fileReplacements": [
-                {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.prod.ts"
-                }
-              ],
-              "budgets": [
-                {
-                  "type": "initial",
-                  "maximumWarning": "500kb",
-                  "maximumError": "1mb"
-                },
-                {
-                  "type": "anyComponentStyle",
-                  "maximumWarning": "2kb",
-                  "maximumError": "4kb"
-                }
-              ],
-              "outputHashing": "all"
-            },
             "development": {
               "buildOptimizer": false,
               "optimization": false,
@@ -63,22 +42,6 @@
               "extractLicenses": false,
               "sourceMap": true,
               "namedChunks": true
-            },
-            "test": {
-              "buildOptimizer": false,
-              "optimization": false,
-              "vendorChunk": true,
-              "extractLicenses": false,
-              "sourceMap": true,
-              "namedChunks": true,
-              "outputPath": "build/test",
-              "baseHref": "/test/demand-intake-ui/",
-              "fileReplacements": [
-                {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.test.ts"
-                }
-              ]
             },
             "dev": {
               "buildOptimizer": false,
@@ -112,22 +75,6 @@
                 }
               ]
             },
-            "prod": {
-              "buildOptimizer": false,
-              "optimization": false,
-              "vendorChunk": true,
-              "extractLicenses": false,
-              "sourceMap": true,
-              "namedChunks": true,
-              "outputPath": "build/prod",
-              "baseHref": "/demand-intake-ui/",
-              "fileReplacements": [
-                {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.prod.ts"
-                }
-              ]
-            },
             "local": {
               "buildOptimizer": false,
               "optimization": false,
@@ -138,19 +85,16 @@
               "outputPath": "build/local"
             }
           },
-          "defaultConfiguration": "local"
+          "defaultConfiguration": "dev"
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
-            "production": {
-              "browserTarget": "itaap-demand-intake-ui:build:production"
+            "acc": {
+              "browserTarget": "itaap-demand-intake-ui:build:acc"
             },
             "development": {
               "browserTarget": "itaap-demand-intake-ui:build:dev"
-            },
-            "test": {
-              "browserTarget": "itaap-demand-intake-ui:build:test"
             },
             "local": {
               "browserTarget": "itaap-demand-intake-ui:build:local"
@@ -161,7 +105,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "buildTarget": "itaap-demand-intake-ui:build"
+            "browserTarget": "itaap-demand-intake-ui:build"
           }
         },
         "test": {
