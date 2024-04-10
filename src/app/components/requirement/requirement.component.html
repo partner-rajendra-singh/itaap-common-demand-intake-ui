@@ -1,81 +1,87 @@
-<div class="grid">
-    <div class="col-12 xs:col-12 sm:col-12 lg:col-12 xl:col-12">
-        <form [formGroup]="requestorDetailsForm"(ngSubmit)="onSubmit()">
-            <div>
-                <h4>Requestor Details</h4>
-                <div>
-                    <label>Program :</label>
-                    &nbsp;&nbsp;&nbsp;&nbsp;<input type="text" id="program" formControlName="program">
-                </div><br>
-                <div>
-                    <label>Domain :</label>
-                     &nbsp;&nbsp;&nbsp;&nbsp;<input type="text" id="domain" formControlName="domain">
-                </div><br>
-                <div>
-                    <label>Program SPOC :</label>
-                    &nbsp;&nbsp;<input type="text" id="programSPOC" formControlName="programSPOC">
-                </div><br>
-                <div>
-                    <label>Request Date :</label>
-                    &nbsp;&nbsp;&nbsp;&nbsp;<input type="text"  id="requestDate" formControlName="requestDate">
-                </div><br>
-            </div>
-                
-            <div>
-                <h4>Requirements :</h4>
-                <div>
-                    <label>Problem Statement :</label>
-                    &nbsp;&nbsp;&nbsp;<textarea formControlName="problemStatement"  id="problemStatement"></textarea>
-                </div><br>
-                <div>
-                    <label>Demand Scope :</label>
-                    &nbsp;&nbsp;&nbsp;&nbsp;<textarea formControlName="demandScope" id="demandScope"></textarea>
-                </div><br>
-                <div>
-                    <label>Business Value :</label>
-                    &nbsp;&nbsp;&nbsp;&nbsp;<textarea formControlName="businessValue" id="businessValue"></textarea>
-                </div><br>
-                <div>
-                    <label>Go Live Approach :</label>
-                    &nbsp;&nbsp;&nbsp;&nbsp;<input type="date" formControlName="goLiveApproach" id="goLiveApproach">
-                </div><br>
-                <div>
-                    <label>Tentative Go Live :</label>
-                    &nbsp;&nbsp; &nbsp;&nbsp;<input type="date" formControlName="tentativeGoLive" id="tentativeGoLive">
-                </div><br>
-            </div>
-                
-            <div>
-                <h4>Solution Directions</h4>
-                <div >
-                    <input type="radio" (change)="setSolution($event)" id="integration" name="solutionDirection" value="Integration/ITaaP">
-                    <label for="integration">Integration/ITaaP</label><br>
-                    
-                    <input type="radio" (change)="setSolution($event)" id="dataModel" name="solutionDirection" value="Data Modelling">
-                    <label for="dataModel">Data Modelling</label><br>
 
-                    <input type="radio" (change)="setSolution($event)" id="dataModel" name="solutionDirection" value="ADL SL1">
-                    <label for="dataModel">ADL SL1</label><br>
+    <div class="p-grid p-justify-center" style="display: flex; justify-content: center;"> 
+        <div class="grid">   
+            <div class="p-col-12">
+                <p-card>
+                    <form [formGroup]="requestorDetailsForm"(ngSubmit)="onSubmit()">
+                        <div>
+                            <h3><u>Requestor Details</u></h3>
+                            <div class="p-field">
+                                <label for="program"><i>Program :</i></label>
+                                &nbsp;<input type="text" id="program" formControlName="program">
+                            </div><br>
+                            <div class="p-field">
+                                <label><i>Domain :</i></label>
+                                &nbsp;&nbsp;<input type="text" id="domain" formControlName="domain">
+                            </div><br>
+                            <div class="p-field">
+                                <label><i>Program SPOC :</i></label>
+                                &nbsp;<input type="text" id="programSPOC" formControlName="programSPOC">
+                            </div><br>
+                            <div class="p-field">
+                                <label><i>Request Date :</i></label>
+                                &nbsp;&nbsp;&nbsp;<input type="text"  id="requestDate" formControlName="requestDate">
+                            </div><br>
+                        </div>
+                            
+                        <div>
+                            <h3><u>Requirements</u></h3>
+                            <div class="p-field">
+                                <label><i>Problem Statement :</i></label>
+                                &nbsp;<textarea formControlName="problemStatement"  id="problemStatement"></textarea>
+                            </div><br>
+                            <div class="p-field">
+                                <label><i>Demand Scope :</i></label>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<textarea formControlName="demandScope" id="demandScope"></textarea>
+                            </div><br>
+                            <div class="p-field">
+                                <label><i>Business Value :</i></label>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<textarea formControlName="businessValue" id="businessValue"></textarea>
+                            </div><br>
+                            <div class="p-field">
+                                <label><i>Go Live Approach :</i></label>
+                                &nbsp;<input type="date" formControlName="goLiveApproach" id="goLiveApproach">
+                            </div><br>
+                            <div class="p-field">
+                                <label><i>Tentative Go Live :</i></label>
+                                &nbsp;&nbsp;<input type="date" formControlName="tentativeGoLive" id="tentativeGoLive">
+                            </div><br>
+                        </div>
+                            
+                        <div>
+                            <h3><u>Solution Directions</u></h3>
+                            <div class="p-field">
+                                <input type="radio" (change)="setSolution($event)" id="integration" name="solutionDirection" value="Integration/ITaaP">
+                                <label for="integration"><i>Integration/ITaaP</i></label><br>
+                                
+                                <input type="radio" (change)="setSolution($event)" id="dataModel" name="solutionDirection" value="Data Modelling">
+                                <label for="dataModel"><i>Data Modelling</i></label><br>
 
-                    <input type="radio" (change)="setSolution($event)" id="dataModel" name="solutionDirection" value="ADL SL2">
-                    <label for="dataModel">ADL SL2</label><br>
+                                <input type="radio" (change)="setSolution($event)" id="dataModel" name="solutionDirection" value="ADL SL1">
+                                <label for="dataModel"><i>ADL SL1</i></label><br>
 
-                    <input type="radio" (change)="setSolution($event)" id="dataModel" name="solutionDirection" value="Gold">
-                    <label for="dataModel">Gold</label><br>
+                                <input type="radio" (change)="setSolution($event)" id="dataModel" name="solutionDirection" value="ADL SL2">
+                                <label for="dataModel"><i>ADL SL2</i></label><br>
 
-                    <input type="radio" (change)="setSolution($event)" id="mdm" name="solutionDirection" value="MDM">
-                    <label for="mdm">MDM</label><br>
+                                <input type="radio" (change)="setSolution($event)" id="dataModel" name="solutionDirection" value="Gold">
+                                <label for="dataModel"><i>Gold</i></label><br>
 
-                    <input type="radio" (change)="setSolution($event)" id="i&a" name="solutionDirection" value="I&A">
-                    <label for="i&a">I&A</label><br>
-                </div>
-                
-            </div><br>
+                                <input type="radio" (change)="setSolution($event)" id="mdm" name="solutionDirection" value="MDM">
+                                <label for="mdm"><i>MDM</i></label><br>
 
-            <button type="submit">Submit</button>
+                                <input type="radio" (change)="setSolution($event)" id="i&a" name="solutionDirection" value="I&A">
+                                <label for="i&a"><i>I&A</i></label><br>
+                            </div >
+                            
+                        </div><br>
 
-        </form>
-    </div><br><br>
+                        <button type="submit" pButton icon="pi pi-check" label="Submit" class="p-button p-button-success">Submit</button>
+
+                    </form>
+                </p-card>
+            </div><br><br>
+       </div>
+    </div>        
            
 <div class="col-12 xs:col-12 sm:col-12 lg:col-12 xl:col-12">
     <p-tabView [(activeIndex)]="activeTabIndex">
@@ -295,5 +301,4 @@
             </div>    
         </p-tabPanel>
     </p-tabView>
-</div>
 </div>
