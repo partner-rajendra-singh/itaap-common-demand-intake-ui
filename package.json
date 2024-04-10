@@ -3,10 +3,8 @@
   "version": "0.0.0",
   "scripts": {
     "build:dev": "echo 'Building dev environment' && ng build --configuration=dev",
-    "build:test": "echo 'Building test environment' && ng build --configuration=test",
     "build:acc": "echo 'Building acc environment' && ng build --configuration=acc",
-    "build:prod": "echo 'Building prod environment' && ng build --configuration=prod",
-    "build": "npm run build:dev && npm run build:acc && npm run build:prod && npm run build:test",
+    "build": "npm run build:dev && npm run build:acc",
     "ng": "ng",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"

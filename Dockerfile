@@ -28,9 +28,7 @@ COPY nginx.conf /etc/nginx/nginx.conf
 # Copy the built Angular app from the build stage to the Nginx web server directory
 COPY --from=build /app /usr/share/app
 COPY --from=build /app/build/dev /usr/share/nginx/html/dev
-COPY --from=build /app/build/test /usr/share/nginx/html/test
 COPY --from=build /app/build/acc /usr/share/nginx/html/acc
-COPY --from=build /app/build/prod /usr/share/nginx/html/prod
 
 
 # Set the ENTRYPOINT for Nginx

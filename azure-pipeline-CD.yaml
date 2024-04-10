@@ -5,7 +5,6 @@ variables:
     value: $[counter(variables['Version.MajorMinor'], 0)]
   - group: AWS_Credentials
   - group: AWS_Credentials_Acc
-  - group: AWS_Credentials_Prod
  
 name: $(Version.MajorMinor).$(Version.Revision)
  
@@ -49,42 +48,8 @@ stages:
                       aws eks --region eu-west-1 update-kubeconfig --name itaap-non-prod
                       imageTagName=$(resources.pipeline.itaap-common-demand-intake-ui-pipeline.runName)
                       echo "Image tag " $imageTagName
-                      template=`cat eks-deployment.yaml | sed "s/{{imageTagName}}/$imageTagName/g" | sed "s/{{deployNamespace}}/itaap-non-prod-digitalit-dev/g" | sed "s/{{env}}/dev/g" | sed "s/{{host}}/dev.apps.api.it.philips.com/g" | sed "s/{{envIdentifier}}/$(ENV_IDENTIFIER)/g"`
-                      configMapTemplate=`cat eks-config-maps.yaml | sed "s/{{deployNamespace}}/itaap-non-prod-digitalit-dev/g"`
-                      secretMapTemplate=`cat eks-config-secrets.yaml | sed "s/{{deployNamespace}}/itaap-non-prod-digitalit-dev/g"`
-                      echo "$secretMapTemplate" | kubectl apply -f -
-                      echo "$configMapTemplate" | kubectl apply -f -
+                      template=`cat eks-deployment.yaml | sed "s/{{imageTagName}}/$imageTagName/g" | sed "s/{{deployNamespace}}/itaap-non-prod-common/g" | sed "s/{{env}}/dev/g" | sed "s/{{host}}/dev.apps.api.it.philips.com/g" | sed "s/{{envIdentifier}}/$(ENV_IDENTIFIER)/g"`
                       echo "$template" | kubectl apply -f -
-
-  - stage: TEST
-    displayName: Test
-    condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'))
-    dependsOn: DEV
-    jobs:
-      - deployment: test
-        variables:
-          - group: AWS_Credentials
-        environment: environment-itaap-apps-dev
-        strategy:
-          runOnce:
-            deploy:
-              steps:
-                - checkout: self
-                - task: Bash@3
-                  inputs:
-                    targetType: "inline"
-                    script: |
-                      # export AWS_ACCESS_KEY_ID=$(AWS_ACCESS_KEY_ID)
-                      # export AWS_SECRET_ACCESS_KEY=$(AWS_SECRET_ACCESS_KEY)
-                      # aws eks --region eu-west-1 update-kubeconfig --name itaap-non-prod
-                      # imageTagName=$(resources.pipeline.itaap-common-demand-intake-ui-pipeline.runName)
-                      # echo "Image tag " $imageTagName
-                      # template=`cat eks-deployment.yaml | sed "s/{{imageTagName}}/$imageTagName/g" | sed "s/{{deployNamespace}}/itaap-non-prod-digitalit-test/g" | sed "s/{{env}}/test/g" | sed "s/{{host}}/dev.apps.api.it.philips.com/g" | sed "s/{{envIdentifier}}/$(ENV_IDENTIFIER)/g"`
-                      # configMapTemplate=`cat eks-config-maps.yaml | sed "s/{{deployNamespace}}/itaap-non-prod-digitalit-test/g"`
-                      # secretMapTemplate=`cat eks-config-secrets.yaml | sed "s/{{deployNamespace}}/itaap-non-prod-digitalit-test/g"`
-                      # echo "$secretMapTemplate" | kubectl apply -f -
-                      # echo "$configMapTemplate" | kubectl apply -f -
-                      # echo "$template" | kubectl apply -f -
 
   - stage: ACC
     displayName: Acceptance
@@ -109,39 +74,5 @@ stages:
                       # aws eks --region eu-west-1 update-kubeconfig --name itaap-acc
                       # imageTagName=$(resources.pipeline.itaap-common-demand-intake-ui-pipeline.runName)
                       # echo "Image tag " $imageTagName
-                      # template=`cat eks-deployment.yaml | sed "s/{{imageTagName}}/$imageTagName/g" | sed "s/{{deployNamespace}}/itaap-acc-digitalit/g" | sed "s/{{env}}/acc/g" | sed "s/{{host}}/acc.apps.api.it.philips.com/g" | sed "s/{{envIdentifier}}/$(ENV_IDENTIFIER)/g"`
-                      # configMapTemplate=`cat eks-config-maps.yaml | sed "s/{{deployNamespace}}/itaap-acc-digitalit/g"`
-                      # secretMapTemplate=`cat eks-config-secrets.yaml | sed "s/{{deployNamespace}}/itaap-acc-digitalit/g"`
-                      # echo "$secretMapTemplate" | kubectl apply -f -
-                      # echo "$configMapTemplate" | kubectl apply -f -
-                      # echo "$template" | kubectl apply -f -
-
-  - stage: PROD
-    displayName: Production
-    condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'))
-    dependsOn: ACC
-    jobs:
-      - deployment: production
-        variables:
-          - group: AWS_Credentials_Prod
-        environment: environment-itaap-apps-dev
-        strategy:
-          runOnce:
-            deploy:
-              steps:
-                - checkout: self
-                - task: Bash@3
-                  inputs:
-                    targetType: "inline"
-                    script: |
-                      # export AWS_ACCESS_KEY_ID=$(AWS_ACCESS_KEY_ID)
-                      # export AWS_SECRET_ACCESS_KEY=$(AWS_SECRET_ACCESS_KEY)
-                      # aws eks --region eu-west-1 update-kubeconfig --name itaap-prod
-                      # imageTagName=$(resources.pipeline.itaap-common-demand-intake-ui-pipeline.runName)
-                      # echo "Image tag " $imageTagName
-                      # template=`cat eks-deployment.yaml | sed "s/{{imageTagName}}/$imageTagName/g" | sed "s/{{deployNamespace}}/itaap-prod-digitalit/g" | sed "s/{{env}}/prod/g" | sed "s/{{host}}/apps.api.it.philips.com/g" | sed "s/{{envIdentifier}}/$(ENV_IDENTIFIER)/g"`
-                      # configMapTemplate=`cat eks-config-maps.yaml | sed "s/{{deployNamespace}}/itaap-prod-digitalit/g"`
-                      # secretMapTemplate=`cat eks-config-secrets.yaml | sed "s/{{deployNamespace}}/itaap-prod-digitalit/g"`
-                      # echo "$secretMapTemplate" | kubectl apply -f -
-                      # echo "$configMapTemplate" | kubectl apply -f -
+                      # template=`cat eks-deployment.yaml | sed "s/{{imageTagName}}/$imageTagName/g" | sed "s/{{deployNamespace}}/itaap-acc-common/g" | sed "s/{{env}}/acc/g" | sed "s/{{host}}/acc.apps.api.it.philips.com/g" | sed "s/{{envIdentifier}}/$(ENV_IDENTIFIER)/g"`
                       # echo "$template" | kubectl apply -f -
