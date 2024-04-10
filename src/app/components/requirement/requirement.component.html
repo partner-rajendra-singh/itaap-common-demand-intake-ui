@@ -1,304 +1,475 @@
+<div class="grid">
+    <div class="col-11 col-offset-1">
+        <p-fieldset legend="Requestor Details">
+            <div class="flex flex-column gap-1">
+                <label for="program">Program</label>
+                <input pInputText id="program" aria-describedby="program-help" />
+                <small id="program-help">Enter your program.</small>
+            </div>
+            <div class="flex flex-column gap-1">
+                <label for="domain">Domain</label>
+                <input pInputText id="domain" aria-describedby="domain-help" />
+                <small id="domain-help">Enter your Domain.</small>
+            </div>
+            <div class="flex flex-column gap-1">
+                <label for="programSpoc">Program SPOC</label>
+                <input pInputText id="programSpoc" aria-describedby="programSpoc-help" />
+                <small id="programSpoc-help">Enter your Program SPOC.</small>
+            </div>
+            <div class="flex flex-column gap-1">
+                <label for="requestDate">Request date</label>
+                <input pInputText id="requestDate" aria-describedby="requestDate-help" />
+                <small id="requestDate-help">Enter your Request date.</small>
+            </div>
+        </p-fieldset>
+    </div>
+    <div class="col-11 col-offset-1">
+        <p-fieldset legend="Requirements">
+            <form>
+                <label for="requestDate">Problem Statement</label>
+                <textarea rows="2" cols="30" pInputTextarea></textarea>
+            </form>
+            <form>
+                <label for="requestDate">Demand Scope</label>
+                <textarea rows="2" cols="30" pInputTextarea></textarea>
+            </form>
+            <form>
+                <label for="requestDate">Business Value</label>
+                <textarea rows="2" cols="30" pInputTextarea></textarea>
+            </form>
+            <form>
+                <label for="requestDate">Go Live Approach</label>
+                <textarea rows="2" cols="30" pInputTextarea></textarea>
+            </form>
+            <form>
+                <label for="requestDate">Tentative Go Live</label>
+                <textarea rows="2" cols="30" pInputTextarea></textarea>
+            </form>
+        </p-fieldset>
+    </div>
+    <div class="col-11 col-offset-1">
+        <p-fieldset legend="Solution Direction">
+            <form class="flex align-items-center gap-1">
+                <p-checkbox value="Integration/ITaap" inputId="integrationItaap"></p-checkbox>
+                <label for="integrationItaap">Integration/ITaap</label>
+            </form>
+            <form class="flex align-items-center gap-1">
+                <p-checkbox value="Data Modelling" inputId="dataModelling"></p-checkbox>
+                <label for="dataModelling">Data Modelling</label>
+            </form>
+            <form class="flex align-items-center gap-1">
+                <p-checkbox value="ADL SL1" inputId="adlSl1"></p-checkbox>
+                <label for="adlSl1">ADL SL1</label>
+            </form>
+            <form class="flex align-items-center gap-1">
+                <p-checkbox value="ADL SL2" inputId="adlSl2"></p-checkbox>
+                <label for="adlSl2">ADL SL2</label>
+            </form>
+            <form class="flex align-items-center gap-1">
+                <p-checkbox value="Gold" inputId="gold"></p-checkbox>
+                <label for="gold">Gold</label>
+            </form>
+            <form class="flex align-items-center gap-1">
+                <p-checkbox value="MDM" inputId="mdm"></p-checkbox>
+                <label for="mdm">MDM</label>
+            </form>
+            <form class="flex align-items-center gap-1">
+                <p-checkbox value="I&A" inputId="iAndA"></p-checkbox>
+                <label for="iAndA">I&A</label>
+            </form>
+        </p-fieldset>
+    </div>
+    <div class="col-11 col-offset-1">
+        <p-tabView [(activeIndex)]="activeTabIndex">
+            <p-tabPanel header="ITaap & Data Model">
+                <div>
+                    <div>
+                        <form class="flex align-items-center gap-1">
+                            <p-checkbox value="API Functional Requirement" inputId="apiFunctionalReq"></p-checkbox>
+                            <label for="apiFunctionalReq">API Functional Requirement</label>
+                        </form>
+                        <form class="flex align-items-center gap-1">
 
-    <div class="p-grid p-justify-center" style="display: flex; justify-content: center;"> 
-        <div class="grid">   
-            <div class="p-col-12">
-                <p-card>
-                    <form [formGroup]="requestorDetailsForm"(ngSubmit)="onSubmit()">
-                        <div>
-                            <h3><u>Requestor Details</u></h3>
-                            <div class="p-field">
-                                <label for="program"><i>Program :</i></label>
-                                &nbsp;<input type="text" id="program" formControlName="program">
-                            </div><br>
-                            <div class="p-field">
-                                <label><i>Domain :</i></label>
-                                &nbsp;&nbsp;<input type="text" id="domain" formControlName="domain">
-                            </div><br>
-                            <div class="p-field">
-                                <label><i>Program SPOC :</i></label>
-                                &nbsp;<input type="text" id="programSPOC" formControlName="programSPOC">
-                            </div><br>
-                            <div class="p-field">
-                                <label><i>Request Date :</i></label>
-                                &nbsp;&nbsp;&nbsp;<input type="text"  id="requestDate" formControlName="requestDate">
-                            </div><br>
-                        </div>
-                            
-                        <div>
-                            <h3><u>Requirements</u></h3>
-                            <div class="p-field">
-                                <label><i>Problem Statement :</i></label>
-                                &nbsp;<textarea formControlName="problemStatement"  id="problemStatement"></textarea>
-                            </div><br>
-                            <div class="p-field">
-                                <label><i>Demand Scope :</i></label>
-                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<textarea formControlName="demandScope" id="demandScope"></textarea>
-                            </div><br>
-                            <div class="p-field">
-                                <label><i>Business Value :</i></label>
-                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<textarea formControlName="businessValue" id="businessValue"></textarea>
-                            </div><br>
-                            <div class="p-field">
-                                <label><i>Go Live Approach :</i></label>
-                                &nbsp;<input type="date" formControlName="goLiveApproach" id="goLiveApproach">
-                            </div><br>
-                            <div class="p-field">
-                                <label><i>Tentative Go Live :</i></label>
-                                &nbsp;&nbsp;<input type="date" formControlName="tentativeGoLive" id="tentativeGoLive">
-                            </div><br>
-                        </div>
-                            
-                        <div>
-                            <h3><u>Solution Directions</u></h3>
-                            <div class="p-field">
-                                <input type="radio" (change)="setSolution($event)" id="integration" name="solutionDirection" value="Integration/ITaaP">
-                                <label for="integration"><i>Integration/ITaaP</i></label><br>
-                                
-                                <input type="radio" (change)="setSolution($event)" id="dataModel" name="solutionDirection" value="Data Modelling">
-                                <label for="dataModel"><i>Data Modelling</i></label><br>
+                            <p-checkbox value="Platforms Capability-definition"
+                                inputId="platformsCapabilityDef"></p-checkbox>
+                            <label for="platformsCapabilityDef">Platforms Capability-definition</label>
+                        </form>
+                        <form class="flex align-items-center gap-1">
 
-                                <input type="radio" (change)="setSolution($event)" id="dataModel" name="solutionDirection" value="ADL SL1">
-                                <label for="dataModel"><i>ADL SL1</i></label><br>
+                            <p-checkbox value="Producer and Consumer systems" inputId="pAndCSystems"></p-checkbox>
+                            <label for="pAndCSystems">Producer and Consumer systems</label>
+                        </form>
+                        <form class="flex align-items-center gap-1">
+                            <p-checkbox value="Philips Capability APIS" inputId="philipsCapabilityApis"></p-checkbox>
+                            <label for="philipsCapabilityApis">Philips Capability APIS</label>
+                        </form>
+                        <form class="flex align-items-center gap-1">
+                            <p-checkbox value="Data Model Definition" inputId="dataModelDefinition"></p-checkbox>
+                            <label for="dataModelDefinition">Data Model Definition</label>
+                        </form>
+                        <form class="flex align-items-center gap-1">
+                            <p-checkbox value="Non Functional Requirement" inputId="nonFunctionalReq"></p-checkbox>
+                            <label for="nonFunctionalReq">Non Functional Requirement</label>
+                        </form>
+                        <form class="flex align-items-center gap-1">
+                            <p-checkbox value="Philips Capability APIS" inputId="peakVolume"></p-checkbox>
+                            <label for="peakVolume">Peak Volume</label>
+                        </form>
+                        <form class="flex align-items-center gap-1">
+                            <p-checkbox value="Average Volume" inputId="avgVolume"></p-checkbox>
+                            <label for="avgVolume">Average Volume</label>
+                        </form>
+                        <form class="flex align-items-center gap-1">
+                            <p-checkbox value="Throughput Time" inputId="throughputTime"></p-checkbox>
+                            <label for="throughputTime">Throughput Time</label>
+                        </form>
+                        <form class="flex align-items-center gap-1">
+                            <p-checkbox value="Message Classification" inputId="msgClassification"></p-checkbox>
+                            <label for="msgClassification">Message Classification</label>
+                        </form>
+                        <form class="flex align-items-center gap-1">
+                            <p-checkbox value="Peak Message Size" inputId="peakMessageSize"></p-checkbox>
+                            <label for="peakMessageSize">Peak Message Size</label>
+                        </form>
+                        <form class="flex align-items-center gap-1">
+                            <p-checkbox value="Average Message Size" inputId="avgMessageSize"></p-checkbox>
+                            <label for="avgMessageSize">Average Message Size</label>
+                        </form>
+                        <form class="flex align-items-center gap-1">
+                            <p-checkbox value="Business Criticality" inputId="businessCriticality"></p-checkbox>
+                            <label for="businessCriticality">Business Criticality</label>
+                        </form>
+                        <form class="flex align-items-center gap-1">
+                            <p-checkbox value="Message Timings, Frequency" inputId="messageTimings"></p-checkbox>
+                            <label for="messageTimings">Message Timings, Frequency</label>
+                        </form>
+                        <form class="flex align-items-center gap-1">
+                            <p-checkbox value="Max Latency" inputId="maxLatency"></p-checkbox>
+                            <label for="maxLatency">Max Latency</label>
+                        </form>
+                        <form class="flex align-items-center gap-1">
+                            <p-checkbox value="Demand Additional Document Attached"
+                                inputId="demandDocAttached"></p-checkbox>
+                            <label for="demandDocAttached">Demand Additional Document Attached</label>
+                        </form>
+                        <form class="flex align-items-center gap-1">
+                            <p-checkbox value="Additional Info" inputId="additionalInfo"></p-checkbox>
+                            <label for="additionalInfo">Additional Info</label>
+                        </form>
+                    </div>
+                </div>
+            </p-tabPanel>
+            <p-tabPanel header="||| ADL SL1 & Data Model">
+                <div>
+                    <div>
+                        <form class="flex align-items-center gap-1">
+                            <p-checkbox value="ADL Functional Requirement" inputId="adlFunctionalReq"></p-checkbox>
+                            <label for="adlFunctionalReq">API Functional Requirement</label>
+                        </form>
+                        <form class="flex align-items-center gap-1">
 
-                                <input type="radio" (change)="setSolution($event)" id="dataModel" name="solutionDirection" value="ADL SL2">
-                                <label for="dataModel"><i>ADL SL2</i></label><br>
+                            <p-checkbox value="FR1" inputId="fr1"></p-checkbox>
+                            <label for="fr1">FR1</label>
+                        </form>
+                        <form class="flex align-items-center gap-1">
 
-                                <input type="radio" (change)="setSolution($event)" id="dataModel" name="solutionDirection" value="Gold">
-                                <label for="dataModel"><i>Gold</i></label><br>
+                            <p-checkbox value="FR2" inputId="fr2"></p-checkbox>
+                            <label for="fr2">FR2</label>
+                        </form>
+                        <form class="flex align-items-center gap-1">
+                            <p-checkbox value="FR3" inputId="fr3"></p-checkbox>
+                            <label for="fr3">FR3</label>
+                        </form>
+                        <form class="flex align-items-center gap-1">
+                            <p-checkbox value="Data Model Definition" inputId="dataModelDefinition"></p-checkbox>
+                            <label for="dataModelDefinition">Data Model Definition</label>
+                        </form>
+                        <form class="flex align-items-center gap-1">
+                            <p-checkbox value="Non Functional Requirement" inputId="nonFunctionalReq"></p-checkbox>
+                            <label for="nonFunctionalReq">Non Functional Requirement</label>
+                        </form>
+                        <form class="flex align-items-center gap-1">
+                            <p-checkbox value="Philips Capability APIS" inputId="peakVolume"></p-checkbox>
+                            <label for="peakVolume">Peak Volume</label>
+                        </form>
+                        <form class="flex align-items-center gap-1">
+                            <p-checkbox value="Average Volume" inputId="avgVolume"></p-checkbox>
+                            <label for="avgVolume">Average Volume</label>
+                        </form>
+                        <form class="flex align-items-center gap-1">
+                            <p-checkbox value="Throughput Time" inputId="throughputTime"></p-checkbox>
+                            <label for="throughputTime">Throughput Time</label>
+                        </form>
+                        <form class="flex align-items-center gap-1">
+                            <p-checkbox value="Message Classification" inputId="msgClassification"></p-checkbox>
+                            <label for="msgClassification">Message Classification</label>
+                        </form>
+                        <form class="flex align-items-center gap-1">
+                            <p-checkbox value="Peak Message Size" inputId="peakMessageSize"></p-checkbox>
+                            <label for="peakMessageSize">Peak Message Size</label>
+                        </form>
+                        <form class="flex align-items-center gap-1">
+                            <p-checkbox value="Average Message Size" inputId="avgMessageSize"></p-checkbox>
+                            <label for="avgMessageSize">Average Message Size</label>
+                        </form>
+                        <form class="flex align-items-center gap-1">
+                            <p-checkbox value="Business Criticality" inputId="businessCriticality"></p-checkbox>
+                            <label for="businessCriticality">Business Criticality</label>
+                        </form>
+                        <form class="flex align-items-center gap-1">
+                            <p-checkbox value="Message Timings, Frequency" inputId="messageTimings"></p-checkbox>
+                            <label for="messageTimings">Message Timings, Frequency</label>
+                        </form>
+                        <form class="flex align-items-center gap-1">
+                            <p-checkbox value="Max Latency" inputId="maxLatency"></p-checkbox>
+                            <label for="maxLatency">Max Latency</label>
+                        </form>
+                        <form class="flex align-items-center gap-1">
+                            <p-checkbox value="Demand Additional Document Attached"
+                                inputId="demandDocAttached"></p-checkbox>
+                            <label for="demandDocAttached">Demand Additional Document Attached</label>
+                        </form>
+                        <form class="flex align-items-center gap-1">
+                            <p-checkbox value="Additional Info" inputId="additionalInfo"></p-checkbox>
+                            <label for="additionalInfo">Additional Info</label>
+                        </form>
+                    </div>
+                </div>
+            </p-tabPanel>
+            <p-tabPanel header="||| ADL SL2 & Data Model">
+                <div>
+                    <div>
+                        <form class="flex align-items-center gap-1">
+                            <p-checkbox value="ADL SL2 Functional Requirement"
+                                inputId="adlSl2FunctionalReq"></p-checkbox>
+                            <label for="adlSl2FunctionalReq">ADL SL2 Functional Requirement</label>
+                        </form>
+                        <form class="flex align-items-center gap-1">
 
-                                <input type="radio" (change)="setSolution($event)" id="mdm" name="solutionDirection" value="MDM">
-                                <label for="mdm"><i>MDM</i></label><br>
+                            <p-checkbox value="FR1" inputId="fr1"></p-checkbox>
+                            <label for="fr1">FR1</label>
+                        </form>
+                        <form class="flex align-items-center gap-1">
 
-                                <input type="radio" (change)="setSolution($event)" id="i&a" name="solutionDirection" value="I&A">
-                                <label for="i&a"><i>I&A</i></label><br>
-                            </div >
-                            
-                        </div><br>
+                            <p-checkbox value="FR2" inputId="fr2"></p-checkbox>
+                            <label for="fr2">FR2</label>
+                        </form>
+                        <form class="flex align-items-center gap-1">
+                            <p-checkbox value="FR3" inputId="fr3"></p-checkbox>
+                            <label for="fr3">FR3</label>
+                        </form>
+                        <form class="flex align-items-center gap-1">
+                            <p-checkbox value="Data Model Definition" inputId="dataModelDefinition"></p-checkbox>
+                            <label for="dataModelDefinition">Data Model Definition</label>
+                        </form>
+                        <form class="flex align-items-center gap-1">
+                            <p-checkbox value="Non Functional Requirement" inputId="nonFunctionalReq"></p-checkbox>
+                            <label for="nonFunctionalReq">Non Functional Requirement</label>
+                        </form>
+                        <form class="flex align-items-center gap-1">
+                            <p-checkbox value="Philips Capability APIS" inputId="peakVolume"></p-checkbox>
+                            <label for="peakVolume">Peak Volume</label>
+                        </form>
+                        <form class="flex align-items-center gap-1">
+                            <p-checkbox value="Average Volume" inputId="avgVolume"></p-checkbox>
+                            <label for="avgVolume">Average Volume</label>
+                        </form>
+                        <form class="flex align-items-center gap-1">
+                            <p-checkbox value="Throughput Time" inputId="throughputTime"></p-checkbox>
+                            <label for="throughputTime">Throughput Time</label>
+                        </form>
+                        <form class="flex align-items-center gap-1">
+                            <p-checkbox value="Message Classification" inputId="msgClassification"></p-checkbox>
+                            <label for="msgClassification">Message Classification</label>
+                        </form>
+                        <form class="flex align-items-center gap-1">
+                            <p-checkbox value="Peak Message Size" inputId="peakMessageSize"></p-checkbox>
+                            <label for="peakMessageSize">Peak Message Size</label>
+                        </form>
+                        <form class="flex align-items-center gap-1">
+                            <p-checkbox value="Average Message Size" inputId="avgMessageSize"></p-checkbox>
+                            <label for="avgMessageSize">Average Message Size</label>
+                        </form>
+                        <form class="flex align-items-center gap-1">
+                            <p-checkbox value="Business Criticality" inputId="businessCriticality"></p-checkbox>
+                            <label for="businessCriticality">Business Criticality</label>
+                        </form>
+                        <form class="flex align-items-center gap-1">
+                            <p-checkbox value="Message Timings, Frequency" inputId="messageTimings"></p-checkbox>
+                            <label for="messageTimings">Message Timings, Frequency</label>
+                        </form>
+                        <form class="flex align-items-center gap-1">
+                            <p-checkbox value="Max Latency" inputId="maxLatency"></p-checkbox>
+                            <label for="maxLatency">Max Latency</label>
+                        </form>
+                        <form class="flex align-items-center gap-1">
+                            <p-checkbox value="Demand Additional Document Attached"
+                                inputId="demandDocAttached"></p-checkbox>
+                            <label for="demandDocAttached">Demand Additional Document Attached</label>
+                        </form>
+                        <form class="flex align-items-center gap-1">
+                            <p-checkbox value="Additional Info" inputId="additionalInfo"></p-checkbox>
+                            <label for="additionalInfo">Additional Info</label>
+                        </form>
+                    </div>
+                </div>
+            </p-tabPanel>
+            <p-tabPanel header="||| ADL Gold & Data Model">
+                <div>
+                    <div>
+                        <form class="flex align-items-center gap-1">
+                            <p-checkbox value="ADL SL2 Functional Requirement"
+                                inputId="adlSl2FunctionalReq"></p-checkbox>
+                            <label for="adlSl2FunctionalReq">ADL SL2 Functional Requirement</label>
+                        </form>
+                        <form class="flex align-items-center gap-1">
 
-                        <button type="submit" pButton icon="pi pi-check" label="Submit" class="p-button p-button-success">Submit</button>
+                            <p-checkbox value="FR1" inputId="fr1"></p-checkbox>
+                            <label for="fr1">FR1</label>
+                        </form>
+                        <form class="flex align-items-center gap-1">
 
-                    </form>
-                </p-card>
-            </div><br><br>
-       </div>
-    </div>        
-           
-<div class="col-12 xs:col-12 sm:col-12 lg:col-12 xl:col-12">
-    <p-tabView [(activeIndex)]="activeTabIndex">
-        <p-tabPanel header="ITaap & Data Model">
-            <div>
-                <form [formGroup]="screen1Form">
-                    <div>
-                        <label >
-                            <input type="checkbox" formControlName="apiFunctionalReq"> API Functional Requirement<br>
-                            &nbsp;&nbsp;<input type="checkbox"  formControlName="platformsCapabilityDef"> Platforms Capability-definition<br>
-                            &nbsp;&nbsp;<input type="checkbox"   formControlName="pAndCSystems"> Producer and Consumer systems<br>
-                            &nbsp;&nbsp;<input type="checkbox"   formControlName="philipsCapabilityApis"> Philips Capability APIS<br>
-                        </label>
+                            <p-checkbox value="FR2" inputId="fr2"></p-checkbox>
+                            <label for="fr2">FR2</label>
+                        </form>
+                        <form class="flex align-items-center gap-1">
+                            <p-checkbox value="FR3" inputId="fr3"></p-checkbox>
+                            <label for="fr3">FR3</label>
+                        </form>
+                        <form class="flex align-items-center gap-1">
+                            <p-checkbox value="Data Model Definition" inputId="dataModelDefinition"></p-checkbox>
+                            <label for="dataModelDefinition">Data Model Definition</label>
+                        </form>
+                        <form class="flex align-items-center gap-1">
+                            <p-checkbox value="Non Functional Requirement" inputId="nonFunctionalReq"></p-checkbox>
+                            <label for="nonFunctionalReq">Non Functional Requirement</label>
+                        </form>
+                        <form class="flex align-items-center gap-1">
+                            <p-checkbox value="Philips Capability APIS" inputId="peakVolume"></p-checkbox>
+                            <label for="peakVolume">Peak Volume</label>
+                        </form>
+                        <form class="flex align-items-center gap-1">
+                            <p-checkbox value="Average Volume" inputId="avgVolume"></p-checkbox>
+                            <label for="avgVolume">Average Volume</label>
+                        </form>
+                        <form class="flex align-items-center gap-1">
+                            <p-checkbox value="Throughput Time" inputId="throughputTime"></p-checkbox>
+                            <label for="throughputTime">Throughput Time</label>
+                        </form>
+                        <form class="flex align-items-center gap-1">
+                            <p-checkbox value="Message Classification" inputId="msgClassification"></p-checkbox>
+                            <label for="msgClassification">Message Classification</label>
+                        </form>
+                        <form class="flex align-items-center gap-1">
+                            <p-checkbox value="Peak Message Size" inputId="peakMessageSize"></p-checkbox>
+                            <label for="peakMessageSize">Peak Message Size</label>
+                        </form>
+                        <form class="flex align-items-center gap-1">
+                            <p-checkbox value="Average Message Size" inputId="avgMessageSize"></p-checkbox>
+                            <label for="avgMessageSize">Average Message Size</label>
+                        </form>
+                        <form class="flex align-items-center gap-1">
+                            <p-checkbox value="Business Criticality" inputId="businessCriticality"></p-checkbox>
+                            <label for="businessCriticality">Business Criticality</label>
+                        </form>
+                        <form class="flex align-items-center gap-1">
+                            <p-checkbox value="Message Timings, Frequency" inputId="messageTimings"></p-checkbox>
+                            <label for="messageTimings">Message Timings, Frequency</label>
+                        </form>
+                        <form class="flex align-items-center gap-1">
+                            <p-checkbox value="Max Latency" inputId="maxLatency"></p-checkbox>
+                            <label for="maxLatency">Max Latency</label>
+                        </form>
+                        <form class="flex align-items-center gap-1">
+                            <p-checkbox value="Demand Additional Document Attached"
+                                inputId="demandDocAttached"></p-checkbox>
+                            <label for="demandDocAttached">Demand Additional Document Attached</label>
+                        </form>
+                        <form class="flex align-items-center gap-1">
+                            <p-checkbox value="Additional Info" inputId="additionalInfo"></p-checkbox>
+                            <label for="additionalInfo">Additional Info</label>
+                        </form>
                     </div>
+                </div>
+            </p-tabPanel>
+            <p-tabPanel header="||| ADL Gold & Data Model">
+                <div>
                     <div>
-                        <label >
-                            <input type="checkbox" formControlName="dataModelDefinition"> Data Model Definition<br>
-                        </label>
+                        <form class="flex align-items-center gap-1">
+                            <p-checkbox value="ADL SL2 Functional Requirement"
+                                inputId="adlSl2FunctionalReq"></p-checkbox>
+                            <label for="adlSl2FunctionalReq">ADL SL2 Functional Requirement</label>
+                        </form>
+                        <form class="flex align-items-center gap-1">
+
+                            <p-checkbox value="FR1" inputId="fr1"></p-checkbox>
+                            <label for="fr1">FR1</label>
+                        </form>
+                        <form class="flex align-items-center gap-1">
+
+                            <p-checkbox value="FR2" inputId="fr2"></p-checkbox>
+                            <label for="fr2">FR2</label>
+                        </form>
+                        <form class="flex align-items-center gap-1">
+                            <p-checkbox value="FR3" inputId="fr3"></p-checkbox>
+                            <label for="fr3">FR3</label>
+                        </form>
+                        <form class="flex align-items-center gap-1">
+                            <p-checkbox value="Data Model Definition" inputId="dataModelDefinition"></p-checkbox>
+                            <label for="dataModelDefinition">Data Model Definition</label>
+                        </form>
+                        <form class="flex align-items-center gap-1">
+                            <p-checkbox value="Non Functional Requirement" inputId="nonFunctionalReq"></p-checkbox>
+                            <label for="nonFunctionalReq">Non Functional Requirement</label>
+                        </form>
+                        <form class="flex align-items-center gap-1">
+                            <p-checkbox value="Philips Capability APIS" inputId="peakVolume"></p-checkbox>
+                            <label for="peakVolume">Peak Volume</label>
+                        </form>
+                        <form class="flex align-items-center gap-1">
+                            <p-checkbox value="Average Volume" inputId="avgVolume"></p-checkbox>
+                            <label for="avgVolume">Average Volume</label>
+                        </form>
+                        <form class="flex align-items-center gap-1">
+                            <p-checkbox value="Throughput Time" inputId="throughputTime"></p-checkbox>
+                            <label for="throughputTime">Throughput Time</label>
+                        </form>
+                        <form class="flex align-items-center gap-1">
+                            <p-checkbox value="Message Classification" inputId="msgClassification"></p-checkbox>
+                            <label for="msgClassification">Message Classification</label>
+                        </form>
+                        <form class="flex align-items-center gap-1">
+                            <p-checkbox value="Peak Message Size" inputId="peakMessageSize"></p-checkbox>
+                            <label for="peakMessageSize">Peak Message Size</label>
+                        </form>
+                        <form class="flex align-items-center gap-1">
+                            <p-checkbox value="Average Message Size" inputId="avgMessageSize"></p-checkbox>
+                            <label for="avgMessageSize">Average Message Size</label>
+                        </form>
+                        <form class="flex align-items-center gap-1">
+                            <p-checkbox value="Business Criticality" inputId="businessCriticality"></p-checkbox>
+                            <label for="businessCriticality">Business Criticality</label>
+                        </form>
+                        <form class="flex align-items-center gap-1">
+                            <p-checkbox value="Message Timings, Frequency" inputId="messageTimings"></p-checkbox>
+                            <label for="messageTimings">Message Timings, Frequency</label>
+                        </form>
+                        <form class="flex align-items-center gap-1">
+                            <p-checkbox value="Max Latency" inputId="maxLatency"></p-checkbox>
+                            <label for="maxLatency">Max Latency</label>
+                        </form>
+                        <form class="flex align-items-center gap-1">
+                            <p-checkbox value="Demand Additional Document Attached"
+                                inputId="demandDocAttached"></p-checkbox>
+                            <label for="demandDocAttached">Demand Additional Document Attached</label>
+                        </form>
+                        <form class="flex align-items-center gap-1">
+                            <p-checkbox value="Additional Info" inputId="additionalInfo"></p-checkbox>
+                            <label for="additionalInfo">Additional Info</label>
+                        </form>
                     </div>
-                    <div>
-                        <label >
-                            <input type="checkbox" formControlName="nonFunctionalReq"> Non Functional Requirement<br>
-                            &nbsp;&nbsp;<input type="checkbox" formControlName="peakVolume"> Peak Volume<br>
-                            &nbsp;&nbsp;<input type="checkbox" formControlName="avgVolume"> Average Volume<br>
-                            &nbsp;&nbsp;<input type="checkbox" formControlName="throughputTime"> Throughput Time<br>
-                            &nbsp;&nbsp;<input type="checkbox" formControlName="msgClassification"> Message Classification<br>
-                            &nbsp;&nbsp;<input type="checkbox" formControlName="peakMessageSize"> Peak Message Size<br>
-                            &nbsp;&nbsp;<input type="checkbox" formControlName="avgMessageSize"> Average Message Size<br>
-                            &nbsp;&nbsp;<input type="checkbox" formControlName="businessCriticality"> Business Criticality<br>
-                            &nbsp;&nbsp;<input type="checkbox" formControlName="messageTimings"> Message Timings, Frequency<br>
-                            &nbsp;&nbsp;<input type="checkbox" formControlName="maxLatency"> Max Latency<br>
-                        </label>
-                    </div>
-                    <div>
-                        <label >
-                            <input type="checkbox" formControlName="demandDocAttached"> Demand Additional Document Attached<br>
-                        </label>
-                    </div>
-                    <div>
-                        <label >
-                            <input type="checkbox" formControlName="additionalInfo"> Additional Info<br>
-                        </label>
-                    </div>
-            </form>  
-            </div>            
-        </p-tabPanel>
-        <p-tabPanel header="||| ADL SL1 & Data Model">
-            <div>
-                <form [formGroup]="screen2Form">
-                    <div>
-                        <label >
-                            <input type="checkbox" formControlName="adlFunctionalReq"> ADL Functional Requirement<br>
-                            &nbsp;&nbsp;<input type="checkbox"  formControlName="fr1"> FR1<br>
-                            &nbsp;&nbsp;<input type="checkbox"   formControlName="fr2"> FR2<br>
-                            &nbsp;&nbsp;<input type="checkbox"   formControlName="fr3"> FR3<br>
-                        </label>
-                    </div>
-                    <div>
-                        <label >
-                            <input type="checkbox" formControlName="dataModelDefinition"> Data Model Definition<br>
-                        </label>
-                    </div>
-                    <div>
-                        <label >
-                            <input type="checkbox" formControlName="nonFunctionalReq"> Non Functional Requirement<br>
-                            &nbsp;&nbsp;<input type="checkbox" formControlName="peakVolume"> Peak Volume<br>
-                            &nbsp;&nbsp; <input type="checkbox" formControlName="avgVolume"> Average Volume<br>
-                            &nbsp;&nbsp;<input type="checkbox" formControlName="throughputTime"> Throughput Time<br>
-                            &nbsp;&nbsp;<input type="checkbox" formControlName="msgClassification"> Message Classification<br>
-                            &nbsp;&nbsp;<input type="checkbox" formControlName="peakMessageSize"> Peak Message Size<br>
-                            &nbsp;&nbsp;<input type="checkbox" formControlName="avgMessageSize"> Average Message Size<br>
-                            &nbsp;&nbsp;<input type="checkbox" formControlName="businessCriticality"> Business Criticality<br>
-                            &nbsp;&nbsp;<input type="checkbox" formControlName="messageTimings"> Message Timings, Frequency<br>
-                            &nbsp;&nbsp;<input type="checkbox" formControlName="maxLatency"> Max Latency<br>
-                        </label>
-                    </div>
-                    <div>
-                        <label >
-                            <input type="checkbox" formControlName="demandDocAttached"> Demand Additional Document Attached<br>
-                        </label>
-                    </div>
-                    <div>
-                        <label >
-                            <input type="checkbox" formControlName="additionalInfo"> Additional Info<br>
-                        </label>
-                    </div>
-            </form>  
-            </div>           
-        </p-tabPanel>
-        <p-tabPanel header="||| ADL SL2 & Data Model">
-            <div>
-                <form [formGroup]="screen3Form">
-                    <div>
-                        <label >
-                            <input type="checkbox" formControlName="adlSl2FunctionalReq"> ADL SL2 Functional Requirement<br>
-                            &nbsp;&nbsp;<input type="checkbox"  formControlName="fr1"> FR1<br>
-                            &nbsp;&nbsp;<input type="checkbox"   formControlName="fr2"> FR2<br>
-                            &nbsp;&nbsp;<input type="checkbox"   formControlName="fr3"> FR3<br>
-                        </label>
-                    </div>
-                    <div>
-                        <label >
-                            <input type="checkbox" formControlName="dataModelDefinition"> Data Model Definition<br>
-                        </label>
-                    </div>
-                    <div>
-                        <label >
-                            <input type="checkbox" formControlName="nonFunctionalReq"> Non Functional Requirement<br>
-                            &nbsp;&nbsp;<input type="checkbox" formControlName="peakVolume"> Peak Volume<br>
-                            &nbsp;&nbsp;<input type="checkbox" formControlName="avgVolume"> Average Volume<br>
-                            &nbsp;&nbsp;<input type="checkbox" formControlName="throughputTime"> Throughput Time<br>
-                            &nbsp;&nbsp;<input type="checkbox" formControlName="msgClassification"> Message Classification<br>
-                            &nbsp;&nbsp;<input type="checkbox" formControlName="peakMessageSize"> Peak Message Size<br>
-                            &nbsp;&nbsp;<input type="checkbox" formControlName="avgMessageSize"> Average Message Size<br>
-                            &nbsp;&nbsp;<input type="checkbox" formControlName="businessCriticality"> Business Criticality<br>
-                            &nbsp;&nbsp; <input type="checkbox" formControlName="messageTimings"> Message Timings, Frequency<br>
-                            &nbsp;&nbsp;<input type="checkbox" formControlName="maxLatency"> Max Latency<br>
-                        </label>
-                    </div>
-                    <div>
-                        <label >
-                            <input type="checkbox" formControlName="demandDocAttached"> Demand Additional Document Attached<br>
-                        </label>
-                    </div>
-                    <div>
-                        <label >
-                            <input type="checkbox" formControlName="additionalInfo"> Additional Info<br>
-                        </label>
-                    </div>
-            </form>  
-            </div>    
-        </p-tabPanel>
-        <p-tabPanel header="||| MDM & Data Model">
-            <div>
-                <form [formGroup]="screen3Form">
-                    <div>
-                        <label >
-                            <input type="checkbox" formControlName="adlSl2FunctionalReq"> ADL SL2 Functional Requirement<br>
-                            &nbsp;&nbsp; <input type="checkbox"  formControlName="fr1"> FR1<br>
-                            &nbsp;&nbsp; <input type="checkbox"   formControlName="fr2"> FR2<br>
-                            &nbsp;&nbsp;<input type="checkbox"   formControlName="fr3"> FR3<br>
-                        </label>
-                    </div>
-                    <div>
-                        <label >
-                            <input type="checkbox" formControlName="dataModelDefinition"> Data Model Definition<br>
-                        </label>
-                    </div>
-                    <div>
-                        <label >
-                            <input type="checkbox" formControlName="nonFunctionalReq"> Non Functional Requirement<br>
-                            &nbsp;&nbsp;<input type="checkbox" formControlName="peakVolume"> Peak Volume<br>
-                            &nbsp;&nbsp;<input type="checkbox" formControlName="avgVolume"> Average Volume<br>
-                            &nbsp;&nbsp;<input type="checkbox" formControlName="throughputTime"> Throughput Time<br>
-                            &nbsp;&nbsp;<input type="checkbox" formControlName="msgClassification"> Message Classification<br>
-                            &nbsp;&nbsp;<input type="checkbox" formControlName="peakMessageSize"> Peak Message Size<br>
-                            &nbsp;&nbsp;<input type="checkbox" formControlName="avgMessageSize"> Average Message Size<br>
-                            &nbsp;&nbsp;<input type="checkbox" formControlName="businessCriticality"> Business Criticality<br>
-                            &nbsp;&nbsp;<input type="checkbox" formControlName="messageTimings"> Message Timings, Frequency<br>
-                            &nbsp;&nbsp;<input type="checkbox" formControlName="maxLatency"> Max Latency<br>
-                        </label>
-                    </div>
-                    <div>
-                        <label >
-                            <input type="checkbox" formControlName="demandDocAttached"> Demand Additional Document Attached<br>
-                        </label>
-                    </div>
-                    <div>
-                        <label >
-                            <input type="checkbox" formControlName="additionalInfo"> Additional Info<br>
-                        </label>
-                    </div>
-            </form>  
-            </div>    
-        </p-tabPanel>
-        <p-tabPanel header="||| ADL Gold & Data Model">
-            <div>
-                <form [formGroup]="screen3Form">
-                    <div>
-                        <label >
-                            <input type="checkbox" formControlName="adlSl2FunctionalReq"> ADL SL2 Functional Requirement<br>
-                            &nbsp;&nbsp;<input type="checkbox"  formControlName="fr1"> FR1<br>
-                            &nbsp;&nbsp;<input type="checkbox"   formControlName="fr2"> FR2<br>
-                            &nbsp;&nbsp;<input type="checkbox"   formControlName="fr3"> FR3<br>
-                        </label>
-                    </div>
-                    <div>
-                        <label >
-                            <input type="checkbox" formControlName="dataModelDefinition"> Data Model Definition<br>
-                        </label>
-                    </div>
-                    <div>
-                        <label >
-                            <input type="checkbox" formControlName="nonFunctionalReq"> Non Functional Requirement<br>
-                            &nbsp;&nbsp;<input type="checkbox" formControlName="peakVolume"> Peak Volume<br>
-                            &nbsp;&nbsp;<input type="checkbox" formControlName="avgVolume"> Average Volume<br>
-                            &nbsp;&nbsp;<input type="checkbox" formControlName="throughputTime"> Throughput Time<br>
-                            &nbsp;&nbsp;<input type="checkbox" formControlName="msgClassification"> Message Classification<br>
-                            &nbsp;&nbsp;<input type="checkbox" formControlName="peakMessageSize"> Peak Message Size<br>
-                            &nbsp;&nbsp;<input type="checkbox" formControlName="avgMessageSize"> Average Message Size<br>
-                            &nbsp;&nbsp;<input type="checkbox" formControlName="businessCriticality"> Business Criticality<br>
-                            &nbsp;&nbsp;<input type="checkbox" formControlName="messageTimings"> Message Timings, Frequency<br>
-                            &nbsp;&nbsp;<input type="checkbox" formControlName="maxLatency"> Max Latency<br>
-                        </label>
-                    </div>
-                    <div>
-                        <label >
-                            <input type="checkbox" formControlName="demandDocAttached"> Demand Additional Document Attached<br>
-                        </label>
-                    </div>
-                    <div>
-                        <label >
-                            <input type="checkbox" formControlName="additionalInfo"> Additional Info<br>
-                        </label>
-                    </div>
-            </form>  
-            </div>    
-        </p-tabPanel>
-    </p-tabView>
+                </div>
+            </p-tabPanel>
+        </p-tabView>
+    </div>
 </div>
