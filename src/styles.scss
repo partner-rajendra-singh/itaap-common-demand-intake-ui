@@ -1,3 +1,8 @@
+@import "primeng/resources/primeng.css";
+@import "node_modules/primeflex/primeflex.scss";
+@import "node_modules/primeicons/primeicons.css";
+@import "~primeng/resources/themes/rhea/theme.css"; //gray
+
 .header {
     color:#fff !important; 
     background-color:#5c5c77 ;//#435761
@@ -62,6 +67,12 @@
 .layout-main {
     flex: 1 1 auto;
 }
+
+// .custom-card {
+//     width: 900px;
+//     border-radius: 8px;
+//     box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+// }
 
 //form
 .form {
