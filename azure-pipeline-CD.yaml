@@ -48,7 +48,7 @@ stages:
                       aws eks --region eu-west-1 update-kubeconfig --name itaap-non-prod
                       imageTagName=$(resources.pipeline.itaap-common-demand-intake-ui-pipeline.runName)
                       echo "Image tag " $imageTagName
-                      template=`cat eks-deployment.yaml | sed "s/{{imageTagName}}/$imageTagName/g" | sed "s/{{deployNamespace}}/itaap-non-prod-common/g" | sed "s/{{env}}/dev/g" | sed "s/{{host}}/dev.apps.api.it.philips.com/g" | sed "s/{{envIdentifier}}/$(ENV_IDENTIFIER)/g"`
+                      template=`cat eks-deployment.yaml | sed "s/{{imageTagName}}/$imageTagName/g" | sed "s/{{deployNamespace}}/itaap-non-prod-common/g" | sed "s/{{env}}/dev/g" | sed "s/{{host}}/dev.apps.api.it.philips.com/g"`
                       echo "$template" | kubectl apply -f -
 
   - stage: ACC
@@ -74,5 +74,5 @@ stages:
                       aws eks --region eu-west-1 update-kubeconfig --name itaap-acc
                       imageTagName=$(resources.pipeline.itaap-common-demand-intake-ui-pipeline.runName)
                       echo "Image tag " $imageTagName
-                      template=`cat eks-deployment.yaml | sed "s/{{imageTagName}}/$imageTagName/g" | sed "s/{{deployNamespace}}/itaap-acc-common/g" | sed "s/{{env}}/acc/g" | sed "s/{{host}}/acc.apps.api.it.philips.com/g" | sed "s/{{envIdentifier}}/$(ENV_IDENTIFIER)/g"`
+                      template=`cat eks-deployment.yaml | sed "s/{{imageTagName}}/$imageTagName/g" | sed "s/{{deployNamespace}}/itaap-acc-common/g" | sed "s/{{env}}/acc/g" | sed "s/{{host}}/acc.apps.api.it.philips.com/g"`
                       echo "$template" | kubectl apply -f -
