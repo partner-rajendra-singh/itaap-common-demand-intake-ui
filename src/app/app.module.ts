@@ -14,6 +14,11 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TabViewModule } from 'primeng/tabview';
 import { CardModule } from 'primeng/card';
 import { RadioButtonModule } from 'primeng/radiobutton';
+import { FieldsetModule } from 'primeng/fieldset';
+import { InputTextModule } from 'primeng/inputtext';
+import { CheckboxModule } from 'primeng/checkbox';
+import { InputTextareaModule } from 'primeng/inputtextarea';
+
 
 
 @NgModule({
@@ -34,7 +39,11 @@ import { RadioButtonModule } from 'primeng/radiobutton';
     BrowserAnimationsModule,
     TabViewModule,
     CardModule,
-    RadioButtonModule
+    RadioButtonModule,
+    FieldsetModule,
+    InputTextModule,
+    CheckboxModule,
+    InputTextareaModule
   ],
   providers: [],
   bootstrap: [AppComponent]
