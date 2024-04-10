@@ -1,53 +1,52 @@
 <div class="grid">
-    <div class="col-11 col-offset-1">
+    <div class="col-12">
         <p-fieldset legend="Requestor Details">
             <div class="flex flex-column gap-1">
                 <label for="program">Program</label>
                 <input pInputText id="program" aria-describedby="program-help" />
-                <small id="program-help">Enter your program.</small>
+                <small id="program-help"></small>
             </div>
             <div class="flex flex-column gap-1">
                 <label for="domain">Domain</label>
                 <input pInputText id="domain" aria-describedby="domain-help" />
-                <small id="domain-help">Enter your Domain.</small>
+                <small id="domain-help"></small>
             </div>
             <div class="flex flex-column gap-1">
                 <label for="programSpoc">Program SPOC</label>
                 <input pInputText id="programSpoc" aria-describedby="programSpoc-help" />
-                <small id="programSpoc-help">Enter your Program SPOC.</small>
+                <small id="programSpoc-help"></small>
             </div>
             <div class="flex flex-column gap-1">
                 <label for="requestDate">Request date</label>
-                <input pInputText id="requestDate" aria-describedby="requestDate-help" />
-                <small id="requestDate-help">Enter your Request date.</small>
+                <p-calendar dateFormat="dd.mm.yy"></p-calendar>     
             </div>
         </p-fieldset>
     </div>
-    <div class="col-11 col-offset-1">
+    <div class="col-12">
         <p-fieldset legend="Requirements">
             <form>
                 <label for="requestDate">Problem Statement</label>
                 <textarea rows="2" cols="30" pInputTextarea></textarea>
             </form>
             <form>
-                <label for="requestDate">Demand Scope</label>
+                <label for="demandScope">Demand Scope</label>
                 <textarea rows="2" cols="30" pInputTextarea></textarea>
             </form>
             <form>
-                <label for="requestDate">Business Value</label>
+                <label for="businessValue">Business Value</label>
                 <textarea rows="2" cols="30" pInputTextarea></textarea>
             </form>
             <form>
-                <label for="requestDate">Go Live Approach</label>
-                <textarea rows="2" cols="30" pInputTextarea></textarea>
+                <label for="goLiveApproach">Go Live Approach</label>
+                <p-calendar dateFormat="dd.mm.yy"></p-calendar>     
             </form>
             <form>
-                <label for="requestDate">Tentative Go Live</label>
-                <textarea rows="2" cols="30" pInputTextarea></textarea>
+                <label for="tentativeGoLive">Tentative Go Live</label>
+                <p-calendar dateFormat="dd.mm.yy"></p-calendar>     
             </form>
         </p-fieldset>
     </div>
-    <div class="col-11 col-offset-1">
+    <div class="col-12">
         <p-fieldset legend="Solution Direction">
             <form class="flex align-items-center gap-1">
                 <p-checkbox value="Integration/ITaap" inputId="integrationItaap"></p-checkbox>
@@ -79,7 +78,7 @@
             </form>
         </p-fieldset>
     </div>
-    <div class="col-11 col-offset-1">
+    <div class="col-12">
         <p-tabView [(activeIndex)]="activeTabIndex">
             <p-tabPanel header="ITaap & Data Model">
                 <div>
