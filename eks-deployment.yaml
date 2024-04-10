@@ -86,7 +86,7 @@ spec:
     - host: {{host}}
       http:
         paths:
-          - path: /demand-intake-ui
+          - path: {{envIdentifier}}/demand-intake-ui
             pathType: Prefix
             backend:
               service:
