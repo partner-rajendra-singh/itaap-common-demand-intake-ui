@@ -54,7 +54,7 @@ stages:
   - stage: ACC
     displayName: Acceptance
     condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'))
-    dependsOn: TEST
+    dependsOn: DEV
     jobs:
       - deployment: acc
         variables:
@@ -69,10 +69,10 @@ stages:
                   inputs:
                     targetType: "inline"
                     script: |
-                      # export AWS_ACCESS_KEY_ID=$(AWS_ACCESS_KEY_ID)
-                      # export AWS_SECRET_ACCESS_KEY=$(AWS_SECRET_ACCESS_KEY)
-                      # aws eks --region eu-west-1 update-kubeconfig --name itaap-acc
-                      # imageTagName=$(resources.pipeline.itaap-common-demand-intake-ui-pipeline.runName)
-                      # echo "Image tag " $imageTagName
-                      # template=`cat eks-deployment.yaml | sed "s/{{imageTagName}}/$imageTagName/g" | sed "s/{{deployNamespace}}/itaap-acc-common/g" | sed "s/{{env}}/acc/g" | sed "s/{{host}}/acc.apps.api.it.philips.com/g" | sed "s/{{envIdentifier}}/$(ENV_IDENTIFIER)/g"`
-                      # echo "$template" | kubectl apply -f -
+                      export AWS_ACCESS_KEY_ID=$(AWS_ACCESS_KEY_ID)
+                      export AWS_SECRET_ACCESS_KEY=$(AWS_SECRET_ACCESS_KEY)
+                      aws eks --region eu-west-1 update-kubeconfig --name itaap-acc
+                      imageTagName=$(resources.pipeline.itaap-common-demand-intake-ui-pipeline.runName)
+                      echo "Image tag " $imageTagName
+                      template=`cat eks-deployment.yaml | sed "s/{{imageTagName}}/$imageTagName/g" | sed "s/{{deployNamespace}}/itaap-acc-common/g" | sed "s/{{env}}/acc/g" | sed "s/{{host}}/acc.apps.api.it.philips.com/g" | sed "s/{{envIdentifier}}/$(ENV_IDENTIFIER)/g"`
+                      echo "$template" | kubectl apply -f -
