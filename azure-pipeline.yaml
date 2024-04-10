@@ -52,5 +52,5 @@ stages:
               ImageName: itaap-common-demand-intake-ui
               AddImageTag: $(Version.MajorMinor).$(Version.Revision)
               Registry: 762168133611.dkr.ecr.eu-west-1.amazonaws.com/itaap
-              Namespace: digitalit
+              Namespace: common
               Dockerfile: "Dockerfile"
