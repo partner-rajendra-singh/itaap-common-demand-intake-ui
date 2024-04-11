@@ -15,8 +15,8 @@ export class MenuComponent implements OnInit {
                 icon: 'pi pi-fw pi-file',
                 items: [
                     { label: 'New', icon: 'pi pi-fw pi-plus' },
-                    { label: 'View', icon: 'pi pi-fw pi-view' },
-                    { label: 'Report', icon: 'pi pi-fw pi-report' }
+                    { label: 'View', icon: 'pi pi-fw pi-search' },
+                    { label: 'Report', icon: 'pi pi-fw pi-file-excel' }
                 ]
             },
             {
