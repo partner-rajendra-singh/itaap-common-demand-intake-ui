@@ -8,9 +8,9 @@ import { MenuItem } from 'primeng/api';
 })
 export class RequirementComponent  {
 
-  activeTab: MenuItem | undefined;
-  activeTabIndex!: number;
-  solutionDirection!: String;
+  // activeTab: MenuItem | undefined;
+  // activeTabIndex!: number;
+  // solutionDirection!: String;
 
   requestorDetailsForm = new FormGroup({
     program: new FormControl(''),
@@ -23,6 +23,14 @@ export class RequirementComponent  {
     businessValue : new FormControl(''),
     goLiveApproach : new FormControl(''),
     tentativeGoLive : new FormControl(''),
+
+    integrationItaap : new FormControl(false),
+    dataModelling : new FormControl(false),
+    adlSl1 : new FormControl(false),
+    adlSl2 : new FormControl(false),
+    gold : new FormControl(false),
+    mdm : new FormControl(false),
+    iAndA : new FormControl(false),
   });
 
 
@@ -89,31 +97,31 @@ export class RequirementComponent  {
     additionalInfo : new FormControl(false)
 });
 
-  onActiveItemChange(event: MenuItem) {
-    console.log("event -> ",event)
-    this.activeTab = event;
-  }
+  // onActiveItemChange(event: MenuItem) {
+  //   console.log("event -> ",event)
+  //   this.activeTab = event;
+  // }
 
 
   onSubmit(){
     console.log(this.requestorDetailsForm.value);
-    console.log(this.solutionDirection);
+    //console.log(this.solutionDirection);
 
   }
 
-  setSolution(e: any){
-    this.solutionDirection= e.target.value;
+  // setSolution(e: any){
+  //   this.solutionDirection= e.target.value;
 
-    switch(e.target.value){
-      case "Integration/ITaaP": this.activeTabIndex = 0;break;
-      case "ADL SL1": this.activeTabIndex = 1; break;
-      case "ADL SL2": this.activeTabIndex = 2;  break;
-      case "Gold": this.activeTabIndex = 3; break;
-      case "MDM": this.activeTabIndex = 4; break;
-      case "I&A": this.activeTabIndex = 0; break;
-      case "Data Modelling": this.activeTabIndex = 0; break;
-    }
+  //   switch(e.target.value){
+  //     case "Integration/ITaaP": this.activeTabIndex = 0;break;
+  //     case "ADL SL1": this.activeTabIndex = 1; break;
+  //     case "ADL SL2": this.activeTabIndex = 2;  break;
+  //     case "Gold": this.activeTabIndex = 3; break;
+  //     case "MDM": this.activeTabIndex = 4; break;
+  //     case "I&A": this.activeTabIndex = 0; break;
+  //     case "Data Modelling": this.activeTabIndex = 0; break;
+  //   }
     
-  }
+  // }
 
 }

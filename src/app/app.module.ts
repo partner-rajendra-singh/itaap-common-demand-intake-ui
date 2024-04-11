@@ -19,6 +19,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { CheckboxModule } from 'primeng/checkbox';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { CalendarModule } from 'primeng/calendar';
+import { ButtonModule } from 'primeng/button';
 
 
 
@@ -45,7 +46,8 @@ import { CalendarModule } from 'primeng/calendar';
     InputTextModule,
     CheckboxModule,
     InputTextareaModule,
-    CalendarModule
+    CalendarModule,
+    ButtonModule
   ],
   providers: [],
   bootstrap: [AppComponent]

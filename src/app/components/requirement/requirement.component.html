@@ -1,85 +1,147 @@
 <div class="grid">
     <div class="col-12">
-        <p-fieldset legend="Requestor Details">
-            <div class="flex flex-column gap-1">
-                <label for="program">Program</label>
-                <input pInputText id="program" aria-describedby="program-help" />
-                <small id="program-help"></small>
+        <p-fieldset legend="Demand Intake">
+            <div class="field">
+                <label for="title">Title</label>
+                <input id="title" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
             </div>
-            <div class="flex flex-column gap-1">
-                <label for="domain">Domain</label>
-                <input pInputText id="domain" aria-describedby="domain-help" />
-                <small id="domain-help"></small>
-            </div>
-            <div class="flex flex-column gap-1">
-                <label for="programSpoc">Program SPOC</label>
-                <input pInputText id="programSpoc" aria-describedby="programSpoc-help" />
-                <small id="programSpoc-help"></small>
-            </div>
-            <div class="flex flex-column gap-1">
-                <label for="requestDate">Request date</label>
-                <p-calendar dateFormat="dd.mm.yy"></p-calendar>     
+            <div class="field">
+                <label for="description">Description</label>
+                <input id="description" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
             </div>
         </p-fieldset>
     </div>
-    <div class="col-12">
-        <p-fieldset legend="Requirements">
-            <form>
-                <label for="requestDate">Problem Statement</label>
-                <textarea rows="2" cols="30" pInputTextarea></textarea>
-            </form>
-            <form>
-                <label for="demandScope">Demand Scope</label>
-                <textarea rows="2" cols="30" pInputTextarea></textarea>
-            </form>
-            <form>
-                <label for="businessValue">Business Value</label>
-                <textarea rows="2" cols="30" pInputTextarea></textarea>
-            </form>
-            <form>
-                <label for="goLiveApproach">Go Live Approach</label>
-                <p-calendar dateFormat="dd.mm.yy"></p-calendar>     
-            </form>
-            <form>
-                <label for="tentativeGoLive">Tentative Go Live</label>
-                <p-calendar dateFormat="dd.mm.yy"></p-calendar>     
-            </form>
-        </p-fieldset>
+    <div class="col-4">
+        <div class="text-center p-3 border-round-sm font-bold">
+            <p-fieldset legend="Requestor">
+                <div class="field grid">
+                    <label for="program" class="col-fixed" style="width:100px">Program</label>
+                    <div class="col-4">
+                        <input id="program" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary">
+                    </div>
+                </div>
+                <div class="field grid">
+                    <label for="domain" class="col-fixed" style="width:100px">Domain</label>
+                    <div class="col-4">
+                        <input id="domain" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary">
+                    </div>
+                </div>
+                <div class="field grid">
+                    <label for="spoc" class="col-fixed" style="width:100px">Program SPOC</label>
+                    <div class="col-4">
+                        <input id="spoc" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary">
+                    </div>
+                </div>
+                <div class="field grid">
+                    <label for="requestDate" class="col-fixed" style="width:100px">Requested Date</label>
+                    <div class="col-4">
+                        <p-calendar ></p-calendar>         
+                    </div>
+                </div>
+            </p-fieldset>
+        </div>
     </div>
-    <div class="col-12">
-        <p-fieldset legend="Solution Direction">
-            <form class="flex align-items-center gap-1">
-                <p-checkbox value="Integration/ITaap" inputId="integrationItaap"></p-checkbox>
-                <label for="integrationItaap">Integration/ITaap</label>
-            </form>
-            <form class="flex align-items-center gap-1">
-                <p-checkbox value="Data Modelling" inputId="dataModelling"></p-checkbox>
-                <label for="dataModelling">Data Modelling</label>
-            </form>
-            <form class="flex align-items-center gap-1">
-                <p-checkbox value="ADL SL1" inputId="adlSl1"></p-checkbox>
-                <label for="adlSl1">ADL SL1</label>
-            </form>
-            <form class="flex align-items-center gap-1">
-                <p-checkbox value="ADL SL2" inputId="adlSl2"></p-checkbox>
-                <label for="adlSl2">ADL SL2</label>
-            </form>
-            <form class="flex align-items-center gap-1">
-                <p-checkbox value="Gold" inputId="gold"></p-checkbox>
-                <label for="gold">Gold</label>
-            </form>
-            <form class="flex align-items-center gap-1">
-                <p-checkbox value="MDM" inputId="mdm"></p-checkbox>
-                <label for="mdm">MDM</label>
-            </form>
-            <form class="flex align-items-center gap-1">
-                <p-checkbox value="I&A" inputId="iAndA"></p-checkbox>
-                <label for="iAndA">I&A</label>
-            </form>
-        </p-fieldset>
+    <div class="col-4">
+        <div class="text-center p-3 border-round-sm font-bold">
+            <p-fieldset legend="Requirements">
+                <div class="field grid">
+                    <label for="statement" class="col-fixed" style="width:100px">Problem Statement</label>
+                    <div class="col-4">
+                        <textarea rows="2" cols="22" pInputTextarea></textarea>
+                    </div>
+                </div>
+                <div class="field grid">
+                    <label for="scope" class="col-fixed" style="width:100px">Demand Scope</label>
+                    <div class="col-4">
+                        <textarea rows="2" cols="22" pInputTextarea></textarea>
+                    </div>
+                </div>
+                <div class="field grid">
+                    <label for="businessValue" class="col-fixed" style="width:100px">Business Value</label>
+                    <div class="col-4">
+                        <textarea rows="2" cols="22" pInputTextarea></textarea>
+                    </div>
+                </div>
+                <div class="field grid">
+                    <label for="tglDate" class="col-fixed" style="width:100px">Go Live Date</label>
+                    <div class="col-4">
+                        <p-calendar ></p-calendar>         
+                    </div>
+                </div>
+                <div class="field grid">
+                    <label for="bglDate" class="col-fixed" style="width:100px">Tentative Go Live</label>
+                    <div class="col-4">
+                        <p-calendar ></p-calendar>         
+                    </div>
+                </div>
+            </p-fieldset>
+
+        </div>
     </div>
+    <div class="col-4">
+        <div class="text-center p-3 border-round-sm font-bold">
+            <p-fieldset legend="Solution Direction">
+                <div class="field grid">
+                    <div class="col-4">
+                        <form class="flex align-items-center gap-8">
+                            <p-checkbox value="integration" inputId="integration"></p-checkbox>
+                            <label for="integration">Integration</label>
+                        </form>
+                    </div>
+                </div>
+                <div class="field grid">
+                    <div class="col-4">
+                        <form class="flex align-items-center gap-8">
+                            <p-checkbox value="dataModelling" inputId="dataModelling"></p-checkbox>
+                            <label for="dataModelling">Data Modelling</label>
+                        </form>
+                    </div>
+                </div>
+                <div class="field grid">
+                    <div class="col-4">
+                        <form class="flex align-items-center gap-8">
+                            <p-checkbox value="adlSL1" inputId="adlSL1"></p-checkbox>
+                            <label for="adlSL1">ADL SL1</label>
+                        </form>
+                    </div>
+                </div>
+                <div class="field grid">
+                    <div class="col-4">
+                        <form class="flex align-items-center gap-8">
+                            <p-checkbox value="adlSL2" inputId="adlSL2"></p-checkbox>
+                            <label for="adlSL2">ADL SL2</label>
+                        </form>
+                    </div>
+                </div>
+                <div class="field grid">
+                    <div class="col-4">
+                        <form class="flex align-items-center gap-8">
+                            <p-checkbox value="gold" inputId="gold"></p-checkbox>
+                            <label for="gold">Gold</label>
+                        </form>
+                    </div>
+                </div>
+                <div class="field grid">
+                    <div class="col-4">
+                        <form class="flex align-items-center gap-8">
+                            <p-checkbox value="mdm" inputId="mdm"></p-checkbox>
+                            <label for="mdm">MDM</label>
+                        </form>
+                    </div>
+                </div>
+                <div class="field grid">
+                    <div class="col-4">
+                        <form class="flex align-items-center gap-8">
+                            <p-checkbox value="ia" inputId="ia"></p-checkbox>
+                            <label for="ia">I&A</label>
+                        </form>
+                    </div>
+                </div>
+            </p-fieldset>
+        </div>
+    </div>    
     <div class="col-12">
-        <p-tabView [(activeIndex)]="activeTabIndex">
+        <p-tabView>
             <p-tabPanel header="ITaap & Data Model">
                 <div>
                     <div>
@@ -158,7 +220,7 @@
                     </div>
                 </div>
             </p-tabPanel>
-            <p-tabPanel header="||| ADL SL1 & Data Model">
+            <p-tabPanel header="ADL SL1 & Data Model">
                 <div>
                     <div>
                         <form class="flex align-items-center gap-1">
@@ -235,7 +297,7 @@
                     </div>
                 </div>
             </p-tabPanel>
-            <p-tabPanel header="||| ADL SL2 & Data Model">
+            <p-tabPanel header="ADL SL2 & Data Model">
                 <div>
                     <div>
                         <form class="flex align-items-center gap-1">
@@ -313,7 +375,7 @@
                     </div>
                 </div>
             </p-tabPanel>
-            <p-tabPanel header="||| ADL Gold & Data Model">
+            <p-tabPanel header="ADL Gold & Data Model">
                 <div>
                     <div>
                         <form class="flex align-items-center gap-1">
@@ -391,7 +453,7 @@
                     </div>
                 </div>
             </p-tabPanel>
-            <p-tabPanel header="||| ADL Gold & Data Model">
+            <p-tabPanel header="ADL Gold & Data Model">
                 <div>
                     <div>
                         <form class="flex align-items-center gap-1">
@@ -471,4 +533,5 @@
             </p-tabPanel>
         </p-tabView>
     </div>
-</div>
+    <button pButton pRipple label="Submit" class="p-button-success"></button>
+</div>	
