@@ -12,7 +12,7 @@ export class ChecklistComponent {
 
   nextPage() {
     // this.demandIntakeService.ticketInformation.seatInformation = this.seatInformation;
-    this.router.navigate(['demand-intake/compliance']);
+    this.router.navigate(['demand-intake/attachment']);
   }
 
   prevPage() {
