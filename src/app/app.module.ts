@@ -20,7 +20,22 @@ import { CheckboxModule } from 'primeng/checkbox';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { CalendarModule } from 'primeng/calendar';
 import { ButtonModule } from 'primeng/button';
-
+import { DemandIntakeComponent } from './components/demand-intake/demand-intake.component';
+import { StepsModule } from 'primeng/steps';
+import { ToastModule } from 'primeng/toast';
+import { RequesterComponent } from './components/requester/requester.component';
+import { RequirementsComponent } from './components/requirements/requirements.component';
+import { DropdownModule } from 'primeng/dropdown';
+import { DemandIntakeService } from './services/demand-intake.service';
+import { MessageService } from 'primeng/api';
+import { SolutionDirectionComponent } from './components/solution-direction/solution-direction.component';
+import { NfrComponent } from './components/nfr/nfr.component';
+import { ComplianceComponent } from './components/compliance/compliance.component';
+import { AttachmentComponent } from './components/attachment/attachment.component';
+import { ChecklistComponent } from './components/checklist/checklist.component';
+import { IntroductionComponent } from './components/introduction/introduction.component';
+import { WipComponent } from './components/wip/wip.component';
+import { FileUploadModule } from 'primeng/fileupload';
 
 
 @NgModule({
@@ -29,7 +44,17 @@ import { ButtonModule } from 'primeng/button';
     HeaderComponent,
     FooterComponent,
     MenuComponent,
-    RequirementComponent
+    RequirementComponent,
+    DemandIntakeComponent,
+    RequesterComponent,
+    RequirementsComponent,
+    SolutionDirectionComponent,
+    NfrComponent,
+    ComplianceComponent,
+    AttachmentComponent,
+    ChecklistComponent,
+    IntroductionComponent,
+    WipComponent
   ],
   imports: [
     BrowserModule,
@@ -47,9 +72,13 @@ import { ButtonModule } from 'primeng/button';
     CheckboxModule,
     InputTextareaModule,
     CalendarModule,
-    ButtonModule
+    ButtonModule,
+    StepsModule,
+    ToastModule,
+    DropdownModule,
+    FileUploadModule
   ],
-  providers: [],
+  providers: [DemandIntakeService, MessageService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

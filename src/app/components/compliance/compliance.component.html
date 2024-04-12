@@ -1,0 +1,71 @@
+<div class="stepsdemo-content">
+    <p-card>
+        <ng-template pTemplate="content">
+            <div style="width: 900px;">
+                
+                <p-fieldset legend="Compliance">
+                    <div class="grid">
+                        <div class="col-8">
+                            <form class="flex align-items-center gap-1">
+                                <div class="col-6">
+                                <label for="integrationItaap">SOX</label></div>
+                                <p-checkbox value="Integration/ITaap" inputId="integrationItaap"></p-checkbox>
+                            </form>
+                        </div>
+                        <div class="col-8">
+                            <form class="flex align-items-center gap-1">
+                                <div class="col-6">
+                                <label for="integrationItaap">FDA</label></div>
+                                <p-checkbox value="Integration/ITaap" inputId="integrationItaap"></p-checkbox>
+                            </form>
+                        </div>
+                        <div class="col-8">
+                            <form class="flex align-items-center gap-1">
+                                <div class="col-6">
+                                <label for="integrationItaap">Security</label></div>
+                                <p-checkbox value="Integration/ITaap" inputId="integrationItaap"></p-checkbox>
+                            </form>
+                        </div>
+                        <div class="col-8">
+                            <form class="flex align-items-center gap-1">
+                                <div class="col-6">
+                                <label for="integrationItaap">Privacy</label></div>
+                                <p-checkbox value="Integration/ITaap" inputId="integrationItaap"></p-checkbox>
+                            </form>
+                        </div>
+
+                        <div class="col-8">
+                            <form class="flex align-items-center gap-1">
+                                <div class="col-6">
+                                <input pInputText id="program" aria-describedby="program-help" /></div>
+                                <input pInputText id="program" aria-describedby="program-help" />
+                            </form>
+                        </div>
+                        <div class="col-8">
+                            <form class="flex align-items-center gap-1">
+                                <div class="col-6">
+                                <input pInputText id="program" aria-describedby="program-help" /></div>
+                                <input pInputText id="program" aria-describedby="program-help" />
+                            </form>
+                        </div>
+
+                        <div class="col-8">
+                            <form class="flex align-items-center gap-1">
+                                <div class="col-6">
+                                <input pInputText id="program" aria-describedby="program-help" /></div>
+                                <input pInputText id="program" aria-describedby="program-help" />
+                            </form>
+                        </div>
+                    </div>
+                </p-fieldset>
+            </div>
+           
+        </ng-template>
+        <ng-template pTemplate="footer">
+            <div class="grid grid-nogutter justify-content-between">
+                <p-button label="Back" (onClick)="prevPage()" icon="pi pi-angle-left"></p-button>
+                <p-button label="Next" (onClick)="nextPage()" icon="pi pi-angle-right" iconPos="right"></p-button>
+            </div>
+        </ng-template>
+    </p-card>
+</div>
