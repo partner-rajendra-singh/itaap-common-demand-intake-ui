@@ -12,7 +12,7 @@ export class SolutionDirectionComponent {
 
   nextPage() {
     // this.demandIntakeService.ticketInformation.seatInformation = this.seatInformation;
-    this.router.navigate(['demand-intake/compliance']);
+    this.router.navigate(['demand-intake/checklist']);
   }
 
   prevPage() {

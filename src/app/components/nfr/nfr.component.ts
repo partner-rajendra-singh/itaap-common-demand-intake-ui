@@ -12,7 +12,7 @@ export class NfrComponent {
 
   nextPage() {
     // this.demandIntakeService.ticketInformation.seatInformation = this.seatInformation;
-    this.router.navigate(['demand-intake/checklist']);
+    this.router.navigate(['demand-intake/attachment']);
   }
 
   prevPage() {

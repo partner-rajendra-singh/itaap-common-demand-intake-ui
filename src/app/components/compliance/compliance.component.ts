@@ -16,7 +16,7 @@ export class ComplianceComponent {
   }
 
   prevPage() {
-      this.router.navigate(['demand-intake/solution-direction']);
+      this.router.navigate(['demand-intake/checklist']);
   }
 
 }

@@ -77,18 +77,20 @@
 
 .layout-main-container {
     flex-grow: 1;
-    overflow-y: auto;
+    // overflow-y: auto;
     display: flex;
     flex-direction: column;
     width: 100%;
     max-height: calc(100vh - 100px);
     justify-content: space-between;
     transition: margin-left 2;
-    padding-top: 10px !important;
+    // padding-top: 10px !important;
 
   }
   
 .layout-main {
+    overflow-y: auto;
+    overflow-x: auto;
     flex: 1 1 auto;
 }
 
@@ -163,3 +165,8 @@
 //     display: block;
 //     margin-bottom: 5px;
 // }
+
+.p-card .p-card-body {
+    /* padding: 1.5rem; */
+    background-color: #bebacf;
+}
