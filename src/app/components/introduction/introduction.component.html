@@ -1,0 +1,26 @@
+<p-card>
+    <!-- <ng-template pTemplate="title"> Demand Intake </ng-template>
+    <ng-template pTemplate="subtitle"> Enter your Demand Intake Information </ng-template> -->
+    <ng-template pTemplate="content">
+        <div class="grid">
+            <div class="col-12" style="width: 900px;">
+                <p-fieldset legend="Demand Intake">
+                    <div class="field">
+                        <label for="title">Title</label>
+                        <input id="title" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+                    </div>
+                    <div class="field">
+                        <label for="description">Description</label>
+                        <input id="description" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+                    </div>
+                </p-fieldset>
+            </div>
+        </div>
+    </ng-template>
+    <ng-template pTemplate="footer">
+        <div class="grid grid-nogutter justify-content-end">
+            <p-button label="Next" (onClick)="nextPage()" icon="pi pi-angle-right" iconPos="right"></p-button>
+        </div>
+    </ng-template>
+    
+</p-card>
