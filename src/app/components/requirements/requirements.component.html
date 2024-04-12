@@ -1,39 +1,64 @@
 <div class="stepsdemo-content">
     <p-card>
-        <!-- <ng-template pTemplate="title"> Requirements Information </ng-template> -->
-        <!-- <ng-template pTemplate="subtitle"> Choose your seat </ng-template> -->
         <ng-template pTemplate="content">
-            <div class="col-4">
+            <div class="col-12">
                 <div class="text-center p-3 border-round-sm" style="width: 900px;">
                     <p-fieldset legend="Requirement">
                         <div class="field grid" style="display: inline-flex;">
-                            <label for="statement" class="col-fixed" style="width:100px">Problem Statement</label>
-                            <div class="col-4">
-                                <textarea rows="2" cols="80" pInputTextarea></textarea>
+                            <div class="col-3">
+                                <label for="statement" class="col-fixed" style="width:100px">Problem Statement</label>
+                            </div>
+                            <div class="col-9">
+                                <textarea rows="2" cols="75" pInputTextarea></textarea>
                             </div>
                         </div>
                         <div class="field grid" style="display: inline-flex;">
-                            <label for="scope" class="col-fixed" style="width:100px">Demand Scope</label>
-                            <div class="col-4">
-                                <textarea rows="2" cols="80" pInputTextarea></textarea>
+                            <div class="col-3">
+                                <label for="scope" class="col-fixed" style="width:100px">Demand Scope</label>
+                            </div>
+                            <div class="col-9">
+                                <textarea rows="2" cols="75" pInputTextarea></textarea>
                             </div>
                         </div>
                         <div class="field grid" style="display: inline-flex;">
-                            <label for="businessValue" class="col-fixed" style="width:100px">Business Value</label>
-                            <div class="col-4">
-                                <textarea rows="2" cols="80" pInputTextarea></textarea>
+                            <div class="col-3">
+                                <label for="businessValue" class="col-fixed" style="width:100px">Business Value</label>
+                            </div>
+                            <div class="col-9">
+                                <textarea rows="2" cols="75" pInputTextarea></textarea>
                             </div>
                         </div>
-                        <div class="field grid" style="display: inline-flex;">
-                            <label for="tglDate" class="col-fixed" style="width:100px">Go Live Date</label>
+                        <div style="display: inline-flex;">
+                            <div class="col-6">
+                                <label for="businessValue" class="col-fixed" style="width:100px">Go-Live Approach</label>
+                            </div>
                             <div class="col-4">
-                                <p-calendar ></p-calendar>         
+                                <div class="field-radiobutton">
+                                    <input type="radio" id="glA1" name="goLiveApproach" [value]="1" [(ngModel)]="goLiveApproach" >
+                                    <label for="glA1">Fixed</label>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                 <div class="field-radiobutton">
+                                    <input type="radio" id="glA2" name="goLiveApproach"  [value]="2" [(ngModel)]="goLiveApproach" >
+                                    <label for="glA2">Phased</label>
+                                </div>
                             </div>
                         </div>
-                        <div class="field grid" style="display: inline-flex;">
-                            <label for="bglDate" class="col-fixed" style="width:100px">Tentative Go Live</label>
-                            <div class="col-4">
-                                <p-calendar ></p-calendar>         
+                        <div class="field grid" *ngIf="goLiveApproach == '1' || goLiveApproach == '2'">
+                            <div class="col-3">
+                                <label for="requestDate" class="col-fixed" style="width:100px">Go Live Date</label>
+                            </div>
+                            <div class="col-9">
+                                <p-calendar dateFormat="dd/mm/yy"></p-calendar>         
+                            </div>
+                        </div>
+                        <div class="field grid" *ngIf="goLiveApproach == '2'">
+                            <div class="col-3">
+                                <label for="requestDate" class="col-fixed" style="width:100px">Tentative Go Live Date</label>
+                            </div>
+                            <div class="col-9">
+                                <p-calendar dateFormat="dd/mm/yy"></p-calendar>         
                             </div>
                         </div>
                     </p-fieldset>

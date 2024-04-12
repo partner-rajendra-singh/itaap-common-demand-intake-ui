@@ -1,21 +1,31 @@
 <p-card>
-    <!-- <ng-template pTemplate="title"> Demand Intake </ng-template> -->
-    <!-- <ng-template pTemplate="subtitle"> Enter your Demand Intake Information </ng-template> -->
     <ng-template pTemplate="content">
         <div class="grid" style="width: 900px;">
             <div class="col-12">
                 <div class="text-center p-3 border-round-sm font-bold">
                     <p-fieldset legend="Requester">
                         <div class="field grid">
-                            <label for="program" class="col-fixed">Program</label>
-                            <div class="col-8">
-                                <input id="program" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary">
+                            <div class="col-3">
+                                <label for="program" class="col-fixed">Program</label>
+                            </div>
+                            <div class="col-9">
+                                <input id="program" type="text" size="60" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary">
                             </div>
                         </div>
                         <div class="field grid">
-                            <label for="domain" class="col-fixed" style="width:100px">Domain</label>
-                            <div class="col-4">
-                                <input id="domain" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary">
+                            <div class="col-3">
+                                <label for="domain" class="col-fixed" style="width:100px">Domain</label>
+                            </div>
+                            <div class="col-9">
+                                <input id="domain" type="text" size="60" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary">
+                            </div>
+                        </div>
+                        <div class="field grid">
+                            <div class="col-3">
+                                <label for="requestDate" class="col-fixed" style="width:100px">Requested Date</label>
+                            </div>
+                            <div class="col-9">
+                                <p-calendar dateFormat="dd/mm/yy"></p-calendar>         
                             </div>
                         </div>
                         <div class="field grid">
@@ -26,35 +36,29 @@
                                 </form>
                                 <form class="flex align-items-center gap-1">
                                     <input pInputText id="program" aria-describedby="program-help" />
-                                    <input pInputText id="program" aria-describedby="program-help" />
+                                    <input pInputText id="program"  type="email" aria-describedby="program-help" />
                                 </form>
                                 <form class="flex align-items-center gap-1">
                                     <input pInputText id="program" aria-describedby="program-help" />
-                                    <input pInputText id="program" aria-describedby="program-help" />
-                                </form>
-                                <form class="flex align-items-center gap-1">
-                                    <input pInputText id="program" aria-describedby="program-help" />
-                    
-                                    <input pInputText id="program" aria-describedby="program-help" />
+                                    <input pInputText id="program" type="email" aria-describedby="program-help" />
                                 </form>
                                 <form class="flex align-items-center gap-1">
                                     <input pInputText id="program" aria-describedby="program-help" />
                     
-                                    <input pInputText id="program" aria-describedby="program-help" />
+                                    <input pInputText  type="email" id="program" aria-describedby="program-help" />
                                 </form>
                                 <form class="flex align-items-center gap-1">
                                     <input pInputText id="program" aria-describedby="program-help" />
                     
+                                    <input pInputText id="program"type="email"  aria-describedby="program-help" />
+                                </form>
+                                <form class="flex align-items-center gap-1">
                                     <input pInputText id="program" aria-describedby="program-help" />
+                    
+                                    <input pInputText id="program" type="email" aria-describedby="program-help" />
                                 </form>
                     
                             </p-fieldset>
-                        </div>
-                        <div class="field grid">
-                            <label for="requestDate" class="col-fixed" style="width:100px">Requested Date</label>
-                            <div class="col-4">
-                                <p-calendar ></p-calendar>         
-                            </div>
                         </div>
                     </p-fieldset>
                 </div>

@@ -19,6 +19,7 @@ export class RequirementsComponent implements OnInit{
     seats!: any[];
 
     seatInformation: any;
+    goLiveApproach!: string;
 
     ngOnInit() {
         this.seatInformation = this.demandIntakeService.ticketInformation.seatInformation;
@@ -55,7 +56,12 @@ export class RequirementsComponent implements OnInit{
     }
 
     prevPage() {
+        console.log(this.goLiveApproach)
         this.router.navigate(['demand-intake/requester']);
+    }
+
+    setGoLiveApproach(){
+        console.log(this.goLiveApproach)
     }
 
 }

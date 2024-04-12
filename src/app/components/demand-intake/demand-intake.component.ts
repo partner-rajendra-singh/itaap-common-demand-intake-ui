@@ -34,16 +34,16 @@ export class DemandIntakeComponent implements OnInit{
                 routerLink: 'solution-direction'
             },
             {
+                label: 'Checklist',
+                routerLink: 'checklist'
+            },
+            {
                 label: 'Compliance',
                 routerLink: 'compliance'
             },
             {
                 label: 'NFR',
                 routerLink: 'nfr'
-            },
-            {
-                label: 'Checklist',
-                routerLink: 'checklist'
             },
             {
                 label: 'Attachment',
