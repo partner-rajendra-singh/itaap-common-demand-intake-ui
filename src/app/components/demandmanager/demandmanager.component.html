@@ -14,7 +14,7 @@
                   <label for="decision">Decision</label>
                 </div>
                 <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
-                  <p-autoComplete [dropdown]="true"></p-autoComplete>
+                  <p-dropdown appendTo="body" [options]="decisions" [(ngModel)]="selectedDecision" placeholder="Your decision" optionLabel="name"></p-dropdown>
                 </div>
                 <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
                   <label for="remarks">Remarks</label>

@@ -42,6 +42,8 @@ import { LoginComponent } from './components/login/login.component';
 import { AuthService } from './services/auth.service';
 import { AuthGuard } from './services/auth-guard.service';
 import { LogoutComponent } from './components/logout/logout.component';
+import { ChartComponent } from './components/chart/chart.component';
+import { ChartModule } from 'primeng/chart';
 
 @NgModule({
   declarations: [
@@ -62,7 +64,8 @@ import { LogoutComponent } from './components/logout/logout.component';
     DemandManagerComponent,
     CCBComponent,
     LoginComponent,
-    LogoutComponent
+    LogoutComponent,
+    ChartComponent
   ],
   imports: [
     BrowserModule,
@@ -85,7 +88,8 @@ import { LogoutComponent } from './components/logout/logout.component';
     ToastModule,
     DropdownModule,
     FileUploadModule,
-    AutoCompleteModule
+    AutoCompleteModule,
+    ChartModule
   ],
   providers: [DemandIntakeService, MessageService,AuthGuard,AuthService],
   bootstrap: [AppComponent]

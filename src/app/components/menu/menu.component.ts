@@ -11,12 +11,13 @@ export class MenuComponent implements OnInit {
     ngOnInit() {
         this.items = [
             {
-                label: 'Demand Intake',
+                label: 'Demand',
                 icon: 'pi pi-fw pi-file',
                 items: [
                     { label: 'New', icon: 'pi pi-fw pi-plus', routerLink: ["/demand-intake"] },
                     { label: 'View', icon: 'pi pi-fw pi-search', routerLink: ["/view"] },
                     { label: 'Report', icon: 'pi pi-fw pi-file-excel', routerLink: ["/report"] },
+                    { label: 'Chart', icon: 'pi pi-fw pi-file-excel', routerLink: ["/chart"] },
                     { label: 'Logout', icon: 'pi pi-fw pi-file-excel', routerLink: ["/logout"] }
                 ]
             },

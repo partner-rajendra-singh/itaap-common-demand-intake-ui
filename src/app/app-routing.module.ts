@@ -15,10 +15,12 @@ import { AuthGuard } from './services/auth-guard.service';
 import { LogoutComponent } from './components/logout/logout.component';
 import { DemandManagerComponent } from './components/demandmanager/demandmanager.component';
 import { CCBComponent } from './components/ccb/ccb.component';
+import { ChartComponent } from './components/chart/chart.component';
 
 const routes: Routes = [
   { path: 'view', component: WipComponent, canActivate: [AuthGuard]},
   { path: 'report', component: WipComponent, canActivate: [AuthGuard]},
+  { path: 'chart', component: ChartComponent, canActivate: [AuthGuard]},
   { path: 'logout', component: LogoutComponent},
   { path: 'demand-intake', component: DemandIntakeComponent, canActivate: [AuthGuard], children: [
     {
@@ -65,7 +67,6 @@ const routes: Routes = [
       path: 'ccb',
       component: CCBComponent
     }
-    
   ]},
   { path: '**', component: LoginComponent}
 ];
