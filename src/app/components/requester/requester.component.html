@@ -1,67 +1,71 @@
 <p-card>
     <ng-template pTemplate="content">
-        <div class="grid" style="width: 900px;">
-            <div class="col-12">
-                <div class="text-center p-3 border-round-sm font-bold">
-                    <p-fieldset legend="Requester">
-                        <div class="field grid">
-                            <div class="col-3">
-                                <label for="program" class="col-fixed">Program</label>
-                            </div>
-                            <div class="col-9">
-                                <input id="program" type="text" size="60" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary">
-                            </div>
+        <div class="grid">
+            <div class="col-12 xs:col-12 sm:col-12 lg:col-12 xl:col-12">
+                <p-fieldset legend="Requester">
+                    <div class="grid">
+                        <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
+                            <label for="program" class="col-fixed">Program</label>
                         </div>
-                        <div class="field grid">
-                            <div class="col-3">
-                                <label for="domain" class="col-fixed" style="width:100px">Domain</label>
-                            </div>
-                            <div class="col-9">
-                                <input id="domain" type="text" size="60" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary">
-                            </div>
+                        <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
+                            <input id="program" type="text" size="60" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary">
                         </div>
-                        <div class="field grid">
-                            <div class="col-3">
-                                <label for="requestDate" class="col-fixed" style="width:100px">Requested Date</label>
-                            </div>
-                            <div class="col-9">
-                                <p-calendar dateFormat="dd/mm/yy"></p-calendar>         
-                            </div>
+                        <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
+                            <label for="domain" class="col-fixed" style="width:100px">Domain</label>
                         </div>
-                        <div class="field grid">
+                        <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
+                            <input id="domain" type="text" size="60" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary">
+                        </div>
+                        <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
+                            <label for="requestDate" class="col-fixed" style="width:100px">Requested Date</label>
+                        </div>
+                        <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
+                            <p-calendar dateFormat="dd/mm/yy"></p-calendar>    
+                        </div>
+                        <div class="col-12 xs:col-12 sm:col-12 lg:col-12 xl:col-12">
                             <p-fieldset legend="SPOC">
-                                <form class="flex align-items-center gap-1">
-                                    <label for="role">Role</label>
-                                    <label for="email" style="margin-left: 200px;">Email</label>
-                                </form>
-                                <form class="flex align-items-center gap-1">
-                                    <input pInputText id="program" aria-describedby="program-help" />
-                                    <input pInputText id="program"  type="email" aria-describedby="program-help" />
-                                </form>
-                                <form class="flex align-items-center gap-1">
-                                    <input pInputText id="program" aria-describedby="program-help" />
-                                    <input pInputText id="program" type="email" aria-describedby="program-help" />
-                                </form>
-                                <form class="flex align-items-center gap-1">
-                                    <input pInputText id="program" aria-describedby="program-help" />
-                    
-                                    <input pInputText  type="email" id="program" aria-describedby="program-help" />
-                                </form>
-                                <form class="flex align-items-center gap-1">
-                                    <input pInputText id="program" aria-describedby="program-help" />
-                    
-                                    <input pInputText id="program"type="email"  aria-describedby="program-help" />
-                                </form>
-                                <form class="flex align-items-center gap-1">
-                                    <input pInputText id="program" aria-describedby="program-help" />
-                    
-                                    <input pInputText id="program" type="email" aria-describedby="program-help" />
-                                </form>
-                    
+                                <div class="grid">
+                                    <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
+                                        <label for="role">Role</label>
+                                    </div>
+                                    <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
+                                        <label for="email" style="margin-left: 200px;">Email</label>
+                                    </div>
+                                    <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
+                                        <input pInputText id="program" aria-describedby="program-help" />
+                                    </div>
+                                    <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
+                                        <input pInputText id="program"  type="email" aria-describedby="program-help" />
+                                    </div>
+                                    <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
+                                        <input pInputText id="program" aria-describedby="program-help" />
+                                    </div>
+                                    <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
+                                        <input pInputText id="program" type="email" aria-describedby="program-help" />
+                                    </div>
+                                    <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
+                                        <input pInputText id="program" aria-describedby="program-help" />
+                                    </div>
+                                    <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
+                                        <input pInputText  type="email" id="program" aria-describedby="program-help" />
+                                    </div>
+                                    <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
+                                        <input pInputText id="program" aria-describedby="program-help" />
+                                    </div>
+                                    <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
+                                        <input pInputText id="program"type="email"  aria-describedby="program-help" />
+                                    </div>
+                                    <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
+                                        <input pInputText id="program" aria-describedby="program-help" />
+                                    </div>
+                                    <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
+                                        <input pInputText id="program" type="email" aria-describedby="program-help" />
+                                    </div>
+                                </div>
                             </p-fieldset>
                         </div>
-                    </p-fieldset>
-                </div>
+                    </div>
+                </p-fieldset>
             </div>
         </div>
     </ng-template>
@@ -71,5 +75,4 @@
             <p-button label="Next" (onClick)="nextPage()" icon="pi pi-angle-right" iconPos="right"></p-button>
         </div>
     </ng-template>
-    
 </p-card>

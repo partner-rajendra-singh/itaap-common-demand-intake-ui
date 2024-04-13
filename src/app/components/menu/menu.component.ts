@@ -20,16 +20,20 @@ export class MenuComponent implements OnInit {
                 ]
             },
             {
-                label: 'Menu 2',
+                label: 'Reports',
                 icon: 'pi pi-fw pi-pencil',
                 items: [
-                    { label: 'Sub Menu 1', icon: 'pi pi-fw pi-align-left' },
-                    { label: 'Sub Menu 2', icon: 'pi pi-fw pi-align-right' }
+                    { label: 'Report 1', icon: 'pi pi-fw pi-align-left' },
+                    { label: 'Report 2', icon: 'pi pi-fw pi-align-right' }
                 ]
             },
             {
-                label: 'Menu 3',
-                icon: 'pi pi-fw pi-user'
+                label: 'Configuration',
+                icon: 'pi pi-fw pi-user',
+                items: [
+                    { label: 'DM List', icon: 'pi pi-fw pi-align-left' },
+                    { label: 'CCB List', icon: 'pi pi-fw pi-align-right' }
+                ]
             }
         ];
 

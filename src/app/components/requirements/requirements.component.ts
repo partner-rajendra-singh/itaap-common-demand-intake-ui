@@ -10,7 +10,7 @@ import { MessageService } from 'primeng/api';
 })
 export class RequirementsComponent implements OnInit{
 
-  constructor(public demandIntakeService: DemandIntakeService, private router: Router) {}
+  constructor(public demandIntakeService: DemandIntakeService, private router: Router,private messageService: MessageService) {}
 
     classes!: any[];
 
@@ -53,6 +53,10 @@ export class RequirementsComponent implements OnInit{
     nextPage() {
         this.demandIntakeService.ticketInformation.seatInformation = this.seatInformation;
         this.router.navigate(['demand-intake/solution-direction']);
+    }
+
+    submitPage() {
+        this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Demand Saved!' });
     }
 
     prevPage() {

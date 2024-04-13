@@ -36,6 +36,9 @@ import { ChecklistComponent } from './components/checklist/checklist.component';
 import { IntroductionComponent } from './components/introduction/introduction.component';
 import { WipComponent } from './components/wip/wip.component';
 import { FileUploadModule } from 'primeng/fileupload';
+import { DemandManagerComponent } from './components/demandmanager/demandmanager.component';
+import { CCBComponent } from './components/ccb/ccb.component';
+import { AutoCompleteModule } from 'primeng/autocomplete';
 
 
 @NgModule({
@@ -54,7 +57,9 @@ import { FileUploadModule } from 'primeng/fileupload';
     AttachmentComponent,
     ChecklistComponent,
     IntroductionComponent,
-    WipComponent
+    WipComponent,
+    DemandManagerComponent,
+    CCBComponent
   ],
   imports: [
     BrowserModule,
@@ -76,7 +81,8 @@ import { FileUploadModule } from 'primeng/fileupload';
     StepsModule,
     ToastModule,
     DropdownModule,
-    FileUploadModule
+    FileUploadModule,
+    AutoCompleteModule
   ],
   providers: [DemandIntakeService, MessageService],
   bootstrap: [AppComponent]

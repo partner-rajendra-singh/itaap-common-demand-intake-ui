@@ -1,60 +1,67 @@
-<div class="stepsdemo-content">
-    <p-card>
-        <ng-template pTemplate="content">
-            <div style="width: 900px;">
-                <p-fieldset legend="Atachments">
-                    <form class="flex align-items-center gap-3">
-                        <label for="desc">Description</label>
-                        <label for="attachment" style="margin-left: 150px;">Attachment</label>
-                    </form>
-                    <form class="flex align-items-center gap-3">
-                        <input pInputText id="program" aria-describedby="program-help" />
-                        <div>
+<p-card>
+    <ng-template pTemplate="content">
+        <div class="grid">
+            <div class="col-12 xs:col-12 sm:col-12 lg:col-12 xl:col-12">
+                <p-fieldset legend="Attachments">
+                    <div class="grid">
+                        <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
+                            <label for="desc">Description</label>
+                        </div>
+                        <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
+                            <label for="attachment">Attachment</label>
+                        </div>
+                        <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
+                            <input pInputText id="program" aria-describedby="program-help" />
+                        </div>
+                        <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
                             <p-toast></p-toast>
                             <p-fileUpload mode="basic" chooseLabel="Attach file" name="demo[]" accept="image/*" (onUpload)="onUpload($event)"></p-fileUpload>
                         </div>
-                    </form><br>
-                    <form class="flex align-items-center gap-3">
-                        <input pInputText id="program" aria-describedby="program-help" />
-                        <div>
+                        <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
+                            <input pInputText id="program" aria-describedby="program-help" />
+                        </div>
+                        <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
                             <p-toast></p-toast>
                             <p-fileUpload mode="basic" chooseLabel="Attach file" name="demo[]" accept="image/*" (onUpload)="onUpload($event)"></p-fileUpload>
                         </div>
-                    </form><br>
-                    <form class="flex align-items-center gap-3">
-                        <input pInputText id="program" aria-describedby="program-help" />
-        
-                        <div>
+                        <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
+                            <input pInputText id="program" aria-describedby="program-help" />
+                        </div>
+                        <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
                             <p-toast></p-toast>
                             <p-fileUpload mode="basic" chooseLabel="Attach file" name="demo[]" accept="image/*" (onUpload)="onUpload($event)"></p-fileUpload>
                         </div>
-                    </form><br>
-                    <form class="flex align-items-center gap-3">
-                        <input pInputText id="program" aria-describedby="program-help" />
-        
-                        <div>
+                        <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
+                            <input pInputText id="program" aria-describedby="program-help" />
+                        </div>
+                        <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
                             <p-toast></p-toast>
                             <p-fileUpload mode="basic" chooseLabel="Attach file" name="demo[]" accept="image/*" (onUpload)="onUpload($event)"></p-fileUpload>
                         </div>
-                    </form><br>
-                    <form class="flex align-items-center gap-3">
-                        <input pInputText id="program" aria-describedby="program-help" />
-        
-                        <div>
+                        <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
+                            <input pInputText id="program" aria-describedby="program-help" />
+                        </div>
+                        <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
                             <p-toast></p-toast>
                             <p-fileUpload mode="basic" chooseLabel="Attach file" name="demo[]" accept="image/*" (onUpload)="onUpload($event)"></p-fileUpload>
                         </div>
-                    </form>
-        
+                        <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
+                            <input pInputText id="program" aria-describedby="program-help" />
+                        </div>
+                        <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
+                            <p-toast></p-toast>
+                            <p-fileUpload mode="basic" chooseLabel="Attach file" name="demo[]" accept="image/*" (onUpload)="onUpload($event)"></p-fileUpload>
+                        </div>
+                    </div>
                 </p-fieldset>
             </div>
-           
-        </ng-template>
-        <ng-template pTemplate="footer">
-            <div class="grid grid-nogutter justify-content-between">
-                <p-button label="Back" (onClick)="prevPage()" icon="pi pi-angle-left"></p-button>
-                <p-button label="Submit" (onClick)="submitPage()" iconPos="right"></p-button>
-            </div>
-        </ng-template>
-    </p-card>
-</div>
+        </div>
+    </ng-template>
+    <ng-template pTemplate="footer">
+        <div class="grid grid-nogutter justify-content-between">
+            <p-button label="Back" (onClick)="prevPage()" icon="pi pi-angle-left"></p-button>
+            <p-button label="Next" (onClick)="nextPage()" icon="pi pi-angle-right"></p-button>
+            <p-button label="Submit" (onClick)="submitPage()" iconPos="right"></p-button>
+        </div>
+    </ng-template>
+</p-card>

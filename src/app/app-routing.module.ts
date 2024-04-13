@@ -10,7 +10,10 @@ import { NfrComponent } from './components/nfr/nfr.component';
 import { AttachmentComponent } from './components/attachment/attachment.component';
 import { ChecklistComponent } from './components/checklist/checklist.component';
 import { IntroductionComponent } from './components/introduction/introduction.component';
+import { DemandManagerComponent } from './components/demandmanager/demandmanager.component';
+
 import { WipComponent } from './components/wip/wip.component';
+import { CCBComponent } from './components/ccb/ccb.component';
 
 const routes: Routes = [
   { path: '', component: RequirementComponent},
@@ -52,6 +55,14 @@ const routes: Routes = [
     {
       path: 'attachment',
       component: AttachmentComponent
+    },
+    {
+      path: 'demandmanager',
+      component: DemandManagerComponent
+    },
+    {
+      path: 'ccb',
+      component: CCBComponent
     }
     
   ]}
