@@ -7,7 +7,6 @@ import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { MenuComponent } from './components/menu/menu.component';
 import { PanelMenuModule } from 'primeng/panelmenu';
-import { RequirementComponent } from './components/requirement/requirement.component';
 import { TabMenuModule } from 'primeng/tabmenu';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -39,7 +38,10 @@ import { FileUploadModule } from 'primeng/fileupload';
 import { DemandManagerComponent } from './components/demandmanager/demandmanager.component';
 import { CCBComponent } from './components/ccb/ccb.component';
 import { AutoCompleteModule } from 'primeng/autocomplete';
-
+import { LoginComponent } from './components/login/login.component';
+import { AuthService } from './services/auth.service';
+import { AuthGuard } from './services/auth-guard.service';
+import { LogoutComponent } from './components/logout/logout.component';
 
 @NgModule({
   declarations: [
@@ -47,7 +49,6 @@ import { AutoCompleteModule } from 'primeng/autocomplete';
     HeaderComponent,
     FooterComponent,
     MenuComponent,
-    RequirementComponent,
     DemandIntakeComponent,
     RequesterComponent,
     RequirementsComponent,
@@ -59,7 +60,9 @@ import { AutoCompleteModule } from 'primeng/autocomplete';
     IntroductionComponent,
     WipComponent,
     DemandManagerComponent,
-    CCBComponent
+    CCBComponent,
+    LoginComponent,
+    LogoutComponent
   ],
   imports: [
     BrowserModule,
@@ -84,7 +87,7 @@ import { AutoCompleteModule } from 'primeng/autocomplete';
     FileUploadModule,
     AutoCompleteModule
   ],
-  providers: [DemandIntakeService, MessageService],
+  providers: [DemandIntakeService, MessageService,AuthGuard,AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

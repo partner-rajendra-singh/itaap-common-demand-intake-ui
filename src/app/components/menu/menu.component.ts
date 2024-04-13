@@ -16,7 +16,8 @@ export class MenuComponent implements OnInit {
                 items: [
                     { label: 'New', icon: 'pi pi-fw pi-plus', routerLink: ["/demand-intake"] },
                     { label: 'View', icon: 'pi pi-fw pi-search', routerLink: ["/view"] },
-                    { label: 'Report', icon: 'pi pi-fw pi-file-excel', routerLink: ["/report"] }
+                    { label: 'Report', icon: 'pi pi-fw pi-file-excel', routerLink: ["/report"] },
+                    { label: 'Logout', icon: 'pi pi-fw pi-file-excel', routerLink: ["/logout"] }
                 ]
             },
             {
