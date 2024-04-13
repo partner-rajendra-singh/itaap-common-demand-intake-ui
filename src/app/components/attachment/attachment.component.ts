@@ -21,12 +21,16 @@ export class AttachmentComponent {
 
   submitPage() {
     // this.demandIntakeService.ticketInformation.seatInformation = this.seatInformation;
-    this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Sumbitted Demand Intake Successfully!' });
+    this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Demand Saved!' });
     // this.router.navigate(['demand-intake/']);
   }
 
   prevPage() {
       this.router.navigate(['demand-intake/checklist']);
+  }
+
+  nextPage() {
+    this.router.navigate(['demand-intake/demandmanager']);
   }
 
   

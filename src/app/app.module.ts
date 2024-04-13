@@ -7,7 +7,6 @@ import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { MenuComponent } from './components/menu/menu.component';
 import { PanelMenuModule } from 'primeng/panelmenu';
-import { RequirementComponent } from './components/requirement/requirement.component';
 import { TabMenuModule } from 'primeng/tabmenu';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -27,7 +26,7 @@ import { RequesterComponent } from './components/requester/requester.component';
 import { RequirementsComponent } from './components/requirements/requirements.component';
 import { DropdownModule } from 'primeng/dropdown';
 import { DemandIntakeService } from './services/demand-intake.service';
-import { MessageService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { SolutionDirectionComponent } from './components/solution-direction/solution-direction.component';
 import { NfrComponent } from './components/nfr/nfr.component';
 import { ComplianceComponent } from './components/compliance/compliance.component';
@@ -36,7 +35,16 @@ import { ChecklistComponent } from './components/checklist/checklist.component';
 import { IntroductionComponent } from './components/introduction/introduction.component';
 import { WipComponent } from './components/wip/wip.component';
 import { FileUploadModule } from 'primeng/fileupload';
-
+import { DemandManagerComponent } from './components/demandmanager/demandmanager.component';
+import { CCBComponent } from './components/ccb/ccb.component';
+import { AutoCompleteModule } from 'primeng/autocomplete';
+import { LoginComponent } from './components/login/login.component';
+import { AuthService } from './services/auth.service';
+import { AuthGuard } from './services/auth-guard.service';
+import { LogoutComponent } from './components/logout/logout.component';
+import { ChartComponent } from './components/chart/chart.component';
+import { ChartModule } from 'primeng/chart';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 
 @NgModule({
   declarations: [
@@ -44,7 +52,6 @@ import { FileUploadModule } from 'primeng/fileupload';
     HeaderComponent,
     FooterComponent,
     MenuComponent,
-    RequirementComponent,
     DemandIntakeComponent,
     RequesterComponent,
     RequirementsComponent,
@@ -54,7 +61,12 @@ import { FileUploadModule } from 'primeng/fileupload';
     AttachmentComponent,
     ChecklistComponent,
     IntroductionComponent,
-    WipComponent
+    WipComponent,
+    DemandManagerComponent,
+    CCBComponent,
+    LoginComponent,
+    LogoutComponent,
+    ChartComponent
   ],
   imports: [
     BrowserModule,
@@ -76,9 +88,12 @@ import { FileUploadModule } from 'primeng/fileupload';
     StepsModule,
     ToastModule,
     DropdownModule,
-    FileUploadModule
+    FileUploadModule,
+    AutoCompleteModule,
+    ChartModule,
+    ConfirmDialogModule
   ],
-  providers: [DemandIntakeService, MessageService],
+  providers: [DemandIntakeService, MessageService,AuthGuard,AuthService,ConfirmationService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

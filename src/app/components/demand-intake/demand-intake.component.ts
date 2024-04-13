@@ -40,6 +40,14 @@ export class DemandIntakeComponent implements OnInit{
             {
                 label: 'Attachment',
                 routerLink: 'attachment'
+            },
+            {
+                label: 'DM',
+                routerLink: 'demandmanager'
+            },
+            {
+                label: 'CCB',
+                routerLink: 'ccb'
             }
         ];
 

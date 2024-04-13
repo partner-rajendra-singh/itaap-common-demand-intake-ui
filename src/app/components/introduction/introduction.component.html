@@ -1,28 +1,30 @@
 <p-card>
-    <ng-template pTemplate="content">
-        <div class="grid">
-            <div class="col-12">
-                <p-fieldset legend="Demand Intake">
-                    <div class="field grid" style="display: inline-flex;">
-                        <label for="title" class="col-fixed" style="width:100px">Title</label>
-                        <div class="col-4">
-                            <input id="title" type="text" size="70" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary">
-                        </div>
-                    </div>
-                    <div class="field grid">
-                        <label for="description" class="col-fixed" style="width:100px">Description</label>
-                        <div class="col-4">
-                            <input id="description" type="text" size="70" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary">
-                        </div>
-                    </div>
-                </p-fieldset>
-            </div>
+  <ng-template pTemplate="content">
+      <div class="grid">
+          <div class="col-12 xs:col-12 sm:col-12 lg:col-12 xl:col-12">
+            <p-fieldset legend="Introduction">
+              <div class="grid">
+                <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
+                  <label for="title" class="col-fixed" style="width: 100px">Title</label>
+                </div>
+                <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
+                  <input id="title" type="text" size="70" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary"/>
+                </div>
+                <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
+                  <label for="description" class="col-fixed" style="width: 100px">Description</label>
+                </div>
+                <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
+                  <input id="description" type="text" size="70" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary"/>
+                </div>
+              </div>
+            </p-fieldset>
         </div>
+      </div>
     </ng-template>
     <ng-template pTemplate="footer">
-        <div class="grid grid-nogutter justify-content-end">
-            <p-button label="Next" (onClick)="nextPage()" icon="pi pi-angle-right" iconPos="right"></p-button>
-        </div>
+      <div class="grid grid-nogutter justify-content-end">
+        <p-button label="Next" (onClick)="nextPage()"  icon="pi pi-angle-right" iconPos="right"></p-button>
+      </div>
     </ng-template>
-    
 </p-card>
+ 

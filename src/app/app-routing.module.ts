@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { RequirementComponent } from './components/requirement/requirement.component';
 import { DemandIntakeComponent } from './components/demand-intake/demand-intake.component';
 import { RequirementsComponent } from './components/requirements/requirements.component';
 import { RequesterComponent } from './components/requester/requester.component';
@@ -11,12 +10,19 @@ import { AttachmentComponent } from './components/attachment/attachment.componen
 import { ChecklistComponent } from './components/checklist/checklist.component';
 import { IntroductionComponent } from './components/introduction/introduction.component';
 import { WipComponent } from './components/wip/wip.component';
+import { LoginComponent } from './components/login/login.component';
+import { AuthGuard } from './services/auth-guard.service';
+import { LogoutComponent } from './components/logout/logout.component';
+import { DemandManagerComponent } from './components/demandmanager/demandmanager.component';
+import { CCBComponent } from './components/ccb/ccb.component';
+import { ChartComponent } from './components/chart/chart.component';
 
 const routes: Routes = [
-  { path: '', component: RequirementComponent},
-  { path: 'view', component: WipComponent},
-  { path: 'report', component: WipComponent},
-  { path: 'demand-intake', component: DemandIntakeComponent, children: [
+  { path: 'view', component: WipComponent, canActivate: [AuthGuard]},
+  { path: 'report', component: WipComponent, canActivate: [AuthGuard]},
+  { path: 'chart', component: ChartComponent, canActivate: [AuthGuard]},
+  { path: 'logout', component: LogoutComponent},
+  { path: 'demand-intake', component: DemandIntakeComponent, canActivate: [AuthGuard], children: [
     {
       path: '',
       component: IntroductionComponent
@@ -52,9 +58,17 @@ const routes: Routes = [
     {
       path: 'attachment',
       component: AttachmentComponent
+    },
+    {
+      path: 'demandmanager',
+      component: DemandManagerComponent
+    },
+    {
+      path: 'ccb',
+      component: CCBComponent
     }
-    
-  ]}
+  ]},
+  { path: '**', component: LoginComponent}
 ];
 
 @NgModule({

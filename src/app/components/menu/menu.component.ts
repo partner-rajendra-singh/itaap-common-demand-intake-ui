@@ -11,25 +11,31 @@ export class MenuComponent implements OnInit {
     ngOnInit() {
         this.items = [
             {
-                label: 'Demand Intake',
+                label: 'Demand',
                 icon: 'pi pi-fw pi-file',
                 items: [
                     { label: 'New', icon: 'pi pi-fw pi-plus', routerLink: ["/demand-intake"] },
                     { label: 'View', icon: 'pi pi-fw pi-search', routerLink: ["/view"] },
-                    { label: 'Report', icon: 'pi pi-fw pi-file-excel', routerLink: ["/report"] }
+                    { label: 'Report', icon: 'pi pi-fw pi-file-excel', routerLink: ["/report"] },
+                    { label: 'Chart', icon: 'pi pi-fw pi-file-excel', routerLink: ["/chart"] },
+                    { label: 'Logout', icon: 'pi pi-fw pi-file-excel', routerLink: ["/logout"] }
                 ]
             },
             {
-                label: 'Menu 2',
+                label: 'Reports',
                 icon: 'pi pi-fw pi-pencil',
                 items: [
-                    { label: 'Sub Menu 1', icon: 'pi pi-fw pi-align-left' },
-                    { label: 'Sub Menu 2', icon: 'pi pi-fw pi-align-right' }
+                    { label: 'Report 1', icon: 'pi pi-fw pi-align-left' },
+                    { label: 'Report 2', icon: 'pi pi-fw pi-align-right' }
                 ]
             },
             {
-                label: 'Menu 3',
-                icon: 'pi pi-fw pi-user'
+                label: 'Configuration',
+                icon: 'pi pi-fw pi-user',
+                items: [
+                    { label: 'DM List', icon: 'pi pi-fw pi-align-left' },
+                    { label: 'CCB List', icon: 'pi pi-fw pi-align-right' }
+                ]
             }
         ];
 

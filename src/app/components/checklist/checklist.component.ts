@@ -11,7 +11,6 @@ export class ChecklistComponent {
   constructor(public demandIntakeService: DemandIntakeService, private router: Router) {}
 
   nextPage() {
-    // this.demandIntakeService.ticketInformation.seatInformation = this.seatInformation;
     this.router.navigate(['demand-intake/attachment']);
   }
 
