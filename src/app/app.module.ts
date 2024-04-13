@@ -26,7 +26,7 @@ import { RequesterComponent } from './components/requester/requester.component';
 import { RequirementsComponent } from './components/requirements/requirements.component';
 import { DropdownModule } from 'primeng/dropdown';
 import { DemandIntakeService } from './services/demand-intake.service';
-import { MessageService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { SolutionDirectionComponent } from './components/solution-direction/solution-direction.component';
 import { NfrComponent } from './components/nfr/nfr.component';
 import { ComplianceComponent } from './components/compliance/compliance.component';
@@ -44,6 +44,7 @@ import { AuthGuard } from './services/auth-guard.service';
 import { LogoutComponent } from './components/logout/logout.component';
 import { ChartComponent } from './components/chart/chart.component';
 import { ChartModule } from 'primeng/chart';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 
 @NgModule({
   declarations: [
@@ -89,9 +90,10 @@ import { ChartModule } from 'primeng/chart';
     DropdownModule,
     FileUploadModule,
     AutoCompleteModule,
-    ChartModule
+    ChartModule,
+    ConfirmDialogModule
   ],
-  providers: [DemandIntakeService, MessageService,AuthGuard,AuthService],
+  providers: [DemandIntakeService, MessageService,AuthGuard,AuthService,ConfirmationService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
