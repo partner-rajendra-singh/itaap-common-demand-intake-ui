@@ -37,13 +37,13 @@
                                     <label for="requestDate" class="col-fixed" style="width:100px">Go Live Date</label>
                                 </div>
                                 <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9" *ngIf="goLiveApproach == '1' || goLiveApproach == '2'">
-                                    <p-calendar dateFormat="dd/mm/yy"></p-calendar>
+                                    <p-calendar dateFormat="dd/mm/yy" [showIcon]="true"></p-calendar>
                                 </div>
                                 <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3" *ngIf="goLiveApproach == '2'">
                                     <label for="requestDate" class="col-fixed" style="width:100px">Tentative Go Live Date</label>
                                 </div>
                                 <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9" *ngIf="goLiveApproach == '2'">
-                                    <p-calendar dateFormat="dd/mm/yy"></p-calendar>
+                                    <p-calendar dateFormat="dd/mm/yy" [showIcon]="true"></p-calendar>
                                 </div>
                             </div>
                         </p-tabPanel>

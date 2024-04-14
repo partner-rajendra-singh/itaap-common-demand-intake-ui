@@ -16,11 +16,15 @@ import { LogoutComponent } from './components/logout/logout.component';
 import { DemandManagerComponent } from './components/demandmanager/demandmanager.component';
 import { CCBComponent } from './components/ccb/ccb.component';
 import { ChartComponent } from './components/chart/chart.component';
+import { DMCRUDComponent } from './components/dmcrud/dmcrud.component';
+import { CCBCRUDComponent } from './components/ccbcrud/ccbcrud.component';
 
 const routes: Routes = [
   { path: 'view', component: WipComponent, canActivate: [AuthGuard]},
   { path: 'report', component: WipComponent, canActivate: [AuthGuard]},
   { path: 'chart', component: ChartComponent, canActivate: [AuthGuard]},
+  { path: 'dmcrud', component: DMCRUDComponent, canActivate: [AuthGuard]},
+  { path: 'ccbcrud', component: CCBCRUDComponent, canActivate: [AuthGuard]},
   { path: 'logout', component: LogoutComponent},
   { path: 'demand-intake', component: DemandIntakeComponent, canActivate: [AuthGuard], children: [
     {

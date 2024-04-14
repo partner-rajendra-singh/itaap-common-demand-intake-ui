@@ -45,6 +45,9 @@ import { LogoutComponent } from './components/logout/logout.component';
 import { ChartComponent } from './components/chart/chart.component';
 import { ChartModule } from 'primeng/chart';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { DMCRUDComponent } from './components/dmcrud/dmcrud.component';
+import { CCBCRUDComponent } from './components/ccbcrud/ccbcrud.component';
+import { TableModule } from 'primeng/table';
 
 @NgModule({
   declarations: [
@@ -66,7 +69,9 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
     CCBComponent,
     LoginComponent,
     LogoutComponent,
-    ChartComponent
+    ChartComponent,
+    DMCRUDComponent,
+    CCBCRUDComponent
   ],
   imports: [
     BrowserModule,
@@ -91,7 +96,8 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
     FileUploadModule,
     AutoCompleteModule,
     ChartModule,
-    ConfirmDialogModule
+    ConfirmDialogModule,
+    TableModule
   ],
   providers: [DemandIntakeService, MessageService,AuthGuard,AuthService,ConfirmationService],
   bootstrap: [AppComponent]
