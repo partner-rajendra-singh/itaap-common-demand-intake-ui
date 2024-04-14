@@ -8,7 +8,7 @@
 <p-card>
     <ng-template pTemplate="content">
         <div class="grid">
-            <p-fieldset legend="Authenication">
+            <p-fieldset legend="Login">
                 <div class="grid">
 
                     <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
@@ -38,7 +38,7 @@
                     </div>
 
                     <div class="col-12 xs:col-12 sm:col-12 lg:col-12 xl:col-12" *ngIf="otpSent">
-                        <p-button label="Login" (onClick)="login()" icon="pi pi-sign-in"></p-button>
+                        <p-button label="Sign In" (onClick)="login()" icon="pi pi-sign-in"></p-button>
                     </div>
                 </div>
             </p-fieldset>
