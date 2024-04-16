@@ -1,11 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { map } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DemandIntakeService {
+
+  baseUrl: string = environment.baseUrl;
 
   constructor(private http: HttpClient) { }
 
@@ -158,7 +161,7 @@ export class DemandIntakeService {
 
   submitDemand(){
 
-    let url = 'http://localhost:9002/common/demand-intake/';
+    let url = '${this.baseUrl}/common/demand-intake/';
     let headerOptions = {
       headers: new HttpHeaders({
           'Content-Type': 'application/json',
