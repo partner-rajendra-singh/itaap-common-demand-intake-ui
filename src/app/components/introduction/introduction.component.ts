@@ -15,10 +15,10 @@ export class IntroductionComponent {
   constructor(public demandIntakeService: DemandIntakeService, private router: Router) {}
 
   ngOnInit() {
-    this.demandInfo = this.demandIntakeService.getDemandInformation().intoduction;
+    this.demandInfo = this.demandIntakeService.getDemandInformation().introduction;
   }
   nextPage() {
-    this.demandIntakeService.demandInformation.intoduction = this.demandInfo;
+    this.demandIntakeService.demandInformation.introduction = this.demandInfo;
     this.router.navigate(['demand-intake/requester']);
     this.submitted = true;
   }

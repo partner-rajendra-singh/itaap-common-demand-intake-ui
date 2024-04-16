@@ -10,7 +10,7 @@ export class DemandIntakeService {
   constructor(private http: HttpClient) { }
 
   demandInformation = {
-    intoduction:{
+    introduction:{
       title: '',
       description: ''
     },
@@ -63,7 +63,7 @@ export class DemandIntakeService {
       protocolConversion: false,
       msgSequencing: false,
       trackNTrace: false,
-      persistenece: false,
+      persistence: false,
       senderTechnicalDetails: '',
       receiverTechnicalDetails: ''
     },
@@ -166,9 +166,7 @@ export class DemandIntakeService {
       })
     };
 
-    var request = this.getDemandInformation();
-
-    return this.http.post<any>(url, {request}, headerOptions)
+    return this.http.post<any>(url, this.demandInformation, headerOptions)
       .pipe(map(response => {
           console.log("SubmitDemand() Response :", response)
           return response;
