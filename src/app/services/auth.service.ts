@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { User } from '../models/user';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -11,6 +12,7 @@ export class AuthService {
 
   private currentUserSubject: BehaviorSubject<User>;
   public currentUser: Observable<User>;
+  baseUrl: string = environment.baseUrl;
 
   constructor(private http: HttpClient) { 
 
@@ -44,7 +46,7 @@ export class AuthService {
   login(email: string, token: string) {
     
     console.log('login : ', this.currentUserValue)
-    let url = 'http://localhost:9002/common/demand-intake/login/';
+    let url = this.baseUrl+'/common/demand-intake/login/';
     let headerOptions = {
       headers: new HttpHeaders({
           'Content-Type': 'application/json',
@@ -69,7 +71,8 @@ export class AuthService {
 
   getOTP(email: string) {
 
-    let url = 'http://localhost:9002/common/demand-intake/otp/';
+    let url = this.baseUrl+'/common/demand-intake/otp/';
+    console.log("url : ", this.baseUrl)
     let headerOptions = {
       headers: new HttpHeaders({
           'Content-Type': 'application/json',
