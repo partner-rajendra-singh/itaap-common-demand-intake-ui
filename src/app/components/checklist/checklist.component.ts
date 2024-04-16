@@ -8,9 +8,16 @@ import { DemandIntakeService } from '../../services/demand-intake.service';
 })
 export class ChecklistComponent {
 
+  eADIInfo!: any;
+
   constructor(public demandIntakeService: DemandIntakeService, private router: Router) {}
 
+  ngOnInit(){
+    this.eADIInfo = this.demandIntakeService.getDemandInformation().eADIInfo;
+  }
+
   nextPage() {
+    this.demandIntakeService.getDemandInformation().eADIInfo = this.eADIInfo;
     this.router.navigate(['demand-intake/attachment']);
   }
 

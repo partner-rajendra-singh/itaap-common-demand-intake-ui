@@ -24,7 +24,7 @@
                         <label for="decisionDate">Email Address</label>
                     </div>
                     <div class="col-6 xs:col-6 sm:col-6 lg:col-6 xl:col-6">
-                        <input pInputText id="emailAddress" pTooltip="Enter your full email address" aria-describedby="emailAddress-help" />
+                        <input pInputText id="emailAddress" type="email" [(ngModel)]='email'  pTooltip="Enter your full email address" aria-describedby="emailAddress-help" />
                     </div>  
                     <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
                         <p-button label="OTP" (onClick)="getOTP()"  icon="pi pi-envelope" [disabled]="otpSent"></p-button>
@@ -34,7 +34,7 @@
                         <label for="decision">OTP</label>
                     </div>
                     <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9" *ngIf="otpSent">
-                        <input pInputText id="otp" pTooltip="Enter OTP received on your email address" aria-describedby="otp-help" />
+                        <input pInputText id="otp" [(ngModel)]='token' pTooltip="Enter OTP received on your email address" aria-describedby="otp-help" />
                     </div>
 
                     <div class="col-12 xs:col-12 sm:col-12 lg:col-12 xl:col-12" *ngIf="otpSent">
