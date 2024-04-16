@@ -8,30 +8,22 @@ import { DemandIntakeService } from '../../services/demand-intake.service';
 })
 export class RequesterComponent implements OnInit{
 
-  personalInformation: any;
+  requesterInfo: any;
 
-    submitted: boolean = false;
+  constructor(public demandIntakeService: DemandIntakeService, private router: Router) {}
 
-    constructor(public demandIntakeService: DemandIntakeService, private router: Router) {}
+  ngOnInit() {
+      this.requesterInfo = this.demandIntakeService.getDemandInformation().requesterInfo;
+      console.log("RequesterComponent Init: ", this.demandIntakeService.demandInformation)
+  }
 
-    ngOnInit() {
-        this.personalInformation = this.demandIntakeService.getTicketInformation().personalInformation;
-    }
+  nextPage() {
+    this.demandIntakeService.demandInformation.requesterInfo = this.requesterInfo;
+    this.router.navigate(['demand-intake/requirement']);
+  }
 
-    nextPage() {
-      this.router.navigate(['demand-intake/requirement']);
-        // if (this.personalInformation.firstname && this.personalInformation.lastname && this.personalInformation.age) {
-        //     this.demandIntakeService.ticketInformation.personalInformation = this.personalInformation;
-        //     this.router.navigate(['demand-intake/seat']);
-
-        //     return;
-        // }
-
-        this.submitted = true;
-    }
-
-    prevPage() {
-      this.router.navigate(['demand-intake/introduction']);
-    }
+  prevPage() {
+    this.router.navigate(['demand-intake/introduction']);
+  }
 
 }

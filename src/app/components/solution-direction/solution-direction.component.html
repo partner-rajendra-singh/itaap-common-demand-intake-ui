@@ -5,43 +5,43 @@
           <p-fieldset legend="Solution Direction">
             <div class="grid">
               <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                <p-checkbox value="integration" inputId="integration"></p-checkbox>
+                <p-checkbox [binary]="true" [(ngModel)]="solutionDirectionInfo.integration" inputId="integration"></p-checkbox>
               </div>
               <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
                 <label for="integration">Integration</label>
               </div>
               <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                <p-checkbox value="dataModelling" inputId="dataModelling"></p-checkbox>
+                <p-checkbox [binary]="true" [(ngModel)]="solutionDirectionInfo.dataModelling" inputId="dataModelling"></p-checkbox>
               </div>
               <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
                 <label for="dataModelling">Data Modelling</label>
               </div>
               <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                <p-checkbox value="adlSL1" inputId="adlSL1"></p-checkbox>
+                <p-checkbox [binary]="true" [(ngModel)]="solutionDirectionInfo.adlSL1" inputId="adlSL1"></p-checkbox>
               </div>
               <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
                 <label for="adlSL1">ADL SL1</label>
               </div>
               <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                <p-checkbox value="adlSL2" inputId="adlSL2"></p-checkbox>
+                <p-checkbox [binary]="true" [(ngModel)]="solutionDirectionInfo.adlSL2" inputId="adlSL2"></p-checkbox>
               </div>
               <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
                 <label for="adlSL2">ADL SL2</label>
               </div>
               <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                <p-checkbox value="gold" inputId="gold"></p-checkbox>
+                <p-checkbox [binary]="true" [(ngModel)]="solutionDirectionInfo.gold" inputId="gold"></p-checkbox>
               </div>
               <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
                 <label for="gold">Gold</label>
               </div>
               <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                <p-checkbox value="mdm" inputId="mdm"></p-checkbox>
+                <p-checkbox [binary]="true" [(ngModel)]="solutionDirectionInfo.mdm" inputId="mdm"></p-checkbox>
               </div>
               <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
                 <label for="mdm">MDM</label>
               </div>
               <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                <p-checkbox value="ia" inputId="ia"></p-checkbox>
+                <p-checkbox [binary]="true" [(ngModel)]="solutionDirectionInfo.ia" inputId="ia"></p-checkbox>
               </div>
               <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
                 <label for="ia">I&A</label>

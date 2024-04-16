@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MenuItem, MessageService } from 'primeng/api';
 import { Subscription } from 'rxjs';
 import { DemandIntakeService } from '../../services/demand-intake.service';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-demand-intake',
@@ -13,47 +14,55 @@ export class DemandIntakeComponent implements OnInit{
 
   subscription!: Subscription;
 
-  constructor(public messageService: MessageService, public demandIntakeService: DemandIntakeService) {}
+  constructor(public messageService: MessageService, public demandIntakeService: DemandIntakeService, private authService: AuthService) {}
 
     ngOnInit() {
         this.items = [
             {
                 label: 'Introduction',
-                routerLink: 'introduction'
+                routerLink: 'introduction',
+                visible: true
             },
             {
                 label: 'Requester',
-                routerLink: 'requester'
+                routerLink: 'requester',
+                visible: true
             },
             {
                 label: 'Requirement',
-                routerLink: 'requirement'
+                routerLink: 'requirement',
+                visible: true
             },
             {
                 label: 'Solution Direction',
-                routerLink: 'solution-direction'
+                routerLink: 'solution-direction',
+                visible: (this.authService.isDM() || this.authService.isCCB() || this.authService.isAdmin()),
             },
             {
                 label: 'EADI',
-                routerLink: 'checklist'
+                routerLink: 'checklist',
+                visible: (this.authService.isDM() || this.authService.isCCB() || this.authService.isAdmin()),
             },
             {
                 label: 'Attachment',
-                routerLink: 'attachment'
+                routerLink: 'attachment',
+                visible: true
             },
             {
                 label: 'DM',
-                routerLink: 'demandmanager'
+                routerLink: 'demandmanager',
+                visible: (this.authService.isDM() || this.authService.isCCB() || this.authService.isAdmin()),
             },
             {
                 label: 'CCB',
-                routerLink: 'ccb'
+                routerLink: 'ccb',
+                visible: (this.authService.isCCB() || this.authService.isAdmin())
             }
         ];
 
-        this.subscription = this.demandIntakeService.paymentComplete$.subscribe((personalInformation) => {
-            this.messageService.add({ severity: 'success', summary: 'Order submitted', detail: 'Dear, ' + personalInformation.firstname + ' ' + personalInformation.lastname + ' your order completed.' });
-        });
+        // Filter and assign only visible steps:
+        this.items = this.items.filter(item => item.visible);
+
     }
 
     ngOnDestroy() {

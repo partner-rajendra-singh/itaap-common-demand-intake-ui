@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { DemandIntakeService } from '../../services/demand-intake.service';
 import { MessageService } from 'primeng/api';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-requirements',
@@ -10,49 +11,34 @@ import { MessageService } from 'primeng/api';
 })
 export class RequirementsComponent implements OnInit{
 
-  constructor(public demandIntakeService: DemandIntakeService, private router: Router,private messageService: MessageService) {}
+  constructor(public demandIntakeService: DemandIntakeService, private router: Router,private messageService: MessageService,
+    private authService: AuthService
+  ) {}
 
-    classes!: any[];
+  requirementFunctionalInfo!: any;
+  requirementNonFunctionalInfo!: any;
+  requirementComplianceInfo!: any;
 
-    vagons!: any[];
-
-    seats!: any[];
-
-    seatInformation: any;
-    goLiveApproach!: string;
+      goLiveApproach!: string;
 
     ngOnInit() {
-        this.seatInformation = this.demandIntakeService.ticketInformation.seatInformation;
-
-        this.classes = [
-            { name: 'First Class', code: 'A', factor: 1 },
-            { name: 'Second Class', code: 'B', factor: 2 },
-            { name: 'Third Class', code: 'C', factor: 3 }
-        ];
-    }
-
-    setVagons(event: any) {
-        if (this.seatInformation.class && event.value) {
-            this.vagons = [];
-            this.seats = [];
-            for (let i = 1; i < 3 * event.value.factor; i++) {
-                this.vagons.push({ wagon: i + event.value.code, type: event.value.name, factor: event.value.factor });
-            }
-        }
-    }
-
-    setSeats(event: any) {
-        if (this.seatInformation.wagon && event.value) {
-            this.seats = [];
-            for (let i = 1; i < 10 * event.value.factor; i++) {
-                this.seats.push({ seat: i, type: event.value.type });
-            }
-        }
+        console.log("RequirementsComponent Init: ", this.demandIntakeService.demandInformation)
+        this.requirementFunctionalInfo = this.demandIntakeService.getDemandInformation().requirementFunctionalInfo;
+        this.requirementNonFunctionalInfo = this.demandIntakeService.getDemandInformation().requirementNonFunctionalInfo;
+        this.requirementComplianceInfo = this.demandIntakeService.getDemandInformation().requirementComplianceInfo;
     }
 
     nextPage() {
-        this.demandIntakeService.ticketInformation.seatInformation = this.seatInformation;
-        this.router.navigate(['demand-intake/solution-direction']);
+
+        this.demandIntakeService.getDemandInformation().requirementFunctionalInfo = this.requirementFunctionalInfo;
+        this.demandIntakeService.getDemandInformation().requirementNonFunctionalInfo = this.requirementNonFunctionalInfo;
+        this.demandIntakeService.getDemandInformation().requirementComplianceInfo = this.requirementComplianceInfo;
+
+        if(this.authService.isRequester()){
+            this.router.navigate(['demand-intake/attachment']);
+        } else {
+            this.router.navigate(['demand-intake/solution-direction']);
+        }
     }
 
     submitPage() {

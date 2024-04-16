@@ -8,19 +8,19 @@
                             <label for="program" class="col-fixed">Program</label>
                         </div>
                         <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
-                            <input id="program" type="text" size="60" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary">
+                            <input id="program" type="text" [(ngModel)]="requesterInfo.program" size="60" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary">
                         </div>
                         <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
                             <label for="domain" class="col-fixed" style="width:100px">Domain</label>
                         </div>
                         <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
-                            <input id="domain" type="text" size="60" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary">
+                            <input id="domain" type="text" [(ngModel)]="requesterInfo.domain" size="60" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary">
                         </div>
                         <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
                             <label for="requestDate" class="col-fixed" style="width:100px">Requested Date</label>
                         </div>
                         <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
-                            <p-calendar dateFormat="dd/mm/yy" [showIcon]="true"></p-calendar>    
+                            <p-calendar dateFormat="dd/mm/yy" [(ngModel)]="requesterInfo.requestedDate" [showIcon]="true"></p-calendar>    
                         </div>
                         <div class="col-12 xs:col-12 sm:col-12 lg:col-12 xl:col-12">
                             <p-fieldset legend="SPOC">
@@ -29,38 +29,18 @@
                                         <label for="role">Role</label>
                                     </div>
                                     <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
-                                        <label for="email" style="margin-left: 200px;">Email</label>
+                                        <label for="email">Email</label>
                                     </div>
-                                    <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                                        <input pInputText id="program" aria-describedby="program-help" />
+
+                                    <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9" style="display: inline-flex;" *ngFor="let item of requesterInfo.spoc">
+                                        <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
+                                            <input pInputText id="spocRole2" [(ngModel)]="item.role" aria-describedby="program-help" />
+                                        </div>
+                                        <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
+                                            <input pInputText id="spocEmail2" [(ngModel)]="item.email" type="email" aria-describedby="program-help" />
+                                        </div>
                                     </div>
-                                    <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
-                                        <input pInputText id="program"  type="email" aria-describedby="program-help" />
-                                    </div>
-                                    <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                                        <input pInputText id="program" aria-describedby="program-help" />
-                                    </div>
-                                    <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
-                                        <input pInputText id="program" type="email" aria-describedby="program-help" />
-                                    </div>
-                                    <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                                        <input pInputText id="program" aria-describedby="program-help" />
-                                    </div>
-                                    <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
-                                        <input pInputText  type="email" id="program" aria-describedby="program-help" />
-                                    </div>
-                                    <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                                        <input pInputText id="program" aria-describedby="program-help" />
-                                    </div>
-                                    <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
-                                        <input pInputText id="program"type="email"  aria-describedby="program-help" />
-                                    </div>
-                                    <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                                        <input pInputText id="program" aria-describedby="program-help" />
-                                    </div>
-                                    <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
-                                        <input pInputText id="program" type="email" aria-describedby="program-help" />
-                                    </div>
+                                    
                                 </div>
                             </p-fieldset>
                         </div>

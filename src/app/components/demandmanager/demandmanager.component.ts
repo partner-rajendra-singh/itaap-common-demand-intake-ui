@@ -2,11 +2,9 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { DemandIntakeService } from '../../services/demand-intake.service';
 import { MessageService } from 'primeng/api';
-
-interface Decision {
-  name: string;
-  code: string;
-}
+import { AuthService } from 'src/app/services/auth.service';
+import { DemandDecision } from 'src/app/models/demand-decision';
+import { first } from 'rxjs/operators';
 
 @Component({
   selector: 'app-demandmanager',
@@ -14,14 +12,26 @@ interface Decision {
 })
 export class DemandManagerComponent {
 
-  decisions: Decision[] | undefined;
-  selectedDecision: Decision | undefined;
+  decisions: DemandDecision[] | undefined;
+  visibleNextButton!: boolean;
+  visibleSubmitButton!: boolean;
 
-  constructor(public demandIntakeService: DemandIntakeService, private router: Router,private messageService: MessageService) {
-    
+  demandManagerInfo!: any;
+
+  constructor(public demandIntakeService: DemandIntakeService, private router: Router,private messageService: MessageService,
+    private authService: AuthService
+  ) {
+    if(authService.isDM()){
+      this.visibleNextButton = false;
+      this.visibleSubmitButton = true;
+    }else{
+      this.visibleNextButton = true;
+      this.visibleSubmitButton = false;
+    }
   }
 
   ngOnInit() { 
+    this.demandManagerInfo = this.demandIntakeService.getDemandInformation().demandManagerInfo;
     this.decisions = [
         {name: 'Approve', code: 'approve'},
         {name: 'Rejected', code: 'rejected'},
@@ -29,18 +39,31 @@ export class DemandManagerComponent {
         {name: 'OnHold', code: 'onhold'},
         {name: 'Need Mofidification', code: 'modification'}
     ];
-}
+  }
 
   prevPage() {
     this.router.navigate(['demand-intake/attachment']);
   }
 
   nextPage() {
+    this.demandManagerInfo.decision = this.demandManagerInfo.decision.code;
+    this.demandIntakeService.getDemandInformation().demandManagerInfo = this.demandManagerInfo;
     this.router.navigate(['demand-intake/ccb']);
   }
 
   submitPage() {
-    this.messageService.add({ severity: 'success', summary: 'Success', detail: 'DM Decision Saved!' });
+    this.demandManagerInfo.decision = this.demandManagerInfo.decision.code;
+    this.demandIntakeService.submitDemand()
+    .pipe(first())
+    .subscribe(
+        data => {
+          this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Demand Saved!' });
+          this.router.navigate(['demand-intake']);
+        },
+        error => {
+          alert("Demand Failed")
+          this.messageService.add({ severity: 'error', summary: 'error', detail: 'Demand Failed!' });
+        });
   }
 
 }

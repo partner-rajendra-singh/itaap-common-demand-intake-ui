@@ -72,7 +72,9 @@ const routes: Routes = [
       component: CCBComponent
     }
   ]},
-  { path: '**', component: LoginComponent}
+  
+  { path: 'login', component: LoginComponent},
+  // { path: '', component: DemandIntakeComponent}
 ];
 
 @NgModule({
