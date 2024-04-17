@@ -161,7 +161,7 @@ export class DemandIntakeService {
 
   submitDemand(){
 
-    let url = '${this.baseUrl}/common/demand-intake/';
+    let url = this.baseUrl+'/common/demand-intake/';
     let headerOptions = {
       headers: new HttpHeaders({
           'Content-Type': 'application/json',

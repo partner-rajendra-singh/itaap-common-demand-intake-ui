@@ -57,7 +57,7 @@ export class AuthService {
     return this.http.post<any>(url, {email, token}, headerOptions)
       .pipe(map(user => {
         console.log("login() Response :", user)
-        user.role = 'CCB_MEMBER';
+        // user.role = 'CCB_MEMBER';
           if (user && user.token && user.isAuthenticated) {
               // store user details and jwt token in local storage to keep user logged in between page refreshes
               localStorage.setItem('currentUser', JSON.stringify(user));
