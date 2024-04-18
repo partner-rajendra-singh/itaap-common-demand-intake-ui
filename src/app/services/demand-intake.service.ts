@@ -4,6 +4,7 @@ import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { Demand } from '../models/demand';
 import { Router } from '@angular/router';
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,7 @@ export class DemandIntakeService {
   baseUrl: string = environment.baseUrl;
   demandInformation = new Demand();
 
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(private http: HttpClient, private router: Router, private authService: AuthService) {}
 
   getDemandInformation() {
       return this.demandInformation;
@@ -41,6 +42,7 @@ export class DemandIntakeService {
       })
     };
 
+    this.demandInformation.introduction.requestedBy = this.authService.currentUserValue.email;
     return this.http.post<any>(url, this.demandInformation, headerOptions)
       .pipe(map(response => {
           console.log("SaveDemand() Response :", response)
@@ -57,6 +59,7 @@ export class DemandIntakeService {
       })
     };
 
+    this.demandInformation.introduction.requestedBy = this.authService.currentUserValue.email;
     return this.http.post<any>(url, this.demandInformation, headerOptions)
       .pipe(map(response => {
           console.log("SubmitDemand() Response :", response)
