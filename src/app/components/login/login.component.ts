@@ -27,10 +27,9 @@ export class LoginComponent {
             this.otpSent=true;
         },
         error => {
-            this.messageService.add({ severity: 'error', summary: 'Error', detail: 'OTP Failed, Please Retry...\n'+error });
+            this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Please provide valid Email Id!' });
         });
 
-    // this.otpSent=true;
   }
 
   login() {
@@ -43,7 +42,6 @@ export class LoginComponent {
             this.router.navigate(['demand-intake']);
         },
         error => {
-          alert("Login Failed")
             this.messageService.add({ severity: 'error', summary: 'error', detail: 'Login Failed!' });
         });
 

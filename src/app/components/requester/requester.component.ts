@@ -14,7 +14,7 @@ export class RequesterComponent implements OnInit{
 
   ngOnInit() {
       this.requesterInfo = this.demandIntakeService.getDemandInformation().requesterInfo;
-      console.log("RequesterComponent Init: ", this.demandIntakeService.demandInformation)
+      // console.log("RequesterComponent Init: ", this.demandIntakeService.demandInformation)
   }
 
   nextPage() {

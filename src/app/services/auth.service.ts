@@ -44,8 +44,6 @@ export class AuthService {
   }
 
   login(email: string, token: string) {
-    
-    console.log('login : ', this.currentUserValue)
     let url = this.baseUrl+'/common/demand-intake/login/';
     let headerOptions = {
       headers: new HttpHeaders({

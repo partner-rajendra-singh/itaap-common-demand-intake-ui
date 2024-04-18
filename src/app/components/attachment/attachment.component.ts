@@ -21,17 +21,17 @@ export class AttachmentComponent {
 
   submitted: boolean = false;
   visibleNextButton!: boolean;
-  visibleSubmitButton!: boolean;
+  visibleSaveButton!: boolean;
 
   constructor(public demandIntakeService: DemandIntakeService, private router: Router,
     private messageService: MessageService, private authService: AuthService
   ) {
     if(authService.isRequester()){
       this.visibleNextButton = false;
-      this.visibleSubmitButton = true;
+      this.visibleSaveButton = true;
     }else{
       this.visibleNextButton = true;
-      this.visibleSubmitButton = false;
+      this.visibleSaveButton = false;
     }
   }
 
@@ -39,7 +39,20 @@ export class AttachmentComponent {
     this.attachmentInfo = this.demandIntakeService.getDemandInformation().attachmentInfo;
   }
 
-  submitPage() {
+  savePage() {
+    this.demandIntakeService.saveDemand()
+    .pipe(first())
+    .subscribe(
+        data => {
+          this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Demand Saved!' });
+            this.router.navigate(['demand-intake']);
+        },
+        error => {
+            this.messageService.add({ severity: 'error', summary: 'error', detail: 'Demand Failed!' });
+        });
+  }
+
+  submitPage(){
     this.demandIntakeService.submitDemand()
     .pipe(first())
     .subscribe(
@@ -48,9 +61,9 @@ export class AttachmentComponent {
             this.router.navigate(['demand-intake']);
         },
         error => {
-          alert("Demand Failed")
             this.messageService.add({ severity: 'error', summary: 'error', detail: 'Demand Failed!' });
         });
+
   }
 
   prevPage() {

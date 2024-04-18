@@ -1,15 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { AuthService } from '../../services/auth.service';
+import { DemandIntakeService } from 'src/app/services/demand-intake.service';
+import { Demand } from 'src/app/models/demand';
 
 @Component({
   selector: 'app-menu',
   templateUrl: './menu.component.html'
 })
 export class MenuComponent implements OnInit {
-  items!: MenuItem[];
+    items!: MenuItem[];
 
-  constructor(private authService: AuthService){}
+    constructor(private authService: AuthService, private demandIntakeService: DemandIntakeService){}
 
     ngOnInit() {
 
@@ -18,7 +20,7 @@ export class MenuComponent implements OnInit {
                 label: 'Demand',
                 icon: 'pi pi-fw pi-file',
                 items: [
-                    { label: 'New', icon: 'pi pi-fw pi-plus', routerLink: ["/demand-intake"], visible: this.authService.isRequester() },
+                    { label: 'New', icon: 'pi pi-fw pi-plus', routerLink: ["/demand-intake"], command: () => this.newDemand() },
                     { label: 'View', icon: 'pi pi-fw pi-search', routerLink: ["/view"] },
                     { label: 'Report', icon: 'pi pi-fw pi-file-excel', routerLink: ["/report"], visible: !this.authService.isRequester() },
                     { label: 'Chart', icon: 'pi pi-chart-pie', routerLink: ["/chart"], visible: !this.authService.isRequester() }
@@ -42,7 +44,10 @@ export class MenuComponent implements OnInit {
             }
         ];
 
+    }
 
+    newDemand(){
+        this.demandIntakeService.setDemand(new Demand());
     }
 
 }

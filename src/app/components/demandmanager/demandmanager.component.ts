@@ -33,11 +33,10 @@ export class DemandManagerComponent {
   ngOnInit() { 
     this.demandManagerInfo = this.demandIntakeService.getDemandInformation().demandManagerInfo;
     this.decisions = [
-        {name: 'Approve', code: 'approve'},
-        {name: 'Rejected', code: 'rejected'},
-        {name: 'Cancelled', code: 'cancelled'},
-        {name: 'OnHold', code: 'onhold'},
-        {name: 'Need Mofidification', code: 'modification'}
+        {name: 'Approve', code: 'APPROVED'},
+        {name: 'Rejected', code: 'REJECTED'},
+        {name: 'OnHold', code: 'ON_HOLD'},
+        {name: 'Need Mofidification', code: 'MODIFICATION'}
     ];
   }
 
@@ -53,6 +52,7 @@ export class DemandManagerComponent {
 
   submitPage() {
     this.demandManagerInfo.decision = this.demandManagerInfo.decision.code;
+    this.demandIntakeService.getDemandInformation().demandManagerInfo = this.demandManagerInfo;
     this.demandIntakeService.submitDemand()
     .pipe(first())
     .subscribe(
@@ -61,7 +61,6 @@ export class DemandManagerComponent {
           this.router.navigate(['demand-intake']);
         },
         error => {
-          alert("Demand Failed")
           this.messageService.add({ severity: 'error', summary: 'error', detail: 'Demand Failed!' });
         });
   }
