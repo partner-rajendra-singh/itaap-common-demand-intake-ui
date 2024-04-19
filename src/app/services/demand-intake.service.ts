@@ -70,6 +70,13 @@ export class DemandIntakeService {
 
   getAllDemands(){
     let url = this.baseUrl+'/common/demand-intake/';
-    return this.http.get(url);
+    let headerOptions = {
+      headers: new HttpHeaders({
+          'Content-Type': 'application/json',
+          'X-Correlation-ID': 'abc',
+          'Requestor': 'partner.sachin.kapkoti@philips.com'
+      })
+    };
+    return this.http.get(url,headerOptions);
   }
 }
