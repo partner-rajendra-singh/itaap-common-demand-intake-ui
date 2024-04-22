@@ -41,14 +41,14 @@ export class CCBComponent {
       .pipe(first())
       .subscribe(
           data => {
-            this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Demand Saved!' });
-              this.router.navigate(['demand-intake']);
+            this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Demand Submitted Successfully!' });
+            this.router.navigate(['view']);
           },
           error => {
-            this.messageService.add({ severity: 'error', summary: 'error', detail: 'Demand Failed!' });
+            this.messageService.add({ severity: 'error', summary: 'error', detail: 'Demand Failed to Submit!' });
           });
     } else {
-      this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Please fill required fields!' });
+      this.messageService.add({ severity: 'warn', summary: 'Error', detail: 'Please fill required fields!' });
     }
   } 
 

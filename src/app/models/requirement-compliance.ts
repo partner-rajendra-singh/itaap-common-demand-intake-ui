@@ -5,7 +5,7 @@ export class RequirementCompliance {
     fda: boolean = false;
     security: boolean = false;
     privacy: boolean = false;
-	compliance : Compliance[] = [
+	compliance = [
         {
             key: '',
             value: ''

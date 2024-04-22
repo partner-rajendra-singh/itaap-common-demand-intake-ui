@@ -23,7 +23,7 @@ export class RequesterComponent implements OnInit{
       this.demandIntakeService.demandInformation.requesterInfo = this.requesterInfo;
       this.router.navigate(['demand-intake/requirement']);
     } else{
-      this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Please fill required fields!' });
+      this.messageService.add({ severity: 'warn', summary: 'Error', detail: 'Please fill required fields!' });
     }
   }
 

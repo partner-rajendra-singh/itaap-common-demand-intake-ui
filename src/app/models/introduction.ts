@@ -3,5 +3,5 @@ export class Introduction {
     title: string = '';
 	description: string = '';
     requestedBy: string = '';
-    status: string = '';
+    status!: string;
 }

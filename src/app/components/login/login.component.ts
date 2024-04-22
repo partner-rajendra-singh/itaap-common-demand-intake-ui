@@ -26,7 +26,7 @@ export class LoginComponent {
           if(data.otpSent){
             this.messageService.add({ severity: 'success', summary: 'Success', detail: 'OTP Sent Successfully!' });
           }else{
-            this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Use already having OTP!' });
+            this.messageService.add({ severity: 'warn', summary: 'Success', detail: 'Use already having OTP!' });
           }
            
             this.otpSent=true;
@@ -44,7 +44,11 @@ export class LoginComponent {
     .subscribe(
         data => {
             this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Login Successful!' });
-            this.router.navigate(['demand-intake']);
+            if(this.authService.isDM() || this.authService.isCCB()){
+              this.router.navigate(['view']);
+            } else{
+              this.router.navigate(['demand-intake']);
+            }
         },
         error => {
             this.messageService.add({ severity: 'error', summary: 'error', detail: 'Login Failed!' });

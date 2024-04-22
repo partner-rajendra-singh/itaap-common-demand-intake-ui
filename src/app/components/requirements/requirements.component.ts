@@ -41,7 +41,7 @@ export class RequirementsComponent implements OnInit{
                 this.router.navigate(['demand-intake/solution-direction']);
             }
         }else{
-            this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Please fill required fields!' });
+            this.messageService.add({ severity: 'warn', summary: 'Error', detail: 'Please fill required fields!' });
         }
     }
 

@@ -26,7 +26,7 @@ export class DemandIntakeComponent implements OnInit{
         const state = navigation.extras.state as {
             demandIntakeId:  string
           };
-          console.log("state", state)
+        //   console.log("state", state)
     }
     
     // this.router.getCurrentNavigation()?.extras.state.demandIntakeId;
@@ -37,7 +37,7 @@ export class DemandIntakeComponent implements OnInit{
         this.items = [
             {
                 label: 'Introduction',
-                routerLink: ['introduction','demand-intake'],
+                routerLink: ['introduction'],
                 visible: true
             },
             {

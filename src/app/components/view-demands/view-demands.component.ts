@@ -12,7 +12,7 @@ import { AuthService } from 'src/app/services/auth.service';
   templateUrl: './view-demands.component.html'
 })
 export class ViewDemandsComponent {
-  allDemands !: any;
+  allDemands: any = [];
   errorData: any;
   columns!: any;
   selectedDemand!: Demand;

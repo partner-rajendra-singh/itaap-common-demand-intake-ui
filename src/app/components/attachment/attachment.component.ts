@@ -28,7 +28,7 @@ export class AttachmentComponent {
   ) {
     if(authService.isRequester()){
       this.visibleNextButton = false;
-      if(this.demandIntakeService.getDemandInformation().introduction.status!='DRAFT' && this.demandIntakeService.getDemandInformation().introduction.status !=''){
+      if(this.demandIntakeService.getDemandInformation().introduction.status!='DRAFT' && this.demandIntakeService.getDemandInformation().introduction.status !=null){
         this.visibleSaveButton = false;
       }else{
         this.visibleSaveButton = true;
@@ -48,12 +48,12 @@ export class AttachmentComponent {
     this.demandIntakeService.saveDemand()
     .pipe(first())
     .subscribe(
-        data => {
-          this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Demand Saved!' });
-          this.router.navigate(['demand-intake']);
+      response => {
+          this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Demand Saved Successfully!' });
+          this.router.navigate(['view']);
         },
         error => {
-            this.messageService.add({ severity: 'error', summary: 'error', detail: 'Demand Failed!' });
+            this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Demand Failed to Save!' });
         });
   }
 
@@ -61,12 +61,12 @@ export class AttachmentComponent {
     this.demandIntakeService.submitDemand()
     .pipe(first())
     .subscribe(
-        data => {
-          this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Demand Submitted!' });
-          this.router.navigate(['demand-intake']);
+        response => {
+          this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Demand Submitted Successfully!' });
+          this.router.navigate(['view']);
         },
         error => {
-            this.messageService.add({ severity: 'error', summary: 'error', detail: 'Demand Failed!' });
+            this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Demand Failed to Submit!' });
         });
 
   }

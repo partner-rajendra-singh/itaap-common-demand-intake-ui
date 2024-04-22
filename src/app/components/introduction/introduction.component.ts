@@ -26,7 +26,7 @@ export class IntroductionComponent {
       this.router.navigate(['demand-intake/requester']);
       this.submitted = true;
     }else{
-      this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Please fill required fields!' });
+      this.messageService.add({ severity: 'warn', summary: 'Error', detail: 'Please fill required fields!' });
     }
 
   }
