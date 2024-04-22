@@ -30,14 +30,18 @@ export class RequirementsComponent implements OnInit{
 
     nextPage() {
 
-        this.demandIntakeService.getDemandInformation().requirementFunctionalInfo = this.requirementFunctionalInfo;
-        this.demandIntakeService.getDemandInformation().requirementNonFunctionalInfo = this.requirementNonFunctionalInfo;
-        this.demandIntakeService.getDemandInformation().requirementComplianceInfo = this.requirementComplianceInfo;
+        if(this.requirementFunctionalInfo.statement != '' && this.requirementFunctionalInfo.scope != '' && this.requirementFunctionalInfo.businessValue != '' && this.requirementFunctionalInfo.goLiveApproach != ''){
+            this.demandIntakeService.getDemandInformation().requirementFunctionalInfo = this.requirementFunctionalInfo;
+            this.demandIntakeService.getDemandInformation().requirementNonFunctionalInfo = this.requirementNonFunctionalInfo;
+            this.demandIntakeService.getDemandInformation().requirementComplianceInfo = this.requirementComplianceInfo;
 
-        if(this.authService.isRequester()){
-            this.router.navigate(['demand-intake/attachment']);
-        } else {
-            this.router.navigate(['demand-intake/solution-direction']);
+            if(this.authService.isRequester()){
+                this.router.navigate(['demand-intake/attachment']);
+            } else {
+                this.router.navigate(['demand-intake/solution-direction']);
+            }
+        }else{
+            this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Please fill required fields!' });
         }
     }
 

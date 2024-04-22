@@ -33,19 +33,23 @@ export class CCBComponent {
   }
 
   submitPage() {
-    this.ccbInfo.decision = this.ccbInfo.decision.code;
-    this.demandIntakeService.getDemandInformation().ccbInfo = this.ccbInfo;
+    if(this.ccbInfo.decisionDate != '' && this.ccbInfo.decision != '' && this.ccbInfo.remarks != ''){
+      this.ccbInfo.decision = this.ccbInfo.decision.code;
+      this.demandIntakeService.getDemandInformation().ccbInfo = this.ccbInfo;
 
-    this.demandIntakeService.submitDemand()
-    .pipe(first())
-    .subscribe(
-        data => {
-          this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Demand Saved!' });
-            this.router.navigate(['demand-intake']);
-        },
-        error => {
-          this.messageService.add({ severity: 'error', summary: 'error', detail: 'Demand Failed!' });
-        });
-  }
+      this.demandIntakeService.submitDemand()
+      .pipe(first())
+      .subscribe(
+          data => {
+            this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Demand Saved!' });
+              this.router.navigate(['demand-intake']);
+          },
+          error => {
+            this.messageService.add({ severity: 'error', summary: 'error', detail: 'Demand Failed!' });
+          });
+    } else {
+      this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Please fill required fields!' });
+    }
+  } 
 
 }

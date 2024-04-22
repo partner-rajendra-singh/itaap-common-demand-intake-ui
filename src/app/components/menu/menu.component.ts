@@ -3,6 +3,7 @@ import { MenuItem } from 'primeng/api';
 import { AuthService } from '../../services/auth.service';
 import { DemandIntakeService } from 'src/app/services/demand-intake.service';
 import { Demand } from 'src/app/models/demand';
+import { Route, Router } from '@angular/router';
 
 @Component({
   selector: 'app-menu',
@@ -11,7 +12,7 @@ import { Demand } from 'src/app/models/demand';
 export class MenuComponent implements OnInit {
     items!: MenuItem[];
 
-    constructor(private authService: AuthService, private demandIntakeService: DemandIntakeService){}
+    constructor(private router: Router,private authService: AuthService, private demandIntakeService: DemandIntakeService){}
 
     ngOnInit() {
 
@@ -46,8 +47,15 @@ export class MenuComponent implements OnInit {
 
     }
 
+    reLoad(){
+        this.router.navigate([this.router.url])
+    }
+
     newDemand(){
-        this.demandIntakeService.setDemand(new Demand());
+        console.log("new demand")
+        this.demandIntakeService.setDemand(new Demand(), true);
+        this.router.navigate(['report'])
+        this.router.navigate(['demand-intake'])
     }
 
 }

@@ -19,7 +19,7 @@ export class Demand {
 	eADIInfo: EADI = new EADI;
 	demandManagerInfo: DM = new DM;
 	ccbInfo: CCB = new CCB;
-	attachmentInfo : Attachment[]=[
+	attachmentInfo : Attachment[] = [
         {
 			file: new Object,
 			description: '',

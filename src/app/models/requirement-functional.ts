@@ -3,6 +3,6 @@ export class RequirementFunctional {
     scope: string = '';
     businessValue: string = '';
     goLiveApproach: string = '';
-    tglDate: Date = new Date();
+    // tglDate: Date = new Date();
     bglDate: Date = new Date();
 }

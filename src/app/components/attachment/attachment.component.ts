@@ -28,8 +28,13 @@ export class AttachmentComponent {
   ) {
     if(authService.isRequester()){
       this.visibleNextButton = false;
-      this.visibleSaveButton = true;
-    }else{
+      if(this.demandIntakeService.getDemandInformation().introduction.status!='DRAFT' && this.demandIntakeService.getDemandInformation().introduction.status !=''){
+        this.visibleSaveButton = false;
+      }else{
+        this.visibleSaveButton = true;
+      }
+      
+    } else{
       this.visibleNextButton = true;
       this.visibleSaveButton = false;
     }
@@ -45,7 +50,7 @@ export class AttachmentComponent {
     .subscribe(
         data => {
           this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Demand Saved!' });
-            this.router.navigate(['demand-intake']);
+          this.router.navigate(['demand-intake']);
         },
         error => {
             this.messageService.add({ severity: 'error', summary: 'error', detail: 'Demand Failed!' });
@@ -57,8 +62,8 @@ export class AttachmentComponent {
     .pipe(first())
     .subscribe(
         data => {
-          this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Demand Saved!' });
-            this.router.navigate(['demand-intake']);
+          this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Demand Submitted!' });
+          this.router.navigate(['demand-intake']);
         },
         error => {
             this.messageService.add({ severity: 'error', summary: 'error', detail: 'Demand Failed!' });

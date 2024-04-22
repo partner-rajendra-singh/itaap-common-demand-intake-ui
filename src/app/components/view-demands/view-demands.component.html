@@ -33,23 +33,23 @@
                                
                             </tr>
                         </ng-template>
-
-                
                     </p-table> 
                     
                     <div *ngIf="errorData">
                         <p style="color: red;">Error : {{errorData}}</p>
                     </div>
+                    <div *ngIf="allDemands.myDemands.length == 0">
+                        <p>You dont have any Demands!</p>
+                    </div>
 
                 </div>
-
             </p-tabPanel>
-            <p-tabPanel header="Pending Demands">
+            <p-tabPanel header="Pending Demands"  *ngIf="!isRequester">
                 <div class="card" *ngIf="allDemands.pendingDemands">
-                    <p-table [value]="allDemands.pendingDemands" [tableStyle]="{ 'min-width': '40rem' }"  [paginator]="true" [rows]="10">
+                    <p-table [value]="allDemands.pendingDemands" selectionMode="single" [(selection)]="selectedDemand" (onRowSelect)="onDemandSelect($event)" [tableStyle]="{ 'min-width': '40rem' }"  [paginator]="true" [rows]="10">
                         <ng-template pTemplate="header">
                             <tr>
-                                <th pSortableColumn="actionTime"><a>Demand Intake Id</a> <p-sortIcon field="demandIntakeId"></p-sortIcon></th>
+                                <th pSortableColumn="actionTime">Demand Intake Id <p-sortIcon field="demandIntakeId"></p-sortIcon></th>
                                 <th pSortableColumn="topicId">Title <p-sortIcon field="title"></p-sortIcon></th>
                                 <th pSortableColumn="actionTime">Description <p-sortIcon field="description"></p-sortIcon></th>
                                 <th pSortableColumn="actionTime">Rquester Program <p-sortIcon field="program"></p-sortIcon></th>
@@ -61,7 +61,7 @@
                             </tr>
                         </ng-template>
                         <ng-template pTemplate="body" let-demand let-ri="rowIndex" let-columns="columns" >
-                            <tr>
+                            <tr [pSelectableRow]="demand">
                                 <td>{{ demand.introduction['demandIntakeId'] }}</td>
                                 <td>{{ demand.introduction['title'] }}</td>
                                 <td>{{ demand.introduction['description'] }}</td>
@@ -77,6 +77,10 @@
                     
                     <div *ngIf="errorData">
                         <p style="color: red;">Error : {{errorData}}</p>
+                    </div>
+
+                    <div *ngIf="allDemands.pendingDemands.length == 0">
+                        <p>No Pending Demands!</p>
                     </div>
 
                 </div>

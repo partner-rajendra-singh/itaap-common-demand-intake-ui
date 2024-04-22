@@ -4,6 +4,7 @@ import { Subscription } from 'rxjs';
 import { DemandIntakeService } from '../../services/demand-intake.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Demand } from 'src/app/models/demand';
 
 @Component({
   selector: 'app-demand-intake',
@@ -36,7 +37,7 @@ export class DemandIntakeComponent implements OnInit{
         this.items = [
             {
                 label: 'Introduction',
-                routerLink: 'introduction',
+                routerLink: ['introduction','demand-intake'],
                 visible: true
             },
             {
@@ -78,7 +79,6 @@ export class DemandIntakeComponent implements OnInit{
 
         // Filter and assign only visible steps:
         this.items = this.items.filter(item => item.visible);
-
     }
 
     ngOnDestroy() {

@@ -1,20 +1,21 @@
 <p-card>
+  <p-toast></p-toast>
   <ng-template pTemplate="content">
       <div class="grid">
           <div class="col-12 xs:col-12 sm:col-12 lg:col-12 xl:col-12">
             <p-fieldset legend="Introduction">
               <div class="grid">
                 <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                  <label for="title" class="col-fixed" style="width: 100px">Title</label>
+                  <label required for="title" class="asterisk-if-mandatory" style="width: 100px">Title</label>
                 </div>
                 <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
-                  <input id="title" type="text" [(ngModel)]="demandInfo.title" size="70" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary"/>
+                  <input required id="title" type="text" [(ngModel)]="demandInfo.title" size="70" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary"/>
                 </div>
                 <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                  <label for="description" class="col-fixed" style="width: 100px">Description</label>
+                  <label required for="description" class="asterisk-if-mandatory" style="width: 100px">Description</label>
                 </div>
                 <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
-                  <input id="description" type="text" [(ngModel)]="demandInfo.description" size="70" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary"/>
+                  <input required id="description" type="text" [(ngModel)]="demandInfo.description" size="70" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary"/>
                 </div>
               </div>
             </p-fieldset>

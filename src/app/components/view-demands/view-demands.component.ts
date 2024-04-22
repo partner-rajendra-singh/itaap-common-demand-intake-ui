@@ -4,6 +4,8 @@ import { catchError, map, throwError } from 'rxjs';
 import { Demand } from 'src/app/models/demand';
 import { MessageService } from 'primeng/api';
 import { NavigationExtras, Router } from '@angular/router';
+import { faL } from '@fortawesome/free-solid-svg-icons';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-view-demands',
@@ -14,11 +16,15 @@ export class ViewDemandsComponent {
   errorData: any;
   columns!: any;
   selectedDemand!: Demand;
+  isReadOnly: boolean = false;
+  isRequester: boolean = false;
 
-  constructor(private demandIntakeService: DemandIntakeService, private messageService: MessageService, private router: Router) {
+  constructor(private authService: AuthService, private demandIntakeService: DemandIntakeService, private messageService: MessageService, private router: Router) {
   }
 
   ngOnInit(){
+
+    this.isRequester = this.authService.isRequester();
   //  this.allDemands = {
   //     "myDemands": [
   //     {
@@ -334,7 +340,7 @@ export class ViewDemandsComponent {
       map((response: any) => {
         this.allDemands = response;
         this.errorData = "";
-        console.log('getAllDemands() Response :',response);
+        console.log('getAllDemands() Response :',this.allDemands);
       }),
       catchError((error: any) => {
         console.log('Error', error);
@@ -347,12 +353,13 @@ export class ViewDemandsComponent {
 
   onDemandSelect(event: any){
     this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Demand Selected!' });
-    console.log(this.selectedDemand)
-    this.demandIntakeService.setDemand(this.selectedDemand);
+    console.log("selectedDemand: ", this.selectedDemand)
+    this.demandIntakeService.setDemand(this.selectedDemand, false);
 
     const navigationExtras: NavigationExtras = {
       state: {
-        'demandIntakeId': this.selectedDemand.introduction.demandIntakeId
+        'demandIntakeId': this.selectedDemand.introduction.demandIntakeId,
+        'isNew': false
       }
     };
     // this.router.navigate(['/demand-intake/', { state: {'demandIntakeId': this.selectedDemand.introduction.demandIntakeId}}]);

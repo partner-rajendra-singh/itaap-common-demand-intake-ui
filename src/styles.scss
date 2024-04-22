@@ -3,6 +3,11 @@
 @import "node_modules/primeicons/primeicons.css";
 @import "~primeng/resources/themes/bootstrap4-light-blue/theme.css";
 
+label.asterisk-if-mandatory::after {
+    content: " *";
+    color: red;
+  }
+
 .header {
     color:#fff !important; 
     background-color:#5c5c77 ;//#435761

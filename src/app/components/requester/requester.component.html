@@ -1,23 +1,24 @@
 <p-card>
+    <p-toast></p-toast>
     <ng-template pTemplate="content">
         <div class="grid">
             <div class="col-12 xs:col-12 sm:col-12 lg:col-12 xl:col-12">
                 <p-fieldset legend="Requester">
                     <div class="grid">
                         <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                            <label for="program" class="col-fixed">Program</label>
+                            <label for="program" required class="asterisk-if-mandatory">Program</label>
                         </div>
                         <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
                             <input id="program" type="text" [(ngModel)]="requesterInfo.program" size="60" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary">
                         </div>
                         <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                            <label for="domain" class="col-fixed" style="width:100px">Domain</label>
+                            <label for="domain" required class="asterisk-if-mandatory" style="width:100px">Domain</label>
                         </div>
                         <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
                             <input id="domain" type="text" [(ngModel)]="requesterInfo.domain" size="60" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary">
                         </div>
                         <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                            <label for="requestDate" class="col-fixed" style="width:100px">Requested Date</label>
+                            <label for="requestDate" required class="asterisk-if-mandatory" style="width:100px">Requested Date</label>
                         </div>
                         <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
                             <p-calendar dateFormat="dd/mm/yy" [(ngModel)]="requesterInfo.requestedDate" [showIcon]="true"></p-calendar>    

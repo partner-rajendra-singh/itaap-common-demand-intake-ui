@@ -23,7 +23,12 @@ export class LoginComponent {
     .pipe(first())
     .subscribe(
         data => {
+          if(data.otpSent){
             this.messageService.add({ severity: 'success', summary: 'Success', detail: 'OTP Sent Successfully!' });
+          }else{
+            this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Use already having OTP!' });
+          }
+           
             this.otpSent=true;
         },
         error => {
