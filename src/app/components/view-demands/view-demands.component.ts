@@ -350,7 +350,7 @@ export class ViewDemandsComponent {
   }
 
   onDemandSelect(event: any){
-    this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Demand Selected!' });
+    // this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Demand Selected!' });
     console.log("selectedDemand: ", this.selectedDemand)
     this.demandIntakeService.setDemand(this.selectedDemand, false);
 

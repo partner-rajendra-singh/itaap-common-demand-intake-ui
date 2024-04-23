@@ -15,16 +15,16 @@ export class CCBComponent {
   selectedDecision: DemandDecision | undefined;
   ccbInfo!: any;
 
-  constructor(public demandIntakeService: DemandIntakeService, private router: Router, private messageService: MessageService) {}
+  constructor(public demandIntakeService: DemandIntakeService, private router: Router, private messageService: MessageService) { }
 
-  ngOnInit() { 
+  ngOnInit() {
     // console.log("CCBComponent Init: ", this.demandIntakeService.demandInformation)
     this.ccbInfo = this.demandIntakeService.getDemandInformation().ccbInfo;
     this.decisions = [
-      {name: 'Approve', code: 'APPROVED'},
-      {name: 'Rejected', code: 'REJECTED'},
-      {name: 'OnHold', code: 'ON_HOLD'},
-      {name: 'Need Mofidification', code: 'MODIFICATION'}
+      { name: 'Approve', code: 'APPROVED' },
+      { name: 'Rejected', code: 'REJECTED' },
+      { name: 'OnHold', code: 'ON_HOLD' },
+      { name: 'Need Mofidification', code: 'MODIFICATION' }
     ];
   }
 
@@ -33,13 +33,13 @@ export class CCBComponent {
   }
 
   submitPage() {
-    if(this.ccbInfo.decisionDate != '' && this.ccbInfo.decision != '' && this.ccbInfo.remarks != ''){
+    if (this.ccbInfo.decisionDate != '' && this.ccbInfo.decision != '' && this.ccbInfo.remarks != '') {
       this.ccbInfo.decision = this.ccbInfo.decision.code;
       this.demandIntakeService.getDemandInformation().ccbInfo = this.ccbInfo;
 
       this.demandIntakeService.submitDemand()
-      .pipe(first())
-      .subscribe(
+        .pipe(first())
+        .subscribe(
           data => {
             this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Demand Submitted Successfully!' });
             this.router.navigate(['view']);
@@ -50,6 +50,6 @@ export class CCBComponent {
     } else {
       this.messageService.add({ severity: 'warn', summary: 'Error', detail: 'Please fill required fields!' });
     }
-  } 
+  }
 
 }

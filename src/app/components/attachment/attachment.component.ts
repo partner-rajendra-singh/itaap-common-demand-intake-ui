@@ -13,7 +13,7 @@ interface UploadEvent {
 @Component({
   selector: 'app-attachment',
   templateUrl: './attachment.component.html',
-  providers:[MessageService]
+  providers: [MessageService]
 })
 export class AttachmentComponent {
 
@@ -26,15 +26,15 @@ export class AttachmentComponent {
   constructor(public demandIntakeService: DemandIntakeService, private router: Router,
     private messageService: MessageService, private authService: AuthService
   ) {
-    if(authService.isRequester()){
+    if (authService.isRequester()) {
       this.visibleNextButton = false;
-      if(this.demandIntakeService.getDemandInformation().introduction.status!='DRAFT' && this.demandIntakeService.getDemandInformation().introduction.status !=null){
+      if (this.demandIntakeService.getDemandInformation().introduction.status != 'DRAFT' && this.demandIntakeService.getDemandInformation().introduction.status != null) {
         this.visibleSaveButton = false;
-      }else{
+      } else {
         this.visibleSaveButton = true;
       }
-      
-    } else{
+
+    } else {
       this.visibleNextButton = true;
       this.visibleSaveButton = false;
     }
@@ -46,35 +46,36 @@ export class AttachmentComponent {
 
   savePage() {
     this.demandIntakeService.saveDemand()
-    .pipe(first())
-    .subscribe(
+      .pipe(first())
+      .subscribe(
         response => {
-          this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Demand Saved Successfully!' });
+          this.messageService.add({ key: 'success', severity: 'success', summary: 'Success', detail: 'Demand Saved Successfully!' });
           this.router.navigate(['view']);
         },
         error => {
-            this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Demand Failed to Save!' });
+          this.messageService.add({ key: 'error', severity: 'error', summary: 'Error', detail: 'Demand Failed to Save!' });
         });
   }
 
-  submitPage(){
+  submitPage() {
     this.demandIntakeService.submitDemand()
-    .pipe(first())
-    .subscribe(
+      .pipe(first())
+      .subscribe(
         response => {
+          // setTimeout(() => {this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Demand Submitted Successfully!' });},1000)
           this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Demand Submitted Successfully!' });
           this.router.navigate(['view']);
         },
         error => {
-            this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Demand Failed to Submit!' });
+          this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Demand Failed to Submit!' });
         });
 
   }
 
   prevPage() {
-    if(this.authService.isRequester()){
+    if (this.authService.isRequester()) {
       this.router.navigate(['demand-intake/requirement']);
-    }else{
+    } else {
       this.router.navigate(['demand-intake/checklist']);
     }
   }
@@ -85,13 +86,13 @@ export class AttachmentComponent {
     this.router.navigate(['demand-intake/demandmanager']);
   }
 
-  
+
   onUpload(event: any, index: any) {
-    for(let file of event.files) {
+    for (let file of event.files) {
       this.attachmentInfo[index].file = file;
     }
     this.messageService.add({ severity: 'info', summary: 'Success', detail: 'File Uploaded with Basic Mode' });
   }
-   
+
 
 }

@@ -10,9 +10,9 @@ export class ChecklistComponent {
 
   eADIInfo!: any;
 
-  constructor(public demandIntakeService: DemandIntakeService, private router: Router) {}
+  constructor(public demandIntakeService: DemandIntakeService, private router: Router) { }
 
-  ngOnInit(){
+  ngOnInit() {
     this.eADIInfo = this.demandIntakeService.getDemandInformation().eADIInfo;
   }
 
@@ -22,7 +22,7 @@ export class ChecklistComponent {
   }
 
   prevPage() {
-      this.router.navigate(['demand-intake/solution-direction']);
+    this.router.navigate(['demand-intake/solution-direction']);
   }
 
 

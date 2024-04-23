@@ -28,8 +28,6 @@ import { DropdownModule } from 'primeng/dropdown';
 import { DemandIntakeService } from './services/demand-intake.service';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { SolutionDirectionComponent } from './components/solution-direction/solution-direction.component';
-import { NfrComponent } from './components/nfr/nfr.component';
-import { ComplianceComponent } from './components/compliance/compliance.component';
 import { AttachmentComponent } from './components/attachment/attachment.component';
 import { ChecklistComponent } from './components/checklist/checklist.component';
 import { IntroductionComponent } from './components/introduction/introduction.component';
@@ -61,8 +59,6 @@ import { DialogModule } from 'primeng/dialog';
     RequesterComponent,
     RequirementsComponent,
     SolutionDirectionComponent,
-    NfrComponent,
-    ComplianceComponent,
     AttachmentComponent,
     ChecklistComponent,
     IntroductionComponent,

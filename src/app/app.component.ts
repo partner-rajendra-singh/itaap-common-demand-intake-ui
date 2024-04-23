@@ -12,19 +12,19 @@ export class AppComponent {
   title = 'itaap-demand-intake-ui';
   currentUser!: User;
   currentUserSubscription!: Subscription;
-  
+
 
   constructor(private authService: AuthService, private router: Router) {
     this.currentUserSubscription = this.authService.currentUser.subscribe(user => {
       this.currentUser = user;
     });
   }
-  
+
   ngOnInit() {
-    if(this.currentUser){
-      if(this.authService.isDM() ||this.authService.isCCB() ){
+    if (this.currentUser) {
+      if (this.authService.isDM() || this.authService.isCCB()) {
         this.router.navigate(['/view']);
-      }else{
+      } else {
         this.router.navigate(['/demand-intake']);
       }
     } else {

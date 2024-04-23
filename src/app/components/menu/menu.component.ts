@@ -6,13 +6,13 @@ import { Demand } from 'src/app/models/demand';
 import { Route, Router } from '@angular/router';
 
 @Component({
-  selector: 'app-menu',
-  templateUrl: './menu.component.html'
+    selector: 'app-menu',
+    templateUrl: './menu.component.html'
 })
 export class MenuComponent implements OnInit {
     items!: MenuItem[];
 
-    constructor(private router: Router,private authService: AuthService, private demandIntakeService: DemandIntakeService){}
+    constructor(private router: Router, private authService: AuthService, private demandIntakeService: DemandIntakeService) { }
 
     ngOnInit() {
 
@@ -26,28 +26,28 @@ export class MenuComponent implements OnInit {
                     { label: 'Report', icon: 'pi pi-fw pi-file-excel', routerLink: ["/report"], visible: !this.authService.isRequester() },
                     { label: 'Chart', icon: 'pi pi-chart-pie', routerLink: ["/chart"], visible: !this.authService.isRequester() }
                 ],
-                expanded:true
+                expanded: true
             },
             {
                 label: 'Configuration',
                 icon: 'pi pi-fw pi-user',
                 items: [
                     { label: 'DM List', icon: 'pi pi-fw pi-align-left', routerLink: ["/dmcrud"] },
-                    { label: 'CCB List', icon: 'pi pi-fw pi-align-right' , routerLink: ["/ccbcrud"]}
+                    { label: 'CCB List', icon: 'pi pi-fw pi-align-right', routerLink: ["/ccbcrud"] }
                 ],
-                expanded:true,
+                expanded: true,
                 visible: this.authService.isAdmin()
             },
             {
                 label: 'Logout',
                 icon: 'pi pi-power-off',
-                routerLink: ["/logout"] 
+                routerLink: ["/logout"]
             }
         ];
 
     }
 
-    newDemand(){
+    newDemand() {
         console.log("new demand")
         this.demandIntakeService.setDemand(new Demand(), true);
         this.router.navigate(['demand-intake'])

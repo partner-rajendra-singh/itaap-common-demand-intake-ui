@@ -1,60 +1,62 @@
-  <p-card>
-    <ng-template pTemplate="content">
-      <div class="grid">
-        <div class="col-12 xs:col-12 sm:col-12 lg:col-12 xl:col-12">
-          <p-fieldset legend="Solution Direction">
-            <div class="grid">
-              <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                <p-checkbox [binary]="true" [(ngModel)]="solutionDirectionInfo.integration" inputId="integration"></p-checkbox>
-              </div>
-              <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
-                <label for="integration">Integration</label>
-              </div>
-              <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                <p-checkbox [binary]="true" [(ngModel)]="solutionDirectionInfo.dataModelling" inputId="dataModelling"></p-checkbox>
-              </div>
-              <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
-                <label for="dataModelling">Data Modelling</label>
-              </div>
-              <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                <p-checkbox [binary]="true" [(ngModel)]="solutionDirectionInfo.adlSL1" inputId="adlSL1"></p-checkbox>
-              </div>
-              <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
-                <label for="adlSL1">ADL SL1</label>
-              </div>
-              <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                <p-checkbox [binary]="true" [(ngModel)]="solutionDirectionInfo.adlSL2" inputId="adlSL2"></p-checkbox>
-              </div>
-              <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
-                <label for="adlSL2">ADL SL2</label>
-              </div>
-              <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                <p-checkbox [binary]="true" [(ngModel)]="solutionDirectionInfo.gold" inputId="gold"></p-checkbox>
-              </div>
-              <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
-                <label for="gold">Gold</label>
-              </div>
-              <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                <p-checkbox [binary]="true" [(ngModel)]="solutionDirectionInfo.mdm" inputId="mdm"></p-checkbox>
-              </div>
-              <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
-                <label for="mdm">MDM</label>
-              </div>
-              <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                <p-checkbox [binary]="true" [(ngModel)]="solutionDirectionInfo.ia" inputId="ia"></p-checkbox>
-              </div>
-              <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
-                <label for="ia">I&A</label>
-              </div>
+<p-card>
+  <ng-template pTemplate="content">
+    <div class="grid">
+      <div class="col-12 xs:col-12 sm:col-12 lg:col-12 xl:col-12">
+        <p-fieldset legend="Solution Direction">
+          <div class="grid">
+            <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
+              <p-checkbox [binary]="true" [(ngModel)]="solutionDirectionInfo.integration"
+                inputId="integration"></p-checkbox>
             </div>
-          </p-fieldset>
-        </div>
+            <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
+              <label for="integration">Integration</label>
+            </div>
+            <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
+              <p-checkbox [binary]="true" [(ngModel)]="solutionDirectionInfo.dataModelling"
+                inputId="dataModelling"></p-checkbox>
+            </div>
+            <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
+              <label for="dataModelling">Data Modelling</label>
+            </div>
+            <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
+              <p-checkbox [binary]="true" [(ngModel)]="solutionDirectionInfo.adlSL1" inputId="adlSL1"></p-checkbox>
+            </div>
+            <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
+              <label for="adlSL1">ADL SL1</label>
+            </div>
+            <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
+              <p-checkbox [binary]="true" [(ngModel)]="solutionDirectionInfo.adlSL2" inputId="adlSL2"></p-checkbox>
+            </div>
+            <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
+              <label for="adlSL2">ADL SL2</label>
+            </div>
+            <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
+              <p-checkbox [binary]="true" [(ngModel)]="solutionDirectionInfo.gold" inputId="gold"></p-checkbox>
+            </div>
+            <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
+              <label for="gold">Gold</label>
+            </div>
+            <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
+              <p-checkbox [binary]="true" [(ngModel)]="solutionDirectionInfo.mdm" inputId="mdm"></p-checkbox>
+            </div>
+            <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
+              <label for="mdm">MDM</label>
+            </div>
+            <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
+              <p-checkbox [binary]="true" [(ngModel)]="solutionDirectionInfo.ia" inputId="ia"></p-checkbox>
+            </div>
+            <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
+              <label for="ia">I&A</label>
+            </div>
+          </div>
+        </p-fieldset>
       </div>
-    </ng-template>
-    <ng-template pTemplate="footer">
-      <div class="grid grid-nogutter justify-content-between">
-        <p-button label="Back"  (onClick)="prevPage()" icon="pi pi-angle-left" ></p-button>
-        <p-button label="Next"  (onClick)="nextPage()"  icon="pi pi-angle-right"  iconPos="right" ></p-button>
-      </div>
-    </ng-template>
-  </p-card>
+    </div>
+  </ng-template>
+  <ng-template pTemplate="footer">
+    <div class="grid grid-nogutter justify-content-between">
+      <p-button label="Back" (onClick)="prevPage()" icon="pi pi-angle-left"></p-button>
+      <p-button label="Next" (onClick)="nextPage()" icon="pi pi-angle-right" iconPos="right"></p-button>
+    </div>
+  </ng-template>
+</p-card>

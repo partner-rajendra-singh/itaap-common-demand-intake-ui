@@ -7,13 +7,13 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class HeaderComponent {
 
-  user : string = '';
+  user: string = '';
   constructor(private authService: AuthService) {
-    if(authService.currentUserValue){
+    if (authService.currentUserValue) {
       this.user = authService.currentUserValue.email;
     }
-    
+
   }
-  
+
 
 }

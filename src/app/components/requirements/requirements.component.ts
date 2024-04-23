@@ -5,21 +5,21 @@ import { MessageService } from 'primeng/api';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
-  selector: 'app-requirements',
-  templateUrl: './requirements.component.html',
-  providers: [MessageService]
+    selector: 'app-requirements',
+    templateUrl: './requirements.component.html',
+    providers: [MessageService]
 })
-export class RequirementsComponent implements OnInit{
+export class RequirementsComponent implements OnInit {
 
-  constructor(public demandIntakeService: DemandIntakeService, private router: Router,private messageService: MessageService,
-    private authService: AuthService
-  ) {}
+    constructor(public demandIntakeService: DemandIntakeService, private router: Router, private messageService: MessageService,
+        private authService: AuthService
+    ) { }
 
-  requirementFunctionalInfo!: any;
-  requirementNonFunctionalInfo!: any;
-  requirementComplianceInfo!: any;
+    requirementFunctionalInfo!: any;
+    requirementNonFunctionalInfo!: any;
+    requirementComplianceInfo!: any;
 
-      goLiveApproach!: string;
+    goLiveApproach!: string;
 
     ngOnInit() {
         // console.log("RequirementsComponent Init: ", this.demandIntakeService.demandInformation)
@@ -30,17 +30,17 @@ export class RequirementsComponent implements OnInit{
 
     nextPage() {
 
-        if(this.requirementFunctionalInfo.statement != '' && this.requirementFunctionalInfo.scope != '' && this.requirementFunctionalInfo.businessValue != '' && this.requirementFunctionalInfo.goLiveApproach != ''){
+        if (this.requirementFunctionalInfo.statement != '' && this.requirementFunctionalInfo.scope != '' && this.requirementFunctionalInfo.businessValue != '' && this.requirementFunctionalInfo.goLiveApproach != '') {
             this.demandIntakeService.getDemandInformation().requirementFunctionalInfo = this.requirementFunctionalInfo;
             this.demandIntakeService.getDemandInformation().requirementNonFunctionalInfo = this.requirementNonFunctionalInfo;
             this.demandIntakeService.getDemandInformation().requirementComplianceInfo = this.requirementComplianceInfo;
 
-            if(this.authService.isRequester()){
+            if (this.authService.isRequester()) {
                 this.router.navigate(['demand-intake/attachment']);
             } else {
                 this.router.navigate(['demand-intake/solution-direction']);
             }
-        }else{
+        } else {
             this.messageService.add({ severity: 'warn', summary: 'Error', detail: 'Please fill required fields!' });
         }
     }
@@ -54,7 +54,7 @@ export class RequirementsComponent implements OnInit{
         this.router.navigate(['demand-intake/requester']);
     }
 
-    setGoLiveApproach(){
+    setGoLiveApproach() {
         console.log(this.goLiveApproach)
     }
 

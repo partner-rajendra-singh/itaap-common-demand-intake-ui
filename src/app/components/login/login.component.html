@@ -4,45 +4,49 @@
 <div class="col-12 xs:col-12 sm:col-12 lg:col-12 xl:col-12">&nbsp;</div>
 <div class="col-12 xs:col-12 sm:col-12 lg:col-12 xl:col-12">&nbsp;</div>
 
-<div class="col-offset-4 xs:col-offset-4 sm:col-offset-4 lg:col-offset-4 xl:col-offset-4 col-4 xs:col-4 sm:col-4 lg:col-4 xl:col-4">
-<p-card>
-    <p-toast></p-toast>
-    <ng-template pTemplate="content">
-        <div class="grid">
-            <p-fieldset legend="Login">
-                <div class="grid">
+<div
+    class="col-offset-4 xs:col-offset-4 sm:col-offset-4 lg:col-offset-4 xl:col-offset-4 col-4 xs:col-4 sm:col-4 lg:col-4 xl:col-4">
+    <p-card>
+        <p-toast></p-toast>
+        <ng-template pTemplate="content">
+            <div class="grid">
+                <p-fieldset legend="Login">
+                    <div class="grid">
 
-                    <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                        
-                    </div>
-                    <div class="col-6 xs:col-6 sm:col-6 lg:col-6 xl:col-6">
-                       
-                    </div>  
-                    <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                    </div>
+                        <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
 
-                    <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                        <label for="decisionDate">Email Address</label>
-                    </div>
-                    <div class="col-6 xs:col-6 sm:col-6 lg:col-6 xl:col-6">
-                        <input pInputText id="emailAddress" type="email" [(ngModel)]='email'  pTooltip="Enter your full email address" aria-describedby="emailAddress-help" />
-                    </div>  
-                    <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                        <p-button label="OTP" (onClick)="getOTP()"  icon="pi pi-envelope" [disabled]="otpSent"></p-button>
-                    </div>
+                        </div>
+                        <div class="col-6 xs:col-6 sm:col-6 lg:col-6 xl:col-6">
 
-                    <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3" *ngIf="otpSent">
-                        <label for="decision">OTP</label>
-                    </div>
-                    <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9" *ngIf="otpSent">
-                        <input pInputText id="otp" [(ngModel)]='token' pTooltip="Enter OTP received on your email address" aria-describedby="otp-help" />
-                    </div>
+                        </div>
+                        <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
+                        </div>
 
-                    <div class="col-12 xs:col-12 sm:col-12 lg:col-12 xl:col-12" *ngIf="otpSent">
-                        <p-button label="Sign In" (onClick)="login()" icon="pi pi-sign-in"></p-button>
+                        <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
+                            <label for="decisionDate">Email Address</label>
+                        </div>
+                        <div class="col-6 xs:col-6 sm:col-6 lg:col-6 xl:col-6">
+                            <input pInputText id="emailAddress" type="email" [(ngModel)]='email'
+                                pTooltip="Enter your full email address" aria-describedby="emailAddress-help" />
+                        </div>
+                        <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
+                            <p-button label="OTP" (onClick)="getOTP()" icon="pi pi-envelope"
+                                [disabled]="otpSent"></p-button>
+                        </div>
+
+                        <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3" *ngIf="otpSent">
+                            <label for="decision">OTP</label>
+                        </div>
+                        <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9" *ngIf="otpSent">
+                            <input pInputText id="otp" [(ngModel)]='token'
+                                pTooltip="Enter OTP received on your email address" aria-describedby="otp-help" />
+                        </div>
+
+                        <div class="col-12 xs:col-12 sm:col-12 lg:col-12 xl:col-12" *ngIf="otpSent">
+                            <p-button label="Sign In" (onClick)="login()" icon="pi pi-sign-in"></p-button>
+                        </div>
                     </div>
-                </div>
-            </p-fieldset>
+                </p-fieldset>
             </div>
         </ng-template>
     </p-card>

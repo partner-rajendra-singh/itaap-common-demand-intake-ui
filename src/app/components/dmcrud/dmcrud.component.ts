@@ -15,7 +15,7 @@ export class DMCRUDComponent {
 
   dmList!: DM[];
 
-  constructor() {}
+  constructor() { }
 
   ngOnInit() {
     this.dmList = [
