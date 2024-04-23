@@ -5,7 +5,6 @@ import { MessageService } from 'primeng/api';
 import { AuthService } from 'src/app/services/auth.service';
 import { DemandDecision } from 'src/app/models/demand-decision';
 import { first } from 'rxjs/operators';
-import { Demand } from 'src/app/models/demand';
 
 @Component({
   selector: 'app-demandmanager',
@@ -25,14 +24,13 @@ export class DemandManagerComponent {
     if(authService.isDM()){
       this.visibleNextButton = false;
       this.visibleSubmitButton = true;
-    }else{
+    } else{
       this.visibleNextButton = true;
       this.visibleSubmitButton = false;
     }
   }
 
   ngOnInit() { 
-    this.demandIntakeService.setDemand(new Demand, true);
     this.demandManagerInfo = this.demandIntakeService.getDemandInformation().demandManagerInfo;
     this.decisions = [
         {name: 'Approve', code: 'APPROVED'},
@@ -51,9 +49,10 @@ export class DemandManagerComponent {
       this.demandManagerInfo.decision = this.demandManagerInfo.decision.code;
       this.demandIntakeService.getDemandInformation().demandManagerInfo = this.demandManagerInfo;
       this.router.navigate(['demand-intake/ccb']);
+      
     } else {
       this.messageService.add({ severity: 'warn', summary: 'Error', detail: 'Please fill required fields!' });
-  }
+    }
   }
 
   submitPage() {

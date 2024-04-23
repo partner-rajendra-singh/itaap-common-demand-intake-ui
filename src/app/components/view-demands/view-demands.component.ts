@@ -4,23 +4,21 @@ import { catchError, map, throwError } from 'rxjs';
 import { Demand } from 'src/app/models/demand';
 import { MessageService } from 'primeng/api';
 import { NavigationExtras, Router } from '@angular/router';
-import { faL } from '@fortawesome/free-solid-svg-icons';
 import { AuthService } from 'src/app/services/auth.service';
+import { AllDemands } from 'src/app/models/all-demands';
 
 @Component({
   selector: 'app-view-demands',
   templateUrl: './view-demands.component.html'
 })
 export class ViewDemandsComponent {
-  allDemands: any = [];
+  allDemands: AllDemands = new AllDemands;
   errorData: any;
   columns!: any;
   selectedDemand!: Demand;
-  isReadOnly: boolean = false;
   isRequester: boolean = false;
 
-  constructor(private authService: AuthService, private demandIntakeService: DemandIntakeService, private messageService: MessageService, private router: Router) {
-  }
+  constructor(private authService: AuthService, private demandIntakeService: DemandIntakeService, private messageService: MessageService, private router: Router) {}
 
   ngOnInit(){
 
@@ -362,9 +360,8 @@ export class ViewDemandsComponent {
         'isNew': false
       }
     };
-    // this.router.navigate(['/demand-intake/', { state: {'demandIntakeId': this.selectedDemand.introduction.demandIntakeId}}]);
+    
     this.router.navigate(['/demand-intake/', navigationExtras]);
-
   }
 
 

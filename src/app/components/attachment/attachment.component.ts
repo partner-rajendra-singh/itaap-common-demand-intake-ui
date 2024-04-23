@@ -48,7 +48,7 @@ export class AttachmentComponent {
     this.demandIntakeService.saveDemand()
     .pipe(first())
     .subscribe(
-      response => {
+        response => {
           this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Demand Saved Successfully!' });
           this.router.navigate(['view']);
         },

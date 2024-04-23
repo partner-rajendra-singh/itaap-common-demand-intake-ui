@@ -39,9 +39,6 @@
                     </div>
                 </div>
 
-                <div *ngIf="allDemands == [] || allDemands.length == 0">
-                    <p>You dont have any Demands!</p>
-                </div>
             </p-tabPanel>
             <p-tabPanel header="Pending Demands" *ngIf="!isRequester">
                 <div class="card" *ngIf="allDemands.pendingDemands">
@@ -74,14 +71,10 @@
                         </ng-template>
                     </p-table> 
                     
-                    <div *ngIf="allDemands.pendingDemands.length == 0">
+                    <div *ngIf="allDemands.pendingDemands.length == 0 && !isRequester">
                         <p>No Pending Demands!</p>
                     </div>
 
-                </div>
-
-                <div *ngIf="allDemands == [] || allDemands.length == 0">
-                    <p>You dont have any Pending Demands!</p>
                 </div>
             </p-tabPanel>
         </p-tabView>

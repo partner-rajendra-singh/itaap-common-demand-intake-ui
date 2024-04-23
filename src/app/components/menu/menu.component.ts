@@ -47,14 +47,9 @@ export class MenuComponent implements OnInit {
 
     }
 
-    reLoad(){
-        this.router.navigate([this.router.url])
-    }
-
     newDemand(){
         console.log("new demand")
         this.demandIntakeService.setDemand(new Demand(), true);
-        this.router.navigate(['report'])
         this.router.navigate(['demand-intake'])
     }
 
