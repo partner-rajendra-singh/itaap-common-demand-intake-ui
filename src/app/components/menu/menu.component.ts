@@ -50,6 +50,7 @@ export class MenuComponent implements OnInit {
     newDemand() {
         console.log("new demand")
         this.demandIntakeService.setDemand(new Demand(), true);
+        window.location.reload();
         this.router.navigate(['demand-intake'])
     }
 
