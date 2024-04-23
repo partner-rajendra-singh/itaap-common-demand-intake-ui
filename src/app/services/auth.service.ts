@@ -44,8 +44,6 @@ export class AuthService {
   }
 
   login(email: string, token: string) {
-    
-    console.log('login : ', this.currentUserValue)
     let url = this.baseUrl+'/common/demand-intake/login/';
     let headerOptions = {
       headers: new HttpHeaders({
@@ -57,16 +55,14 @@ export class AuthService {
     return this.http.post<any>(url, {email, token}, headerOptions)
       .pipe(map(user => {
         console.log("login() Response :", user)
-        // user.role = 'CCB_MEMBER';
+        // user.role = 'DEMAND_MANAGER';
           if (user && user.token && user.isAuthenticated) {
               // store user details and jwt token in local storage to keep user logged in between page refreshes
               localStorage.setItem('currentUser', JSON.stringify(user));
               this.currentUserSubject.next(user);
           }
-
           return user;
       }));
-    
   }
 
   getOTP(email: string) {
@@ -83,6 +79,7 @@ export class AuthService {
     return this.http.post<any>(url, {email}, headerOptions)
     .pipe(map(user => {
       console.log("getOTP() Response :", user)
+     
       
         // store user details and jwt token in local storage to keep user logged in between page refreshes
         localStorage.setItem('currentUser', JSON.stringify(user));

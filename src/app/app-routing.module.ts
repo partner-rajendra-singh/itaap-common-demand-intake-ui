@@ -18,9 +18,10 @@ import { CCBComponent } from './components/ccb/ccb.component';
 import { ChartComponent } from './components/chart/chart.component';
 import { DMCRUDComponent } from './components/dmcrud/dmcrud.component';
 import { CCBCRUDComponent } from './components/ccbcrud/ccbcrud.component';
+import { ViewDemandsComponent } from './components/view-demands/view-demands.component';
 
 const routes: Routes = [
-  { path: 'view', component: WipComponent, canActivate: [AuthGuard]},
+  { path: 'view', component: ViewDemandsComponent, canActivate: [AuthGuard]},
   { path: 'report', component: WipComponent, canActivate: [AuthGuard]},
   { path: 'chart', component: ChartComponent, canActivate: [AuthGuard]},
   { path: 'dmcrud', component: DMCRUDComponent, canActivate: [AuthGuard]},

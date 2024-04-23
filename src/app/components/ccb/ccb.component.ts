@@ -18,14 +18,13 @@ export class CCBComponent {
   constructor(public demandIntakeService: DemandIntakeService, private router: Router, private messageService: MessageService) {}
 
   ngOnInit() { 
-    console.log("CCBComponent Init: ", this.demandIntakeService.demandInformation)
+    // console.log("CCBComponent Init: ", this.demandIntakeService.demandInformation)
     this.ccbInfo = this.demandIntakeService.getDemandInformation().ccbInfo;
     this.decisions = [
-        {name: 'Approve', code: 'approve'},
-        {name: 'Rejected', code: 'rejected'},
-        {name: 'Cancelled', code: 'cancelled'},
-        {name: 'OnHold', code: 'onhold'},
-        {name: 'Need Mofidification', code: 'modification'}
+      {name: 'Approve', code: 'APPROVED'},
+      {name: 'Rejected', code: 'REJECTED'},
+      {name: 'OnHold', code: 'ON_HOLD'},
+      {name: 'Need Mofidification', code: 'MODIFICATION'}
     ];
   }
 
@@ -34,20 +33,23 @@ export class CCBComponent {
   }
 
   submitPage() {
-    this.ccbInfo.decision = this.ccbInfo.decision.code;
-    this.demandIntakeService.getDemandInformation().ccbInfo = this.ccbInfo;
+    if(this.ccbInfo.decisionDate != '' && this.ccbInfo.decision != '' && this.ccbInfo.remarks != ''){
+      this.ccbInfo.decision = this.ccbInfo.decision.code;
+      this.demandIntakeService.getDemandInformation().ccbInfo = this.ccbInfo;
 
-    this.demandIntakeService.submitDemand()
-    .pipe(first())
-    .subscribe(
-        data => {
-          this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Demand Saved!' });
-            this.router.navigate(['demand-intake']);
-        },
-        error => {
-          alert("Demand Failed")
-            this.messageService.add({ severity: 'error', summary: 'error', detail: 'Demand Failed!' });
-        });
-  }
+      this.demandIntakeService.submitDemand()
+      .pipe(first())
+      .subscribe(
+          data => {
+            this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Demand Submitted Successfully!' });
+            this.router.navigate(['view']);
+          },
+          error => {
+            this.messageService.add({ severity: 'error', summary: 'error', detail: 'Demand Failed to Submit!' });
+          });
+    } else {
+      this.messageService.add({ severity: 'warn', summary: 'Error', detail: 'Please fill required fields!' });
+    }
+  } 
 
 }

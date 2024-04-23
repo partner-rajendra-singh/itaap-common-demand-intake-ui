@@ -1,4 +1,5 @@
 <p-card>
+    <p-toast></p-toast>
     <ng-template pTemplate="content">
         <div class="grid">
             <div class="col-12 xs:col-12 sm:col-12 lg:col-12 xl:col-12">
@@ -7,44 +8,44 @@
                         <p-tabPanel header="Functional">
                             <div class="grid">
                                 <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                                    <label for="statement" class="col-fixed" style="width:100px">Problem Statement</label>
+                                    <label for="statement" required class="asterisk-if-mandatory" style="width:100px">Problem Statement</label>
                                 </div>
                                 <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
                                     <textarea rows="2" [(ngModel)]="requirementFunctionalInfo.statement" cols="75" pInputTextarea></textarea>
                                 </div>
                                 <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                                    <label for="scope" class="col-fixed" style="width:100px">Demand Scope</label>
+                                    <label for="scope" required class="asterisk-if-mandatory" style="width:100px">Demand Scope</label>
                                 </div>
                                 <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
                                     <textarea rows="2" [(ngModel)]="requirementFunctionalInfo.scope" cols="75" pInputTextarea></textarea>
                                 </div>
                                 <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                                    <label for="businessValue" class="col-fixed" style="width:100px">Business Value</label>
+                                    <label for="businessValue" required class="asterisk-if-mandatory" style="width:100px">Business Value</label>
                                 </div>
                                 <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
                                     <textarea rows="2" [(ngModel)]="requirementFunctionalInfo.businessValue" cols="75" pInputTextarea></textarea>
                                 </div>
                                 <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                                    <label for="businessValue" class="col-fixed" style="width:100px">Go-Live Approach</label>
+                                    <label for="goLiveApproach" required class="asterisk-if-mandatory" style="width:100px">Go-Live Approach</label>
                                 </div>
                                 <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
                                     <input type="radio" id="glA1" name="goLiveApproach" [(ngModel)]="requirementFunctionalInfo.goLiveApproach" value="fixed">
                                     <label for="glA1">Fixed</label>
-                                    <input type="radio" id="glA2" name="goLiveApproach" [(ngModel)]="requirementFunctionalInfo.goLiveApproach" value="phased">
-                                    <label for="glA2">Phased</label>
+                                    <!-- <input type="radio" id="glA2" name="goLiveApproach" [(ngModel)]="requirementFunctionalInfo.goLiveApproach" value="phased">
+                                    <label for="glA2">Phased</label> -->
                                 </div>
                                 <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3" *ngIf="requirementFunctionalInfo.goLiveApproach == 'fixed' || requirementFunctionalInfo.goLiveApproach == 'phased'">
                                     <label for="requestDate" class="col-fixed" style="width:100px">Go Live Date</label>
                                 </div>
                                 <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9" *ngIf="requirementFunctionalInfo.goLiveApproach == 'fixed' || requirementFunctionalInfo.goLiveApproach == 'phased'">
-                                    <p-calendar dateFormat="dd/mm/yy" [(ngModel)]="requirementFunctionalInfo.tglDate" [showIcon]="true"></p-calendar>
+                                    <p-calendar dateFormat="dd/mm/yy" [(ngModel)]="requirementFunctionalInfo.bglDate" [showIcon]="true"></p-calendar>
                                 </div>
-                                <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3" *ngIf="requirementFunctionalInfo.goLiveApproach == 'phased'">
+                                <!-- <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3" *ngIf="requirementFunctionalInfo.goLiveApproach == 'phased'">
                                     <label for="requestDate" class="col-fixed" style="width:100px">Tentative Go Live Date</label>
                                 </div>
                                 <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9" *ngIf="requirementFunctionalInfo.goLiveApproach == 'phased'">
-                                    <p-calendar dateFormat="dd/mm/yy" [(ngModel)]="requirementFunctionalInfo.bglDate" [showIcon]="true"></p-calendar>
-                                </div>
+                                    <p-calendar dateFormat="dd/mm/yy" [(ngModel)]="requirementFunctionalInfo.tglDate" [showIcon]="true"></p-calendar>
+                                </div> -->
                             </div>
                         </p-tabPanel>
                         <p-tabPanel header="Non Functional">

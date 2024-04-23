@@ -21,17 +21,22 @@ export class AttachmentComponent {
 
   submitted: boolean = false;
   visibleNextButton!: boolean;
-  visibleSubmitButton!: boolean;
+  visibleSaveButton!: boolean;
 
   constructor(public demandIntakeService: DemandIntakeService, private router: Router,
     private messageService: MessageService, private authService: AuthService
   ) {
     if(authService.isRequester()){
       this.visibleNextButton = false;
-      this.visibleSubmitButton = true;
-    }else{
+      if(this.demandIntakeService.getDemandInformation().introduction.status!='DRAFT' && this.demandIntakeService.getDemandInformation().introduction.status !=null){
+        this.visibleSaveButton = false;
+      }else{
+        this.visibleSaveButton = true;
+      }
+      
+    } else{
       this.visibleNextButton = true;
-      this.visibleSubmitButton = false;
+      this.visibleSaveButton = false;
     }
   }
 
@@ -39,18 +44,31 @@ export class AttachmentComponent {
     this.attachmentInfo = this.demandIntakeService.getDemandInformation().attachmentInfo;
   }
 
-  submitPage() {
+  savePage() {
+    this.demandIntakeService.saveDemand()
+    .pipe(first())
+    .subscribe(
+      response => {
+          this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Demand Saved Successfully!' });
+          this.router.navigate(['view']);
+        },
+        error => {
+            this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Demand Failed to Save!' });
+        });
+  }
+
+  submitPage(){
     this.demandIntakeService.submitDemand()
     .pipe(first())
     .subscribe(
-        data => {
-          this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Demand Saved!' });
-            this.router.navigate(['demand-intake']);
+        response => {
+          this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Demand Submitted Successfully!' });
+          this.router.navigate(['view']);
         },
         error => {
-          alert("Demand Failed")
-            this.messageService.add({ severity: 'error', summary: 'error', detail: 'Demand Failed!' });
+            this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Demand Failed to Submit!' });
         });
+
   }
 
   prevPage() {

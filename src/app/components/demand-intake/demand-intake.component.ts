@@ -3,6 +3,8 @@ import { MenuItem, MessageService } from 'primeng/api';
 import { Subscription } from 'rxjs';
 import { DemandIntakeService } from '../../services/demand-intake.service';
 import { AuthService } from 'src/app/services/auth.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Demand } from 'src/app/models/demand';
 
 @Component({
   selector: 'app-demand-intake',
@@ -13,14 +15,29 @@ export class DemandIntakeComponent implements OnInit{
   items!: MenuItem[];
 
   subscription!: Subscription;
+  demandIntakeId!: string;
 
-  constructor(public messageService: MessageService, public demandIntakeService: DemandIntakeService, private authService: AuthService) {}
+  constructor(private router : Router, public messageService: MessageService, public demandIntakeService: DemandIntakeService, private authService: AuthService) {
+    // this.demandIntakeId = decodeURIComponent(this.activatedRoute.snapshot.queryParams['demandIntakeId']);
+    // this.activatedRoute.data.subscribe(v => console.log(v));
+    // console.log("this.demandIntakeId", this.demandIntakeId)
+    const navigation = this.router.getCurrentNavigation();
+    if(navigation!=null){
+        const state = navigation.extras.state as {
+            demandIntakeId:  string
+          };
+        //   console.log("state", state)
+    }
+    
+    // this.router.getCurrentNavigation()?.extras.state.demandIntakeId;
+  }
 
     ngOnInit() {
+        if(this.demandIntakeId=='true'){}
         this.items = [
             {
                 label: 'Introduction',
-                routerLink: 'introduction',
+                routerLink: ['introduction'],
                 visible: true
             },
             {
@@ -62,7 +79,6 @@ export class DemandIntakeComponent implements OnInit{
 
         // Filter and assign only visible steps:
         this.items = this.items.filter(item => item.visible);
-
     }
 
     ngOnDestroy() {

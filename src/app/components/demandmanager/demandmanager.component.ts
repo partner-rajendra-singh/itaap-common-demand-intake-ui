@@ -5,6 +5,7 @@ import { MessageService } from 'primeng/api';
 import { AuthService } from 'src/app/services/auth.service';
 import { DemandDecision } from 'src/app/models/demand-decision';
 import { first } from 'rxjs/operators';
+import { Demand } from 'src/app/models/demand';
 
 @Component({
   selector: 'app-demandmanager',
@@ -31,13 +32,13 @@ export class DemandManagerComponent {
   }
 
   ngOnInit() { 
+    this.demandIntakeService.setDemand(new Demand, true);
     this.demandManagerInfo = this.demandIntakeService.getDemandInformation().demandManagerInfo;
     this.decisions = [
-        {name: 'Approve', code: 'approve'},
-        {name: 'Rejected', code: 'rejected'},
-        {name: 'Cancelled', code: 'cancelled'},
-        {name: 'OnHold', code: 'onhold'},
-        {name: 'Need Mofidification', code: 'modification'}
+        {name: 'Approve', code: 'APPROVED'},
+        {name: 'Rejected', code: 'REJECTED'},
+        {name: 'OnHold', code: 'ON_HOLD'},
+        {name: 'Need Mofidification', code: 'MODIFICATION'}
     ];
   }
 
@@ -46,24 +47,31 @@ export class DemandManagerComponent {
   }
 
   nextPage() {
-    this.demandManagerInfo.decision = this.demandManagerInfo.decision.code;
-    this.demandIntakeService.getDemandInformation().demandManagerInfo = this.demandManagerInfo;
-    this.router.navigate(['demand-intake/ccb']);
+    if(this.demandManagerInfo.decisionDate != '' && this.demandManagerInfo.decision != '' && this.demandManagerInfo.remarks != ''){
+      this.demandManagerInfo.decision = this.demandManagerInfo.decision.code;
+      this.demandIntakeService.getDemandInformation().demandManagerInfo = this.demandManagerInfo;
+      this.router.navigate(['demand-intake/ccb']);
+    } else {
+      this.messageService.add({ severity: 'warn', summary: 'Error', detail: 'Please fill required fields!' });
+  }
   }
 
   submitPage() {
-    this.demandManagerInfo.decision = this.demandManagerInfo.decision.code;
-    this.demandIntakeService.submitDemand()
-    .pipe(first())
-    .subscribe(
-        data => {
-          this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Demand Saved!' });
-          this.router.navigate(['demand-intake']);
-        },
-        error => {
-          alert("Demand Failed")
-          this.messageService.add({ severity: 'error', summary: 'error', detail: 'Demand Failed!' });
-        });
-  }
-
+    if(this.demandManagerInfo.decisionDate != '' && this.demandManagerInfo.decision != '' && this.demandManagerInfo.remarks != ''){
+      this.demandManagerInfo.decision = this.demandManagerInfo.decision.code;
+      this.demandIntakeService.getDemandInformation().demandManagerInfo = this.demandManagerInfo;
+      this.demandIntakeService.submitDemand()
+      .pipe(first())
+      .subscribe(
+          data => {
+            this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Demand Submitted Successfully!' });
+            this.router.navigate(['view']);
+          },
+          error => {
+            this.messageService.add({ severity: 'error', summary: 'error', detail: 'Demand Failed to Submit!' });
+          });
+      } else {
+          this.messageService.add({ severity: 'warn', summary: 'Error', detail: 'Please fill required fields!' });
+      }
+    }
 }

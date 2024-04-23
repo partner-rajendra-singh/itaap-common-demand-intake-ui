@@ -13,7 +13,7 @@ export class SolutionDirectionComponent {
   constructor(public demandIntakeService: DemandIntakeService, private router: Router) {}
 
   ngOnInit() {
-    console.log("SolutionDirectionComponent Init: ", this.demandIntakeService.demandInformation)
+    // console.log("SolutionDirectionComponent Init: ", this.demandIntakeService.demandInformation)
     this.solutionDirectionInfo = this.demandIntakeService.getDemandInformation().solutionDirectionInfo;
   }
 
