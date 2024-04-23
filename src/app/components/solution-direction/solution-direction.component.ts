@@ -10,7 +10,7 @@ export class SolutionDirectionComponent {
 
   solutionDirectionInfo!: any;
 
-  constructor(public demandIntakeService: DemandIntakeService, private router: Router) {}
+  constructor(public demandIntakeService: DemandIntakeService, private router: Router) { }
 
   ngOnInit() {
     // console.log("SolutionDirectionComponent Init: ", this.demandIntakeService.demandInformation)
@@ -23,7 +23,7 @@ export class SolutionDirectionComponent {
   }
 
   prevPage() {
-      this.router.navigate(['demand-intake/requirement']);
+    this.router.navigate(['demand-intake/requirement']);
   }
 
 }

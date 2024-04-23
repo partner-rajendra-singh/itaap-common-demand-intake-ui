@@ -1,8 +1,9 @@
-
+<p-toast></p-toast>
+<p-toast key="success"></p-toast>
+<p-toast key="error"></p-toast>
 <div class="grid">
     <div class="col-12 xs:col-12 sm:col-12 lg:col-12 xl:col-12">
         <p-tabView>
-            <p-toast></p-toast>
             <p-tabPanel header="My Demands">
                 <div class="card" *ngIf="allDemands.myDemands">
                     <p-table [value]="allDemands.myDemands" selectionMode="single" [(selection)]="selectedDemand" (onRowSelect)="onDemandSelect($event)" [tableStyle]="{ 'min-width': '40rem' }"  [paginator]="true" [rows]="10">
@@ -39,9 +40,6 @@
                     </div>
                 </div>
 
-                <div *ngIf="allDemands == [] || allDemands.length == 0">
-                    <p>You dont have any Demands!</p>
-                </div>
             </p-tabPanel>
             <p-tabPanel header="Pending Demands" *ngIf="!isRequester">
                 <div class="card" *ngIf="allDemands.pendingDemands">
@@ -74,14 +72,10 @@
                         </ng-template>
                     </p-table> 
                     
-                    <div *ngIf="allDemands.pendingDemands.length == 0">
+                    <div *ngIf="allDemands.pendingDemands.length == 0 && !isRequester">
                         <p>No Pending Demands!</p>
                     </div>
 
-                </div>
-
-                <div *ngIf="allDemands == [] || allDemands.length == 0">
-                    <p>You dont have any Pending Demands!</p>
                 </div>
             </p-tabPanel>
         </p-tabView>

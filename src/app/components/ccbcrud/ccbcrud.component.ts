@@ -14,7 +14,7 @@ interface CCB {
 export class CCBCRUDComponent {
   ccbList!: CCB[];
 
-  constructor() {}
+  constructor() { }
 
   ngOnInit() {
     this.ccbList = [

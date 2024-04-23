@@ -7,22 +7,22 @@ import { MessageService } from 'primeng/api';
   selector: 'app-requester',
   templateUrl: './requester.component.html'
 })
-export class RequesterComponent implements OnInit{
+export class RequesterComponent implements OnInit {
 
   requesterInfo: any;
 
-  constructor(public demandIntakeService: DemandIntakeService, private router: Router, private messageService: MessageService) {}
+  constructor(public demandIntakeService: DemandIntakeService, private router: Router, private messageService: MessageService) { }
 
   ngOnInit() {
-      this.requesterInfo = this.demandIntakeService.getDemandInformation().requesterInfo;
-      // console.log("RequesterComponent Init: ", this.demandIntakeService.demandInformation)
+    this.requesterInfo = this.demandIntakeService.getDemandInformation().requesterInfo;
+    // console.log("RequesterComponent Init: ", this.demandIntakeService.demandInformation)
   }
 
   nextPage() {
-    if(this.requesterInfo.program != '' && this.requesterInfo.domain != '' && this.requesterInfo.requestDate != ''){
+    if (this.requesterInfo.program != '' && this.requesterInfo.domain != '' && this.requesterInfo.requestDate != '') {
       this.demandIntakeService.demandInformation.requesterInfo = this.requesterInfo;
       this.router.navigate(['demand-intake/requirement']);
-    } else{
+    } else {
       this.messageService.add({ severity: 'warn', summary: 'Error', detail: 'Please fill required fields!' });
     }
   }

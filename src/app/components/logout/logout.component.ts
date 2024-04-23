@@ -9,7 +9,7 @@ import { ConfirmationService, MessageService, ConfirmEventType } from 'primeng/a
 })
 export class LogoutComponent {
 
-  constructor(private router: Router,private authService: AuthService,private confirmationService: ConfirmationService, private messageService: MessageService) {
+  constructor(private router: Router, private authService: AuthService, private confirmationService: ConfirmationService, private messageService: MessageService) {
   }
 
   ngOnInit() {
@@ -21,10 +21,10 @@ export class LogoutComponent {
         this.router.navigate(['login']);
       },
       reject: () => {
-          this.messageService.add({ severity: 'error', summary: 'Rejected', detail: 'You have rejected', life: 3000 });
+        this.messageService.add({ severity: 'error', summary: 'Rejected', detail: 'You have rejected', life: 3000 });
       }
-  });
-    
+    });
+
   }
 
 }

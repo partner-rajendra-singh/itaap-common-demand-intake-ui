@@ -4,8 +4,6 @@ import { DemandIntakeComponent } from './components/demand-intake/demand-intake.
 import { RequirementsComponent } from './components/requirements/requirements.component';
 import { RequesterComponent } from './components/requester/requester.component';
 import { SolutionDirectionComponent } from './components/solution-direction/solution-direction.component';
-import { ComplianceComponent } from './components/compliance/compliance.component';
-import { NfrComponent } from './components/nfr/nfr.component';
 import { AttachmentComponent } from './components/attachment/attachment.component';
 import { ChecklistComponent } from './components/checklist/checklist.component';
 import { IntroductionComponent } from './components/introduction/introduction.component';
@@ -49,14 +47,6 @@ const routes: Routes = [
       component: SolutionDirectionComponent
     },
     {
-      path: 'compliance',
-      component: ComplianceComponent
-    },
-    {
-      path: 'nfr',
-      component: NfrComponent
-    },
-    {
       path: 'checklist',
       component: ChecklistComponent
     },
@@ -73,9 +63,7 @@ const routes: Routes = [
       component: CCBComponent
     }
   ]},
-  
   { path: 'login', component: LoginComponent},
-  // { path: '', component: DemandIntakeComponent}
 ];
 
 @NgModule({

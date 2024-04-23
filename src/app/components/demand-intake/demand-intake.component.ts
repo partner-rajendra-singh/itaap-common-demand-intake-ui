@@ -7,33 +7,33 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Demand } from 'src/app/models/demand';
 
 @Component({
-  selector: 'app-demand-intake',
-  templateUrl: './demand-intake.component.html'
+    selector: 'app-demand-intake',
+    templateUrl: './demand-intake.component.html'
 })
-export class DemandIntakeComponent implements OnInit{
+export class DemandIntakeComponent implements OnInit {
 
-  items!: MenuItem[];
+    items!: MenuItem[];
 
-  subscription!: Subscription;
-  demandIntakeId!: string;
+    subscription!: Subscription;
+    demandIntakeId!: string;
 
-  constructor(private router : Router, public messageService: MessageService, public demandIntakeService: DemandIntakeService, private authService: AuthService) {
-    // this.demandIntakeId = decodeURIComponent(this.activatedRoute.snapshot.queryParams['demandIntakeId']);
-    // this.activatedRoute.data.subscribe(v => console.log(v));
-    // console.log("this.demandIntakeId", this.demandIntakeId)
-    const navigation = this.router.getCurrentNavigation();
-    if(navigation!=null){
-        const state = navigation.extras.state as {
-            demandIntakeId:  string
-          };
-        //   console.log("state", state)
+    constructor(private router: Router, public messageService: MessageService, public demandIntakeService: DemandIntakeService, private authService: AuthService) {
+        // this.demandIntakeId = decodeURIComponent(this.activatedRoute.snapshot.queryParams['demandIntakeId']);
+        // this.activatedRoute.data.subscribe(v => console.log(v));
+        // console.log("this.demandIntakeId", this.demandIntakeId)
+        const navigation = this.router.getCurrentNavigation();
+        if (navigation != null) {
+            const state = navigation.extras.state as {
+                demandIntakeId: string
+            };
+            //   console.log("state", state)
+        }
+
+        // this.router.getCurrentNavigation()?.extras.state.demandIntakeId;
     }
-    
-    // this.router.getCurrentNavigation()?.extras.state.demandIntakeId;
-  }
 
     ngOnInit() {
-        if(this.demandIntakeId=='true'){}
+        if (this.demandIntakeId == 'true') { }
         this.items = [
             {
                 label: 'Introduction',
