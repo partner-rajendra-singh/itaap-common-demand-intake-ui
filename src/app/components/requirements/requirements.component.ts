@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { DemandIntakeService } from '../../services/demand-intake.service';
 import { MessageService } from 'primeng/api';
 import { AuthService } from 'src/app/services/auth.service';
+import { first } from 'rxjs';
 
 @Component({
     selector: 'app-requirements',
@@ -13,12 +14,22 @@ export class RequirementsComponent implements OnInit {
 
     constructor(public demandIntakeService: DemandIntakeService, private router: Router, private messageService: MessageService,
         private authService: AuthService
-    ) { }
+    ) {
+        if (authService.isRequester()) {
+            if (this.demandIntakeService.getDemandInformation().introduction.status != 'DRAFT' && this.demandIntakeService.getDemandInformation().introduction.status != null) {
+                this.visibleSaveButton = false;
+            } else {
+                this.visibleSaveButton = true;
+            }
+        } else {
+            this.visibleSaveButton = false;
+        }
+    }
 
     requirementFunctionalInfo!: any;
     requirementNonFunctionalInfo!: any;
     requirementComplianceInfo!: any;
-
+    visibleSaveButton!: boolean;
     goLiveApproach!: string;
 
     ngOnInit() {
@@ -56,6 +67,19 @@ export class RequirementsComponent implements OnInit {
 
     setGoLiveApproach() {
         console.log(this.goLiveApproach)
+    }
+
+    savePage() {
+        this.demandIntakeService.saveDemand()
+            .pipe(first())
+            .subscribe(
+                response => {
+                    this.messageService.add({ key: 'success', severity: 'success', summary: 'Success', detail: 'Demand Saved Successfully!' });
+                    this.router.navigate(['view']);
+                },
+                error => {
+                    this.messageService.add({ key: 'error', severity: 'error', summary: 'Error', detail: 'Demand Failed to Save!' });
+                });
     }
 
 }

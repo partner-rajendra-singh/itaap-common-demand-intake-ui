@@ -3,7 +3,7 @@
         <div class="grid">
             <div class="col-12 xs:col-12 sm:col-12 lg:col-12 xl:col-12">
                 <p-tabView>
-                    <p-tabPanel header="ITaap & Data Model">
+                    <p-tabPanel header="ITaap ">
                         <div class="grid">
                             <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
                                 <label for="platformsCapabilityDef">Platforms Capability-definition</label>
@@ -50,22 +50,104 @@
                             </div>
                         </div>
                     </p-tabPanel>
-                    <p-tabPanel header="ADL SL1 & Data Model">
+                    <p-tabPanel header="Data Model">
+                        <div>
+                            <div class="grid">
+                                <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
+                                    <label for="demandModelType">Demand Model Type</label>
+                                </div>
+                                <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
+                                    <input id="demandModelType" type="text"
+                                        [(ngModel)]="eADIInfo.dataModel.demandModelType"
+                                        class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary">
+                                </div>
+
+                                <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
+                                    <label for="dataDomain">Data Domain</label>
+                                </div>
+                                <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
+                                    <input id="dataDomain" type="text"
+                                        [(ngModel)]="eADIInfo.dataModel.dataDomain"
+                                        class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary">
+                                </div>
+
+                                <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
+                                    <label for="modelName">Model Name</label>
+                                </div>
+                                <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
+                                    <input id="modelName" type="text"
+                                        [(ngModel)]="eADIInfo.dataModel.modelName"
+                                        class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary">
+                                </div>
+
+                                <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
+                                    <label for="modelType">Model Type</label>
+                                </div>
+                                <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
+                                    <input id="modelType" type="text"
+                                        [(ngModel)]="eADIInfo.dataModel.modelType"
+                                        class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary">
+                                </div>
+
+                                <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
+                                    <label for="requestingProgram">Requesting Program</label>
+                                </div>
+                                <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
+                                    <input id="requestingProgram" type="text"
+                                        [(ngModel)]="eADIInfo.dataModel.requestingProgram"
+                                        class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary">
+                                </div>
+
+                                <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
+                                    <label for="demandModelType">API Relevant</label>
+                                </div>
+                                <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
+                                    <p-checkbox [binary]="true" [(ngModel)]="eADIInfo.dataModel.demandModelType" inputId="demandModelType"></p-checkbox>
+                                </div>
+
+                                <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
+                                    <label for="relevantITApplication">Relevant IT Application</label>
+                                </div>
+                                <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
+                                    <input id="relevantITApplication" type="text"
+                                        [(ngModel)]="eADIInfo.dataModel.relevantITApplication"
+                                        class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary">
+                                </div>
+
+                                <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
+                                    <label for="businessDataObject">Business Data Object</label>
+                                </div>
+                                <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
+                                    <input id="businessDataObject" type="text"
+                                        [(ngModel)]="eADIInfo.dataModel.businessDataObject"
+                                        class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary">
+                                </div>
+
+                                <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
+                                    <label for="demandModelType">Detailed Mapping Requirements Provided</label>
+                                </div>
+                                <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
+                                    <p-checkbox [binary]="true" [(ngModel)]="eADIInfo.dataModel.isMappingReqProvided" inputId="isMappingReqProvided"></p-checkbox>
+                                </div>
+                            </div>
+                        </div>
+                    </p-tabPanel>
+                    <p-tabPanel header="ADL SL1 ">
                         <div>
                             <h2>TBD</h2>
                         </div>
                     </p-tabPanel>
-                    <p-tabPanel header="ADL SL2 & Data Model">
+                    <p-tabPanel header="ADL SL2 ">
                         <div>
                             <h2>TBD</h2>
                         </div>
                     </p-tabPanel>
-                    <p-tabPanel header="ADL Gold & Data Model">
+                    <p-tabPanel header="ADL Gold ">
                         <div>
                             <h2>TBD</h2>
                         </div>
                     </p-tabPanel>
-                    <p-tabPanel header="ADL Gold & Data Model">
+                    <p-tabPanel header="ADL Gold ">
                         <div>
                             <h2>TBD</h2>
                         </div>

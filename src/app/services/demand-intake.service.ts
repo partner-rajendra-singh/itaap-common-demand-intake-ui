@@ -12,6 +12,7 @@ import { EADI } from '../models/eadi';
 import { throwError } from 'rxjs';
 import { MessageService } from 'primeng/api';
 import { AllDemands } from '../models/all-demands';
+import { faL } from '@fortawesome/free-solid-svg-icons';
 
 @Injectable({
   providedIn: 'root'
@@ -101,44 +102,55 @@ export class DemandIntakeService {
     console.log("setDemand: ", this.demandInformation)
   }
 
-  validateRequest(): boolean {
+  validateRequest(isSave : boolean): boolean {
 
-    if (this.demandInformation.introduction.title == '' || this.demandInformation.introduction.description == '') {
-      this.messageService.add({ severity: 'warn', summary: 'Error', detail: 'Please fill required fields!' });
-      this.router.navigate(['demand-intake/introduction']);
-      return false;
-
-    } else if (this.demandInformation.requesterInfo.program == '' || this.demandInformation.requesterInfo.domain == '') {
-      this.messageService.add({ severity: 'warn', summary: 'Error', detail: 'Please fill required fields!' });
-      this.router.navigate(['demand-intake/requester']);
-      return false;
-
-    } else if (this.demandInformation.requirementFunctionalInfo.statement == '' || this.demandInformation.requirementFunctionalInfo.scope == '' || this.demandInformation.requirementFunctionalInfo.businessValue == '' || this.demandInformation.requirementFunctionalInfo.goLiveApproach == '') {
-      this.messageService.add({ severity: 'warn', summary: 'Error', detail: 'Please fill required fields!' });
-      this.router.navigate(['demand-intake/requirement']);
-      return false;
-    }
-
-    if (this.authService.isDM()) {
-      if (this.demandInformation.demandManagerInfo.decision == null || this.demandInformation.demandManagerInfo.remarks == '') {
+    if(isSave){
+      if (this.demandInformation.introduction.title == '' || this.demandInformation.introduction.description == '') {
         this.messageService.add({ severity: 'warn', summary: 'Error', detail: 'Please fill required fields!' });
-        this.router.navigate(['demand-intake/demandmanager']);
+        this.router.navigate(['demand-intake/introduction']);
+        return false;
+  
+      }
+
+    }else{
+      if (this.demandInformation.introduction.title == '' || this.demandInformation.introduction.description == '') {
+        this.messageService.add({ severity: 'warn', summary: 'Error', detail: 'Please fill required fields!' });
+        this.router.navigate(['demand-intake/introduction']);
+        return false;
+  
+      } else if (this.demandInformation.requesterInfo.program == '' || this.demandInformation.requesterInfo.domain == '') {
+        this.messageService.add({ severity: 'warn', summary: 'Error', detail: 'Please fill required fields!' });
+        this.router.navigate(['demand-intake/requester']);
+        return false;
+  
+      } else if (this.demandInformation.requirementFunctionalInfo.statement == '' || this.demandInformation.requirementFunctionalInfo.scope == '' || this.demandInformation.requirementFunctionalInfo.businessValue == '' || this.demandInformation.requirementFunctionalInfo.goLiveApproach == '') {
+        this.messageService.add({ severity: 'warn', summary: 'Error', detail: 'Please fill required fields!' });
+        this.router.navigate(['demand-intake/requirement']);
         return false;
       }
-    } else if (this.authService.isCCB()) {
-      if (this.demandInformation.ccbInfo.decision == '' || this.demandInformation.ccbInfo.remarks == '') {
-        this.messageService.add({ severity: 'warn', summary: 'Error', detail: 'Please fill required fields!' });
-        this.router.navigate(['demand-intake/ccb']);
-        return false;
+  
+      if (this.authService.isDM()) {
+        if (this.demandInformation.demandManagerInfo.decision == null || this.demandInformation.demandManagerInfo.remarks == '') {
+          this.messageService.add({ severity: 'warn', summary: 'Error', detail: 'Please fill required fields!' });
+          this.router.navigate(['demand-intake/demandmanager']);
+          return false;
+        }
+      } else if (this.authService.isCCB()) {
+        if (this.demandInformation.ccbInfo.decision == '' || this.demandInformation.ccbInfo.remarks == '') {
+          this.messageService.add({ severity: 'warn', summary: 'Error', detail: 'Please fill required fields!' });
+          this.router.navigate(['demand-intake/ccb']);
+          return false;
+        }
       }
-    }
 
+    }
     return true;
-  }
+  
+    }
 
   saveDemand() {
     console.log("saveDemand: ", this.demandInformation)
-    if (this.validateRequest()) {
+    if (this.validateRequest(true)) {
 
       let url = this.baseUrl + '/common/demand-intake/';
       let headerOptions = {
@@ -161,7 +173,7 @@ export class DemandIntakeService {
 
   submitDemand() {
     console.log("submit: ", this.demandInformation)
-    if (this.validateRequest()) {
+    if (this.validateRequest(false)) {
       let url = this.baseUrl + '/common/demand-intake/submit';
       let headerOptions = {
         headers: new HttpHeaders({

@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { DemandIntakeService } from '../../services/demand-intake.service';
+import { first } from 'rxjs';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-solution-direction',
@@ -10,7 +12,7 @@ export class SolutionDirectionComponent {
 
   solutionDirectionInfo!: any;
 
-  constructor(public demandIntakeService: DemandIntakeService, private router: Router) { }
+  constructor(public demandIntakeService: DemandIntakeService, private router: Router, private messageService: MessageService) { }
 
   ngOnInit() {
     // console.log("SolutionDirectionComponent Init: ", this.demandIntakeService.demandInformation)
