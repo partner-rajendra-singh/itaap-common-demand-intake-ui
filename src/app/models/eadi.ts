@@ -1,3 +1,5 @@
+import { DataModel } from "./data-model";
+
 export class EADI {
     platformsCapabilityDef: string = '';
     producerAndConsumerSystems: string = '';
@@ -5,4 +7,5 @@ export class EADI {
     dataModelDefinition: string = '';
     demandDocAttached: string = '';
     additionalInfo: string = '';
+    dataModel: DataModel = new DataModel
 }
