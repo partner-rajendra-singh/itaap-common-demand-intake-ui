@@ -25,6 +25,7 @@ export class AppComponent {
       if (this.authService.isDM() || this.authService.isCCB()) {
         this.router.navigate(['/view']);
       } else {
+        window.location.reload();
         this.router.navigate(['/demand-intake']);
       }
     } else {

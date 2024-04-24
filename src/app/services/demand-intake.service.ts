@@ -36,7 +36,7 @@ export class DemandIntakeService {
       this.demandInformation = new Demand();
     } else {
 
-      if (this.authService.isDM()) {
+      if (this.authService.isDM() || this.authService.isCCB()) {
         if (demand.demandManagerInfo == null) {
           demand.demandManagerInfo = new DM;
         }
@@ -54,15 +54,17 @@ export class DemandIntakeService {
           demand.eADIInfo = new EADI;
         }
 
-      } else if (this.authService.isCCB()) {
-        if (demand.ccbInfo == null) {
-          demand.ccbInfo = new CCB;
+        if (this.authService.isCCB()) {
+          if (demand.ccbInfo == null) {
+            demand.ccbInfo = new CCB;
+          }
+  
+          if (demand.ccbInfo.decisionDate != null) {
+            demand.ccbInfo.decisionDate = new Date(demand.ccbInfo.decisionDate);
+          }
         }
 
-        if (demand.ccbInfo.decisionDate != null) {
-          demand.ccbInfo.decisionDate = new Date(demand.ccbInfo.decisionDate);
-        }
-      }
+      } 
 
       if (demand.attachmentInfo == null) {
         demand.attachmentInfo = [

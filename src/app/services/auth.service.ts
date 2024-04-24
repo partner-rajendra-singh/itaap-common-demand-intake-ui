@@ -97,5 +97,6 @@ export class AuthService {
   logout(): void {
     localStorage.removeItem('currentUser');
     this.currentUserSubject.next(null!);
+    window.location.reload();
   }
 }
