@@ -9,4 +9,7 @@
       <h4>{{user}}</h4>
     </div>
   </div>
+  <div class="col-12 xs:col-12 sm:col-12 lg:col-12 xl:col-12" style="margin-top: -2.2rem;">
+    <p-progressBar mode="indeterminate" *ngIf="isProgressing" [style]="{ height: '6px'}"></p-progressBar>
+  </div>
 </div>

@@ -1,26 +1,24 @@
-
 <div class="layout-wrapper">
+
+  <div class="header">
+    <app-header></app-header>
+  </div>
+
+  <div class="menu-wrapper" *ngIf="isAuthenticated()">
+    <div class="menu">
+      <app-menu></app-menu>
+    </div>
+    <div class="layout-main-container">
+      <div class="layout-main">
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+  </div>
   
-    <div class = "header">
-      <app-header></app-header>
-    </div>
+  <router-outlet *ngIf="!isAuthenticated()"></router-outlet>
 
-    
-    <div class="menu-wrapper" *ngIf="isAuthenticated()">
-      <div class="menu">
-        <app-menu></app-menu>
-      </div>
-      <div class="layout-main-container" >
-        <div class="layout-main">
-          <router-outlet></router-outlet>
-        </div>
-      </div>
-    </div>
-   
-  <router-outlet  *ngIf="!isAuthenticated()"></router-outlet>
-
-    <div class="footer">
-      <app-footer></app-footer>
-    </div>
+  <div class="footer">
+    <app-footer></app-footer>
+  </div>
 
 </div>

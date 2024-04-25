@@ -2,8 +2,9 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { DemandIntakeService } from '../../services/demand-intake.service';
 import { MessageService } from 'primeng/api';
-import { DemandDecision } from 'src/app/models/demand-decision';
 import { first } from 'rxjs/operators';
+import { DemandIntakeDecision } from 'src/app/models/enum';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-ccb',
@@ -11,21 +12,26 @@ import { first } from 'rxjs/operators';
 })
 export class CCBComponent {
 
-  decisions: DemandDecision[] | undefined;
-  selectedDecision: DemandDecision | undefined;
+  decisions!: string[];
+  selectedDecision!: string;
   ccbInfo!: any;
+  visibleSubmitButton: boolean = true;
 
-  constructor(public demandIntakeService: DemandIntakeService, private router: Router, private messageService: MessageService) { }
+  constructor(public demandIntakeService: DemandIntakeService, private router: Router, private messageService: MessageService, private authService: AuthService) { }
 
   ngOnInit() {
-    // console.log("CCBComponent Init: ", this.demandIntakeService.demandInformation)
     this.ccbInfo = this.demandIntakeService.getDemandInformation().ccbInfo;
-    this.decisions = [
-      { name: 'Approve', code: 'APPROVED' },
-      { name: 'Rejected', code: 'REJECTED' },
-      { name: 'OnHold', code: 'ON_HOLD' },
-      { name: 'Need Mofidification', code: 'MODIFICATION' }
-    ];
+    this.decisions = Object.values(DemandIntakeDecision);
+    this.selectedDecision = this.getStatusValue(this.demandIntakeService.getDemandInformation().ccbInfo.decision);
+
+    if(this.demandIntakeService.getDemandInformation().introduction.status == 'ACCEPTED' || this.demandIntakeService.getDemandInformation().introduction.status == 'REJECTED'){
+      this.visibleSubmitButton = false;
+    }else{
+      if(this.authService.isAdmin() || this.authService.isCCB()){
+        this.visibleSubmitButton = true;
+      }
+      
+    }
   }
 
   prevPage() {
@@ -33,8 +39,8 @@ export class CCBComponent {
   }
 
   submitPage() {
-    if (this.ccbInfo.decisionDate != '' && this.ccbInfo.decision != '' && this.ccbInfo.remarks != '') {
-      this.ccbInfo.decision = this.ccbInfo.decision.code;
+    if (this.ccbInfo.decisionDate != '' && this.selectedDecision != '' && this.ccbInfo.remarks != '') {
+      this.ccbInfo.decision = this.getStatusKey(this.selectedDecision);
       this.demandIntakeService.getDemandInformation().ccbInfo = this.ccbInfo;
 
       this.demandIntakeService.submitDemand()
@@ -50,6 +56,17 @@ export class CCBComponent {
     } else {
       this.messageService.add({ severity: 'warn', summary: 'Error', detail: 'Please fill required fields!' });
     }
+  }
+
+  getStatusKey(value: string): string {
+    const index = Object.values(DemandIntakeDecision).indexOf(value as unknown as DemandIntakeDecision);
+    return Object.keys(DemandIntakeDecision)[index];
+  }
+
+  getStatusValue(key: string): string {
+    const status = Object.keys(DemandIntakeDecision).indexOf(key as unknown as DemandIntakeDecision);
+    let s = Object.values(DemandIntakeDecision)[status];
+    return s;
   }
 
 }

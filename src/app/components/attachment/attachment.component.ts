@@ -4,6 +4,7 @@ import { DemandIntakeService } from '../../services/demand-intake.service';
 import { MessageService } from 'primeng/api';
 import { AuthService } from 'src/app/services/auth.service';
 import { first } from 'rxjs/operators';
+import { EventService } from 'src/app/services/event.service';
 
 interface UploadEvent {
   originalEvent: Event;
@@ -22,21 +23,32 @@ export class AttachmentComponent {
   submitted: boolean = false;
   visibleNextButton!: boolean;
   visibleSaveButton!: boolean;
+  visibleSubmitButton!: boolean;
 
   constructor(public demandIntakeService: DemandIntakeService, private router: Router,
-    private messageService: MessageService, private authService: AuthService
+    private messageService: MessageService, private authService: AuthService, private eventService: EventService
   ) {
+    
     if (authService.isRequester()) {
       this.visibleNextButton = false;
       if (this.demandIntakeService.getDemandInformation().introduction.status != 'DRAFT' && this.demandIntakeService.getDemandInformation().introduction.status != null) {
         this.visibleSaveButton = false;
+        this.visibleSubmitButton = false;
       } else {
         this.visibleSaveButton = true;
+        this.visibleSubmitButton = true;
       }
 
     } else {
-      this.visibleNextButton = true;
-      this.visibleSaveButton = false;
+      if (this.eventService.isNewDemand) {
+        this.visibleNextButton = false;
+        this.visibleSaveButton = false;
+        this.visibleSubmitButton = true;
+      } else {
+        this.visibleNextButton = true;
+        this.visibleSaveButton = false;
+        this.visibleSubmitButton = false;
+      }
     }
   }
 

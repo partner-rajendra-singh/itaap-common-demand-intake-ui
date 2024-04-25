@@ -4,4 +4,5 @@ export class Introduction {
 	description: string = '';
     requestedBy: string = '';
     status!: string;
+    statusLabel: string = '';
 }

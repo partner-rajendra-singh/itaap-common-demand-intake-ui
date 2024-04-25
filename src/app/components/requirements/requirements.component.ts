@@ -33,7 +33,7 @@ export class RequirementsComponent implements OnInit {
     goLiveApproach!: string;
 
     ngOnInit() {
-        // console.log("RequirementsComponent Init: ", this.demandIntakeService.demandInformation)
+        console.log("RequirementsComponent Init: ", this.demandIntakeService.demandInformation)
         this.requirementFunctionalInfo = this.demandIntakeService.getDemandInformation().requirementFunctionalInfo;
         this.requirementNonFunctionalInfo = this.demandIntakeService.getDemandInformation().requirementNonFunctionalInfo;
         this.requirementComplianceInfo = this.demandIntakeService.getDemandInformation().requirementComplianceInfo;

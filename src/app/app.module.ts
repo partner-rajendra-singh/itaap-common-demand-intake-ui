@@ -48,6 +48,7 @@ import { CCBCRUDComponent } from './components/ccbcrud/ccbcrud.component';
 import { TableModule } from 'primeng/table';
 import { ViewDemandsComponent } from './components/view-demands/view-demands.component';
 import { DialogModule } from 'primeng/dialog';
+import { ProgressBarModule } from 'primeng/progressbar';
 
 @NgModule({
   declarations: [
@@ -97,7 +98,8 @@ import { DialogModule } from 'primeng/dialog';
     ChartModule,
     ConfirmDialogModule,
     TableModule,
-    DialogModule
+    DialogModule,
+    ProgressBarModule
   ],
   providers: [DemandIntakeService, MessageService,AuthGuard,AuthService,ConfirmationService],
   bootstrap: [AppComponent]

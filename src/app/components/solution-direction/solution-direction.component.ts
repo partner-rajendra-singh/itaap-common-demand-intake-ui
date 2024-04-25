@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { DemandIntakeService } from '../../services/demand-intake.service';
 import { first } from 'rxjs';
 import { MessageService } from 'primeng/api';
+import { EventService } from 'src/app/services/event.service';
 
 @Component({
   selector: 'app-solution-direction',
@@ -10,9 +11,10 @@ import { MessageService } from 'primeng/api';
 })
 export class SolutionDirectionComponent {
 
+  parentMessage = "Message from Parent";
   solutionDirectionInfo!: any;
 
-  constructor(public demandIntakeService: DemandIntakeService, private router: Router, private messageService: MessageService) { }
+  constructor(public demandIntakeService: DemandIntakeService, private router: Router, private messageService: MessageService, private eventService: EventService) { }
 
   ngOnInit() {
     // console.log("SolutionDirectionComponent Init: ", this.demandIntakeService.demandInformation)
@@ -26,6 +28,10 @@ export class SolutionDirectionComponent {
 
   prevPage() {
     this.router.navigate(['demand-intake/requirement']);
+  }
+
+  emitCheckList(){
+    this.eventService.solutionDirectionValue = this.solutionDirectionInfo;
   }
 
 }

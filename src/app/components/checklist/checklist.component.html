@@ -2,8 +2,11 @@
     <ng-template pTemplate="content">
         <div class="grid">
             <div class="col-12 xs:col-12 sm:col-12 lg:col-12 xl:col-12">
+                <div *ngIf="!this.showTab('integration') && !this.showTab('dataModelling') && !this.showTab('adlSL1') && !this.showTab('adlSL2') && !this.showTab('gold') && !this.showTab('mdm') && !this.showTab('ia')">
+                    <p>Please Select Solution Direction!</p>
+                </div>
                 <p-tabView>
-                    <p-tabPanel header="ITaap ">
+                    <p-tabPanel header="ITaaP" *ngIf="showTab('integration')">
                         <div class="grid">
                             <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
                                 <label for="platformsCapabilityDef">Platforms Capability-definition</label>
@@ -50,7 +53,7 @@
                             </div>
                         </div>
                     </p-tabPanel>
-                    <p-tabPanel header="Data Model">
+                    <p-tabPanel header="Data Model" *ngIf="showTab('dataModelling')">
                         <div>
                             <div class="grid">
                                 <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
@@ -132,22 +135,27 @@
                             </div>
                         </div>
                     </p-tabPanel>
-                    <p-tabPanel header="ADL SL1 ">
+                    <p-tabPanel header="ADL SL1" *ngIf="showTab('adlSL1')">
                         <div>
                             <h2>TBD</h2>
                         </div>
                     </p-tabPanel>
-                    <p-tabPanel header="ADL SL2 ">
+                    <p-tabPanel header="ADL SL2" *ngIf="showTab('adlSL2')">
                         <div>
                             <h2>TBD</h2>
                         </div>
                     </p-tabPanel>
-                    <p-tabPanel header="ADL Gold ">
+                    <p-tabPanel header="ADL Gold" *ngIf="showTab('gold')">
                         <div>
                             <h2>TBD</h2>
                         </div>
                     </p-tabPanel>
-                    <p-tabPanel header="ADL Gold ">
+                    <p-tabPanel header="MDM" *ngIf="showTab('mdm')">
+                        <div>
+                            <h2>TBD</h2>
+                        </div>
+                    </p-tabPanel>
+                    <p-tabPanel header="I&A" *ngIf="showTab('ia')">
                         <div>
                             <h2>TBD</h2>
                         </div>

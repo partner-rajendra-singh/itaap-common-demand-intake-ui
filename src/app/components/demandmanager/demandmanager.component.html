@@ -16,8 +16,7 @@
               <label required class="asterisk-if-mandatory" for="decision">Decision</label>
             </div>
             <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
-              <p-dropdown appendTo="body" [options]="decisions" [(ngModel)]="demandManagerInfo.decision"
-                placeholder="Your decision" optionLabel="name"></p-dropdown>
+              <p-dropdown [options]="decisions" [(ngModel)]="selectedDecision" placeholder="Your decision"></p-dropdown>
             </div>
             <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
               <label required class="asterisk-if-mandatory" for="remarks">Remarks</label>
