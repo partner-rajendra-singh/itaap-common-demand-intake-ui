@@ -26,11 +26,6 @@ export class CCBComponent {
 
     if(this.demandIntakeService.getDemandInformation().introduction.status == 'ACCEPTED' || this.demandIntakeService.getDemandInformation().introduction.status == 'REJECTED'){
       this.visibleSubmitButton = false;
-    }else{
-      if(this.authService.isAdmin() || this.authService.isCCB()){
-        this.visibleSubmitButton = true;
-      }
-      
     }
   }
 

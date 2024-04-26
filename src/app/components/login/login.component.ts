@@ -26,7 +26,7 @@ export class LoginComponent {
           if (data.otpSent) {
             this.messageService.add({ severity: 'success', summary: 'Success', detail: 'OTP Sent Successfully!' });
           } else {
-            this.messageService.add({ severity: 'warn', summary: 'Success', detail: 'Use already having OTP!' });
+            this.messageService.add({ severity: 'warn', summary: 'Warning', detail: 'Use already having OTP!' });
           }
 
           this.otpSent = true;

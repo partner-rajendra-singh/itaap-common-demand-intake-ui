@@ -1,4 +1,9 @@
 import { Component } from '@angular/core';
+import { MessageService } from 'primeng/api';
+import { map, catchError, throwError, first } from 'rxjs';
+import { Approver } from 'src/app/models/approver';
+import { AdminService } from 'src/app/services/admin.service';
+import { EventService } from 'src/app/services/event.service';
 
 interface CCB {
   email: string;
@@ -12,30 +17,80 @@ interface CCB {
   templateUrl: './ccbcrud.component.html',
 })
 export class CCBCRUDComponent {
-  ccbList!: CCB[];
 
-  constructor() { }
+  ccbList!: Approver[];
+  visibleAddCCBDialog!: boolean;
+  visibleUpdateCCBDialog!: boolean;
+
+  constructor(private messageService: MessageService, private eventService: EventService, public adminService: AdminService) { }
 
   ngOnInit() {
-    this.ccbList = [
-      {
-        email: 'partner.pankajkumar.patel_1@philips.com',
-        status: 'Active',
-        createdOn: '14/Apr/2024 11:59:00 AM IST',
-        updatedOn: '14/Apr/2024 11:59:00 PM IST',
-      },
-      {
-        email: 'pradnya@philips.com',
-        status: 'Active',
-        createdOn: '14/Apr/2024 11:59:00 AM IST',
-        updatedOn: '14/Apr/2024 11:59:00 PM IST',
-      },
-      {
-        email: 'sachin@philips.com',
-        status: 'Active',
-        createdOn: '14/Apr/2024 11:59:00 AM IST',
-        updatedOn: '14/Apr/2024 11:59:00 PM IST',
-      }
-    ];
+    this.adminService.getAllCCB().pipe(
+      map((response: any) => {
+        this.ccbList = response;
+             
+        console.log('getAllCCB() Response :',this.ccbList);
+        this.eventService.progressBarEvent.emit(false);
+      }),
+      catchError((error: any) => {
+        console.log('Error', error);
+        this.eventService.progressBarEvent.emit(false);
+        return throwError(error);
+      })
+    ).subscribe();
+    
   }
+
+  showAddCCBDialog(){
+    this.adminService.setApprover(new Approver);
+    this.visibleAddCCBDialog = true;
+  }
+
+  showUpdateCCBDialog(dm: Approver){
+    this.adminService.setApprover(dm);
+    this.visibleUpdateCCBDialog = true;
+  }
+
+  closeAddCCBDialog() {
+    this.visibleAddCCBDialog = false;
+  } 
+
+  closeUpdateCCBDialog() {
+    this.visibleUpdateCCBDialog = false;
+  } 
+  
+  onSubmit() {
+    this.adminService.addApprover('CCB_MEMBER')
+    .pipe(first())
+      .subscribe(
+        response => {
+          this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Demand Manager is added successfully!' });
+          this.closeAddCCBDialog();
+          this.ngOnInit();
+        },
+        error => {
+          this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Failed to add Demand Manager!' });
+          this.closeAddCCBDialog();
+          this.ngOnInit();
+        });
+  }
+
+  onUpdate(){
+
+    this.adminService.updateApprover('CCB_MEMBER')
+    .pipe(first())
+      .subscribe(
+        response => {
+          this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Demand Manager is updated successfully!' });
+          this.closeUpdateCCBDialog();
+          this.ngOnInit();
+        },
+        error => {
+          this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Failed to update Demand Manager!' });
+          this.closeUpdateCCBDialog();
+          this.ngOnInit();
+        });
+
+  }
+
 }
