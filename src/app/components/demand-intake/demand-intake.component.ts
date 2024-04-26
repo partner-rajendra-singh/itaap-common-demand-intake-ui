@@ -5,6 +5,7 @@ import { DemandIntakeService } from '../../services/demand-intake.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Demand } from 'src/app/models/demand';
+import { EventService } from 'src/app/services/event.service';
 
 @Component({
     selector: 'app-demand-intake',
@@ -13,27 +14,16 @@ import { Demand } from 'src/app/models/demand';
 export class DemandIntakeComponent implements OnInit {
 
     items!: MenuItem[];
-
     subscription!: Subscription;
     demandIntakeId!: string;
 
-    constructor(private router: Router, public messageService: MessageService, public demandIntakeService: DemandIntakeService, private authService: AuthService) {
-        // this.demandIntakeId = decodeURIComponent(this.activatedRoute.snapshot.queryParams['demandIntakeId']);
-        // this.activatedRoute.data.subscribe(v => console.log(v));
-        // console.log("this.demandIntakeId", this.demandIntakeId)
-        const navigation = this.router.getCurrentNavigation();
-        if (navigation != null) {
-            const state = navigation.extras.state as {
-                demandIntakeId: string
-            };
-            //   console.log("state", state)
-        }
-
-        // this.router.getCurrentNavigation()?.extras.state.demandIntakeId;
+    constructor(private router: Router, public messageService: MessageService, public demandIntakeService: DemandIntakeService, private authService: AuthService,
+        private eventService: EventService) {
     }
 
     ngOnInit() {
-        if (this.demandIntakeId == 'true') { }
+        console.log("DemandIntakeComponent isNewDemand ", this.eventService.isNewDemand);
+
         this.items = [
             {
                 label: 'Introduction',
@@ -68,18 +58,18 @@ export class DemandIntakeComponent implements OnInit {
             {
                 label: 'DM',
                 routerLink: 'demandmanager',
-                visible: (this.authService.isDM() || this.authService.isCCB() || this.authService.isAdmin()),
+                visible: (!this.eventService.isNewDemand && (this.authService.isDM() || this.authService.isCCB() || this.authService.isAdmin())),
             },
             {
                 label: 'CCB',
                 routerLink: 'ccb',
-                visible: (this.authService.isCCB() || this.authService.isAdmin())
+                visible: (!this.eventService.isNewDemand && (this.authService.isCCB() || this.authService.isAdmin())),
             }
         ];
 
-        // Filter and assign only visible steps:
         this.items = this.items.filter(item => item.visible);
     }
+
 
     ngOnDestroy() {
         if (this.subscription) {

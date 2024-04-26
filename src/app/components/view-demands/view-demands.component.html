@@ -27,9 +27,9 @@
                                 <td>{{ demand.introduction['description'] }}</td>
                                 <td>{{ demand.requesterInfo['program'] }}</td>
                                 <td>{{ demand.requesterInfo['domain'] }}</td>
-                                <td>{{ demand.requesterInfo['requestedDate'] }}</td>
+                                <td>{{ demand.requesterInfo['requestedDate']  | date: 'MMM dd, yyyy'}}</td>
                                 <td>{{ demand.introduction['requestedBy'] }}</td>
-                                <td>{{ demand.introduction['status'] }}</td>
+                                <td>{{ demand.introduction['statusLabel'] }}</td>
                                
                             </tr>
                         </ng-template>
@@ -64,9 +64,9 @@
                                 <td>{{ demand.introduction['description'] }}</td>
                                 <td>{{ demand.requesterInfo['program'] }}</td>
                                 <td>{{ demand.requesterInfo['domain'] }}</td>
-                                <td>{{ demand.requesterInfo['requestedDate'] }}</td>
+                                <td>{{ demand.requesterInfo['requestedDate'] | date: 'MMM dd, yyyy'}}</td>
                                 <td>{{ demand.introduction['requestedBy'] }}</td>
-                                <td>{{ demand.introduction['status'] }}</td>
+                                <td>{{ demand.introduction['statusLabel'] }}</td>
                                
                             </tr>
                         </ng-template>

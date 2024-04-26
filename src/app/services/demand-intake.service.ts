@@ -12,7 +12,7 @@ import { EADI } from '../models/eadi';
 import { throwError } from 'rxjs';
 import { MessageService } from 'primeng/api';
 import { AllDemands } from '../models/all-demands';
-import { faL } from '@fortawesome/free-solid-svg-icons';
+import { EventService } from './event.service';
 
 @Injectable({
   providedIn: 'root'
@@ -22,7 +22,8 @@ export class DemandIntakeService {
   baseUrl: string = environment.baseUrl;
   demandInformation = new Demand();
 
-  constructor(private http: HttpClient, private router: Router, private authService: AuthService, private messageService: MessageService) { }
+  constructor(private http: HttpClient, private router: Router, private authService: AuthService, private messageService: MessageService,
+    private eventService: EventService) { }
 
   getDemandInformation() {
     return this.demandInformation;
@@ -45,8 +46,6 @@ export class DemandIntakeService {
           demand.demandManagerInfo.decisionDate = new Date(demand.demandManagerInfo.decisionDate);
         }
 
-        // demand.demandManagerInfo.decision  = this.decisions.filter(p => p.code === demand.demandManagerInfo.decision.code);
-
         if (demand.solutionDirectionInfo == null) {
           demand.solutionDirectionInfo = new SolutionDirection;
         }
@@ -59,13 +58,11 @@ export class DemandIntakeService {
           if (demand.ccbInfo == null) {
             demand.ccbInfo = new CCB;
           }
-  
           if (demand.ccbInfo.decisionDate != null) {
             demand.ccbInfo.decisionDate = new Date(demand.ccbInfo.decisionDate);
           }
         }
-
-      } 
+      }
 
       if (demand.attachmentInfo == null) {
         demand.attachmentInfo = [
@@ -93,42 +90,39 @@ export class DemandIntakeService {
       }
 
       demand.requesterInfo.requestedDate = new Date(demand.requesterInfo.requestedDate)
-      // demand.requirementFunctionalInfo.tglDate = new Date(demand.requirementFunctionalInfo.tglDate)
       demand.requirementFunctionalInfo.bglDate = new Date(demand.requirementFunctionalInfo.bglDate)
       this.demandInformation = demand;
-
     }
 
     console.log("setDemand: ", this.demandInformation)
   }
 
-  validateRequest(isSave : boolean): boolean {
+  validateRequest(isSave: boolean): boolean {
 
-    if(isSave){
+    if (isSave) {
       if (this.demandInformation.introduction.title == '' || this.demandInformation.introduction.description == '') {
         this.messageService.add({ severity: 'warn', summary: 'Error', detail: 'Please fill required fields!' });
         this.router.navigate(['demand-intake/introduction']);
         return false;
-  
       }
 
-    }else{
+    } else {
       if (this.demandInformation.introduction.title == '' || this.demandInformation.introduction.description == '') {
         this.messageService.add({ severity: 'warn', summary: 'Error', detail: 'Please fill required fields!' });
         this.router.navigate(['demand-intake/introduction']);
         return false;
-  
+
       } else if (this.demandInformation.requesterInfo.program == '' || this.demandInformation.requesterInfo.domain == '') {
         this.messageService.add({ severity: 'warn', summary: 'Error', detail: 'Please fill required fields!' });
         this.router.navigate(['demand-intake/requester']);
         return false;
-  
+
       } else if (this.demandInformation.requirementFunctionalInfo.statement == '' || this.demandInformation.requirementFunctionalInfo.scope == '' || this.demandInformation.requirementFunctionalInfo.businessValue == '' || this.demandInformation.requirementFunctionalInfo.goLiveApproach == '') {
         this.messageService.add({ severity: 'warn', summary: 'Error', detail: 'Please fill required fields!' });
         this.router.navigate(['demand-intake/requirement']);
         return false;
       }
-  
+
       if (this.authService.isDM()) {
         if (this.demandInformation.demandManagerInfo.decision == null || this.demandInformation.demandManagerInfo.remarks == '') {
           this.messageService.add({ severity: 'warn', summary: 'Error', detail: 'Please fill required fields!' });
@@ -145,10 +139,11 @@ export class DemandIntakeService {
 
     }
     return true;
-  
-    }
+
+  }
 
   saveDemand() {
+    this.eventService.progressBarEvent.emit(true);
     console.log("saveDemand: ", this.demandInformation)
     if (this.validateRequest(true)) {
 
@@ -164,14 +159,17 @@ export class DemandIntakeService {
       return this.http.post<any>(url, this.demandInformation, headerOptions)
         .pipe(map(response => {
           console.log("SaveDemand() Response :", response)
+          this.eventService.progressBarEvent.emit(false);
           return response;
         }));
     } else {
+      this.eventService.progressBarEvent.emit(false);
       return throwError(false);
     }
   }
 
   submitDemand() {
+    this.eventService.progressBarEvent.emit(true);
     console.log("submit: ", this.demandInformation)
     if (this.validateRequest(false)) {
       let url = this.baseUrl + '/common/demand-intake/submit';
@@ -189,16 +187,19 @@ export class DemandIntakeService {
       return this.http.post<any>(url, this.demandInformation, headerOptions)
         .pipe(map(response => {
           console.log("SubmitDemand() Response :", response)
+          this.eventService.progressBarEvent.emit(false);
           return response;
         }));
 
     } else {
+      this.eventService.progressBarEvent.emit(false);
       return throwError(false);
     }
 
   }
 
   getAllDemands() {
+    this.eventService.progressBarEvent.emit(true);
     let url = this.baseUrl + '/common/demand-intake/';
     let headerOptions = {
       headers: new HttpHeaders({
@@ -210,4 +211,6 @@ export class DemandIntakeService {
 
     return this.http.get<AllDemands>(url, headerOptions);
   }
+
+
 }

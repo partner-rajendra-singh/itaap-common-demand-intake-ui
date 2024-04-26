@@ -4,6 +4,7 @@ import { AuthService } from '../../services/auth.service';
 import { DemandIntakeService } from 'src/app/services/demand-intake.service';
 import { Demand } from 'src/app/models/demand';
 import { Route, Router } from '@angular/router';
+import { EventService } from 'src/app/services/event.service';
 
 @Component({
     selector: 'app-menu',
@@ -12,7 +13,9 @@ import { Route, Router } from '@angular/router';
 export class MenuComponent implements OnInit {
     items!: MenuItem[];
 
-    constructor(private router: Router, private authService: AuthService, private demandIntakeService: DemandIntakeService) { }
+    constructor(private router: Router, private authService: AuthService, private demandIntakeService: DemandIntakeService, 
+        private eventService: EventService
+    ) { }
 
     ngOnInit() {
 
@@ -21,7 +24,7 @@ export class MenuComponent implements OnInit {
                 label: 'Demand',
                 icon: 'pi pi-fw pi-file',
                 items: [
-                    { label: 'New', icon: 'pi pi-fw pi-plus', routerLink: ["/demand-intake"], command: () => this.newDemand() },
+                    { label: 'New', icon: 'pi pi-fw pi-plus', command: () => this.newDemand() },
                     { label: 'View', icon: 'pi pi-fw pi-search', routerLink: ["/view"] },
                     { label: 'Report', icon: 'pi pi-fw pi-file-excel', routerLink: ["/report"], visible: !this.authService.isRequester() },
                     { label: 'Chart', icon: 'pi pi-chart-pie', routerLink: ["/chart"], visible: !this.authService.isRequester() }
@@ -48,10 +51,11 @@ export class MenuComponent implements OnInit {
     }
 
     newDemand() {
-        console.log("new demand")
+        this.eventService.isNewDemand = true;
+        console.log("MenuComponent isNewDemand ", this.eventService.isNewDemand);
         this.demandIntakeService.setDemand(new Demand(), true);
-        // window.location.reload();
-        this.router.navigate(['demand-intake']);
+        this.router.navigate(['/demand-intake/introduction']);
     }
+
 
 }
