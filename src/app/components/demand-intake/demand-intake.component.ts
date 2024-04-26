@@ -43,12 +43,12 @@ export class DemandIntakeComponent implements OnInit {
             {
                 label: 'Solution Direction',
                 routerLink: 'solution-direction',
-                visible: (this.authService.isDM() || this.authService.isCCB() || this.authService.isAdmin()),
+                visible: (this.authService.isDM() || this.authService.isCCB()),
             },
             {
                 label: 'EADI',
                 routerLink: 'checklist',
-                visible: (this.authService.isDM() || this.authService.isCCB() || this.authService.isAdmin()),
+                visible: (this.authService.isDM() || this.authService.isCCB()),
             },
             {
                 label: 'Attachment',
@@ -58,12 +58,12 @@ export class DemandIntakeComponent implements OnInit {
             {
                 label: 'DM',
                 routerLink: 'demandmanager',
-                visible: (!this.eventService.isNewDemand && (this.authService.isDM() || this.authService.isCCB() || this.authService.isAdmin())),
+                visible: (!this.eventService.isNewDemand && (this.authService.isDM() || this.authService.isCCB())),
             },
             {
                 label: 'CCB',
                 routerLink: 'ccb',
-                visible: (!this.eventService.isNewDemand && (this.authService.isCCB() || this.authService.isAdmin())),
+                visible: (!this.eventService.isNewDemand && this.authService.isCCB()),
             }
         ];
 

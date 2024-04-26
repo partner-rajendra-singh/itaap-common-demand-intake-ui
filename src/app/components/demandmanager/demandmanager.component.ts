@@ -19,26 +19,21 @@ export class DemandManagerComponent {
   demandManagerInfo!: any;
 
   constructor(public demandIntakeService: DemandIntakeService, private router: Router, private messageService: MessageService,
-    private authService: AuthService
-  ) {
-    if(authService.isAdmin()){
+    private authService: AuthService) {
+
+    if (authService.isDM()) {
+      this.visibleNextButton = false;
+      if (this.demandIntakeService.getDemandInformation().introduction.status == 'ACCEPTED' || this.demandIntakeService.getDemandInformation().introduction.status == 'REJECTED') {
+        this.visibleSubmitButton = false;
+      } else {
+        this.visibleSubmitButton = true;
+      }
+
+    } else {
       this.visibleNextButton = true;
       this.visibleSubmitButton = false;
-    }else{
-      if (authService.isDM()) {
-        this.visibleNextButton = false;
-        if (this.demandIntakeService.getDemandInformation().introduction.status == 'ACCEPTED' || this.demandIntakeService.getDemandInformation().introduction.status == 'REJECTED') {
-          this.visibleSubmitButton = false;
-        } else {
-          this.visibleSubmitButton = true;
-        }
-  
-      } else {
-        this.visibleNextButton = true;
-        this.visibleSubmitButton = false;
-      }
     }
-    
+
   }
 
   ngOnInit() {
