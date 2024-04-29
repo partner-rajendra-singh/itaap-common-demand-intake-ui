@@ -36,7 +36,9 @@
                                         style="width:100px">Go-Live Approach</label>
                                 </div>
                                 <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
-                                    <input type="radio" id="glA1" name="goLiveApproach"
+                            
+                                        
+                                    <input type="radio" id="glA1" name="goLiveApproach" checked="checked"
                                         [(ngModel)]="requirementFunctionalInfo.goLiveApproach" value="oneTime">
                                     <label for="glA1">One Time</label>
                                     <input type="radio" id="glA2" name="goLiveApproach" [(ngModel)]="requirementFunctionalInfo.goLiveApproach" value="phased">
@@ -52,7 +54,7 @@
                                 </div>
                                 <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9"
                                     *ngIf="requirementFunctionalInfo.goLiveApproach == 'oneTime' || requirementFunctionalInfo.goLiveApproach == 'phased'">
-                                    <p-calendar dateFormat="dd/mm/yy" [(ngModel)]="requirementFunctionalInfo.bglDate"
+                                    <p-calendar dateFormat="dd/mm/yy" [(ngModel)]="requirementFunctionalInfo.bglDate" [minDate]="eventService.goLiveMinDate"
                                         [showIcon]="true"></p-calendar>
                                 </div>
                             </div>

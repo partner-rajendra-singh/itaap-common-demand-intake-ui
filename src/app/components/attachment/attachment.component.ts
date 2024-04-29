@@ -44,7 +44,11 @@ export class AttachmentComponent {
         this.visibleNextButton = false;
         this.visibleSaveButton = false;
         this.visibleSubmitButton = true;
-      } else {
+      } else if(this.eventService.isMyDemand){
+        this.visibleNextButton = false;
+        this.visibleSaveButton = false;
+        this.visibleSubmitButton = false;
+      }else{
         this.visibleNextButton = true;
         this.visibleSaveButton = false;
         this.visibleSubmitButton = false;
@@ -95,7 +99,9 @@ export class AttachmentComponent {
   nextPage() {
     // this.demandIntakeService.getDemandInformation().attachmentInfo = this.attachmentInfo;
     console.log("files: ", this.demandIntakeService.getDemandInformation().attachmentInfo)
-    this.router.navigate(['demand-intake/demandmanager']);
+    if(!this.eventService.isNewDemand){
+      this.router.navigate(['demand-intake/demandmanager']);
+    }
   }
 
 

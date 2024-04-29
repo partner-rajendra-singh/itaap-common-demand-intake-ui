@@ -18,15 +18,15 @@ export class DMCRUDComponent {
   visibleAddDMDialog!: boolean;
   visibleUpdateDMDialog!: boolean;
 
-  constructor(private messageService: MessageService, private eventService: EventService, public adminService: AdminService) { }
+  constructor(private messageService: MessageService, public eventService: EventService, public adminService: AdminService) { }
 
   ngOnInit() {
-    
+
     this.adminService.getAllDM().pipe(
       map((response: any) => {
         this.dmList = response;
-             
-        console.log('getAllDM() Response :',this.dmList);
+
+        console.log('getAllDM() Response :', this.dmList);
         this.eventService.progressBarEvent.emit(false);
       }),
       catchError((error: any) => {
@@ -38,55 +38,71 @@ export class DMCRUDComponent {
 
   }
 
-  showAddDMDialog(){
+  showAddDMDialog() {
     this.adminService.setApprover(new Approver);
     this.visibleAddDMDialog = true;
   }
 
-  showUpdateDMDialog(dm: Approver){
+  showUpdateDMDialog(dm: Approver) {
     this.adminService.setApprover(dm);
     this.visibleUpdateDMDialog = true;
   }
 
   closeAddDMDialog() {
     this.visibleAddDMDialog = false;
-  } 
+  }
 
   closeUpdateDMDialog() {
     this.visibleUpdateDMDialog = false;
-  } 
-  
-  onSubmit() {
-    this.adminService.addApprover('DEMAND_MANAGER')
-    .pipe(first())
-      .subscribe(
-        response => {
-          this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Demand Manager is added successfully!' });
-          this.closeAddDMDialog();
-          this.ngOnInit();
-        },
-        error => {
-          this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Failed to add Demand Manager!' });
-          this.closeAddDMDialog();
-          this.ngOnInit();
-        });
   }
 
-  onUpdate(){
+  onSubmit() {
+    this.eventService.progressBarEvent.emit(true);
+    if (this.adminService.validateApproverRequest()) {
+      this.adminService.addApprover('DEMAND_MANAGER')
+        .pipe(first())
+        .subscribe(
+          response => {
+            this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Demand Manager is added successfully!' });
+            this.closeAddDMDialog();
+            this.ngOnInit();
+          },
+          error => {
+            this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Failed to add Demand Manager!' });
+            this.eventService.progressBarEvent.emit(false);
+            this.closeAddDMDialog();
+            this.ngOnInit();
+          });
 
-    this.adminService.updateApprover('DEMAND_MANAGER')
-    .pipe(first())
-      .subscribe(
-        response => {
-          this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Demand Manager is updated successfully!' });
-          this.closeUpdateDMDialog();
-          this.ngOnInit();
-        },
-        error => {
-          this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Failed to update Demand Manager!' });
-          this.closeUpdateDMDialog();
-          this.ngOnInit();
-        });
+    } else {
+
+      this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Please fill the all the fields!' });
+      this.eventService.progressBarEvent.emit(false);
+    }
+  }
+
+  onUpdate() {
+    this.eventService.progressBarEvent.emit(true);
+    if (this.adminService.validateApproverRequest()) {
+      this.adminService.updateApprover('DEMAND_MANAGER')
+        .pipe(first())
+        .subscribe(
+          response => {
+            this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Demand Manager is updated successfully!' });
+            this.closeUpdateDMDialog();
+            this.ngOnInit();
+          },
+          error => {
+            this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Failed to update Demand Manager!' });
+            this.eventService.progressBarEvent.emit(false);
+            this.closeUpdateDMDialog();
+            this.ngOnInit();
+          });
+
+    } else {
+      this.eventService.progressBarEvent.emit(false);
+      this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Please fill the all the fields!' });
+    }
 
   }
 

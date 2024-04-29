@@ -4,6 +4,7 @@ import { DemandIntakeService } from '../../services/demand-intake.service';
 import { MessageService } from 'primeng/api';
 import { first } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
+import { EventService } from 'src/app/services/event.service';
 
 @Component({
   selector: 'app-requester',
@@ -14,7 +15,7 @@ export class RequesterComponent implements OnInit {
   requesterInfo: any;
   visibleSaveButton!: boolean;
 
-  constructor(private authService: AuthService, public demandIntakeService: DemandIntakeService, private router: Router, private messageService: MessageService) {
+  constructor(private authService: AuthService, public demandIntakeService: DemandIntakeService, private router: Router, private messageService: MessageService, public eventService: EventService) {
     if (authService.isRequester()) {
       if (this.demandIntakeService.getDemandInformation().introduction.status != 'DRAFT' && this.demandIntakeService.getDemandInformation().introduction.status != null) {
         this.visibleSaveButton = false;
@@ -30,6 +31,8 @@ export class RequesterComponent implements OnInit {
     this.requesterInfo = this.demandIntakeService.getDemandInformation().requesterInfo;
     console.log("RequesterComponent Init: ", this.demandIntakeService.demandInformation)
   }
+
+
 
   nextPage() {
     if (this.requesterInfo.program != '' && this.requesterInfo.domain != '' && this.requesterInfo.requestDate != '') {

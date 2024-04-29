@@ -21,7 +21,7 @@ export class LogoutComponent {
         this.router.navigate(['login']);
       },
       reject: () => {
-        this.messageService.add({ severity: 'error', summary: 'Rejected', detail: 'You have rejected', life: 3000 });
+        this.messageService.add({ severity: 'error', summary: 'Rejected', detail: 'You have rejected', life: 1000 });
       }
     });
 

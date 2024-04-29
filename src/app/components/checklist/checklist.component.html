@@ -37,13 +37,7 @@
                                 <input id="dataModelDefinition" type="text" [(ngModel)]="eADIInfo.dataModelDefinition"
                                     class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary">
                             </div>
-                            <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                                <label for="demandDocAttached">Demand Additional Document Attached</label>
-                            </div>
-                            <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
-                                <input id="title" type="text" [(ngModel)]="eADIInfo.demandDocAttached"
-                                    class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary">
-                            </div>
+                            
                             <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
                                 <label for="additionalInfo">Additional Info</label>
                             </div>
@@ -102,10 +96,10 @@
                                 </div>
 
                                 <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                                    <label for="demandModelType">API Relevant</label>
+                                    <label for="isAPIRelevant">API Relevant</label>
                                 </div>
                                 <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
-                                    <p-checkbox [binary]="true" [(ngModel)]="eADIInfo.dataModel.demandModelType" inputId="demandModelType"></p-checkbox>
+                                    <p-checkbox [binary]="true" [(ngModel)]="eADIInfo.dataModel.isAPIRelevant" inputId="isAPIRelevant"></p-checkbox>
                                 </div>
 
                                 <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
@@ -127,7 +121,7 @@
                                 </div>
 
                                 <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                                    <label for="demandModelType">Detailed Mapping Requirements Provided</label>
+                                    <label for="isMappingReqProvided">Detailed Mapping Requirements Provided</label>
                                 </div>
                                 <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
                                     <p-checkbox [binary]="true" [(ngModel)]="eADIInfo.dataModel.isMappingReqProvided" inputId="isMappingReqProvided"></p-checkbox>

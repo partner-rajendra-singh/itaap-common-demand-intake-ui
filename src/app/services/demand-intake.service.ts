@@ -97,6 +97,18 @@ export class DemandIntakeService {
     console.log("setDemand: ", this.demandInformation)
   }
 
+  validateSpoc(): boolean {
+    var result = true;
+    this.demandInformation.requesterInfo.spoc.forEach(s => {
+      if(!this.eventService.checkEmailValue(s.email)){
+        result = false;
+      }
+    });
+
+    return result;
+  }
+  
+
   validateRequest(isSave: boolean): boolean {
 
     if (isSave) {
@@ -112,7 +124,7 @@ export class DemandIntakeService {
         this.router.navigate(['demand-intake/introduction']);
         return false;
 
-      } else if (this.demandInformation.requesterInfo.program == '' || this.demandInformation.requesterInfo.domain == '') {
+      } else if (this.demandInformation.requesterInfo.program == '' || this.demandInformation.requesterInfo.domain == '' || !this.validateSpoc()) {
         this.messageService.add({ severity: 'warn', summary: 'Error', detail: 'Please fill required fields!' });
         this.router.navigate(['demand-intake/requester']);
         return false;
@@ -123,13 +135,13 @@ export class DemandIntakeService {
         return false;
       }
 
-      if (this.authService.isDM()) {
+      if (this.authService.isDM() && !this.eventService.isNewDemand) {
         if (this.demandInformation.demandManagerInfo.decision == null || this.demandInformation.demandManagerInfo.remarks == '') {
           this.messageService.add({ severity: 'warn', summary: 'Error', detail: 'Please fill required fields!' });
           this.router.navigate(['demand-intake/demandmanager']);
           return false;
         }
-      } else if (this.authService.isCCB()) {
+      } else if (this.authService.isCCB() && !this.eventService.isNewDemand) {
         if (this.demandInformation.ccbInfo.decision == '' || this.demandInformation.ccbInfo.remarks == '') {
           this.messageService.add({ severity: 'warn', summary: 'Error', detail: 'Please fill required fields!' });
           this.router.navigate(['demand-intake/ccb']);
@@ -214,3 +226,4 @@ export class DemandIntakeService {
 
 
 }
+

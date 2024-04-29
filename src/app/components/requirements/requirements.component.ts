@@ -4,6 +4,7 @@ import { DemandIntakeService } from '../../services/demand-intake.service';
 import { MessageService } from 'primeng/api';
 import { AuthService } from 'src/app/services/auth.service';
 import { first } from 'rxjs';
+import { EventService } from 'src/app/services/event.service';
 
 @Component({
     selector: 'app-requirements',
@@ -13,7 +14,7 @@ import { first } from 'rxjs';
 export class RequirementsComponent implements OnInit {
 
     constructor(public demandIntakeService: DemandIntakeService, private router: Router, private messageService: MessageService,
-        private authService: AuthService
+        private authService: AuthService, public eventService: EventService
     ) {
         if (authService.isRequester()) {
             if (this.demandIntakeService.getDemandInformation().introduction.status != 'DRAFT' && this.demandIntakeService.getDemandInformation().introduction.status != null) {
@@ -31,6 +32,7 @@ export class RequirementsComponent implements OnInit {
     requirementComplianceInfo!: any;
     visibleSaveButton!: boolean;
     goLiveApproach!: string;
+   
 
     ngOnInit() {
         console.log("RequirementsComponent Init: ", this.demandIntakeService.demandInformation)

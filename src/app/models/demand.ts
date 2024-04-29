@@ -10,6 +10,7 @@ import { RequirementNonFunctional } from "./requirement-non-functional";
 import { SolutionDirection } from "./solution-direction";
 
 export class Demand {
+	
     introduction: Introduction = new Introduction;
 	requesterInfo: RequesterInfo = new RequesterInfo;
 	requirementFunctionalInfo: RequirementFunctional = new RequirementFunctional;
