@@ -7,6 +7,7 @@ import { AuthService } from './auth.service';
 import { MessageService } from 'primeng/api';
 import { EventService } from './event.service';
 import { Approver } from '../models/approver';
+import { throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -45,8 +46,16 @@ export class AdminService {
     return this.http.get<any>(url, headerOptions);
   }
 
-  addApprover(role: string) {
+  validateApproverRequest() : boolean{
+    console.log("validateApproverRequest ", this.approver)
+    if (this.approver.email == '' || this.approver.status == '' || !this.eventService.checkEmailValue(this.approver.email)) {
+      return false;
+    }
 
+    return true;
+  }
+
+  addApprover(role: string) {
     this.approver.role = role;
     this.eventService.progressBarEvent.emit(true);
     let url = this.baseUrl + '/common/demand-intake/approver';
@@ -67,7 +76,6 @@ export class AdminService {
   }
 
   updateApprover(role: string) {
-    
     this.approver.role = role;
     console.log("upadate approver", this.approver)
     this.eventService.progressBarEvent.emit(true);
@@ -85,9 +93,10 @@ export class AdminService {
         this.eventService.progressBarEvent.emit(false);
         return response;
       }));
+
   }
 
-  setApprover(user : Approver){
+  setApprover(user: Approver) {
     this.approver.approverId = user.approverId;
     this.approver.email = user.email;
     this.approver.status = user.status;

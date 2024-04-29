@@ -5,6 +5,7 @@ import { DemandIntakeService } from 'src/app/services/demand-intake.service';
 import { Demand } from 'src/app/models/demand';
 import { Route, Router } from '@angular/router';
 import { EventService } from 'src/app/services/event.service';
+import { DemandIntakeComponent } from '../demand-intake/demand-intake.component';
 
 @Component({
     selector: 'app-menu',
@@ -52,9 +53,12 @@ export class MenuComponent implements OnInit {
 
     newDemand() {
         this.eventService.isNewDemand = true;
-        console.log("MenuComponent isNewDemand ", this.eventService.isNewDemand);
+        this.eventService.isMyDemand = true;
+        console.log("MenuComponent1 isNewDemand, isMyDemand ", this.eventService.isNewDemand, this.eventService.isMyDemand);
+
         this.demandIntakeService.setDemand(new Demand(), true);
         this.router.navigate(['/demand-intake/introduction']);
+
     }
 
 

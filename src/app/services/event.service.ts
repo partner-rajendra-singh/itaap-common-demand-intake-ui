@@ -1,5 +1,6 @@
 import { EventEmitter, Injectable } from '@angular/core';
 import { SolutionDirection } from '../models/solution-direction';
+import { MessageService } from 'primeng/api';
 
 @Injectable({
   providedIn: 'root'
@@ -7,8 +8,29 @@ import { SolutionDirection } from '../models/solution-direction';
 export class EventService {
 
   progressBarEvent = new EventEmitter();
-  isNewDemand : any;
+  isNewDemand : boolean = true;
+  isMyDemand : boolean = true;
   solutionDirectionValue : SolutionDirection = new SolutionDirection;
+  selectedDemandTabIndex: any = 0;
+  today : Date =  new Date();
+  goLiveMinDate : Date = new Date(this.today.setDate(this.today.getDate() + 1));
 
-  constructor() { }
+  constructor(private messageService: MessageService) {}
+
+  checkEmailValue(email: string) : boolean{
+    if(email == ''){
+      return true;
+    }
+
+    var regex = new RegExp("[A-Za-z0-9._%-]+@philips.com");
+    var res = regex.test(email);
+    // console.log("email check ", res)
+    if(!res){
+      this.messageService.add({ severity: 'warn', summary: 'Warning', detail: 'Please provide email under Philips domain!' });
+    }
+
+    return res;
+  }
+
+
 }

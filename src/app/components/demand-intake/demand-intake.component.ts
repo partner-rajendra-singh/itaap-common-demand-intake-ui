@@ -17,9 +17,7 @@ export class DemandIntakeComponent implements OnInit {
     subscription!: Subscription;
     demandIntakeId!: string;
 
-    constructor(private router: Router, public messageService: MessageService, public demandIntakeService: DemandIntakeService, private authService: AuthService,
-        private eventService: EventService) {
-    }
+    constructor(private router: Router, public messageService: MessageService, public demandIntakeService: DemandIntakeService, private eventService: EventService, private authService: AuthService) {   }
 
     ngOnInit() {
         console.log("DemandIntakeComponent isNewDemand ", this.eventService.isNewDemand);
@@ -58,18 +56,21 @@ export class DemandIntakeComponent implements OnInit {
             {
                 label: 'DM',
                 routerLink: 'demandmanager',
-                visible: (!this.eventService.isNewDemand && (this.authService.isDM() || this.authService.isCCB())),
+                visible: (!this.eventService.isNewDemand && !this.eventService.isMyDemand && (this.authService.isDM() || this.authService.isCCB())),
             },
             {
                 label: 'CCB',
                 routerLink: 'ccb',
-                visible: (!this.eventService.isNewDemand && this.authService.isCCB()),
+                visible: (!this.eventService.isNewDemand && !this.eventService.isMyDemand && this.authService.isCCB()),
             }
         ];
-
+        
         this.items = this.items.filter(item => item.visible);
     }
 
+    setItems(items : any){
+        this.items = items;
+    }
 
     ngOnDestroy() {
         if (this.subscription) {

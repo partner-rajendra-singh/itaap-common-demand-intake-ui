@@ -4,6 +4,7 @@ import { MessageService } from 'primeng/api';
 import { DemandIntakeService } from 'src/app/services/demand-intake.service';
 import { AuthService } from '../../services/auth.service';
 import { first } from 'rxjs/operators';
+import { EventService } from 'src/app/services/event.service';
 
 @Component({
   selector: 'app-login',
@@ -15,7 +16,7 @@ export class LoginComponent {
   token !: string;
   otpSent: boolean = false;
 
-  constructor(public demandIntakeService: DemandIntakeService, private router: Router, private messageService: MessageService, private authService: AuthService) {
+  constructor(public eventService: EventService, private router: Router, private messageService: MessageService, private authService: AuthService) {
   }
 
   getOTP() {

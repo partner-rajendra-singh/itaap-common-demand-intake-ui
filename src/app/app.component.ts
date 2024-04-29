@@ -3,6 +3,7 @@ import { AuthService } from './services/auth.service';
 import { User } from './models/user';
 import { Subscription } from 'rxjs';
 import { Router } from "@angular/router";
+import { EventService } from './services/event.service';
 
 @Component({
   selector: 'app-root',
@@ -14,7 +15,7 @@ export class AppComponent {
   currentUserSubscription!: Subscription;
 
 
-  constructor(private authService: AuthService, private router: Router) {
+  constructor(private authService: AuthService, private router: Router, private eventService: EventService) {
     this.currentUserSubscription = this.authService.currentUser.subscribe(user => {
       this.currentUser = user;
     });
@@ -24,9 +25,9 @@ export class AppComponent {
     if (this.currentUser) {
       if (this.authService.isDM() || this.authService.isCCB()) {
         this.router.navigate(['/view']);
-      } else {
-        window.location.reload();
-        this.router.navigate(['/demand-intake']);
+      // } else {
+      //   window.location.reload();
+      //   this.router.navigate(['/demand-intake']);
       }
     } else {
       this.router.navigate(['/login']);
