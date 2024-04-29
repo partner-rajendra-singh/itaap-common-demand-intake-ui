@@ -19,6 +19,7 @@ export class SolutionDirectionComponent {
   ngOnInit() {
     // console.log("SolutionDirectionComponent Init: ", this.demandIntakeService.demandInformation)
     this.solutionDirectionInfo = this.demandIntakeService.getDemandInformation().solutionDirectionInfo;
+    this.eventService.solutionDirectionValue = this.solutionDirectionInfo;
   }
 
   nextPage() {
