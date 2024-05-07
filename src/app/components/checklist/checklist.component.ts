@@ -37,6 +37,9 @@ export class ChecklistComponent {
       case 'gold': return this.eventService.solutionDirectionValue.gold;
       case 'mdm': return this.eventService.solutionDirectionValue.mdm;
       case 'ia': return this.eventService.solutionDirectionValue.ia;
+      case 'dataQuality': return this.eventService.solutionDirectionValue.dataQuality;
+      case 'informatica': return this.eventService.solutionDirectionValue.informatica;
+      case 'azureSynapse': return this.eventService.solutionDirectionValue.azureSynapse;
     }
 
     return false;

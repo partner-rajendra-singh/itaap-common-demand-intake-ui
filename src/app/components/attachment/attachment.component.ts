@@ -6,9 +6,10 @@ import { AuthService } from 'src/app/services/auth.service';
 import { first } from 'rxjs/operators';
 import { EventService } from 'src/app/services/event.service';
 
+
 interface UploadEvent {
   originalEvent: Event;
-  files: File[];
+  files: Blob[];
 }
 
 @Component({
@@ -61,7 +62,7 @@ export class AttachmentComponent {
   }
 
   savePage() {
-    this.demandIntakeService.saveDemand()
+    this.demandIntakeService.saveDemandWithAttachment()
       .pipe(first())
       .subscribe(
         response => {
@@ -109,7 +110,7 @@ export class AttachmentComponent {
     for (let file of event.files) {
       this.attachmentInfo[index].file = file;
     }
-    this.messageService.add({ severity: 'info', summary: 'Success', detail: 'File Uploaded with Basic Mode' });
+    this.messageService.add({ severity: 'info', summary: 'Success', detail: 'Files Uploaded Successfully!' });
   }
 
 

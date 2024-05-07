@@ -6,4 +6,7 @@ export class SolutionDirection {
     gold: boolean = false;
     mdm: boolean = false;
     ia: boolean = false;
+    dataQuality: boolean = false;
+    informatica: boolean = false;
+    azureSynapse: boolean = false;
 }

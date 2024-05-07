@@ -2,11 +2,12 @@
     <ng-template pTemplate="content">
         <div class="grid">
             <div class="col-12 xs:col-12 sm:col-12 lg:col-12 xl:col-12">
-                <div *ngIf="!this.showTab('integration') && !this.showTab('dataModelling') && !this.showTab('adlSL1') && !this.showTab('adlSL2') && !this.showTab('gold') && !this.showTab('mdm') && !this.showTab('ia')">
+                <div
+                    *ngIf="!this.showTab('integration') && !this.showTab('dataModelling') && !this.showTab('adlSL1') && !this.showTab('adlSL2') && !this.showTab('gold') && !this.showTab('mdm') && !this.showTab('ia')">
                     <p>Please Select Solution Direction!</p>
                 </div>
                 <p-tabView>
-                    <p-tabPanel header="ITaaP" *ngIf="showTab('integration')">
+                    <p-tabPanel header="Integration/ITaaP" *ngIf="showTab('integration')">
                         <div class="grid">
                             <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
                                 <label for="platformsCapabilityDef">Platforms Capability-definition</label>
@@ -37,7 +38,7 @@
                                 <input id="dataModelDefinition" type="text" [(ngModel)]="eADIInfo.dataModelDefinition"
                                     class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary">
                             </div>
-                            
+
                             <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
                                 <label for="additionalInfo">Additional Info</label>
                             </div>
@@ -54,17 +55,20 @@
                                     <label for="demandModelType">Demand Model Type</label>
                                 </div>
                                 <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
-                                    <input id="demandModelType" type="text"
-                                        [(ngModel)]="eADIInfo.dataModel.demandModelType"
-                                        class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary">
+                                    <input type="radio" id="dm1" name="demandModelType" checked="checked"
+                                        [(ngModel)]="eADIInfo.dataModel.demandModelType" value="New Model">
+                                    <label for="dm1">New Model</label> &nbsp;
+                                    <input type="radio" id="dm2" name="demandModelType" [(ngModel)]="eADIInfo.dataModel.demandModelType" value="Change To Existing Model">
+                                    <label for="dm2">Change To Existing Model</label> &nbsp;
+                                    <input type="radio" id="dm3" name="demandModelType" [(ngModel)]="eADIInfo.dataModel.demandModelType" value="Target Date Postponement">
+                                    <label for="dm3">Target Date Postponement</label>
                                 </div>
 
                                 <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
                                     <label for="dataDomain">Data Domain</label>
                                 </div>
                                 <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
-                                    <input id="dataDomain" type="text"
-                                        [(ngModel)]="eADIInfo.dataModel.dataDomain"
+                                    <input id="dataDomain" type="text" [(ngModel)]="eADIInfo.dataModel.dataDomain"
                                         class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary">
                                 </div>
 
@@ -72,8 +76,7 @@
                                     <label for="modelName">Model Name</label>
                                 </div>
                                 <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
-                                    <input id="modelName" type="text"
-                                        [(ngModel)]="eADIInfo.dataModel.modelName"
+                                    <input id="modelName" type="text" [(ngModel)]="eADIInfo.dataModel.modelName"
                                         class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary">
                                 </div>
 
@@ -81,9 +84,13 @@
                                     <label for="modelType">Model Type</label>
                                 </div>
                                 <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
-                                    <input id="modelType" type="text"
-                                        [(ngModel)]="eADIInfo.dataModel.modelType"
-                                        class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary">
+                                    <input type="radio" id="dm1" name="modelType" checked="checked"
+                                        [(ngModel)]="eADIInfo.dataModel.modelType" value="Conceptual">
+                                    <label for="dm1">Conceptual</label> &nbsp;
+                                    <input type="radio" id="dm2" name="modelType" [(ngModel)]="eADIInfo.dataModel.modelType" value="Logical">
+                                    <label for="dm2">Logical</label> &nbsp;
+                                    <input type="radio" id="dm3" name="modelType" [(ngModel)]="eADIInfo.dataModel.modelType" value="Physical">
+                                    <label for="dm3">Physical</label>
                                 </div>
 
                                 <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
@@ -99,7 +106,8 @@
                                     <label for="isAPIRelevant">API Relevant</label>
                                 </div>
                                 <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
-                                    <p-checkbox [binary]="true" [(ngModel)]="eADIInfo.dataModel.isAPIRelevant" inputId="isAPIRelevant"></p-checkbox>
+                                    <p-checkbox [binary]="true" [(ngModel)]="eADIInfo.dataModel.isAPIRelevant"
+                                        inputId="isAPIRelevant"></p-checkbox>
                                 </div>
 
                                 <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
@@ -124,7 +132,8 @@
                                     <label for="isMappingReqProvided">Detailed Mapping Requirements Provided</label>
                                 </div>
                                 <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
-                                    <p-checkbox [binary]="true" [(ngModel)]="eADIInfo.dataModel.isMappingReqProvided" inputId="isMappingReqProvided"></p-checkbox>
+                                    <p-checkbox [binary]="true" [(ngModel)]="eADIInfo.dataModel.isMappingReqProvided"
+                                        inputId="isMappingReqProvided"></p-checkbox>
                                 </div>
                             </div>
                         </div>
@@ -150,6 +159,130 @@
                         </div>
                     </p-tabPanel>
                     <p-tabPanel header="I&A" *ngIf="showTab('ia')">
+                        <div>
+                            <h2>TBD</h2>
+                        </div>
+                    </p-tabPanel>
+                    <p-tabPanel header="Data Quality" *ngIf="showTab('dataQuality')">
+                        <div>
+                            <p-fieldset legend="Data Cleaning SPOC Information">
+                                <div class="grid">
+                                    <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
+                                        <label required for="name" style="width: 100px">Name</label>
+                                    </div>
+                                    <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
+                                        <input required id="name" type="text"
+                                            [(ngModel)]="eADIInfo.dataQuality.dataCleaningSpocName" size="70"
+                                            class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary" />
+                                    </div>
+                                    <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
+                                        <label required for="email" style="width: 100px">Email</label>
+                                    </div>
+                                    <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
+                                        <input required id="email" type="email"
+                                            [(ngModel)]="eADIInfo.dataQuality.dataCleaningSpocEmail" size="70"
+                                            class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary" />
+                                    </div>
+                                </div>
+                            </p-fieldset>
+                            <p-fieldset legend="BPO Information">
+                                <div class="grid">
+                                    <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
+                                        <label required for="name" style="width: 100px">Name</label>
+                                    </div>
+                                    <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
+                                        <input required id="name" type="text" [(ngModel)]="eADIInfo.dataQuality.bpoName"
+                                            size="70"
+                                            class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary" />
+                                    </div>
+                                    <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
+                                        <label required for="email" style="width: 100px">Email</label>
+                                    </div>
+                                    <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
+                                        <input required id="email" type="email"
+                                            [(ngModel)]="eADIInfo.dataQuality.bpoEmail" size="70"
+                                            class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary" />
+                                    </div>
+                                </div>
+                            </p-fieldset>
+                            <p-fieldset legend="Other">
+                                <div class="grid">
+                                    <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
+                                        <label required for="name" style="width: 100px">Exceptions if any to the
+                                            requirement [not applicable conditions]</label>
+                                    </div>
+                                    <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
+                                        <textarea id="description" rows="3" cols="78"
+                                            [(ngModel)]="eADIInfo.dataQuality.exceptions" pInputTextarea></textarea>
+                                    </div>
+                                    <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
+                                        <label required for="businessKPIImpacted" style="width: 100px">Business KPI
+                                            impacted</label>
+                                    </div>
+                                    <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
+                                        <input required id="businessKPIImpacted" type="text"
+                                            [(ngModel)]="eADIInfo.dataQuality.businessKPIImpacted" size="70"
+                                            class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary" />
+                                    </div>
+
+                                    <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
+                                        <label required for="dataRuleDescription" style="width: 100px">Data Rule
+                                            Description</label>
+                                    </div>
+                                    <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
+                                        <input required id="dataRuleDescription" type="text"
+                                            [(ngModel)]="eADIInfo.dataQuality.dataRuleDescription" size="70"
+                                            class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary" />
+                                    </div>
+
+                                    <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
+                                        <label required for="processPEPFInScope" style="width: 100px">PEPF Process In
+                                            Scope</label>
+                                    </div>
+                                    <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
+                                        <input required id="processPEPFInScope" type="text"
+                                            [(ngModel)]="eADIInfo.dataQuality.processPEPFInScope" size="70"
+                                            class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary" />
+                                    </div>
+
+                                    <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
+                                        <label for="requirementType" required style="width:100px">Requirement Type</label>
+                                    </div>
+
+                                    <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
+                                        <input type="radio" id="Global" name="approvedBudget" checked="checked"
+                                            [(ngModel)]="eADIInfo.dataQuality.requirementType" value="Global">
+                                        <label for="Global">Global</label>
+                                        <input type="radio" id="BU/Market" name="approvedBudget"
+                                            [(ngModel)]="eADIInfo.dataQuality.requirementType" value="BU/Market">
+                                        <label for="BU/Market">BU/Market</label>
+                                    </div>
+
+                                    <div class="col-12 xs:col-12 sm:col-12 lg:col-12 xl:col-12"
+                                        *ngIf="eADIInfo.dataQuality.requirementType == 'BU/Market'"
+                                        style="display: inline-flex;">
+                                        <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
+                                            <label for="market" required>Market</label>
+                                        </div>
+                                        <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
+                                            <input id="market" type="text"
+                                                [(ngModel)]="eADIInfo.dataQuality.market" size="60"
+                                                class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary">
+                                        </div>
+                                    </div>
+
+                                </div>
+
+
+                            </p-fieldset>
+                        </div>
+                    </p-tabPanel>
+                    <p-tabPanel header="Informatica PWC" *ngIf="showTab('informatica')">
+                        <div>
+                            <h2>TBD</h2>
+                        </div>
+                    </p-tabPanel>
+                    <p-tabPanel header="Azure Synapse DWH" *ngIf="showTab('azureSynapse')">
                         <div>
                             <h2>TBD</h2>
                         </div>

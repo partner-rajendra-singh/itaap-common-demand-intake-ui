@@ -9,7 +9,7 @@
                 inputId="integration" (onChange)="emitCheckList()"></p-checkbox>
             </div>
             <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
-              <label for="integration" >Integration</label>
+              <label for="integration">Integration/ITaaP</label>
             </div>
             <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
               <p-checkbox [binary]="true" [(ngModel)]="solutionDirectionInfo.dataModelling"
@@ -47,6 +47,27 @@
             </div>
             <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
               <label for="ia">I&A</label>
+            </div>
+
+            <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
+              <p-checkbox [binary]="true" (onChange)="emitCheckList()" [(ngModel)]="solutionDirectionInfo.dataQuality" inputId="dataQuality"></p-checkbox>
+            </div>
+            <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
+              <label for="dataQuality">Data Quality</label>
+            </div>
+
+            <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
+              <p-checkbox [binary]="true" (onChange)="emitCheckList()" [(ngModel)]="solutionDirectionInfo.informatica" inputId="informatica"></p-checkbox>
+            </div>
+            <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
+              <label for="informatica">Informatica PWC</label>
+            </div>
+
+            <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
+              <p-checkbox [binary]="true" (onChange)="emitCheckList()" [(ngModel)]="solutionDirectionInfo.azureSynapse" inputId="azureSynapse"></p-checkbox>
+            </div>
+            <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
+              <label for="azureSynapse">Azure Synapse DWH</label>
             </div>
           </div>
         </p-fieldset>

@@ -67,12 +67,12 @@ export class CCBCRUDComponent {
         .pipe(first())
         .subscribe(
           response => {
-            this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Demand Manager is added successfully!' });
+            this.messageService.add({ severity: 'success', summary: 'Success', detail: 'CCB Member is added successfully!' });
             this.closeAddCCBDialog();
             this.ngOnInit();
           },
           error => {
-            this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Failed to add Demand Manager!' });
+            this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Failed to add CCB Member!' });
             this.closeAddCCBDialog();
             this.ngOnInit();
           });
@@ -90,12 +90,12 @@ export class CCBCRUDComponent {
         .pipe(first())
         .subscribe(
           response => {
-            this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Demand Manager is updated successfully!' });
+            this.messageService.add({ severity: 'success', summary: 'Success', detail: 'CCB Member is updated successfully!' });
             this.closeUpdateCCBDialog();
             this.ngOnInit();
           },
           error => {
-            this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Failed to update Demand Manager!' });
+            this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Failed to update CCB Member!' });
             this.closeUpdateCCBDialog();
             this.ngOnInit();
           });

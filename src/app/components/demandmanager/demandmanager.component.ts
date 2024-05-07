@@ -4,7 +4,7 @@ import { DemandIntakeService } from '../../services/demand-intake.service';
 import { MessageService } from 'primeng/api';
 import { AuthService } from 'src/app/services/auth.service';
 import { first } from 'rxjs/operators';
-import { DemandIntakeDecision } from 'src/app/models/enum';
+import { DemandIntakeDecision } from 'src/app/enums/demandIntakeDecision';
 
 @Component({
   selector: 'app-demandmanager',

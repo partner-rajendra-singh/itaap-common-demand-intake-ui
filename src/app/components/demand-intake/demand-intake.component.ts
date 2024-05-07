@@ -21,6 +21,11 @@ export class DemandIntakeComponent implements OnInit {
 
     ngOnInit() {
         console.log("DemandIntakeComponent isNewDemand ", this.eventService.isNewDemand);
+        if(this.authService.isRequester()){
+            if(this.eventService.isMyDemand && this.demandIntakeService.demandInformation.introduction.status!='DRAFT'){
+              
+            }
+          }
 
         this.items = [
             {
@@ -41,7 +46,8 @@ export class DemandIntakeComponent implements OnInit {
             {
                 label: 'Solution Direction',
                 routerLink: 'solution-direction',
-                visible: (this.authService.isDM() || this.authService.isCCB()),
+                visible: this.authService.isDM() || this.authService.isCCB() 
+                // || (!this.eventService.isNewDemand && this.authService.isRequester() && this.eventService.isMyDemand && this.demandIntakeService.demandInformation.introduction.status!='DRAFT'),
             },
             {
                 label: 'EADI',
