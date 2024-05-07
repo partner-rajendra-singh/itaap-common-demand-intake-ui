@@ -58,8 +58,6 @@ export class MenuComponent implements OnInit {
 
         this.demandIntakeService.setDemand(new Demand(), true);
         this.router.navigate(['/demand-intake/introduction']);
-
     }
-
 
 }

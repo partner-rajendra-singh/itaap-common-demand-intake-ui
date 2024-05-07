@@ -14,6 +14,7 @@ import { MessageService } from 'primeng/api';
 import { AllDemands } from '../models/all-demands';
 import { EventService } from './event.service';
 
+
 @Injectable({
   providedIn: 'root'
 })
@@ -67,23 +68,23 @@ export class DemandIntakeService {
       if (demand.attachmentInfo == null) {
         demand.attachmentInfo = [
           {
-            file: new Object,
+            file: File,
             description: '',
             uploadedDate: new Date()
           }, {
-            file: new Object,
+            file: File,
             description: '',
             uploadedDate: new Date()
           }, {
-            file: new Object,
+            file: File,
             description: '',
             uploadedDate: new Date()
           }, {
-            file: new Object,
+            file: File,
             description: '',
             uploadedDate: new Date()
           }, {
-            file: new Object,
+            file: File,
             description: '',
             uploadedDate: new Date()
           }];
@@ -124,7 +125,7 @@ export class DemandIntakeService {
         this.router.navigate(['demand-intake/introduction']);
         return false;
 
-      } else if (this.demandInformation.requesterInfo.program == '' || this.demandInformation.requesterInfo.domain == '' || !this.validateSpoc()) {
+      } else if (this.demandInformation.requesterInfo.program == '' || this.demandInformation.requesterInfo.domain == '' || !this.validateSpoc() || (this.demandInformation.requesterInfo.approvedBudget && this.demandInformation.requesterInfo.clarityProjectId == '')) {
         this.messageService.add({ severity: 'warn', summary: 'Error', detail: 'Please fill required fields!' });
         this.router.navigate(['demand-intake/requester']);
         return false;
@@ -180,6 +181,44 @@ export class DemandIntakeService {
     }
   }
 
+  saveDemandWithAttachment(){
+    this.eventService.progressBarEvent.emit(true);
+    console.log("saveDemandWithAttachment: ", this.demandInformation)
+
+    if (this.validateRequest(true)) {
+
+      let url = this.baseUrl + '/common/demand-intake/attachment';
+      let headerOptions = {
+        headers: new HttpHeaders({
+          // 'Content-Type': 'multipart/form-data',
+          'X-Correlation-ID': 'abc'
+        })
+      };
+
+      this.demandInformation.introduction.requestedBy = this.authService.currentUserValue.email;
+      // const files = [this.demandInformation.attachmentInfo[0].file, this.demandInformation.attachmentInfo[1].file];
+      const formData : any = new FormData();
+      formData.append('demand', JSON.stringify(this.demandInformation)); 
+      for (let i = 0; i < this.demandInformation.attachmentInfo.length; i++) {
+        if(!this.demandInformation.attachmentInfo[i].file.length){
+          formData.append('files', this.demandInformation.attachmentInfo[i].file)
+        }
+        
+      }
+      
+      return this.http.post<any>(url, formData, headerOptions)
+        .pipe(map(response => {
+          console.log("saveDemandWithAttachment() Response :", response)
+          this.eventService.progressBarEvent.emit(false);
+          return response;
+        }));
+    } else {
+      this.eventService.progressBarEvent.emit(false);
+      return throwError(false);
+    }
+
+  }
+
   submitDemand() {
     this.eventService.progressBarEvent.emit(true);
     console.log("submit: ", this.demandInformation)
@@ -224,6 +263,18 @@ export class DemandIntakeService {
     return this.http.get<AllDemands>(url, headerOptions);
   }
 
+  getRequesterDomain(){
+    this.eventService.progressBarEvent.emit(true);
+    let url = this.baseUrl + '/common/demand-intake/domain';
+    let headerOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'X-Correlation-ID': 'abc',
+      })
+    };
+
+    return this.http.get(url, headerOptions);
+  }
 
 }
 

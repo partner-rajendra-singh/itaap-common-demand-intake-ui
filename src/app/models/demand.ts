@@ -9,6 +9,7 @@ import { RequirementFunctional } from "./requirement-functional";
 import { RequirementNonFunctional } from "./requirement-non-functional";
 import { SolutionDirection } from "./solution-direction";
 
+
 export class Demand {
 	
     introduction: Introduction = new Introduction;
@@ -22,23 +23,23 @@ export class Demand {
 	ccbInfo: CCB = new CCB;
 	attachmentInfo = [
         {
-			file: new Object,
+			file: File,
 			description: '',
 			uploadedDate: new Date()
         },{
-			file: new Object,
+			file: File,
 			description: '',
 			uploadedDate: new Date()
         },{
-			file: new Object,
+			file: File,
 			description: '',
 			uploadedDate: new Date()
         },{
-			file: new Object,
+			file: File,
 			description: '',
 			uploadedDate: new Date()
         },{
-			file: new Object,
+			file: File,
 			description: '',
 			uploadedDate: new Date()
         } ];

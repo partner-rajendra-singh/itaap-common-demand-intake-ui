@@ -11,7 +11,6 @@ import { EventService } from 'src/app/services/event.service';
 })
 export class SolutionDirectionComponent {
 
-  parentMessage = "Message from Parent";
   solutionDirectionInfo!: any;
 
   constructor(public demandIntakeService: DemandIntakeService, private router: Router, private messageService: MessageService, private eventService: EventService) { }

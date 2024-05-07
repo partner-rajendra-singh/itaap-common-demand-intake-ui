@@ -1,4 +1,5 @@
 import { DataModel } from "./data-model";
+import { DataQuality } from "./data-quality";
 
 export class EADI {
     platformsCapabilityDef: string = '';
@@ -7,5 +8,6 @@ export class EADI {
     dataModelDefinition: string = '';
     demandDocAttached: string = '';
     additionalInfo: string = '';
-    dataModel: DataModel = new DataModel
+    dataModel: DataModel = new DataModel;
+    dataQuality: DataQuality = new DataQuality;
 }

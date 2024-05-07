@@ -36,12 +36,11 @@
                                         style="width:100px">Go-Live Approach</label>
                                 </div>
                                 <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
-                            
-                                        
                                     <input type="radio" id="glA1" name="goLiveApproach" checked="checked"
                                         [(ngModel)]="requirementFunctionalInfo.goLiveApproach" value="oneTime">
                                     <label for="glA1">One Time</label>
-                                    <input type="radio" id="glA2" name="goLiveApproach" [(ngModel)]="requirementFunctionalInfo.goLiveApproach" value="phased">
+                                    <input type="radio" id="glA2" name="goLiveApproach"
+                                        [(ngModel)]="requirementFunctionalInfo.goLiveApproach" value="phased">
                                     <label for="glA2">Phased</label>
                                 </div>
                                 <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3"
@@ -50,12 +49,13 @@
                                 </div>
                                 <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3"
                                     *ngIf="requirementFunctionalInfo.goLiveApproach == 'phased'">
-                                    <label for="requestDate" class="col-fixed" style="width:100px">First Go Live Date</label>
+                                    <label for="requestDate" class="col-fixed" style="width:100px">First Go Live
+                                        Date</label>
                                 </div>
                                 <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9"
                                     *ngIf="requirementFunctionalInfo.goLiveApproach == 'oneTime' || requirementFunctionalInfo.goLiveApproach == 'phased'">
-                                    <p-calendar dateFormat="dd/mm/yy" [(ngModel)]="requirementFunctionalInfo.bglDate" [minDate]="eventService.goLiveMinDate"
-                                        [showIcon]="true"></p-calendar>
+                                    <p-calendar dateFormat="dd/mm/yy" [(ngModel)]="requirementFunctionalInfo.bglDate"
+                                        [minDate]="eventService.goLiveMinDate" [showIcon]="true"></p-calendar>
                                 </div>
                             </div>
                         </p-tabPanel>
@@ -196,32 +196,59 @@
                         <p-tabPanel header="Compliance">
                             <div class="grid">
                                 <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                                    <label for="integrationItaap">SOX</label>
+                                    <label for="sox">SOX</label>
                                 </div>
                                 <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
                                     <p-checkbox [binary]="true" [(ngModel)]="requirementComplianceInfo.sox"
-                                        inputId="integrationItaap"></p-checkbox>
+                                        inputId="sox"></p-checkbox>
                                 </div>
                                 <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                                    <label for="integrationItaap">FDA</label>
+                                    <label for="fda">FDA</label>
                                 </div>
                                 <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
                                     <p-checkbox [binary]="true" [(ngModel)]="requirementComplianceInfo.fda"
-                                        inputId="integrationItaap"></p-checkbox>
+                                        inputId="fda"></p-checkbox>
                                 </div>
                                 <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                                    <label for="integrationItaap">Security</label>
+                                    <label for="security">Security</label>
                                 </div>
                                 <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
                                     <p-checkbox [binary]="true" [(ngModel)]="requirementComplianceInfo.security"
-                                        inputId="integrationItaap"></p-checkbox>
+                                        inputId="security"></p-checkbox>
                                 </div>
                                 <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                                    <label for="integrationItaap">Privacy</label>
+                                    <label for="privacy">Privacy</label>
                                 </div>
                                 <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
                                     <p-checkbox [binary]="true" [(ngModel)]="requirementComplianceInfo.privacy"
-                                        inputId="integrationItaap"></p-checkbox>
+                                        inputId="privacy"></p-checkbox>
+                                </div>
+
+                                <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
+                                    <label for="qms">QMS</label>
+                                </div>
+                                <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
+                                    <p-checkbox [binary]="true" [(ngModel)]="requirementComplianceInfo.qms"
+                                        inputId="qms"></p-checkbox>
+                                </div>
+
+                                <div class="col-12 xs:col-12 sm:col-12 lg:col-12 xl:col-12" *ngIf="requirementComplianceInfo.qms" style="display: inline-flex;">
+                                    <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
+                                        <label for="valgEntityId">Valgenesis Entity ID</label>
+                                    </div>
+                                    <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
+                                        <input pInputText id="valgEntityId"
+                                            [(ngModel)]="requirementComplianceInfo.valgEntityId"
+                                            aria-describedby="messageSize-help" />
+                                    </div>
+                                </div>
+
+                                <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
+                                    <label for="qsia">QSIA</label>
+                                </div>
+                                <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
+                                    <p-checkbox [binary]="true" [(ngModel)]="requirementComplianceInfo.qsia"
+                                        inputId="qsia"></p-checkbox>
                                 </div>
 
                                 <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9" style="display: inline-flex;"
@@ -248,7 +275,8 @@
     <ng-template pTemplate="footer">
         <div class="grid grid-nogutter justify-content-between">
             <p-button label="Back" (onClick)="prevPage()" icon="pi pi-angle-left"></p-button>
-            <p-button label="Save For Later" *ngIf="visibleSaveButton" (onClick)="savePage()" iconPos="right"></p-button>
+            <p-button label="Save For Later" *ngIf="visibleSaveButton" (onClick)="savePage()"
+                iconPos="right"></p-button>
             <p-button label="Next" (onClick)="nextPage()" icon="pi pi-angle-right"></p-button>
         </div>
     </ng-template>
