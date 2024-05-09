@@ -24,16 +24,21 @@ export class ChecklistComponent {
     console.log("ChecklistComponent ", this.eventService.solutionDirectionValue);
     this.eADIInfo = this.demandIntakeService.getDemandInformation().eADIInfo;
     this.refreshFrequencies = Object.values(RefreshFrequency);
-    this.selectedFrequency = this.getFrequencyValue(this.demandIntakeService.getDemandInformation().eADIInfo.adlSL1.frequency);
+    if (this.demandIntakeService.getDemandInformation().eADIInfo.adlL1 != null && this.demandIntakeService.getDemandInformation().eADIInfo.adlL1.frequency != '') {
+      this.selectedFrequency = this.getFrequencyValue(this.demandIntakeService.getDemandInformation().eADIInfo.adlL1.frequency);
+    }
+
 
     this.loadStrategies = Object.values(LoadStrategy);
-    this.selectedLoadStrategy = this.getStrategyValue(this.demandIntakeService.getDemandInformation().eADIInfo.adlSL1.loadStrategy);
+    if (this.demandIntakeService.getDemandInformation().eADIInfo.adlL1 != null && this.demandIntakeService.getDemandInformation().eADIInfo.adlL1.loadStrategy != '') {
+      this.selectedLoadStrategy = this.getStrategyValue(this.demandIntakeService.getDemandInformation().eADIInfo.adlL1.loadStrategy);
+    }
   }
 
   nextPage() {
     this.demandIntakeService.getDemandInformation().eADIInfo = this.eADIInfo;
-    this.eADIInfo.adlSL1.frequency = this.getFrequencyKey(this.selectedFrequency);
-    this.eADIInfo.adlSL1.loadStrategies = this.getStrategyKey(this.selectedLoadStrategy);
+    this.eADIInfo.adlL1.frequency = this.getFrequencyKey(this.selectedFrequency);
+    this.eADIInfo.adlL1.loadStrategies = this.getStrategyKey(this.selectedLoadStrategy);
     this.router.navigate(['demand-intake/attachment']);
   }
 
@@ -41,12 +46,12 @@ export class ChecklistComponent {
     this.router.navigate(['demand-intake/solution-direction']);
   }
 
-  showTab(name: string): boolean{
-    switch(name){
+  showTab(name: string): boolean {
+    switch (name) {
       case 'integration': return this.eventService.solutionDirectionValue.integration;
       case 'dataModelling': return this.eventService.solutionDirectionValue.dataModelling;
-      case 'adlSL1': return this.eventService.solutionDirectionValue.adlSL1;
-      case 'adlSL2': return this.eventService.solutionDirectionValue.adlSL2;
+      case 'adlL1': return this.eventService.solutionDirectionValue.adlL1;
+      case 'adlL2': return this.eventService.solutionDirectionValue.adlL2;
       case 'gold': return this.eventService.solutionDirectionValue.gold;
       case 'mdm': return this.eventService.solutionDirectionValue.mdm;
       case 'ia': return this.eventService.solutionDirectionValue.ia;

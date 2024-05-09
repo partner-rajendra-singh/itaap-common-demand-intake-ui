@@ -1,8 +1,8 @@
 export class SolutionDirection {
     integration: boolean = true;
     dataModelling: boolean = false;
-    adlSL1: boolean = false;
-    adlSL2: boolean = false;
+    adlL1: boolean = false;
+    adlL2: boolean = false;
     gold: boolean = false;
     mdm: boolean = false;
     ia: boolean = false;
