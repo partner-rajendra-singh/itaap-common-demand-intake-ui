@@ -11,5 +11,5 @@ export class EADI {
     additionalInfo: string = '';
     dataModel: DataModel = new DataModel;
     dataQuality: DataQuality = new DataQuality;
-    adlSL1: ADLL1 = new ADLL1;
+    adlL1: ADLL1 = new ADLL1;
 }
