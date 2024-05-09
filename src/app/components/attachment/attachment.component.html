@@ -10,10 +10,10 @@
                         <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
                             <label for="desc">Description</label>
                         </div>
-                        <div class="col-6 xs:col-6 sm:col-6 lg:col-6 xl:col-6">
+                        <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
                             <label for="attachment">Attachment</label>
                         </div>
-                        <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
+                        <div class="col-4 xs:col-4 sm:col-4 lg:col-4 xl:col-4">
                             <label for="uploadDate">Upload Date</label>
                         </div>
 
@@ -23,12 +23,19 @@
                                 <input pInputText id="program" [(ngModel)]="item.description"
                                     aria-describedby="program-help" />
                             </div>
-                            <div class="col-8 xs:col-8 sm:col-8 lg:col-8 xl:col-8">
+                            <div class="col-4 xs:col-4 sm:col-4 lg:col-4 xl:col-4">
                                 <p-fileUpload mode="basic" chooseLabel="Attach file" [(ngModel)]="item.file"
                                     (onSelect)="onUpload($event, i)"></p-fileUpload>
                             </div>
-                            <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
+                            <div class="col-4 xs:col-4 sm:col-4 lg:col-4 xl:col-4">
                                 <label for="uploadDate">{{item.uploadedDate | date: 'MMM dd, yyyy' }}</label>
+                            </div>
+
+                            <div class="col-4 xs:col-4 sm:col-4 lg:col-4 xl:col-4"
+                                *ngIf="demandIntakeService.demandInformation.attachmentInfo[i].description!=''">
+                                <button pButton pRipple icon="pi pi-download" label="download"
+                                    class="p-button-info p-button-text p-button-sm mr-2"
+                                    (click)="downloadAttachment(i)"></button>
                             </div>
                         </div>
                     </div>
@@ -40,7 +47,8 @@
         <div class="grid grid-nogutter justify-content-between">
             <p-button label="Back" (onClick)="prevPage()" icon="pi pi-angle-left"></p-button>
             <p-button label="Next" *ngIf="visibleNextButton" (onClick)="nextPage()" icon="pi pi-angle-right"></p-button>
-            <p-button label="Save For Later" *ngIf="visibleSaveButton" (onClick)="savePage()" iconPos="right"></p-button>
+            <p-button label="Save For Later" *ngIf="visibleSaveButton" (onClick)="savePage()"
+                iconPos="right"></p-button>
             <p-button label="Submit" *ngIf="visibleSubmitButton" (onClick)="submitPage()" iconPos="right"></p-button>
         </div>
     </ng-template>

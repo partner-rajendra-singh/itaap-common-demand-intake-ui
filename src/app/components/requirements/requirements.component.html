@@ -57,6 +57,33 @@
                                     <p-calendar dateFormat="dd/mm/yy" [(ngModel)]="requirementFunctionalInfo.bglDate"
                                         [minDate]="eventService.goLiveMinDate" [showIcon]="true"></p-calendar>
                                 </div>
+
+                                <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
+                                    <label for="sourceDetails" 
+                                        style="width:100px">Source Details</label>
+                                </div>
+                                <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
+                                    <textarea rows="2" [(ngModel)]="requirementFunctionalInfo.sourceDetails" cols="75"
+                                        pInputTextarea></textarea>
+                                </div>
+
+                                <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
+                                    <label for="targetDetails" 
+                                        style="width:100px">Target Details</label>
+                                </div>
+                                <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
+                                    <textarea rows="2" [(ngModel)]="requirementFunctionalInfo.targetDetails" cols="75"
+                                        pInputTextarea></textarea>
+                                </div>
+
+                                <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
+                                    <label for="mappingRequirement" 
+                                        style="width:100px">Mapping Requirement</label>
+                                </div>
+                                <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
+                                    <textarea rows="2" [(ngModel)]="requirementFunctionalInfo.mappingRequirement" cols="75"
+                                        pInputTextarea></textarea>
+                                </div>
                             </div>
                         </p-tabPanel>
                         <p-tabPanel header="Non Functional">

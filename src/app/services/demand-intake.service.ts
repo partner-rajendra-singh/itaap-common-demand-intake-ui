@@ -22,6 +22,7 @@ export class DemandIntakeService {
 
   baseUrl: string = environment.baseUrl;
   demandInformation = new Demand();
+  attachments = Array(5);
 
   constructor(private http: HttpClient, private router: Router, private authService: AuthService, private messageService: MessageService,
     private eventService: EventService) { }
@@ -36,6 +37,7 @@ export class DemandIntakeService {
 
   setDemand(demand: Demand, isNew: boolean) {
     if (isNew) {
+      this.attachments = [];
       this.demandInformation = new Demand();
     } else {
 
@@ -69,25 +71,41 @@ export class DemandIntakeService {
         demand.attachmentInfo = [
           {
             file: File,
+            fileName: String,
             description: '',
             uploadedDate: new Date()
           }, {
             file: File,
+            fileName: String,
             description: '',
             uploadedDate: new Date()
           }, {
             file: File,
+            fileName: String,
             description: '',
             uploadedDate: new Date()
           }, {
             file: File,
+            fileName: String,
             description: '',
             uploadedDate: new Date()
           }, {
             file: File,
+            fileName: String,
             description: '',
             uploadedDate: new Date()
           }];
+      }
+
+      if (demand.attachmentInfo.length < 5) {
+        for (let i = demand.attachmentInfo.length; i < 5; i++) {
+          demand.attachmentInfo[i] = {
+            file: File,
+            fileName: String,
+            description: '',
+            uploadedDate: new Date()
+          }
+        }
       }
 
       demand.requesterInfo.requestedDate = new Date(demand.requesterInfo.requestedDate)
@@ -101,14 +119,14 @@ export class DemandIntakeService {
   validateSpoc(): boolean {
     var result = true;
     this.demandInformation.requesterInfo.spoc.forEach(s => {
-      if(!this.eventService.checkEmailValue(s.email)){
+      if (!this.eventService.checkEmailValue(s.email)) {
         result = false;
       }
     });
 
     return result;
   }
-  
+
 
   validateRequest(isSave: boolean): boolean {
 
@@ -181,34 +199,73 @@ export class DemandIntakeService {
     }
   }
 
-  saveDemandWithAttachment(){
+  saveDemandWithAttachment() {
     this.eventService.progressBarEvent.emit(true);
     console.log("saveDemandWithAttachment: ", this.demandInformation)
 
     if (this.validateRequest(true)) {
 
-      let url = this.baseUrl + '/common/demand-intake/attachment';
+      let url = this.baseUrl + '/common/demand-intake/';
       let headerOptions = {
         headers: new HttpHeaders({
-          // 'Content-Type': 'multipart/form-data',
-          'X-Correlation-ID': 'abc'
+          'X-Correlation-ID': 'abc',
+          'responseType':'blob'
         })
       };
 
       this.demandInformation.introduction.requestedBy = this.authService.currentUserValue.email;
-      // const files = [this.demandInformation.attachmentInfo[0].file, this.demandInformation.attachmentInfo[1].file];
-      const formData : any = new FormData();
-      formData.append('demand', JSON.stringify(this.demandInformation)); 
-      for (let i = 0; i < this.demandInformation.attachmentInfo.length; i++) {
-        if(!this.demandInformation.attachmentInfo[i].file.length){
-          formData.append('files', this.demandInformation.attachmentInfo[i].file)
+      console.log("attachments: ", this.attachments);
+      const formData: any = new FormData();
+      formData.append('demand', JSON.stringify(this.demandInformation));
+      for (let i = 0; i < this.attachments.length; i++) {
+        if (this.attachments[i]) {
+          formData.append('files', this.attachments[i]);
         }
-        
       }
-      
+
       return this.http.post<any>(url, formData, headerOptions)
         .pipe(map(response => {
           console.log("saveDemandWithAttachment() Response :", response)
+          this.eventService.progressBarEvent.emit(false);
+          return response;
+        }));
+    } else {
+      this.eventService.progressBarEvent.emit(false);
+      return throwError(false);
+    }
+
+  }
+
+  submitDemandWithAttachment() {
+    this.eventService.progressBarEvent.emit(true);
+    console.log("submitDemandWithAttachment: ", this.demandInformation)
+
+    if (this.validateRequest(true)) {
+
+      let url = this.baseUrl + '/common/demand-intake/submit';
+      let headerOptions = {
+        headers: new HttpHeaders({
+          'X-Correlation-ID': 'abc',
+          'responseType':'blob'
+        })
+      };
+
+      if (this.demandInformation.introduction.requestedBy == '') {
+        this.demandInformation.introduction.requestedBy = this.authService.currentUserValue.email;
+      }
+
+      console.log("attachments: ", this.attachments);
+      const formData: any = new FormData();
+      formData.append('demand', JSON.stringify(this.demandInformation));
+      for (let i = 0; i < this.attachments.length; i++) {
+        if (this.attachments[i]) {
+          formData.append('files', this.attachments[i]);
+        }
+      }
+
+      return this.http.post<any>(url, formData, headerOptions)
+        .pipe(map(response => {
+          console.log("submitDemandWithAttachment() Response :", response)
           this.eventService.progressBarEvent.emit(false);
           return response;
         }));
@@ -263,7 +320,7 @@ export class DemandIntakeService {
     return this.http.get<AllDemands>(url, headerOptions);
   }
 
-  getRequesterDomain(){
+  getRequesterDomain() {
     this.eventService.progressBarEvent.emit(true);
     let url = this.baseUrl + '/common/demand-intake/domain';
     let headerOptions = {

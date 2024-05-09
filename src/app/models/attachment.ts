@@ -1,5 +1,6 @@
 export class Attachment {
-    file!: object;
+    file!: File;
+    fileName!: string;
     description: string = '';
     uploadedDate: Date = new Date();
 }
