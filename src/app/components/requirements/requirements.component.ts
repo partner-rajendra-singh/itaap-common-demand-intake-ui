@@ -72,7 +72,7 @@ export class RequirementsComponent implements OnInit {
     }
 
     savePage() {
-        this.demandIntakeService.saveDemand()
+        this.demandIntakeService.saveDemandWithAttachment()
             .pipe(first())
             .subscribe(
                 response => {

@@ -45,7 +45,7 @@ export class IntroductionComponent {
   }
 
   savePage() {
-    this.demandIntakeService.saveDemand()
+    this.demandIntakeService.saveDemandWithAttachment()
       .pipe(first())
       .subscribe(
         response => {

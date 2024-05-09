@@ -58,9 +58,13 @@
                                     <input type="radio" id="dm1" name="demandModelType" checked="checked"
                                         [(ngModel)]="eADIInfo.dataModel.demandModelType" value="New Model">
                                     <label for="dm1">New Model</label> &nbsp;
-                                    <input type="radio" id="dm2" name="demandModelType" [(ngModel)]="eADIInfo.dataModel.demandModelType" value="Change To Existing Model">
+                                    <input type="radio" id="dm2" name="demandModelType"
+                                        [(ngModel)]="eADIInfo.dataModel.demandModelType"
+                                        value="Change To Existing Model">
                                     <label for="dm2">Change To Existing Model</label> &nbsp;
-                                    <input type="radio" id="dm3" name="demandModelType" [(ngModel)]="eADIInfo.dataModel.demandModelType" value="Target Date Postponement">
+                                    <input type="radio" id="dm3" name="demandModelType"
+                                        [(ngModel)]="eADIInfo.dataModel.demandModelType"
+                                        value="Target Date Postponement">
                                     <label for="dm3">Target Date Postponement</label>
                                 </div>
 
@@ -87,9 +91,11 @@
                                     <input type="radio" id="dm1" name="modelType" checked="checked"
                                         [(ngModel)]="eADIInfo.dataModel.modelType" value="Conceptual">
                                     <label for="dm1">Conceptual</label> &nbsp;
-                                    <input type="radio" id="dm2" name="modelType" [(ngModel)]="eADIInfo.dataModel.modelType" value="Logical">
+                                    <input type="radio" id="dm2" name="modelType"
+                                        [(ngModel)]="eADIInfo.dataModel.modelType" value="Logical">
                                     <label for="dm2">Logical</label> &nbsp;
-                                    <input type="radio" id="dm3" name="modelType" [(ngModel)]="eADIInfo.dataModel.modelType" value="Physical">
+                                    <input type="radio" id="dm3" name="modelType"
+                                        [(ngModel)]="eADIInfo.dataModel.modelType" value="Physical">
                                     <label for="dm3">Physical</label>
                                 </div>
 
@@ -140,7 +146,181 @@
                     </p-tabPanel>
                     <p-tabPanel header="ADL SL1" *ngIf="showTab('adlSL1')">
                         <div>
-                            <h2>TBD</h2>
+                            <div class="grid">
+                                <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
+                                    <label for="dataDemandType">Data Demand Type</label>
+                                </div>
+                                <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
+                                    <input type="radio" id="dm1" name="dataDemandType"
+                                        [(ngModel)]="eADIInfo.adlSL1.dataDemandType" value="New Data Set Onboarding">
+                                    <label for="dm1">New Data Set Onboarding</label> &nbsp;
+                                    <input type="radio" id="dm2" name="dataDemandType"
+                                        [(ngModel)]="eADIInfo.adlSL1.dataDemandType" value="Data Set Enhancement">
+                                    <label for="dm2">Data Set Enhancement (addition of tables/fields)</label> &nbsp;
+                                    <input type="radio" id="dm3" name="dataDemandType"
+                                        [(ngModel)]="eADIInfo.adlSL1.dataDemandType" value="Data Set Modifications">
+                                    <label for="dm3">Data Set Modifications</label>
+                                </div>
+
+                                <p-fieldset legend="Source Details">
+                                    <div class="grid">
+                                        <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
+                                            <label required for="sourceSystemName" style="width: 100px">System
+                                                Name</label>
+                                        </div>
+                                        <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
+                                            <input required id="sourceSystemName" type="text"
+                                                [(ngModel)]="eADIInfo.adlSL1.sourceSystemName" size="70"
+                                                class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary" />
+                                        </div>
+
+                                        <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
+                                            <label required for="kernelSid" style="width: 100px">Kernel SID</label>
+                                        </div>
+                                        <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
+                                            <input required id="kernelSid" type="text"
+                                                [(ngModel)]="eADIInfo.adlSL1.kernelSid" size="70"
+                                                class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary" />
+                                        </div>
+
+                                        <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
+                                            <label required for="database" style="width: 100px">Database</label>
+                                        </div>
+                                        <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
+                                            <input required id="database" type="text"
+                                                [(ngModel)]="eADIInfo.adlSL1.database" size="70"
+                                                class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary" />
+                                        </div>
+
+                                        <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
+                                            <label required for="module" style="width: 100px">Module</label>
+                                        </div>
+                                        <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
+                                            <input required id="module" type="text"
+                                                [(ngModel)]="eADIInfo.adlSL1.module" size="70"
+                                                class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary" />
+                                        </div>
+
+                                        <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
+                                            <label required for="instance" style="width: 100px">Instance</label>
+                                        </div>
+                                        <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
+                                            <input required id="instance" type="text"
+                                                [(ngModel)]="eADIInfo.adlSL1.instance" size="70"
+                                                class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary" />
+                                        </div>
+
+                                        <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
+                                            <label required for="tableName" style="width: 100px">Table Name</label>
+                                        </div>
+                                        <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
+                                            <input required id="tableName" type="text"
+                                                [(ngModel)]="eADIInfo.adlSL1.tableName" size="70"
+                                                class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary" />
+                                        </div>
+
+                                        <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
+                                            <label required for="capability" style="width: 100px">Capability</label>
+                                        </div>
+                                        <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
+                                            <input required id="capability" type="text"
+                                                [(ngModel)]="eADIInfo.adlSL1.capability" size="70"
+                                                class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary" />
+                                        </div>
+
+                                        <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
+                                            <label required for="functionality"
+                                                style="width: 100px">Functionality</label>
+                                        </div>
+                                        <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
+                                            <input required id="functionality" type="text"
+                                                [(ngModel)]="eADIInfo.adlSL1.functionality" size="70"
+                                                class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary" />
+                                        </div>
+
+                                        <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
+                                            <label required for="sourceEmail" style="width: 100px">POC Email</label>
+                                        </div>
+                                        <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
+                                            <input required id="sourceEmail" type="email" (blur)="eventService.checkEmailValue(eADIInfo.adlSL1.sourceEmail)"
+                                                [(ngModel)]="eADIInfo.adlSL1.sourceEmail" size="70"
+                                                class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary" />
+                                        </div>
+
+                                        <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
+                                            <label for="additionalDocAttached">Demand additional document (One Document) attached?</label>
+                                        </div>
+                                        <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
+                                            <p-checkbox [binary]="true" [(ngModel)]="eADIInfo.adlSL1.additionalDocAttached"
+                                                inputId="additionalDocAttached"></p-checkbox>
+                                        </div>
+                                    </div>
+                                </p-fieldset>
+
+                                <p-fieldset legend="Data Feed Details">
+                                    <div class="grid">
+                                        <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
+                                            <label required for="dataSetName" style="width: 100px">Dataset Name</label>
+                                        </div>
+                                        <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
+                                            <input required id="dataSetName" type="text"
+                                                [(ngModel)]="eADIInfo.adlSL1.dataSetName" size="70"
+                                                class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary" />
+                                        </div>
+
+                                        <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
+                                            <label required for="dataSetOwner" style="width: 100px">Dataset
+                                                Owner</label>
+                                        </div>
+                                        <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
+                                            <input required id="dataSetOwner" type="text"
+                                                [(ngModel)]="eADIInfo.adlSL1.dataSetOwner" size="70"
+                                                class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary" />
+                                        </div>
+
+                                        <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
+                                            <label required for="frequency" style="width: 100px">Frequency of Data Refresh</label>
+                                        </div>
+                                        <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
+                                            <p-dropdown appendTo="body" [options]="refreshFrequencies"
+                                                [(ngModel)]="selectedFrequency" placeholder="Select Refresh Frequency"></p-dropdown>
+                                        </div>
+
+                                        <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
+                                            <label required for="loadStrategy" style="width: 100px">Load strategy</label>
+                                        </div>
+                                        <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
+                                            <p-dropdown appendTo="body" [options]="loadStrategies"
+                                                [(ngModel)]="selectedLoadStrategy" placeholder="Select Refresh Frequency"></p-dropdown>
+                                        </div>
+
+                                        <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
+                                            <label required for="extractionlogic" style="width: 100px">Incremental Extraction Logic</label>
+                                        </div>
+                                        <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
+                                            <textarea id="extractionlogic" rows="3" cols="78"
+                                                [(ngModel)]="eADIInfo.adlSL1.extractionlogic" pInputTextarea></textarea>
+                                        </div>
+
+                                        <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
+                                            <label required for="tableAccessInfo" style="width: 100px">Table & Column Level Access Information</label>
+                                        </div>
+                                        <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
+                                            <textarea id="tableAccessInfo" rows="3" cols="78"
+                                                [(ngModel)]="eADIInfo.adlSL1.tableAccessInfo" pInputTextarea></textarea>
+                                        </div>
+
+                                        <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
+                                            <label required for="history" style="width: 100px">History Data Requirements</label>
+                                        </div>
+                                        <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
+                                            <textarea id="history" rows="3" cols="78"
+                                                [(ngModel)]="eADIInfo.adlSL1.history" pInputTextarea></textarea>
+                                        </div>
+                                    </div>
+                                </p-fieldset>
+
+                            </div>
                         </div>
                     </p-tabPanel>
                     <p-tabPanel header="ADL SL2" *ngIf="showTab('adlSL2')">
@@ -246,7 +426,8 @@
                                     </div>
 
                                     <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                                        <label for="requirementType" required style="width:100px">Requirement Type</label>
+                                        <label for="requirementType" required style="width:100px">Requirement
+                                            Type</label>
                                     </div>
 
                                     <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
@@ -265,8 +446,8 @@
                                             <label for="market" required>Market</label>
                                         </div>
                                         <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
-                                            <input id="market" type="text"
-                                                [(ngModel)]="eADIInfo.dataQuality.market" size="60"
+                                            <input id="market" type="text" [(ngModel)]="eADIInfo.dataQuality.market"
+                                                size="60"
                                                 class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary">
                                         </div>
                                     </div>
