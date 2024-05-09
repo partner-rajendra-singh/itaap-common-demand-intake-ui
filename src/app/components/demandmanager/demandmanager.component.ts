@@ -62,7 +62,7 @@ export class DemandManagerComponent {
       this.demandManagerInfo.decision = this.getStatusKey(this.selectedDecision);
       this.demandIntakeService.getDemandInformation().demandManagerInfo = this.demandManagerInfo;
 
-      this.demandIntakeService.submitDemand()
+      this.demandIntakeService.submitDemandWithAttachment()
         .pipe(first())
         .subscribe(
           data => {

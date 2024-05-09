@@ -7,4 +7,7 @@ export class RequirementFunctional {
     businessValue: string = '';
     goLiveApproach: string = 'oneTime';
     bglDate: Date = new Date(this.today.setDate(this.today.getDate() + 1));
+    sourceDetails: string = '';
+	targetDetails: string = '';
+	mappingRequirement: string = '';
 }

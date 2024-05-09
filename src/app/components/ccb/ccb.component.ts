@@ -38,7 +38,7 @@ export class CCBComponent {
       this.ccbInfo.decision = this.getStatusKey(this.selectedDecision);
       this.demandIntakeService.getDemandInformation().ccbInfo = this.ccbInfo;
 
-      this.demandIntakeService.submitDemand()
+      this.demandIntakeService.submitDemandWithAttachment()
         .pipe(first())
         .subscribe(
           data => {
