@@ -173,31 +173,31 @@ export class DemandIntakeService {
 
   }
 
-  saveDemand() {
-    this.eventService.progressBarEvent.emit(true);
-    console.log("saveDemand: ", this.demandInformation)
-    if (this.validateRequest(true)) {
+  // saveDemand() {
+  //   this.eventService.progressBarEvent.emit(true);
+  //   console.log("saveDemand: ", this.demandInformation)
+  //   if (this.validateRequest(true)) {
 
-      let url = this.baseUrl + '/common/demand-intake/';
-      let headerOptions = {
-        headers: new HttpHeaders({
-          'Content-Type': 'application/json',
-          'X-Correlation-ID': 'abc'
-        })
-      };
+  //     let url = this.baseUrl + '/common/demand-intake/';
+  //     let headerOptions = {
+  //       headers: new HttpHeaders({
+  //         'Content-Type': 'application/json',
+  //         'X-Correlation-ID': 'abc'
+  //       })
+  //     };
 
-      this.demandInformation.introduction.requestedBy = this.authService.currentUserValue.email;
-      return this.http.post<any>(url, this.demandInformation, headerOptions)
-        .pipe(map(response => {
-          console.log("SaveDemand() Response :", response)
-          this.eventService.progressBarEvent.emit(false);
-          return response;
-        }));
-    } else {
-      this.eventService.progressBarEvent.emit(false);
-      return throwError(false);
-    }
-  }
+  //     this.demandInformation.introduction.requestedBy = this.authService.currentUserValue.email;
+  //     return this.http.post<any>(url, this.demandInformation, headerOptions)
+  //       .pipe(map(response => {
+  //         console.log("SaveDemand() Response :", response)
+  //         this.eventService.progressBarEvent.emit(false);
+  //         return response;
+  //       }));
+  //   } else {
+  //     this.eventService.progressBarEvent.emit(false);
+  //     return throwError(false);
+  //   }
+  // }
 
   saveDemandWithAttachment() {
     this.eventService.progressBarEvent.emit(true);
@@ -208,21 +208,26 @@ export class DemandIntakeService {
       let url = this.baseUrl + '/common/demand-intake/';
       let headerOptions = {
         headers: new HttpHeaders({
-          'X-Correlation-ID': 'abc',
-          'responseType':'blob'
+          'X-Correlation-ID': 'abc'
         })
       };
 
       this.demandInformation.introduction.requestedBy = this.authService.currentUserValue.email;
-      console.log("attachments: ", this.attachments);
-      const formData: any = new FormData();
-      formData.append('demand', JSON.stringify(this.demandInformation));
-      for (let i = 0; i < this.attachments.length; i++) {
-        if (this.attachments[i]) {
-          formData.append('files', this.attachments[i]);
+      // console.log("attachments: ", this.attachments);
+      const formData : FormData = new FormData();
+      
+      if (this.attachments.length == 0) {
+        // formData.append('files', '');
+      } else {
+        for (let i = 0; i < this.attachments.length; i++) {
+          if (this.attachments[i]) {
+            formData.append('files', this.attachments[i]);
+          }
         }
       }
+      formData.append('demand', JSON.stringify(this.demandInformation));
 
+      console.log("formdata demand, files",formData.get('demand'), formData.get('files'))
       return this.http.post<any>(url, formData, headerOptions)
         .pipe(map(response => {
           console.log("saveDemandWithAttachment() Response :", response)
@@ -245,8 +250,7 @@ export class DemandIntakeService {
       let url = this.baseUrl + '/common/demand-intake/submit';
       let headerOptions = {
         headers: new HttpHeaders({
-          'X-Correlation-ID': 'abc',
-          'responseType':'blob'
+          'X-Correlation-ID': 'abc'
         })
       };
 
@@ -255,13 +259,17 @@ export class DemandIntakeService {
       }
 
       console.log("attachments: ", this.attachments);
-      const formData: any = new FormData();
-      formData.append('demand', JSON.stringify(this.demandInformation));
-      for (let i = 0; i < this.attachments.length; i++) {
-        if (this.attachments[i]) {
-          formData.append('files', this.attachments[i]);
+      const formData: FormData = new FormData();
+      if (this.attachments.length == 0) {
+        formData.append('files', '');
+      } else {
+        for (let i = 0; i < this.attachments.length; i++) {
+          if (this.attachments[i]) {
+            formData.append('files', this.attachments[i]);
+          }
         }
       }
+      formData.append('demand', JSON.stringify(this.demandInformation));
 
       return this.http.post<any>(url, formData, headerOptions)
         .pipe(map(response => {
@@ -276,35 +284,35 @@ export class DemandIntakeService {
 
   }
 
-  submitDemand() {
-    this.eventService.progressBarEvent.emit(true);
-    console.log("submit: ", this.demandInformation)
-    if (this.validateRequest(false)) {
-      let url = this.baseUrl + '/common/demand-intake/submit';
-      let headerOptions = {
-        headers: new HttpHeaders({
-          'Content-Type': 'application/json',
-          'X-Correlation-ID': 'abc'
-        })
-      };
+  // submitDemand() {
+  //   this.eventService.progressBarEvent.emit(true);
+  //   console.log("submit: ", this.demandInformation)
+  //   if (this.validateRequest(false)) {
+  //     let url = this.baseUrl + '/common/demand-intake/submit';
+  //     let headerOptions = {
+  //       headers: new HttpHeaders({
+  //         'Content-Type': 'application/json',
+  //         'X-Correlation-ID': 'abc'
+  //       })
+  //     };
 
-      if (this.demandInformation.introduction.requestedBy == '') {
-        this.demandInformation.introduction.requestedBy = this.authService.currentUserValue.email;
-      }
+  //     if (this.demandInformation.introduction.requestedBy == '') {
+  //       this.demandInformation.introduction.requestedBy = this.authService.currentUserValue.email;
+  //     }
 
-      return this.http.post<any>(url, this.demandInformation, headerOptions)
-        .pipe(map(response => {
-          console.log("SubmitDemand() Response :", response)
-          this.eventService.progressBarEvent.emit(false);
-          return response;
-        }));
+  //     return this.http.post<any>(url, this.demandInformation, headerOptions)
+  //       .pipe(map(response => {
+  //         console.log("SubmitDemand() Response :", response)
+  //         this.eventService.progressBarEvent.emit(false);
+  //         return response;
+  //       }));
 
-    } else {
-      this.eventService.progressBarEvent.emit(false);
-      return throwError(false);
-    }
+  //   } else {
+  //     this.eventService.progressBarEvent.emit(false);
+  //     return throwError(false);
+  //   }
 
-  }
+  // }
 
   getAllDemands() {
     this.eventService.progressBarEvent.emit(true);

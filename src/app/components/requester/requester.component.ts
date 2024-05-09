@@ -20,8 +20,8 @@ export class RequesterComponent implements OnInit {
 
   requesterInfo: any;
   visibleSaveButton!: boolean;
-  domainList!: Domain[];
-  selectedDomain!: Domain;
+  domainList!: string[];
+  selectedDomain!: string;
 
   constructor(private authService: AuthService, public demandIntakeService: DemandIntakeService, private router: Router, private messageService: MessageService, public eventService: EventService) {
     if (authService.isRequester()) {
@@ -37,18 +37,20 @@ export class RequesterComponent implements OnInit {
 
   ngOnInit() {
     this.requesterInfo = this.demandIntakeService.getDemandInformation().requesterInfo;
-    this.domainList = [
-      { key: 'Digital_IT', value: 'Digital IT' },
-      { key: 'Commercial_IT', value: 'Commercial IT' },
-      { key: 'SCM_IT', value: 'SC&M IT' },
-      { key: 'Innovation_Engineering', value: 'Innovation & Engineering' },
-      { key: 'Group_Functions', value: 'Group Functions' },
-      { key: 'EADI', value: 'EADI' },
-      { key: 'Services_Solutions_IT', value: 'Services Solutions IT' },
-      { key: 'Hyper_Automation', value: 'Hyper Automation' },
-      { key: 'MA', value: 'M&A' },
-      { key: 'Software_Vendor_Management', value: 'Software & Vendor Management' }
-  ];
+  //   this.domainList = [
+  //     { key: 'Digital_IT', value: 'Digital IT' },
+  //     { key: 'Commercial_IT', value: 'Commercial IT' },
+  //     { key: 'SCM_IT', value: 'SC&M IT' },
+  //     { key: 'Innovation_Engineering', value: 'Innovation & Engineering' },
+  //     { key: 'Group_Functions', value: 'Group Functions' },
+  //     { key: 'EADI', value: 'EADI' },
+  //     { key: 'Services_Solutions_IT', value: 'Services Solutions IT' },
+  //     { key: 'Hyper_Automation', value: 'Hyper Automation' },
+  //     { key: 'MA', value: 'M&A' },
+  //     { key: 'Software_Vendor_Management', value: 'Software & Vendor Management' }
+  // ];
+
+  this.domainList = Object.values(RequesterDomain);
 
   // this.demandIntakeService.getRequesterDomain().pipe(
   //   map((response: any) => {
@@ -63,14 +65,14 @@ export class RequesterComponent implements OnInit {
   //   })
   // ).subscribe();
 
-    this.selectedDomain = this.getDomain(this.demandIntakeService.getDemandInformation().requesterInfo.domain);
+    this.selectedDomain = this.getDomainValue(this.demandIntakeService.getDemandInformation().requesterInfo.domain);
     console.log("RequesterComponent Init: ", this.demandIntakeService.demandInformation)
   }
 
   nextPage() {
     
     if (this.requesterInfo.program != '' && this.selectedDomain && this.requesterInfo.requestDate != '') {
-      this.requesterInfo.domain = this.selectedDomain.key;
+      this.requesterInfo.domain = this.getDomainKey(this.selectedDomain);
       this.demandIntakeService.demandInformation.requesterInfo = this.requesterInfo;
       this.router.navigate(['demand-intake/requirement']);
     } else {
@@ -84,10 +86,10 @@ export class RequesterComponent implements OnInit {
 
   savePage() {
     if(this.selectedDomain){
-      this.requesterInfo.domain = this.selectedDomain.key;
+      this.requesterInfo.domain = this.getDomainKey(this.selectedDomain);
     }
     
-    this.demandIntakeService.saveDemand()
+    this.demandIntakeService.saveDemandWithAttachment()
       .pipe(first())
       .subscribe(
         response => {
@@ -99,10 +101,15 @@ export class RequesterComponent implements OnInit {
         });
   }
 
-  getDomain(value: string): Domain {
-    const index = Object.values(this.domainList).indexOf(value as unknown as Domain);
-    return this.domainList[index];
+  getDomainValue(key: string): string {
+    const status = Object.keys(RequesterDomain).indexOf(key as unknown as RequesterDomain);
+    let s = Object.values(RequesterDomain)[status];
+    return s;
   }
 
+  getDomainKey(value: string): string {
+    const index = Object.values(RequesterDomain).indexOf(value as unknown as RequesterDomain);
+    return Object.keys(RequesterDomain)[index];
+  }
 
 }
