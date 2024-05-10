@@ -21,10 +21,8 @@ export class EventService {
     if(email == ''){
       return true;
     }
-
     var regex = new RegExp("[A-Za-z0-9._%-]+@philips.com");
     var res = regex.test(email);
-    // console.log("email check ", res)
     if(!res){
       this.messageService.add({ severity: 'warn', summary: 'Warning', detail: 'Please provide email under Philips domain!' });
     }

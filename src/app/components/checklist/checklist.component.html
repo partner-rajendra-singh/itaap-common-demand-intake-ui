@@ -144,7 +144,7 @@
                             </div>
                         </div>
                     </p-tabPanel>
-                    <p-tabPanel header="ADL SL1" *ngIf="showTab('adlL1')">
+                    <p-tabPanel header="ADL L1" *ngIf="showTab('adlL1')">
                         <div>
                             <div class="grid">
                                 <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
@@ -196,8 +196,8 @@
                                             <label required for="module" style="width: 100px">Module</label>
                                         </div>
                                         <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
-                                            <input required id="module" type="text"
-                                                [(ngModel)]="eADIInfo.adlL1.module" size="70"
+                                            <input required id="module" type="text" [(ngModel)]="eADIInfo.adlL1.module"
+                                                size="70"
                                                 class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary" />
                                         </div>
 
@@ -242,16 +242,19 @@
                                             <label required for="sourceEmail" style="width: 100px">POC Email</label>
                                         </div>
                                         <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
-                                            <input required id="sourceEmail" type="email" (blur)="eventService.checkEmailValue(eADIInfo.adlL1.sourceEmail)"
+                                            <input required id="sourceEmail" type="email"
+                                                (blur)="eventService.checkEmailValue(eADIInfo.adlL1.sourceEmail)"
                                                 [(ngModel)]="eADIInfo.adlL1.sourceEmail" size="70"
                                                 class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary" />
                                         </div>
 
                                         <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                                            <label for="additionalDocAttached">Demand additional document (One Document) attached?</label>
+                                            <label for="additionalDocAttached">Demand additional document (One Document)
+                                                attached?</label>
                                         </div>
                                         <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
-                                            <p-checkbox [binary]="true" [(ngModel)]="eADIInfo.adlL1.additionalDocAttached"
+                                            <p-checkbox [binary]="true"
+                                                [(ngModel)]="eADIInfo.adlL1.additionalDocAttached"
                                                 inputId="additionalDocAttached"></p-checkbox>
                                         </div>
                                     </div>
@@ -279,23 +282,28 @@
                                         </div>
 
                                         <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                                            <label required for="selectedFrequency" style="width: 100px">Frequency of Data Refresh</label>
+                                            <label required for="selectedFrequency" style="width: 100px">Frequency of
+                                                Data Refresh</label>
                                         </div>
                                         <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
                                             <p-dropdown appendTo="body" [options]="refreshFrequencies"
-                                                [(ngModel)]="selectedFrequency" placeholder="Select Refresh Frequency"></p-dropdown>
+                                                [(ngModel)]="selectedFrequency"
+                                                placeholder="Select Refresh Frequency"></p-dropdown>
                                         </div>
 
                                         <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                                            <label required for="loadStrategy" style="width: 100px">Load strategy</label>
+                                            <label required for="loadStrategy" style="width: 100px">Load
+                                                strategy</label>
                                         </div>
                                         <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
                                             <p-dropdown appendTo="body" [options]="loadStrategies"
-                                                [(ngModel)]="selectedLoadStrategy" placeholder="Select Refresh Frequency"></p-dropdown>
+                                                [(ngModel)]="selectedLoadStrategy"
+                                                placeholder="Select Refresh Frequency"></p-dropdown>
                                         </div>
 
                                         <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                                            <label required for="extractionlogic" style="width: 100px">Incremental Extraction Logic</label>
+                                            <label required for="extractionlogic" style="width: 100px">Incremental
+                                                Extraction Logic</label>
                                         </div>
                                         <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
                                             <textarea id="extractionlogic" rows="3" cols="78"
@@ -303,7 +311,8 @@
                                         </div>
 
                                         <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                                            <label required for="tableAccessInfo" style="width: 100px">Table & Column Level Access Information</label>
+                                            <label required for="tableAccessInfo" style="width: 100px">Table & Column
+                                                Level Access Information</label>
                                         </div>
                                         <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
                                             <textarea id="tableAccessInfo" rows="3" cols="78"
@@ -311,7 +320,8 @@
                                         </div>
 
                                         <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                                            <label required for="history" style="width: 100px">History Data Requirements</label>
+                                            <label required for="history" style="width: 100px">History Data
+                                                Requirements</label>
                                         </div>
                                         <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
                                             <textarea id="history" rows="3" cols="78"
@@ -323,9 +333,50 @@
                             </div>
                         </div>
                     </p-tabPanel>
-                    <p-tabPanel header="ADL SL2" *ngIf="showTab('adlL2')">
+                    <p-tabPanel header="ADL L2" *ngIf="showTab('adlL2')">
                         <div>
-                            <h2>TBD</h2>
+                            <div class="grid">
+                                <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
+                                    <label required for="architectureReview" style="width: 100px">Architecture
+                                        Review</label>
+                                </div>
+                                <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
+                                    <textarea id="architectureReview" rows="3" cols="78"
+                                        [(ngModel)]="eADIInfo.adlL2.architectureReview" pInputTextarea></textarea>
+                                </div>
+
+                                <div class="col-12 xs:col-12 sm:col-12 lg:col-12 xl:col-12">
+                                    <label><b>Common Data Model</b></label>
+                                </div>
+                                <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
+                                    <label for="certifiedDataModel">Certified</label>
+                                </div>
+                                <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
+                                    <p-checkbox [binary]="true" [(ngModel)]="eADIInfo.adlL2.certifiedDataModel"
+                                        inputId="certifiedDataModel"></p-checkbox>
+                                </div>
+                                <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
+                                    <label for="existingDataModel">Existing</label>
+                                </div>
+                                <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
+                                    <p-checkbox [binary]="true" [(ngModel)]="eADIInfo.adlL2.existingDataModel"
+                                        inputId="existingDataModel"></p-checkbox>
+                                </div>
+                                <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
+                                    <label for="newDataModel">New</label>
+                                </div>
+                                <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
+                                    <p-checkbox [binary]="true" [(ngModel)]="eADIInfo.adlL2.newDataModel"
+                                        inputId="newDataModel"></p-checkbox>
+                                </div>
+                                <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
+                                    <label for="leadBioDataModel">Lead BIO</label>
+                                </div>
+                                <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
+                                    <p-checkbox [binary]="true" [(ngModel)]="eADIInfo.adlL2.leadBioDataModel"
+                                        inputId="leadBioDataModel"></p-checkbox>
+                                </div>
+                            </div>
                         </div>
                     </p-tabPanel>
                     <p-tabPanel header="ADL Gold" *ngIf="showTab('gold')">
@@ -340,7 +391,115 @@
                     </p-tabPanel>
                     <p-tabPanel header="I&A" *ngIf="showTab('ia')">
                         <div>
-                            <h2>TBD</h2>
+                            <div class="grid">
+                                <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
+                                    <label required for="location" style="width: 100px">Location of the Report</label>
+                                </div>
+                                <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
+                                    <input required id="location" type="text"
+                                        [(ngModel)]="eADIInfo.ia.location" size="70"
+                                        class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary" />
+                                </div>
+                                <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
+                                    <label required for="team" style="width: 100px">Team for which Report is Required</label>
+                                </div>
+                                <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
+                                    <input required id="team" type="text"
+                                        [(ngModel)]="eADIInfo.ia.team" size="70"
+                                        class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary" />
+                                </div>
+
+                                <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
+                                    <label for="newReportRequired" required style="width:100px">New Report Required?</label>
+                                </div>
+                                <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
+                                    <input type="radio" id="Yes" name="newReportRequired" checked="checked"
+                                        [(ngModel)]="eADIInfo.ia.newReportRequired" [value]="true">
+                                    <label for="Yes">Yes</label>
+                                    <input type="radio" id="No" name="newReportRequired"
+                                        [(ngModel)]="eADIInfo.ia.newReportRequired" [value]="false">
+                                    <label for="No">No</label>
+                                </div>
+
+                                <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
+                                    <label required for="reportDescription" style="width: 100px">Report Description</label>
+                                </div>
+                                <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
+                                    <textarea id="reportDescription" rows="3" cols="78"
+                                        [(ngModel)]="eADIInfo.ia.reportDescription" pInputTextarea></textarea>
+                                </div>
+                                <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
+                                    <label required for="reportUsage" style="width: 100px">Report Usage (can be used as reference/can be leveraged)</label>
+                                </div>
+                                <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
+                                    <textarea id="reportUsage" rows="3" cols="78"
+                                        [(ngModel)]="eADIInfo.ia.reportUsage" pInputTextarea></textarea>
+                                </div>
+                                <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
+                                    <label required for="businessCase" style="width: 100px">Business Case (why report is required?)</label>
+                                </div>
+                                <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
+                                    <textarea id="businessCase" rows="3" cols="78"
+                                        [(ngModel)]="eADIInfo.ia.businessCase" pInputTextarea></textarea>
+                                </div>
+                                <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
+                                    <label required for="refreshFrequency" style="width: 100px">Refresh Frequency</label>
+                                </div>
+                                <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
+                                    <input required id="refreshFrequency" type="text"
+                                        [(ngModel)]="eADIInfo.ia.refreshFrequency" size="70"
+                                        class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary" />
+                                </div>
+                                <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
+                                    <label required for="reportType" style="width: 100px">Report Type</label>
+                                </div>
+                                <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
+                                    <input type="radio" id="Temporary" name="reportType" checked="checked"
+                                        [(ngModel)]="eADIInfo.ia.reportType" value="Temporary">
+                                    <label for="Temporary">Temporary</label>
+                                    <input type="radio" id="Permanent" name="reportType"
+                                        [(ngModel)]="eADIInfo.ia.reportType" value="Permanent">
+                                    <label for="Permanent">Permanent</label>
+                                </div>
+                                <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
+                                    <label required for="projectCode" style="width: 100px">Project Code</label>
+                                </div>
+                                <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
+                                    <input required id="projectCode" type="text"
+                                        [(ngModel)]="eADIInfo.ia.projectCode" size="70"
+                                        class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary" />
+                                </div>
+                                <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
+                                    <label required for="reportTool" style="width: 100px">Tool of preference for Report to be built in </label>
+                                </div>
+                                <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
+                                    <input required id="reportTool" type="text"
+                                        [(ngModel)]="eADIInfo.ia.reportTool" size="70"
+                                        class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary" />
+                                </div>
+
+                                <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
+                                    <label for="designReportAttached">Design of report attached?</label>
+                                </div>
+                                <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
+                                    <p-checkbox [binary]="true" [(ngModel)]="eADIInfo.ia.designReportAttached"
+                                        inputId="designReportAttached"></p-checkbox>
+                                </div> 
+                                <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
+                                    <label for="cdmConsumed">Existing CDM to be consumed?</label>
+                                </div>
+                                <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
+                                    <p-checkbox [binary]="true" [(ngModel)]="eADIInfo.ia.cdmConsumed"
+                                        inputId="cdmConsumed"></p-checkbox>
+                                </div> <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
+                                    <label for="datasetConsumed">Existing Datasets to be consumed?</label>
+                                </div>
+                                <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
+                                    <p-checkbox [binary]="true" [(ngModel)]="eADIInfo.ia.datasetConsumed"
+                                        inputId="datasetConsumed"></p-checkbox>
+                                </div>
+
+                            </div>
                         </div>
                     </p-tabPanel>
                     <p-tabPanel header="Data Quality" *ngIf="showTab('dataQuality')">
@@ -359,8 +518,10 @@
                                         <label required for="email" style="width: 100px">Email</label>
                                     </div>
                                     <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
-                                        <input required id="email" type="email"
+                                        <input required id="email"
                                             [(ngModel)]="eADIInfo.dataQuality.dataCleaningSpocEmail" size="70"
+                                            type="email"
+                                            (blur)="eventService.checkEmailValue(eADIInfo.dataQuality.dataCleaningSpocEmail)"
                                             class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary" />
                                     </div>
                                 </div>
@@ -380,6 +541,7 @@
                                     </div>
                                     <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
                                         <input required id="email" type="email"
+                                            (blur)="eventService.checkEmailValue(eADIInfo.dataQuality.bpoEmail)"
                                             [(ngModel)]="eADIInfo.dataQuality.bpoEmail" size="70"
                                             class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary" />
                                     </div>

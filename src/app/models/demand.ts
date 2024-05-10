@@ -26,26 +26,26 @@ export class Demand {
 			file: File,
 			fileName: String,
 			description: '',
-			uploadedDate: new Date()
+			uploadedDate: new Date
         },{
 			file: File,
 			fileName: String,
 			description: '',
-			uploadedDate: new Date()
+			uploadedDate: new Date
         },{
 			file: File,
 			fileName: String,
 			description: '',
-			uploadedDate: new Date()
+			uploadedDate: new Date
         },{
 			file: File,
 			fileName: String,
 			description: '',
-			uploadedDate: new Date()
+			uploadedDate: new Date
         },{
 			file: File,
 			fileName: String,
 			description: '',
-			uploadedDate: new Date()
+			uploadedDate: new Date
         } ];
 }

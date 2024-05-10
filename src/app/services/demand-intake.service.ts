@@ -73,27 +73,27 @@ export class DemandIntakeService {
             file: File,
             fileName: String,
             description: '',
-            uploadedDate: new Date()
+            uploadedDate: new Date
           }, {
             file: File,
             fileName: String,
             description: '',
-            uploadedDate: new Date()
+            uploadedDate: new Date
           }, {
             file: File,
             fileName: String,
             description: '',
-            uploadedDate: new Date()
+            uploadedDate: new Date
           }, {
             file: File,
             fileName: String,
             description: '',
-            uploadedDate: new Date()
+            uploadedDate: new Date
           }, {
             file: File,
             fileName: String,
             description: '',
-            uploadedDate: new Date()
+            uploadedDate: new Date
           }];
       }
 
@@ -103,7 +103,7 @@ export class DemandIntakeService {
             file: File,
             fileName: String,
             description: '',
-            uploadedDate: new Date()
+            uploadedDate: new Date
           }
         }
       }
@@ -154,6 +154,18 @@ export class DemandIntakeService {
         return false;
       }
 
+      if (this.authService.isDM() || this.authService.isCCB()) {
+        if (this.demandInformation.solutionDirectionInfo.adlL1 && this.eventService.checkEmailValue(this.demandInformation.eADIInfo.adlL1.sourceEmail)) {
+          this.messageService.add({ severity: 'warn', summary: 'Error', detail: 'Please fill required fields!' });
+          this.router.navigate(['demand-intake/checklist']);
+          return false;
+        } else if (this.demandInformation.solutionDirectionInfo.dataQuality && (this.eventService.checkEmailValue(this.demandInformation.eADIInfo.dataQuality.bpoEmail) || this.eventService.checkEmailValue(this.demandInformation.eADIInfo.dataQuality.dataCleaningSpocEmail))) {
+          this.messageService.add({ severity: 'warn', summary: 'Error', detail: 'Please fill required fields!' });
+          this.router.navigate(['demand-intake/checklist']);
+          return false;
+        }
+      }
+
       if (this.authService.isDM() && !this.eventService.isNewDemand) {
         if (this.demandInformation.demandManagerInfo.decision == null || this.demandInformation.demandManagerInfo.remarks == '') {
           this.messageService.add({ severity: 'warn', summary: 'Error', detail: 'Please fill required fields!' });
@@ -173,32 +185,6 @@ export class DemandIntakeService {
 
   }
 
-  // saveDemand() {
-  //   this.eventService.progressBarEvent.emit(true);
-  //   console.log("saveDemand: ", this.demandInformation)
-  //   if (this.validateRequest(true)) {
-
-  //     let url = this.baseUrl + '/common/demand-intake/';
-  //     let headerOptions = {
-  //       headers: new HttpHeaders({
-  //         'Content-Type': 'application/json',
-  //         'X-Correlation-ID': 'abc'
-  //       })
-  //     };
-
-  //     this.demandInformation.introduction.requestedBy = this.authService.currentUserValue.email;
-  //     return this.http.post<any>(url, this.demandInformation, headerOptions)
-  //       .pipe(map(response => {
-  //         console.log("SaveDemand() Response :", response)
-  //         this.eventService.progressBarEvent.emit(false);
-  //         return response;
-  //       }));
-  //   } else {
-  //     this.eventService.progressBarEvent.emit(false);
-  //     return throwError(false);
-  //   }
-  // }
-
   saveDemandWithAttachment() {
     this.eventService.progressBarEvent.emit(true);
     console.log("saveDemandWithAttachment: ", this.demandInformation)
@@ -214,8 +200,8 @@ export class DemandIntakeService {
 
       this.demandInformation.introduction.requestedBy = this.authService.currentUserValue.email;
       // console.log("attachments: ", this.attachments);
-      const formData : FormData = new FormData();
-      
+      const formData: FormData = new FormData();
+
       if (this.attachments.length == 0) {
         // formData.append('files', '');
       } else {
@@ -227,7 +213,7 @@ export class DemandIntakeService {
       }
       formData.append('demand', JSON.stringify(this.demandInformation));
 
-      console.log("formdata demand, files",formData.get('demand'), formData.get('files'))
+      console.log("formdata demand, files", formData.get('demand'), formData.get('files'))
       return this.http.post<any>(url, formData, headerOptions)
         .pipe(map(response => {
           console.log("saveDemandWithAttachment() Response :", response)
@@ -245,7 +231,7 @@ export class DemandIntakeService {
     this.eventService.progressBarEvent.emit(true);
     console.log("submitDemandWithAttachment: ", this.demandInformation)
 
-    if (this.validateRequest(true)) {
+    if (this.validateRequest(false)) {
 
       let url = this.baseUrl + '/common/demand-intake/submit';
       let headerOptions = {
@@ -256,6 +242,14 @@ export class DemandIntakeService {
 
       if (this.demandInformation.introduction.requestedBy == '') {
         this.demandInformation.introduction.requestedBy = this.authService.currentUserValue.email;
+      }
+
+      if (this.authService.isDM() && this.demandInformation.demandManagerInfo.decisionBy == '') {
+        this.demandInformation.demandManagerInfo.decisionBy = this.authService.currentUserValue.email;
+      }
+
+      if (this.authService.isCCB() && this.demandInformation.ccbInfo.decisionBy == '') {
+        this.demandInformation.ccbInfo.decisionBy = this.authService.currentUserValue.email;
       }
 
       console.log("attachments: ", this.attachments);
@@ -283,36 +277,6 @@ export class DemandIntakeService {
     }
 
   }
-
-  // submitDemand() {
-  //   this.eventService.progressBarEvent.emit(true);
-  //   console.log("submit: ", this.demandInformation)
-  //   if (this.validateRequest(false)) {
-  //     let url = this.baseUrl + '/common/demand-intake/submit';
-  //     let headerOptions = {
-  //       headers: new HttpHeaders({
-  //         'Content-Type': 'application/json',
-  //         'X-Correlation-ID': 'abc'
-  //       })
-  //     };
-
-  //     if (this.demandInformation.introduction.requestedBy == '') {
-  //       this.demandInformation.introduction.requestedBy = this.authService.currentUserValue.email;
-  //     }
-
-  //     return this.http.post<any>(url, this.demandInformation, headerOptions)
-  //       .pipe(map(response => {
-  //         console.log("SubmitDemand() Response :", response)
-  //         this.eventService.progressBarEvent.emit(false);
-  //         return response;
-  //       }));
-
-  //   } else {
-  //     this.eventService.progressBarEvent.emit(false);
-  //     return throwError(false);
-  //   }
-
-  // }
 
   getAllDemands() {
     this.eventService.progressBarEvent.emit(true);

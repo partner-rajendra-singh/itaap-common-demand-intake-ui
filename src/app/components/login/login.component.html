@@ -38,7 +38,7 @@
                             <label for="decision">OTP</label>
                         </div>
                         <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9" *ngIf="otpSent">
-                            <input pInputText id="otp" [(ngModel)]='token'
+                            <input pInputText id="otp" [(ngModel)]='token' type="password"
                                 pTooltip="Enter OTP received on your email address" aria-describedby="otp-help" />
                         </div>
 
