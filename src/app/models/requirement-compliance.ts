@@ -11,13 +11,13 @@ export class RequirementCompliance {
 	compliance = [
         {
             key: '',
-            value: ''
+            value: false
         },{
             key: '',
-            value: ''
+            value: false
         },{
             key: '',
-            value: ''
+            value: false
         }
     ];
 }

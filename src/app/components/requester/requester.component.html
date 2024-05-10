@@ -17,10 +17,17 @@
                                 style="width:100px">Domain/Platform</label>
                         </div>
                         <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
-                            <p-dropdown appendTo="body" [options]="domainList" [(ngModel)]="selectedDomain"
+                            <p-dropdown appendTo="body" [options]="domainList" [(ngModel)]="selectedDomain" optionLabel="value"
                                  placeholder="Please Select Domain/Platform"></p-dropdown>
-
                         </div>
+                        <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3"></div>
+                        <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9" >
+                            <div *ngIf="selectedDomain && selectedDomain.key=='Other'">
+                                <input id="domain" type="text" [(ngModel)]="requesterInfo.domain" placeholder="Please specify Domain/Platform" size="70"
+                                class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary">
+                            </div>
+                        </div>
+
                         <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
                             <label for="requestDate" required class="asterisk-if-mandatory"
                                 style="width:100px">Requested Date</label>
@@ -30,6 +37,58 @@
                                 [minDate]="requesterInfo.requestedDate" [maxDate]="requesterInfo.requestedDate"
                                 [showIcon]="true"></p-calendar>
                         </div>
+                    
+                        <div class="col-12 xs:col-12 sm:col-12 lg:col-12 xl:col-12">
+                            <label> <b>Use Case</b></label>
+                        </div>
+                        <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
+                            <label for="usecaseBU">BU</label>
+                        </div>
+                        <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
+                            <p-checkbox [binary]="true" [(ngModel)]="requesterInfo.usecaseBU"
+                                inputId="usecaseBU"></p-checkbox>
+                        </div>
+                        <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
+                            <label for="usecaseMarket">Market</label>
+                        </div>
+                        <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
+                            <p-checkbox [binary]="true" [(ngModel)]="requesterInfo.usecaseMarket"
+                                inputId="usecaseMarket"></p-checkbox>
+                        </div>
+                        <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
+                            <label for="usecaseGlobal">Global</label>
+                        </div>
+                        <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
+                            <p-checkbox [binary]="true" [(ngModel)]="requesterInfo.usecaseGlobal"
+                                inputId="usecaseGlobal"></p-checkbox>
+                        </div>
+
+                        <div class="col-12 xs:col-12 sm:col-12 lg:col-12 xl:col-12">
+                            <label><b>Consumption Pattern</b></label>
+                        </div>
+                        <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
+                            <label for="cpAPI">API</label>
+                        </div>
+                        <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
+                            <p-checkbox [binary]="true" [(ngModel)]="requesterInfo.cpAPI"
+                                inputId="cpAPI"></p-checkbox>
+                        </div>
+                        <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
+                            <label for="cpReport">Report/Dashboard</label>
+                        </div>
+                        <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
+                            <p-checkbox [binary]="true" [(ngModel)]="requesterInfo.cpReport"
+                                inputId="cpReport"></p-checkbox>
+                        </div>
+                        <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
+                            <label for="cpTransactionPlatform">Downstream Transaction Platform</label>
+                        </div>
+                        <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
+                            <p-checkbox [binary]="true" [(ngModel)]="requesterInfo.cpTransactionPlatform"
+                                inputId="cpTransactionPlatform"></p-checkbox>
+                        </div>
+
+
                         <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
                             <label for="goLiveApproach" required class="asterisk-if-mandatory"
                                 style="width:100px">Approved budget for this demand?</label>

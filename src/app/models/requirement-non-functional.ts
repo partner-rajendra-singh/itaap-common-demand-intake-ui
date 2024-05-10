@@ -6,7 +6,6 @@ export class RequirementNonFunctional {
 	maxLatency: string = '';
 	businessCriticality: string = '';
 	dataPrivacy: string = '';
-	serviceQuality: string = '';
 	transformation: boolean = false;
 	routing: boolean = false;
 	protocolConversion: boolean = false;
@@ -15,4 +14,7 @@ export class RequirementNonFunctional {
 	persistence: boolean = false;
 	senderTechnicalDetails: string = '';
 	receiverTechnicalDetails: string = '';
+	refreshFrequency : string = '';
+	dimentionType:string = '';
+	snapshot: string = '';
 }

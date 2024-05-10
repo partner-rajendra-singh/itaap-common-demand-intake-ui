@@ -109,6 +109,7 @@ export class AttachmentComponent {
   onUpload(event: any, index: any) {
     for (let file of event.files) {
       // this.attachmentInfo[index].file = file;
+      // this.attachmentInfo[index].uploadedDate = new Date();
       this.demandIntakeService.attachments[index] = file;
     }
     console.log("attachments1: ", this.demandIntakeService.attachments);
