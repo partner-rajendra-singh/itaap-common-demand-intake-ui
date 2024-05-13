@@ -24,27 +24,27 @@ export class Demand {
 	attachmentInfo = [
         {
 			file: File,
-			fileName: String,
+			fileName: '',
 			description: '',
 			uploadedDate: new Date
         },{
 			file: File,
-			fileName: String,
+			fileName: '',
 			description: '',
 			uploadedDate: new Date
         },{
 			file: File,
-			fileName: String,
+			fileName: '',
 			description: '',
 			uploadedDate: new Date
         },{
 			file: File,
-			fileName: String,
+			fileName: '',
 			description: '',
 			uploadedDate: new Date
         },{
 			file: File,
-			fileName: String,
+			fileName: '',
 			description: '',
 			uploadedDate: new Date
         } ];

@@ -2,9 +2,8 @@ export class RequesterInfo {
     program: string = '';
     domain: string = '';
     requestedDate: Date = new Date();
-    usecaseBU: boolean = false;
-    usecaseMarket: boolean = false;
-    usecaseGlobal: boolean = false;
+    businessUnit: string = '';
+    market: string = '';
     cpAPI: boolean = false;
     cpReport: boolean = false;
     cpTransactionPlatform: boolean = false;
