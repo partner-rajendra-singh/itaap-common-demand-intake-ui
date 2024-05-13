@@ -23,7 +23,7 @@
                         <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3"></div>
                         <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9" >
                             <div *ngIf="selectedDomain && selectedDomain.key=='Other'">
-                                <input id="domain" type="text" [(ngModel)]="requesterInfo.domain" placeholder="Please specify Domain/Platform" size="70"
+                                <input id="domain" type="text" [(ngModel)]="requesterInfo.domain" placeholder="Please Specify Domain/Platform" size="70"
                                 class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary">
                             </div>
                         </div>
@@ -33,38 +33,45 @@
                                 style="width:100px">Requested Date</label>
                         </div>
                         <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
-                            <p-calendar dateFormat="dd/mm/yy" [(ngModel)]="requesterInfo.requestedDate"
+                            <p-calendar dateFormat="dd/mm/yy" [(ngModel)]="requesterInfo.requestedDate" [disabled]="true"
                                 [minDate]="requesterInfo.requestedDate" [maxDate]="requesterInfo.requestedDate"
                                 [showIcon]="true"></p-calendar>
                         </div>
-                    
-                        <div class="col-12 xs:col-12 sm:col-12 lg:col-12 xl:col-12">
-                            <label> <b>Use Case</b></label>
-                        </div>
+
                         <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                            <label for="usecaseBU">BU</label>
+                            <label for="domain" required class="asterisk-if-mandatory"
+                                style="width:100px">Market</label>
                         </div>
                         <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
-                            <p-checkbox [binary]="true" [(ngModel)]="requesterInfo.usecaseBU"
-                                inputId="usecaseBU"></p-checkbox>
+                            <p-dropdown appendTo="body" [options]="marketList" [(ngModel)]="selectedMarket"
+                                 placeholder="Please Select Market"></p-dropdown>
                         </div>
+                        <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3"></div>
+                        <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9" >
+                            <div *ngIf="selectedMarket && getMarketKey(this.selectedMarket) == 'Other'">
+                                <input id="domain" type="text" [(ngModel)]="requesterInfo.market" placeholder="Please Specify Market" size="70"
+                                class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary">
+                            </div>
+                        </div>
+
                         <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                            <label for="usecaseMarket">Market</label>
+                            <label for="businessUnit" required class="asterisk-if-mandatory"
+                                style="width:100px">Business Unit</label>
                         </div>
                         <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
-                            <p-checkbox [binary]="true" [(ngModel)]="requesterInfo.usecaseMarket"
-                                inputId="usecaseMarket"></p-checkbox>
+                            <p-dropdown appendTo="body" [options]="businessUnitList" [(ngModel)]="selectedBusinessUnit"
+                                 placeholder="Please Select Business Unit"></p-dropdown>
                         </div>
-                        <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                            <label for="usecaseGlobal">Global</label>
-                        </div>
-                        <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
-                            <p-checkbox [binary]="true" [(ngModel)]="requesterInfo.usecaseGlobal"
-                                inputId="usecaseGlobal"></p-checkbox>
+                        <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3"></div>
+                        <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9" >
+                            <div *ngIf="selectedBusinessUnit && getBUKey(this.selectedBusinessUnit) == 'Other'">
+                                <input id="domain" type="text" [(ngModel)]="requesterInfo.businessUnit" placeholder="Please Specify Business Unit" size="70"
+                                class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary">
+                            </div>
                         </div>
 
                         <div class="col-12 xs:col-12 sm:col-12 lg:col-12 xl:col-12">
-                            <label><b>Consumption Pattern</b></label>
+                            <label><b>ADL L2 (Consumption Pattern)</b></label>
                         </div>
                         <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
                             <label for="cpAPI">API</label>

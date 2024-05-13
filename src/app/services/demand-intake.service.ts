@@ -71,27 +71,27 @@ export class DemandIntakeService {
         demand.attachmentInfo = [
           {
             file: File,
-            fileName: String,
+            fileName: '',
             description: '',
             uploadedDate: new Date
           }, {
             file: File,
-            fileName: String,
+            fileName: '',
             description: '',
             uploadedDate: new Date
           }, {
             file: File,
-            fileName: String,
+            fileName: '',
             description: '',
             uploadedDate: new Date
           }, {
             file: File,
-            fileName: String,
+            fileName: '',
             description: '',
             uploadedDate: new Date
           }, {
             file: File,
-            fileName: String,
+            fileName: '',
             description: '',
             uploadedDate: new Date
           }];
@@ -101,7 +101,7 @@ export class DemandIntakeService {
         for (let i = demand.attachmentInfo.length; i < 5; i++) {
           demand.attachmentInfo[i] = {
             file: File,
-            fileName: String,
+            fileName: '',
             description: '',
             uploadedDate: new Date
           }

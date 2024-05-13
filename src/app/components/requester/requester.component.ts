@@ -5,6 +5,8 @@ import { MessageService } from 'primeng/api';
 import { catchError, first, map, throwError } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
 import { EventService } from 'src/app/services/event.service';
+import { Market } from 'src/app/enums/market';
+import { BusinessUnit } from 'src/app/enums/businessUnit';
 
 interface Domain {
   key: string;
@@ -21,6 +23,10 @@ export class RequesterComponent implements OnInit {
   visibleSaveButton!: boolean;
   domainList!: Domain[];
   selectedDomain!: Domain;
+  marketList!: string[];
+  selectedMarket!: string;
+  businessUnitList!: string[];
+  selectedBusinessUnit!: string;
 
   constructor(private authService: AuthService, public demandIntakeService: DemandIntakeService, private router: Router, private messageService: MessageService, public eventService: EventService) {
     if (authService.isRequester()) {
@@ -36,6 +42,10 @@ export class RequesterComponent implements OnInit {
 
   ngOnInit() {
     this.requesterInfo = this.demandIntakeService.getDemandInformation().requesterInfo;
+    this.marketList = Object.values(Market);
+    this.businessUnitList = Object.values(BusinessUnit);
+    this.selectedMarket = this.getMarketValue(this.demandIntakeService.getDemandInformation().requesterInfo.market);
+    this.selectedBusinessUnit = this.getBUValue(this.demandIntakeService.getDemandInformation().requesterInfo.businessUnit);
     this.demandIntakeService.getRequesterDomain().pipe(
       map((response: any) => {
         this.domainList = response;
@@ -63,6 +73,14 @@ export class RequesterComponent implements OnInit {
         this.requesterInfo.domain = this.selectedDomain.key;
       }
 
+      if (this.getMarketKey(this.selectedMarket) != 'Other') {
+        this.requesterInfo.market = this.getMarketKey(this.selectedMarket);
+      }
+
+      if (this.getBUKey(this.selectedBusinessUnit) != 'Other') {
+        this.requesterInfo.businessUnit = this.getBUKey(this.selectedBusinessUnit);
+      }
+
       this.demandIntakeService.demandInformation.requesterInfo = this.requesterInfo;
       this.router.navigate(['demand-intake/requirement']);
     } else {
@@ -79,6 +97,14 @@ export class RequesterComponent implements OnInit {
       this.requesterInfo.domain = this.selectedDomain.key;
     }
 
+    if (this.getMarketKey(this.selectedMarket) != 'Other') {
+      this.requesterInfo.market = this.getMarketKey(this.selectedMarket);
+    }
+
+    if (this.getBUKey(this.selectedBusinessUnit) != 'Other') {
+      this.requesterInfo.businessUnit = this.getBUKey(this.selectedBusinessUnit);
+    }
+
     this.demandIntakeService.saveDemandWithAttachment()
       .pipe(first())
       .subscribe(
@@ -91,5 +117,26 @@ export class RequesterComponent implements OnInit {
         });
   }
 
+  getMarketValue(key: string): string {
+    const status = Object.keys(Market).indexOf(key as unknown as Market);
+    let s = Object.values(Market)[status];
+    return s;
+  }
+
+  getMarketKey(value: string): string {
+    const index = Object.values(Market).indexOf(value as unknown as Market);
+    return Object.keys(Market)[index];
+  }
+
+  getBUValue(key: string): string {
+    const status = Object.keys(BusinessUnit).indexOf(key as unknown as BusinessUnit);
+    let s = Object.values(BusinessUnit)[status];
+    return s;
+  }
+
+  getBUKey(value: string): string {
+    const index = Object.values(BusinessUnit).indexOf(value as unknown as BusinessUnit);
+    return Object.keys(BusinessUnit)[index];
+  }
 
 }

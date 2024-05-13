@@ -13,7 +13,7 @@
                         <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
                             <label for="attachment">Attachment</label>
                         </div>
-                        <div class="col-4 xs:col-4 sm:col-4 lg:col-4 xl:col-4">
+                        <div class="col-4 xs:col-4 sm:col-4 lg:col-4 xl:col-4"  *ngIf="demandIntakeService.demandInformation.attachmentInfo[0].description!=''">
                             <label for="uploadDate">Upload Date</label>
                         </div>
 
@@ -27,7 +27,7 @@
                                 <p-fileUpload mode="basic" chooseLabel="Attach file" [(ngModel)]="item.file"
                                     (onSelect)="onUpload($event, i)"></p-fileUpload>
                             </div>
-                            <div class="col-4 xs:col-4 sm:col-4 lg:col-4 xl:col-4" >
+                            <div class="col-4 xs:col-4 sm:col-4 lg:col-4 xl:col-4" *ngIf="demandIntakeService.demandInformation.attachmentInfo[i].description!=''">
                                 <label for="uploadDate">{{item.uploadedDate | date: 'MMM dd, yyyy' }}</label>
                             </div>
 
