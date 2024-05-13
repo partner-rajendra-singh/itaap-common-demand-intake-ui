@@ -38,7 +38,7 @@ export class ChecklistComponent {
   nextPage() {
     this.demandIntakeService.getDemandInformation().eADIInfo = this.eADIInfo;
     this.eADIInfo.adlL1.frequency = this.getFrequencyKey(this.selectedFrequency);
-    this.eADIInfo.adlL1.loadStrategies = this.getStrategyKey(this.selectedLoadStrategy);
+    this.eADIInfo.adlL1.loadStrategy = this.getStrategyKey(this.selectedLoadStrategy);
     this.router.navigate(['demand-intake/attachment']);
   }
 

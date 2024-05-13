@@ -155,11 +155,11 @@ export class DemandIntakeService {
       }
 
       if (this.authService.isDM() || this.authService.isCCB()) {
-        if (this.demandInformation.solutionDirectionInfo.adlL1 && this.eventService.checkEmailValue(this.demandInformation.eADIInfo.adlL1.sourceEmail)) {
+        if (this.demandInformation.solutionDirectionInfo.adlL1 && !this.eventService.checkEmailValue(this.demandInformation.eADIInfo.adlL1.sourceEmail)) {
           this.messageService.add({ severity: 'warn', summary: 'Error', detail: 'Please fill required fields!' });
           this.router.navigate(['demand-intake/checklist']);
           return false;
-        } else if (this.demandInformation.solutionDirectionInfo.dataQuality && (this.eventService.checkEmailValue(this.demandInformation.eADIInfo.dataQuality.bpoEmail) || this.eventService.checkEmailValue(this.demandInformation.eADIInfo.dataQuality.dataCleaningSpocEmail))) {
+        } else if (this.demandInformation.solutionDirectionInfo.dataQuality && (!this.eventService.checkEmailValue(this.demandInformation.eADIInfo.dataQuality.bpoEmail) || !this.eventService.checkEmailValue(this.demandInformation.eADIInfo.dataQuality.dataCleaningSpocEmail))) {
           this.messageService.add({ severity: 'warn', summary: 'Error', detail: 'Please fill required fields!' });
           this.router.navigate(['demand-intake/checklist']);
           return false;
