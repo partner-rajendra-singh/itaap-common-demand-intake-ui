@@ -44,13 +44,22 @@ export class RequesterComponent implements OnInit {
     this.requesterInfo = this.demandIntakeService.getDemandInformation().requesterInfo;
     this.marketList = Object.values(Market);
     this.businessUnitList = Object.values(BusinessUnit);
+
     this.selectedMarket = this.getMarketValue(this.demandIntakeService.getDemandInformation().requesterInfo.market);
+    if (!this.selectedMarket) {
+      this.selectedMarket = 'Other';
+    }
+
     this.selectedBusinessUnit = this.getBUValue(this.demandIntakeService.getDemandInformation().requesterInfo.businessUnit);
+    if (!this.selectedBusinessUnit) {
+      this.selectedBusinessUnit = 'Other';
+    }
+
     this.demandIntakeService.getRequesterDomain().pipe(
       map((response: any) => {
         this.domainList = response;
         console.log('getAllDemands() Response :', this.domainList);
-        this.selectedDomain = this.getSelectedDomain();;
+        this.selectedDomain = this.getSelectedDomain();
         this.eventService.progressBarEvent.emit(false);
       }),
       catchError((error: any) => {
@@ -64,7 +73,11 @@ export class RequesterComponent implements OnInit {
   }
 
   getSelectedDomain(): Domain {
-    return JSON.parse(JSON.stringify(this.domainList.find(item => item.key === this.demandIntakeService.getDemandInformation().requesterInfo.domain))) as Domain;
+    let platform = this.domainList.find(item => item.key === this.demandIntakeService.getDemandInformation().requesterInfo.domain);
+    if (!platform) {
+      this.selectedDomain = { key: 'Other', value: 'Other' };
+    }
+    return JSON.parse(JSON.stringify(platform)) as Domain;
   }
 
   nextPage() {
