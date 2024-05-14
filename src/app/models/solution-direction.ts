@@ -1,5 +1,5 @@
 export class SolutionDirection {
-    integration: boolean = true;
+    integration: boolean = false;
     dataModelling: boolean = false;
     adlL1: boolean = false;
     adlL2: boolean = false;

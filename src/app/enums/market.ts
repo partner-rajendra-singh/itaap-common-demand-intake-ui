@@ -1,5 +1,5 @@
 export enum Market {
-    Global= 'Gloabl',
+    Global= 'Global',
     North_America= 'North America',
     Greater_China= 'Greater China',
     APAC= 'APAC',

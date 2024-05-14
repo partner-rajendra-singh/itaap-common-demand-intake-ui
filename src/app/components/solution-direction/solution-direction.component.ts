@@ -16,22 +16,36 @@ export class SolutionDirectionComponent {
   constructor(public demandIntakeService: DemandIntakeService, private router: Router, private messageService: MessageService, private eventService: EventService) { }
 
   ngOnInit() {
-    // console.log("SolutionDirectionComponent Init: ", this.demandIntakeService.demandInformation)
+    console.log("SolutionDirectionComponent Init: ", this.demandIntakeService.demandInformation)
     this.solutionDirectionInfo = this.demandIntakeService.getDemandInformation().solutionDirectionInfo;
     this.eventService.solutionDirectionValue = this.solutionDirectionInfo;
   }
 
   nextPage() {
-    this.demandIntakeService.getDemandInformation().solutionDirectionInfo = this.solutionDirectionInfo;
-    this.router.navigate(['demand-intake/checklist']);
+    if (this.isAnySD()) {
+      this.demandIntakeService.getDemandInformation().solutionDirectionInfo = this.solutionDirectionInfo;
+      this.router.navigate(['demand-intake/checklist']);
+    } else {
+      this.messageService.add({ severity: 'warn', summary: 'Warning', detail: 'Please select atleast one Solution Direction!' });
+    }
   }
 
   prevPage() {
     this.router.navigate(['demand-intake/requirement']);
   }
 
-  emitCheckList(){
+  emitCheckList() {
     this.eventService.solutionDirectionValue = this.solutionDirectionInfo;
+  }
+
+  isAnySD(): boolean {
+
+    return (this.solutionDirectionInfo.integration || this.solutionDirectionInfo.dataModelling || this.solutionDirectionInfo.adlL1 ||
+      this.solutionDirectionInfo.adlL2 || this.solutionDirectionInfo.gold || this.solutionDirectionInfo.mdm ||
+      this.solutionDirectionInfo.ia || this.solutionDirectionInfo.dataQuality || this.solutionDirectionInfo.informatica
+      || this.solutionDirectionInfo.azureSynapse
+    );
+
   }
 
 }
