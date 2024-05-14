@@ -6,7 +6,7 @@
                     *ngIf="!this.showTab('integration') && !this.showTab('dataModelling') && !this.showTab('adlL1') && !this.showTab('adlL2') && !this.showTab('gold') && !this.showTab('mdm') && !this.showTab('ia')">
                     <p>Please Select Solution Direction!</p>
                 </div>
-                <p-tabView>
+                <p-tabView [activeIndex]="eventService.selectedEADITabIndex">
                     <p-tabPanel header="Integration/ITaaP" *ngIf="showTab('integration')">
                         <div class="grid">
                             <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">

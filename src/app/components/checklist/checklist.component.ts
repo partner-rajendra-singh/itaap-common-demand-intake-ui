@@ -6,6 +6,12 @@ import { EventService } from 'src/app/services/event.service';
 import { RefreshFrequency } from 'src/app/enums/refreshFrequency';
 import { LoadStrategy } from 'src/app/enums/loadStrategy';
 
+interface EADITab {
+  index: number,
+  name: string,
+  visible: boolean
+}
+
 @Component({
   selector: 'app-checklist',
   templateUrl: './checklist.component.html'
@@ -17,17 +23,20 @@ export class ChecklistComponent {
   selectedFrequency!: string;
   loadStrategies!: string[];
   selectedLoadStrategy!: string;
+  tabs: EADITab[] = [];
+  visibleTabs!: EADITab[];
 
   constructor(public demandIntakeService: DemandIntakeService, private router: Router, private messageService: MessageService, public eventService: EventService) { }
 
   ngOnInit() {
     console.log("ChecklistComponent ", this.eventService.solutionDirectionValue);
+    this.setTabsVisibility();
+
     this.eADIInfo = this.demandIntakeService.getDemandInformation().eADIInfo;
     this.refreshFrequencies = Object.values(RefreshFrequency);
     if (this.demandIntakeService.getDemandInformation().eADIInfo.adlL1 != null && this.demandIntakeService.getDemandInformation().eADIInfo.adlL1.frequency != '') {
       this.selectedFrequency = this.getFrequencyValue(this.demandIntakeService.getDemandInformation().eADIInfo.adlL1.frequency);
     }
-
 
     this.loadStrategies = Object.values(LoadStrategy);
     if (this.demandIntakeService.getDemandInformation().eADIInfo.adlL1 != null && this.demandIntakeService.getDemandInformation().eADIInfo.adlL1.loadStrategy != '') {
@@ -35,15 +44,47 @@ export class ChecklistComponent {
     }
   }
 
+  setTabsVisibility() {
+    this.tabs.push({ index: 0, name: 'integration', visible: this.eventService.solutionDirectionValue.integration });
+    this.tabs.push({ index: 1, name: 'dataModelling', visible: this.eventService.solutionDirectionValue.dataModelling });
+    this.tabs.push({ index: 2, name: 'adlL1', visible: this.eventService.solutionDirectionValue.adlL1 });
+    this.tabs.push({ index: 3, name: 'adlL2', visible: this.eventService.solutionDirectionValue.adlL2 });
+    this.tabs.push({ index: 4, name: 'gold', visible: this.eventService.solutionDirectionValue.gold });
+    this.tabs.push({ index: 5, name: 'mdm', visible: this.eventService.solutionDirectionValue.mdm });
+    this.tabs.push({ index: 6, name: 'ia', visible: this.eventService.solutionDirectionValue.ia });
+    this.tabs.push({ index: 7, name: 'dataQuality', visible: this.eventService.solutionDirectionValue.dataQuality });
+    this.tabs.push({ index: 8, name: 'informatica', visible: this.eventService.solutionDirectionValue.informatica });
+    this.tabs.push({ index: 9, name: 'azureSynapse', visible: this.eventService.solutionDirectionValue.azureSynapse });
+
+    this.visibleTabs = this.tabs.filter(item => item.visible);
+    // this.tabs.filter(item => item.name =='integration').at(0).visible
+  }
+
   nextPage() {
+
     this.demandIntakeService.getDemandInformation().eADIInfo = this.eADIInfo;
     this.eADIInfo.adlL1.frequency = this.getFrequencyKey(this.selectedFrequency);
     this.eADIInfo.adlL1.loadStrategy = this.getStrategyKey(this.selectedLoadStrategy);
-    this.router.navigate(['demand-intake/attachment']);
+
+
+    if (this.eventService.selectedEADITabIndex < this.visibleTabs.length - 1) {
+      // let currentTab: EADITab|undefined = visibleTabs.filter(t => t.index === this.eventService.selectedEADITabIndex).at(0);
+      // if(currentTab){
+      //   this.eventService.selectedEADITabIndex = visibleTabs.indexOf(currentTab) + 1;
+      // }
+      this.eventService.selectedEADITabIndex += 1;
+    } else {
+      this.router.navigate(['demand-intake/attachment']);
+    }
+
   }
 
   prevPage() {
-    this.router.navigate(['demand-intake/solution-direction']);
+    if (this.eventService.selectedEADITabIndex > 0) {
+      this.eventService.selectedEADITabIndex -= 1;
+    } else {
+      this.router.navigate(['demand-intake/solution-direction']);
+    }
   }
 
   showTab(name: string): boolean {

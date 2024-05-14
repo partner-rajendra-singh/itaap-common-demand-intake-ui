@@ -46,12 +46,12 @@ export class RequesterComponent implements OnInit {
     this.businessUnitList = Object.values(BusinessUnit);
 
     this.selectedMarket = this.getMarketValue(this.demandIntakeService.getDemandInformation().requesterInfo.market);
-    if (!this.selectedMarket) {
+    if (!this.selectedMarket && !this.eventService.isNewDemand) {
       this.selectedMarket = 'Other';
     }
 
     this.selectedBusinessUnit = this.getBUValue(this.demandIntakeService.getDemandInformation().requesterInfo.businessUnit);
-    if (!this.selectedBusinessUnit) {
+    if (!this.selectedBusinessUnit && !this.eventService.isNewDemand) {
       this.selectedBusinessUnit = 'Other';
     }
 
@@ -74,7 +74,7 @@ export class RequesterComponent implements OnInit {
 
   getSelectedDomain(): Domain {
     let platform = this.domainList.find(item => item.key === this.demandIntakeService.getDemandInformation().requesterInfo.domain);
-    if (!platform) {
+    if (!platform && !this.eventService.isNewDemand) {
       this.selectedDomain = { key: 'Other', value: 'Other' };
     }
     return JSON.parse(JSON.stringify(platform)) as Domain;
