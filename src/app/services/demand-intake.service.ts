@@ -201,14 +201,9 @@ export class DemandIntakeService {
       this.demandInformation.introduction.requestedBy = this.authService.currentUserValue.email;
       // console.log("attachments: ", this.attachments);
       const formData: FormData = new FormData();
-
-      if (this.attachments.length == 0) {
-        // formData.append('files', '');
-      } else {
-        for (let i = 0; i < this.attachments.length; i++) {
-          if (this.attachments[i]) {
-            formData.append('files', this.attachments[i]);
-          }
+      for (let i = 0; i < this.attachments.length; i++) {
+        if (this.attachments[i]) {
+          formData.append('files', this.attachments[i]);
         }
       }
       formData.append('demand', JSON.stringify(this.demandInformation));
@@ -254,13 +249,9 @@ export class DemandIntakeService {
 
       console.log("attachments: ", this.attachments);
       const formData: FormData = new FormData();
-      if (this.attachments.length == 0) {
-        formData.append('files', '');
-      } else {
-        for (let i = 0; i < this.attachments.length; i++) {
-          if (this.attachments[i]) {
-            formData.append('files', this.attachments[i]);
-          }
+      for (let i = 0; i < this.attachments.length; i++) {
+        if (this.attachments[i]) {
+          formData.append('files', this.attachments[i]);
         }
       }
       formData.append('demand', JSON.stringify(this.demandInformation));

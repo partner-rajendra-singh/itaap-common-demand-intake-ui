@@ -12,6 +12,7 @@ export class EventService {
   isMyDemand : boolean = true;
   solutionDirectionValue : SolutionDirection = new SolutionDirection;
   selectedDemandTabIndex: any = 0;
+  selectedEADITabIndex: any = 0;
   today : Date =  new Date();
   goLiveMinDate : Date = new Date(this.today.setDate(this.today.getDate() + 1));
 
