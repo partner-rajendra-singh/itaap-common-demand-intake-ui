@@ -5,6 +5,7 @@ import { MessageService } from 'primeng/api';
 import { first } from 'rxjs/operators';
 import { DemandIntakeDecision } from 'src/app/enums/demandIntakeDecision';
 import { AuthService } from 'src/app/services/auth.service';
+import { EventService } from 'src/app/services/event.service';
 
 @Component({
   selector: 'app-ccb',
@@ -17,7 +18,7 @@ export class CCBComponent {
   ccbInfo!: any;
   visibleSubmitButton: boolean = true;
 
-  constructor(public demandIntakeService: DemandIntakeService, private router: Router, private messageService: MessageService, private authService: AuthService) { }
+  constructor(private eventService: EventService, public demandIntakeService: DemandIntakeService, private router: Router, private messageService: MessageService, private authService: AuthService) { }
 
   ngOnInit() {
     this.ccbInfo = this.demandIntakeService.getDemandInformation().ccbInfo;
@@ -30,7 +31,11 @@ export class CCBComponent {
   }
 
   prevPage() {
-    this.router.navigate(['demand-intake/demandmanager']);
+    if (this.eventService.isNewDemand) {
+      this.router.navigate(['demand-intake/demandmanager']);
+    } else {
+      this.router.navigate(['demand-intake/demandmanager/' + this.demandIntakeService.demandInformation.introduction.demandIntakeId]);
+    }
   }
 
   submitPage() {

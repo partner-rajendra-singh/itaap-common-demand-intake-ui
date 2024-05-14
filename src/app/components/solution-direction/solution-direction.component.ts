@@ -24,14 +24,23 @@ export class SolutionDirectionComponent {
   nextPage() {
     if (this.isAnySD()) {
       this.demandIntakeService.getDemandInformation().solutionDirectionInfo = this.solutionDirectionInfo;
-      this.router.navigate(['demand-intake/checklist']);
+      if (this.eventService.isNewDemand) {
+        this.router.navigate(['demand-intake/checklist']);
+      } else {
+        this.router.navigate(['demand-intake/checklist/' + this.demandIntakeService.demandInformation.introduction.demandIntakeId]);
+      }
+
     } else {
       this.messageService.add({ severity: 'warn', summary: 'Warning', detail: 'Please select atleast one Solution Direction!' });
     }
   }
 
   prevPage() {
-    this.router.navigate(['demand-intake/requirement']);
+    if (this.eventService.isNewDemand) {
+      this.router.navigate(['demand-intake/requirement']);
+    } else {
+      this.router.navigate(['demand-intake/requirement/' + this.demandIntakeService.demandInformation.introduction.demandIntakeId]);
+    }
   }
 
   emitCheckList() {

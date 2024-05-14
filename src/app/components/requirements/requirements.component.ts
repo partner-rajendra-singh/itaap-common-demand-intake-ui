@@ -32,7 +32,7 @@ export class RequirementsComponent implements OnInit {
     requirementComplianceInfo!: any;
     visibleSaveButton!: boolean;
     goLiveApproach!: string;
-   
+
 
     ngOnInit() {
         console.log("RequirementsComponent Init: ", this.demandIntakeService.demandInformation)
@@ -49,9 +49,17 @@ export class RequirementsComponent implements OnInit {
             this.demandIntakeService.getDemandInformation().requirementComplianceInfo = this.requirementComplianceInfo;
 
             if (this.authService.isRequester()) {
-                this.router.navigate(['demand-intake/attachment']);
+                if (this.eventService.isNewDemand) {
+                    this.router.navigate(['demand-intake/attachment']);
+                } else {
+                    this.router.navigate(['demand-intake/attachment/' + this.demandIntakeService.demandInformation.introduction.demandIntakeId]);
+                }
             } else {
-                this.router.navigate(['demand-intake/solution-direction']);
+                if (this.eventService.isNewDemand) {
+                    this.router.navigate(['demand-intake/solution-direction']);
+                } else {
+                    this.router.navigate(['demand-intake/solution-direction/' + this.demandIntakeService.demandInformation.introduction.demandIntakeId]);
+                }
             }
         } else {
             this.messageService.add({ severity: 'warn', summary: 'Error', detail: 'Please fill required fields!' });
@@ -63,8 +71,11 @@ export class RequirementsComponent implements OnInit {
     }
 
     prevPage() {
-        console.log(this.goLiveApproach)
-        this.router.navigate(['demand-intake/requester']);
+        if (this.eventService.isNewDemand) {
+            this.router.navigate(['demand-intake/requester']);
+        } else {
+            this.router.navigate(['demand-intake/requester/' + this.demandIntakeService.demandInformation.introduction.demandIntakeId]);
+        }
     }
 
     setGoLiveApproach() {

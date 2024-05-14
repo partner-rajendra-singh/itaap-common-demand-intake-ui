@@ -18,7 +18,7 @@ export class ViewDemandsComponent {
   columns!: any;
   selectedDemand!: Demand;
   isRequester: boolean = false;
-  
+
   constructor(private authService: AuthService, private demandIntakeService: DemandIntakeService, private messageService: MessageService, private router: Router, public eventService: EventService) { }
 
   ngOnInit() {
@@ -78,7 +78,7 @@ export class ViewDemandsComponent {
     this.eventService.isNewDemand = false;
     this.demandIntakeService.setDemand(this.selectedDemand, false);
 
-    this.router.navigate(['/demand-intake/']);
+    this.router.navigate(['/demand-intake/' + this.selectedDemand.introduction.demandIntakeId]);
   }
 
 

@@ -91,9 +91,17 @@ export class AttachmentComponent {
 
   prevPage() {
     if (this.authService.isRequester()) {
-      this.router.navigate(['demand-intake/requirement']);
+      if (this.eventService.isNewDemand) {
+        this.router.navigate(['demand-intake/requirement']);
+      } else {
+        this.router.navigate(['demand-intake/requirement/' + this.demandIntakeService.demandInformation.introduction.demandIntakeId]);
+      }
     } else {
-      this.router.navigate(['demand-intake/checklist']);
+      if (this.eventService.isNewDemand) {
+        this.router.navigate(['demand-intake/checklist']);
+      } else {
+        this.router.navigate(['demand-intake/checklist/' + this.demandIntakeService.demandInformation.introduction.demandIntakeId]);
+      }
     }
   }
 
@@ -101,7 +109,11 @@ export class AttachmentComponent {
     // this.demandIntakeService.getDemandInformation().attachmentInfo = this.attachmentInfo;
     console.log("files: ", this.demandIntakeService.getDemandInformation().attachmentInfo)
     if (!this.eventService.isNewDemand) {
-      this.router.navigate(['demand-intake/demandmanager']);
+      if (this.eventService.isNewDemand) {
+        this.router.navigate(['demand-intake/demandmanager']);
+      } else {
+        this.router.navigate(['demand-intake/demandmanager/' + this.demandIntakeService.demandInformation.introduction.demandIntakeId]);
+      }
     }
   }
 
