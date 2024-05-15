@@ -31,7 +31,7 @@ export class DemandManagerComponent {
         this.visibleSubmitButton = true;
       }
     } else {
-      if (this.authService.isRequester() && this.eventService.isMyDemand &&
+      if (this.eventService.isMyDemand && !this.eventService.isNewDemand &&
         (this.demandIntakeService.demandInformation.introduction.status == 'CCB_HOLD' || this.demandIntakeService.demandInformation.introduction.status == 'ACCEPTED' || this.demandIntakeService.demandInformation.introduction.status == 'REJECTED')) {
         this.visibleNextButton = true;
       } else {
