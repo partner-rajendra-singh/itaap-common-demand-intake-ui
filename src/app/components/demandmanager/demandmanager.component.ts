@@ -31,8 +31,9 @@ export class DemandManagerComponent {
         this.visibleSubmitButton = true;
       }
     } else {
-      if (((this.authService.isRequester() && this.eventService.isMyDemand) || (!this.eventService.isNewDemand && (this.authService.isCCB() || this.authService.isAdmin()))) &&
-        (this.demandIntakeService.demandInformation.introduction.status == 'CCB_HOLD' || this.demandIntakeService.demandInformation.introduction.status == 'ACCEPTED' || this.demandIntakeService.demandInformation.introduction.status == 'REJECTED')) {
+      if (((this.authService.isRequester() && this.eventService.isMyDemand) || 
+      (!this.eventService.isNewDemand && (this.authService.isCCB() || this.authService.isAdmin()))) 
+      && (this.demandIntakeService.demandInformation.introduction.status == 'CCB_PENDING' || this.demandIntakeService.demandInformation.introduction.status == 'CCB_HOLD' || this.demandIntakeService.demandInformation.introduction.status == 'ACCEPTED' || this.demandIntakeService.demandInformation.introduction.status == 'REJECTED')) {
         this.visibleNextButton = true;
       } else {
         this.visibleNextButton = false;
