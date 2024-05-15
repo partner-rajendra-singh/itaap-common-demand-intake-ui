@@ -4,6 +4,7 @@ import { DemandIntakeService } from '../../services/demand-intake.service';
 import { first } from 'rxjs';
 import { MessageService } from 'primeng/api';
 import { EventService } from 'src/app/services/event.service';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-solution-direction',
@@ -13,7 +14,7 @@ export class SolutionDirectionComponent {
 
   solutionDirectionInfo!: any;
 
-  constructor(public demandIntakeService: DemandIntakeService, private router: Router, private messageService: MessageService, private eventService: EventService) { }
+  constructor(private authService: AuthService, public demandIntakeService: DemandIntakeService, private router: Router, private messageService: MessageService, private eventService: EventService) { }
 
   ngOnInit() {
     console.log("SolutionDirectionComponent Init: ", this.demandIntakeService.demandInformation)

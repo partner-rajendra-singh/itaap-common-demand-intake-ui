@@ -14,13 +14,14 @@ export class DemandIntakeComponent implements OnInit {
 
     items!: MenuItem[];
     subscription!: Subscription;
-    demandIntakeId!: any;
 
-    constructor(private activatedRoute: ActivatedRoute, private router: Router, public messageService: MessageService, public demandIntakeService: DemandIntakeService, private eventService: EventService, private authService: AuthService) { }
+    constructor(private activatedRoute: ActivatedRoute, private router: Router, public messageService: MessageService, public demandIntakeService: DemandIntakeService, private eventService: EventService, private authService: AuthService) {
+        const demandIntakeId = this.activatedRoute.snapshot.paramMap.get('demandIntakeId');
+        this.eventService.currentDemandIntakeId = this.demandIntakeService.demandInformation.introduction.demandIntakeId;
+    }
 
     ngOnInit() {
-        this.demandIntakeId = this.activatedRoute.snapshot.paramMap.get('demandIntakeId');
-        console.log("DemandIntakeComponent id ", this.demandIntakeId);
+        console.log("DemandIntakeComponent id ", this.eventService.currentDemandIntakeId);
         console.log("DemandIntakeComponent isNewDemand ", this.eventService.isNewDemand);
         if (this.authService.isRequester()) {
             if (this.eventService.isMyDemand && this.demandIntakeService.demandInformation.introduction.status != 'DRAFT') {
@@ -76,57 +77,90 @@ export class DemandIntakeComponent implements OnInit {
             this.items = [
                 {
                     label: 'Introduction',
-                    routerLink: ['introduction/:demandIntakeId'],
+                    command: () => this.routeToIntroduction(),
+                    // routerLink: ['introduction/'+this.eventService.currentDemandIntakeId],
                     visible: true
                 },
                 {
                     label: 'Requester',
-                    routerLink: 'requester/:demandIntakeId',
+                    command: () => this.routeToRequester(),
                     visible: true
                 },
                 {
                     label: 'Requirement',
-                    routerLink: 'requirement/:demandIntakeId',
+                    command: () => this.routeToRequirement(),
                     visible: true
                 },
                 {
                     label: 'Solution Direction',
-                    routerLink: 'solution-direction/:demandIntakeId',
+                    command: () => this.routeToSD(),
                     visible: this.authService.isDM() || this.authService.isCCB()
-                    // || (this.authService.isRequester() && this.eventService.isMyDemand && 
-                    // (this.demandIntakeService.demandInformation.introduction.status!='DRAFT' && this.demandIntakeService.demandInformation.introduction.status!='PENDING_WITH_DM')),
+                        || (this.authService.isRequester() && this.eventService.isMyDemand &&
+                            (this.demandIntakeService.demandInformation.introduction.status != 'DRAFT' && this.demandIntakeService.demandInformation.introduction.status != 'PENDING_WITH_DM')),
                 },
                 {
                     label: 'EADI',
-                    routerLink: 'checklist/:demandIntakeId',
+                    command: () => this.routeToEADI(),
                     visible: (this.authService.isDM() || this.authService.isCCB())
-                    // || (this.authService.isRequester() && this.eventService.isMyDemand && 
-                    // (this.demandIntakeService.demandInformation.introduction.status!='DRAFT' && this.demandIntakeService.demandInformation.introduction.status!='PENDING_WITH_DM')),
+                        || (this.authService.isRequester() && this.eventService.isMyDemand &&
+                            (this.demandIntakeService.demandInformation.introduction.status != 'DRAFT' && this.demandIntakeService.demandInformation.introduction.status != 'PENDING_WITH_DM')),
                 },
                 {
                     label: 'Attachment',
-                    routerLink: 'attachment/:demandIntakeId',
+                    command: () => this.routeToAttachment(),
                     visible: true
                 },
                 {
                     label: 'DM',
-                    routerLink: 'demandmanager/:demandIntakeId',
+                    command: () => this.routeToDM(),
                     visible: (!this.eventService.isMyDemand && (this.authService.isDM() || this.authService.isCCB()))
-                    // || (this.authService.isRequester() && this.eventService.isMyDemand && 
-                    // (this.demandIntakeService.demandInformation.introduction.status!='DRAFT' && this.demandIntakeService.demandInformation.introduction.status!='PENDING_WITH_DM')),
+                        || (this.authService.isRequester() && this.eventService.isMyDemand &&
+                            (this.demandIntakeService.demandInformation.introduction.status != 'DRAFT' && this.demandIntakeService.demandInformation.introduction.status != 'PENDING_WITH_DM')),
                 },
                 {
                     label: 'CCB',
-                    routerLink: 'ccb/:demandIntakeId',
+                    command: () => this.routeToCCB(),
                     visible: (!this.eventService.isMyDemand && this.authService.isCCB())
-                    // || (this.authService.isRequester() && this.eventService.isMyDemand && 
-                    // (this.demandIntakeService.demandInformation.introduction.status=='CCB_HOLD' || this.demandIntakeService.demandInformation.introduction.status=='ACCEPTED' || this.demandIntakeService.demandInformation.introduction.status=='REJECTED')),
+                        || (this.authService.isRequester() && this.eventService.isMyDemand &&
+                            (this.demandIntakeService.demandInformation.introduction.status == 'CCB_HOLD' || this.demandIntakeService.demandInformation.introduction.status == 'ACCEPTED' || this.demandIntakeService.demandInformation.introduction.status == 'REJECTED')),
                 }
             ];
         }
 
-
         this.items = this.items.filter(item => item.visible);
+    }
+
+    routeToIntroduction() {
+        console.log("this.demandIntakeId", this.eventService.currentDemandIntakeId)
+        this.router.navigate(['/demand-intake/introduction/' + this.eventService.currentDemandIntakeId]);
+    }
+    routeToRequester() {
+        console.log("this.demandIntakeId", this.eventService.currentDemandIntakeId)
+        this.router.navigate(['/demand-intake/requester/' + this.eventService.currentDemandIntakeId]);
+    }
+    routeToRequirement() {
+        console.log("this.eventService.currentDemandIntakeId", this.eventService.currentDemandIntakeId)
+        this.router.navigate(['/demand-intake/requirement/' + this.eventService.currentDemandIntakeId]);
+    }
+    routeToSD() {
+        console.log("this.eventService.currentDemandIntakeId", this.eventService.currentDemandIntakeId)
+        this.router.navigate(['/demand-intake/solution-direction/' + this.eventService.currentDemandIntakeId]);
+    }
+    routeToEADI() {
+        console.log("this.eventService.currentDemandIntakeId", this.eventService.currentDemandIntakeId)
+        this.router.navigate(['/demand-intake/checklist/' + this.eventService.currentDemandIntakeId]);
+    }
+    routeToAttachment() {
+        console.log("this.eventService.currentDemandIntakeId", this.eventService.currentDemandIntakeId)
+        this.router.navigate(['/demand-intake/attachment/' + this.eventService.currentDemandIntakeId]);
+    }
+    routeToDM() {
+        console.log("this.eventService.currentDemandIntakeId", this.eventService.currentDemandIntakeId)
+        this.router.navigate(['/demand-intake/demandmanager/' + this.eventService.currentDemandIntakeId]);
+    }
+    routeToCCB() {
+        console.log("this.eventService.currentDemandIntakeId", this.eventService.currentDemandIntakeId)
+        this.router.navigate(['/demand-intake/ccb/' + this.eventService.currentDemandIntakeId]);
     }
 
     setItems(items: any) {

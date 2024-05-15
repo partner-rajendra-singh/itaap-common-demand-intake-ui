@@ -102,6 +102,38 @@ const routes: Routes = [
       {
         path: '',
         component: IntroductionComponent
+      },
+      {
+        path: 'introduction/:demandIntakeId',
+        component: IntroductionComponent
+      },
+      {
+        path: 'requester/:demandIntakeId',
+        component: RequesterComponent
+      },
+      {
+        path: 'requirement/:demandIntakeId',
+        component: RequirementsComponent
+      },
+      {
+        path: 'solution-direction/:demandIntakeId',
+        component: SolutionDirectionComponent
+      },
+      {
+        path: 'checklist/:demandIntakeId',
+        component: ChecklistComponent
+      },
+      {
+        path: 'attachment/:demandIntakeId',
+        component: AttachmentComponent
+      },
+      {
+        path: 'demandmanager/:demandIntakeId',
+        component: DemandManagerComponent
+      },
+      {
+        path: 'ccb/:demandIntakeId',
+        component: CCBComponent
       }
     ]
   },

@@ -21,6 +21,7 @@ export class CCBComponent {
   constructor(private eventService: EventService, public demandIntakeService: DemandIntakeService, private router: Router, private messageService: MessageService, private authService: AuthService) { }
 
   ngOnInit() {
+    this.demandIntakeService.getDemandInformation().ccbInfo.decisionDate = new Date(this.demandIntakeService.getDemandInformation().ccbInfo.decisionDate);
     this.ccbInfo = this.demandIntakeService.getDemandInformation().ccbInfo;
     this.decisions = Object.values(DemandIntakeDecision);
     this.selectedDecision = this.getStatusValue(this.demandIntakeService.getDemandInformation().ccbInfo.decision);

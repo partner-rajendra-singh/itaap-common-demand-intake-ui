@@ -31,13 +31,18 @@ export class AttachmentComponent {
   ) {
 
     if (authService.isRequester()) {
-      this.visibleNextButton = false;
-      if (this.demandIntakeService.getDemandInformation().introduction.status != 'DRAFT' && this.demandIntakeService.getDemandInformation().introduction.status != null) {
-        this.visibleSaveButton = false;
-        this.visibleSubmitButton = false;
+
+      if (this.eventService.isMyDemand && (this.demandIntakeService.demandInformation.introduction.status != 'DRAFT' && this.demandIntakeService.demandInformation.introduction.status != 'PENDING_WITH_DM')) {
+        this.visibleNextButton = true;
       } else {
-        this.visibleSaveButton = true;
-        this.visibleSubmitButton = true;
+        this.visibleNextButton = false;
+        if (this.demandIntakeService.getDemandInformation().introduction.status != 'DRAFT' && this.demandIntakeService.getDemandInformation().introduction.status != null) {
+          this.visibleSaveButton = false;
+          this.visibleSubmitButton = false;
+        } else {
+          this.visibleSaveButton = true;
+          this.visibleSubmitButton = true;
+        }
       }
 
     } else {
@@ -94,7 +99,11 @@ export class AttachmentComponent {
       if (this.eventService.isNewDemand) {
         this.router.navigate(['demand-intake/requirement']);
       } else {
-        this.router.navigate(['demand-intake/requirement/' + this.demandIntakeService.demandInformation.introduction.demandIntakeId]);
+        if (this.eventService.isMyDemand && (this.demandIntakeService.demandInformation.introduction.status != 'DRAFT' && this.demandIntakeService.demandInformation.introduction.status != 'PENDING_WITH_DM')) {
+          this.router.navigate(['demand-intake/checklist/' + this.demandIntakeService.demandInformation.introduction.demandIntakeId]);
+        } else {
+          this.router.navigate(['demand-intake/requirement/' + this.demandIntakeService.demandInformation.introduction.demandIntakeId]);
+        }
       }
     } else {
       if (this.eventService.isNewDemand) {

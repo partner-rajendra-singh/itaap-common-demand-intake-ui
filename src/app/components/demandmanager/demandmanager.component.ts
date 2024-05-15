@@ -6,6 +6,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { first } from 'rxjs/operators';
 import { DemandIntakeDecision } from 'src/app/enums/demandIntakeDecision';
 import { EventService } from 'src/app/services/event.service';
+import { DM } from 'src/app/models/dm';
 
 @Component({
   selector: 'app-demandmanager',
@@ -17,7 +18,7 @@ export class DemandManagerComponent {
   selectedDecision!: string;
   visibleNextButton!: boolean;
   visibleSubmitButton!: boolean;
-  demandManagerInfo!: any;
+  demandManagerInfo!: DM;
 
   constructor(private eventService: EventService, public demandIntakeService: DemandIntakeService, private router: Router, private messageService: MessageService,
     private authService: AuthService) {
@@ -30,13 +31,18 @@ export class DemandManagerComponent {
         this.visibleSubmitButton = true;
       }
     } else {
-      this.visibleNextButton = true;
+      if (this.authService.isRequester() && this.eventService.isMyDemand &&
+        (this.demandIntakeService.demandInformation.introduction.status == 'CCB_HOLD' || this.demandIntakeService.demandInformation.introduction.status == 'ACCEPTED' || this.demandIntakeService.demandInformation.introduction.status == 'REJECTED')) {
+        this.visibleNextButton = true;
+      } else {
+        this.visibleNextButton = false;
+      }
       this.visibleSubmitButton = false;
     }
-
   }
 
   ngOnInit() {
+    this.demandIntakeService.getDemandInformation().demandManagerInfo.decisionDate = new Date(this.demandIntakeService.getDemandInformation().demandManagerInfo.decisionDate);
     this.demandManagerInfo = this.demandIntakeService.getDemandInformation().demandManagerInfo;
     this.decisions = Object.values(DemandIntakeDecision);
     this.selectedDecision = this.getStatusValue(this.demandIntakeService.getDemandInformation().demandManagerInfo.decision);
@@ -51,7 +57,7 @@ export class DemandManagerComponent {
   }
 
   nextPage() {
-    if (this.demandManagerInfo.decisionDate != '' && this.selectedDecision != '' && this.demandManagerInfo.remarks != '') {
+    if (this.demandManagerInfo.decisionDate && this.selectedDecision != '' && this.demandManagerInfo.remarks != '') {
       this.demandManagerInfo.decision = this.getStatusKey(this.selectedDecision);
       this.demandIntakeService.getDemandInformation().demandManagerInfo = this.demandManagerInfo;
       if (this.eventService.isNewDemand) {
@@ -66,7 +72,7 @@ export class DemandManagerComponent {
   }
 
   submitPage() {
-    if (this.demandManagerInfo.decisionDate != '' && this.selectedDecision != '' && this.demandManagerInfo.remarks != '') {
+    if (this.demandManagerInfo.decisionDate && this.selectedDecision != '' && this.demandManagerInfo.remarks != '') {
       this.demandManagerInfo.decision = this.getStatusKey(this.selectedDecision);
       this.demandIntakeService.getDemandInformation().demandManagerInfo = this.demandManagerInfo;
 
