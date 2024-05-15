@@ -31,13 +31,18 @@ export class AttachmentComponent {
   ) {
 
     if (authService.isRequester()) {
-      this.visibleNextButton = false;
-      if (this.demandIntakeService.getDemandInformation().introduction.status != 'DRAFT' && this.demandIntakeService.getDemandInformation().introduction.status != null) {
-        this.visibleSaveButton = false;
-        this.visibleSubmitButton = false;
+
+      if (this.eventService.isMyDemand && (this.demandIntakeService.demandInformation.introduction.status != 'DRAFT' && this.demandIntakeService.demandInformation.introduction.status != 'PENDING_WITH_DM')) {
+        this.visibleNextButton = true;
       } else {
-        this.visibleSaveButton = true;
-        this.visibleSubmitButton = true;
+        this.visibleNextButton = false;
+        if (this.demandIntakeService.getDemandInformation().introduction.status != 'DRAFT' && this.demandIntakeService.getDemandInformation().introduction.status != null) {
+          this.visibleSaveButton = false;
+          this.visibleSubmitButton = false;
+        } else {
+          this.visibleSaveButton = true;
+          this.visibleSubmitButton = true;
+        }
       }
 
     } else {
@@ -91,9 +96,21 @@ export class AttachmentComponent {
 
   prevPage() {
     if (this.authService.isRequester()) {
-      this.router.navigate(['demand-intake/requirement']);
+      if (this.eventService.isNewDemand) {
+        this.router.navigate(['demand-intake/requirement']);
+      } else {
+        if (this.eventService.isMyDemand && (this.demandIntakeService.demandInformation.introduction.status != 'DRAFT' && this.demandIntakeService.demandInformation.introduction.status != 'PENDING_WITH_DM')) {
+          this.router.navigate(['demand-intake/checklist/' + this.demandIntakeService.demandInformation.introduction.demandIntakeId]);
+        } else {
+          this.router.navigate(['demand-intake/requirement/' + this.demandIntakeService.demandInformation.introduction.demandIntakeId]);
+        }
+      }
     } else {
-      this.router.navigate(['demand-intake/checklist']);
+      if (this.eventService.isNewDemand) {
+        this.router.navigate(['demand-intake/checklist']);
+      } else {
+        this.router.navigate(['demand-intake/checklist/' + this.demandIntakeService.demandInformation.introduction.demandIntakeId]);
+      }
     }
   }
 
@@ -101,7 +118,11 @@ export class AttachmentComponent {
     // this.demandIntakeService.getDemandInformation().attachmentInfo = this.attachmentInfo;
     console.log("files: ", this.demandIntakeService.getDemandInformation().attachmentInfo)
     if (!this.eventService.isNewDemand) {
-      this.router.navigate(['demand-intake/demandmanager']);
+      if (this.eventService.isNewDemand) {
+        this.router.navigate(['demand-intake/demandmanager']);
+      } else {
+        this.router.navigate(['demand-intake/demandmanager/' + this.demandIntakeService.demandInformation.introduction.demandIntakeId]);
+      }
     }
   }
 

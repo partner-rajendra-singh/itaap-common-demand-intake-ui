@@ -95,14 +95,24 @@ export class RequesterComponent implements OnInit {
       }
 
       this.demandIntakeService.demandInformation.requesterInfo = this.requesterInfo;
-      this.router.navigate(['demand-intake/requirement']);
+
+      if (this.eventService.isNewDemand) {
+        this.router.navigate(['demand-intake/requirement']);
+      } else {
+        this.router.navigate(['demand-intake/requirement/' + this.demandIntakeService.demandInformation.introduction.demandIntakeId]);
+      }
+      
     } else {
       this.messageService.add({ severity: 'warn', summary: 'Error', detail: 'Please fill required fields!' });
     }
   }
 
   prevPage() {
-    this.router.navigate(['demand-intake/introduction']);
+    if (this.eventService.isNewDemand) {
+      this.router.navigate(['demand-intake/introduction']);
+    } else {
+      this.router.navigate(['demand-intake/introduction/' + this.demandIntakeService.demandInformation.introduction.demandIntakeId]);
+    }
   }
 
   savePage() {

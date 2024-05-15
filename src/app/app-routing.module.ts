@@ -19,51 +19,93 @@ import { CCBCRUDComponent } from './components/ccbcrud/ccbcrud.component';
 import { ViewDemandsComponent } from './components/view-demands/view-demands.component';
 
 const routes: Routes = [
-  { path: 'view', component: ViewDemandsComponent, canActivate: [AuthGuard]},
-  { path: 'report', component: WipComponent, canActivate: [AuthGuard]},
-  { path: 'chart', component: ChartComponent, canActivate: [AuthGuard]},
-  { path: 'dmcrud', component: DMCRUDComponent, canActivate: [AuthGuard]},
-  { path: 'ccbcrud', component: CCBCRUDComponent, canActivate: [AuthGuard]},
-  { path: 'logout', component: LogoutComponent},
-  { path: 'demand-intake', component: DemandIntakeComponent, canActivate: [AuthGuard], children: [
-    {
-      path: '',
-      component: IntroductionComponent
-    },
-    {
-      path: 'introduction',
-      component: IntroductionComponent
-    },
-    {
-      path: 'requester',
-      component: RequesterComponent
-    },
-    {
-      path: 'requirement',
-      component: RequirementsComponent
-    },
-    {
-      path: 'solution-direction',
-      component: SolutionDirectionComponent
-    },
-    {
-      path: 'checklist',
-      component: ChecklistComponent
-    },
-    {
-      path: 'attachment',
-      component: AttachmentComponent
-    },
-    {
-      path: 'demandmanager',
-      component: DemandManagerComponent
-    },
-    {
-      path: 'ccb',
-      component: CCBComponent
-    }
-  ]},
-  { path: 'login', component: LoginComponent},
+  { path: 'view', component: ViewDemandsComponent, canActivate: [AuthGuard] },
+  { path: 'report', component: WipComponent, canActivate: [AuthGuard] },
+  { path: 'chart', component: ChartComponent, canActivate: [AuthGuard] },
+  { path: 'dmcrud', component: DMCRUDComponent, canActivate: [AuthGuard] },
+  { path: 'ccbcrud', component: CCBCRUDComponent, canActivate: [AuthGuard] },
+  { path: 'logout', component: LogoutComponent },
+  {
+    path: 'demand-intake', component: DemandIntakeComponent, canActivate: [AuthGuard], children: [
+      {
+        path: '',
+        component: IntroductionComponent
+      },
+      {
+        path: 'introduction',
+        component: IntroductionComponent
+      },
+      {
+        path: 'requester',
+        component: RequesterComponent
+      },
+      {
+        path: 'requirement',
+        component: RequirementsComponent
+      },
+      {
+        path: 'solution-direction',
+        component: SolutionDirectionComponent
+      },
+      {
+        path: 'checklist',
+        component: ChecklistComponent
+      },
+      {
+        path: 'attachment',
+        component: AttachmentComponent
+      },
+      {
+        path: 'demandmanager',
+        component: DemandManagerComponent
+      },
+      {
+        path: 'ccb',
+        component: CCBComponent
+      },
+      {
+        path: 'introduction/:demandIntakeId',
+        component: IntroductionComponent
+      },
+      {
+        path: 'requester/:demandIntakeId',
+        component: RequesterComponent
+      },
+      {
+        path: 'requirement/:demandIntakeId',
+        component: RequirementsComponent
+      },
+      {
+        path: 'solution-direction/:demandIntakeId',
+        component: SolutionDirectionComponent
+      },
+      {
+        path: 'checklist/:demandIntakeId',
+        component: ChecklistComponent
+      },
+      {
+        path: 'attachment/:demandIntakeId',
+        component: AttachmentComponent
+      },
+      {
+        path: 'demandmanager/:demandIntakeId',
+        component: DemandManagerComponent
+      },
+      {
+        path: 'ccb/:demandIntakeId',
+        component: CCBComponent
+      }
+    ]
+  },
+  {
+    path: 'demand-intake/:demandIntakeId', component: DemandIntakeComponent, canActivate: [AuthGuard], children: [
+      {
+        path: '',
+        component: IntroductionComponent
+      }
+    ]
+  },
+  { path: 'login', component: LoginComponent },
 ];
 
 @NgModule({

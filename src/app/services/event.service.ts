@@ -15,6 +15,7 @@ export class EventService {
   selectedEADITabIndex: any = 0;
   today : Date =  new Date();
   goLiveMinDate : Date = new Date(this.today.setDate(this.today.getDate() + 1));
+  currentDemandIntakeId!: any;
 
   constructor(private messageService: MessageService) {}
 

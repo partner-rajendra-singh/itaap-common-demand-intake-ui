@@ -61,29 +61,35 @@ export class ChecklistComponent {
   }
 
   nextPage() {
-
     this.demandIntakeService.getDemandInformation().eADIInfo = this.eADIInfo;
     this.eADIInfo.adlL1.frequency = this.getFrequencyKey(this.selectedFrequency);
     this.eADIInfo.adlL1.loadStrategy = this.getStrategyKey(this.selectedLoadStrategy);
 
-
     if (this.eventService.selectedEADITabIndex < this.visibleTabs.length - 1) {
-      // let currentTab: EADITab|undefined = visibleTabs.filter(t => t.index === this.eventService.selectedEADITabIndex).at(0);
-      // if(currentTab){
-      //   this.eventService.selectedEADITabIndex = visibleTabs.indexOf(currentTab) + 1;
-      // }
       this.eventService.selectedEADITabIndex += 1;
     } else {
-      this.router.navigate(['demand-intake/attachment']);
+      if (this.eventService.isNewDemand) {
+        this.router.navigate(['demand-intake/attachment']);
+      } else {
+        this.router.navigate(['demand-intake/attachment/' + this.demandIntakeService.demandInformation.introduction.demandIntakeId]);
+      }
     }
+  }
 
+  onTabChange(event: any) {
+    console.log("tab index : ", event.index);
+    this.eventService.selectedEADITabIndex = event.index;
   }
 
   prevPage() {
     if (this.eventService.selectedEADITabIndex > 0) {
       this.eventService.selectedEADITabIndex -= 1;
     } else {
-      this.router.navigate(['demand-intake/solution-direction']);
+      if (this.eventService.isNewDemand) {
+        this.router.navigate(['demand-intake/solution-direction']);
+      } else {
+        this.router.navigate(['demand-intake/solution-direction/' + this.demandIntakeService.demandInformation.introduction.demandIntakeId]);
+      }
     }
   }
 

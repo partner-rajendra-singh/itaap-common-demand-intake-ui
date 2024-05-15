@@ -23,12 +23,7 @@ export class AppComponent {
 
   ngOnInit() {
     if (this.currentUser) {
-      if (this.authService.isDM() || this.authService.isCCB()) {
-        this.router.navigate(['/view']);
-      // } else {
-      //   window.location.reload();
-      //   this.router.navigate(['/demand-intake']);
-      }
+      this.router.navigate(['/view']);
     } else {
       this.router.navigate(['/login']);
     }
