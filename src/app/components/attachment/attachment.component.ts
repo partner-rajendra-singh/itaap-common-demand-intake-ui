@@ -32,7 +32,7 @@ export class AttachmentComponent {
 
     if (authService.isRequester()) {
 
-      if (this.eventService.isMyDemand && (this.demandIntakeService.demandInformation.introduction.status != 'DRAFT' && this.demandIntakeService.demandInformation.introduction.status != 'PENDING_WITH_DM')) {
+      if (!this.eventService.isNewDemand && this.eventService.isMyDemand && (this.demandIntakeService.demandInformation.introduction.status != 'DRAFT' && this.demandIntakeService.demandInformation.introduction.status != 'PENDING_WITH_DM')) {
         this.visibleNextButton = true;
       } else {
         this.visibleNextButton = false;
