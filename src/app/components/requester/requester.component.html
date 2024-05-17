@@ -5,8 +5,41 @@
             <div class="col-12 xs:col-12 sm:col-12 lg:col-12 xl:col-12">
                 <p-fieldset legend="Requester">
                     <div class="grid">
+                        <div class="col-6 xs:col-6 sm:col-6 lg:col-6 xl:col-6">
+                            <label for="goLiveApproach" required class="asterisk-if-mandatory" style="width:100px">If
+                                you are raising demand on behalf then enter their email address & role?</label>
+                        </div>
+                        <div class="col-6 xs:col-6 sm:col-6 lg:col-6 xl:col-6">
+                            <input type="radio" id="yes" name="isAnotherRequester" [(ngModel)]="isAnotherRequester"
+                                [value]="true" (change)="requesterChange($event)">
+                            <label for="yes">Yes</label>
+                            <input type="radio" id="no" name="isAnotherRequester" checked="checked"
+                                [(ngModel)]="isAnotherRequester" [value]="false" (change)="requesterChange($event)">
+                            <label for="no">No</label>
+                        </div>
                         <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                            <label for="program" required class="asterisk-if-mandatory">Program</label>
+                            <label for="email">Email</label>
+                        </div>
+                        <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
+                            <input id="email" type="email" [(ngModel)]="requesterInfo.requestedBy" size="60"
+                                (blur)="eventService.checkEmailValue(requesterInfo.requestedBy)"
+                                [disabled]="!isAnotherRequester"
+                                class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary">
+                        </div>
+                        <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
+                            <label for="email">Role</label>
+                        </div>
+                        <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
+                            <input id="email" type="text" [(ngModel)]="requesterInfo.requesterRole" size="60"
+                                class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary">
+                        </div>
+                    </div>
+                </p-fieldset>
+
+                <p-fieldset legend="Demand Information">
+                    <div class="grid">
+                        <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
+                            <label for="program">Program</label>
                         </div>
                         <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
                             <input id="program" type="text" [(ngModel)]="requesterInfo.program" size="60"
@@ -17,25 +50,16 @@
                                 style="width:100px">Domain/Platform</label>
                         </div>
                         <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
-                            <p-dropdown appendTo="body" [options]="domainList" [(ngModel)]="selectedDomain" optionLabel="value"
-                                 placeholder="Please Select Domain/Platform"></p-dropdown>
+                            <p-dropdown appendTo="body" [options]="domainList" [(ngModel)]="selectedDomain"
+                                optionLabel="value" placeholder="Please Select Domain/Platform"></p-dropdown>
                         </div>
                         <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3"></div>
-                        <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9" >
-                            <div *ngIf="selectedDomain && selectedDomain.key=='Other'">
-                                <input id="domain" type="text" [(ngModel)]="requesterInfo.domain" placeholder="Please Specify Domain/Platform" size="70"
-                                class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary">
-                            </div>
-                        </div>
-
-                        <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                            <label for="requestDate" required class="asterisk-if-mandatory"
-                                style="width:100px">Requested Date</label>
-                        </div>
                         <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
-                            <p-calendar dateFormat="dd/mm/yy" [(ngModel)]="requesterInfo.requestedDate" [disabled]="true"
-                                [minDate]="requesterInfo.requestedDate" [maxDate]="requesterInfo.requestedDate"
-                                [showIcon]="true"></p-calendar>
+                            <div *ngIf="selectedDomain && selectedDomain.key=='Other'">
+                                <input id="domain" type="text" [(ngModel)]="requesterInfo.domain"
+                                    placeholder="Please Specify Domain/Platform" size="70"
+                                    class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary">
+                            </div>
                         </div>
 
                         <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
@@ -43,14 +67,24 @@
                                 style="width:100px">Market</label>
                         </div>
                         <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
-                            <p-dropdown appendTo="body" [options]="marketList" [(ngModel)]="selectedMarket"
-                                 placeholder="Please Select Market"></p-dropdown>
+                            <!-- <p-dropdown appendTo="body" [options]="marketList" [(ngModel)]="selectedMarket"
+                                placeholder="Please Select Market"></p-dropdown> -->
+                            <p-multiSelect [options]="marketList" placeholder="Please Select Market"
+                                [(ngModel)]="selectedMarket" />
                         </div>
+
+                        <div class="col-12 xs:col-12 sm:col-12 lg:col-12 xl:col-12">
+                            <div style="display: inline-flex;" *ngFor="let item of selectedMarket ; let i =index">
+                                <p-chip>{{item}}</p-chip>
+                            </div>
+                        </div>
+
                         <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3"></div>
-                        <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9" >
-                            <div *ngIf="selectedMarket && getMarketKey(this.selectedMarket) == 'Other'">
-                                <input id="domain" type="text" [(ngModel)]="requesterInfo.market" placeholder="Please Specify Market" size="70"
-                                class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary">
+                        <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
+                            <div *ngIf="isOtherMarketSelected()">
+                                <input id="domain" type="text" [(ngModel)]="otherMarket"
+                                    placeholder="Please Specify Market" size="70"
+                                    class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary">
                             </div>
                         </div>
 
@@ -59,42 +93,24 @@
                                 style="width:100px">Business Unit</label>
                         </div>
                         <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
-                            <p-dropdown appendTo="body" [options]="businessUnitList" [(ngModel)]="selectedBusinessUnit"
-                                 placeholder="Please Select Business Unit"></p-dropdown>
+                            <!-- <p-dropdown appendTo="body" [options]="businessUnitList" [(ngModel)]="selectedBusinessUnit"
+                                placeholder="Please Select Business Unit"></p-dropdown> -->
+                            <p-multiSelect [options]="businessUnitList" placeholder="Please Select Business Unit"
+                                [(ngModel)]="selectedBusinessUnit" />
                         </div>
-                        <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3"></div>
-                        <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9" >
-                            <div *ngIf="selectedBusinessUnit && getBUKey(this.selectedBusinessUnit) == 'Other'">
-                                <input id="domain" type="text" [(ngModel)]="requesterInfo.businessUnit" placeholder="Please Specify Business Unit" size="70"
-                                class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary">
+                        <div class="col-12 xs:col-12 sm:col-12 lg:col-12 xl:col-12">
+                            <div style="display: inline-flex;" *ngFor="let item of selectedBusinessUnit ; let i =index">
+                                <p-chip>{{item}}</p-chip>
                             </div>
                         </div>
-
-                        <div class="col-12 xs:col-12 sm:col-12 lg:col-12 xl:col-12">
-                            <label><b>ADL L2 (Consumption Pattern)</b></label>
-                        </div>
-                        <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                            <label for="cpAPI">API</label>
-                        </div>
+                        <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3"></div>
                         <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
-                            <p-checkbox [binary]="true" [(ngModel)]="requesterInfo.cpAPI"
-                                inputId="cpAPI"></p-checkbox>
+                            <div *ngIf="isOtherBUSelected()">
+                                <input id="domain" type="text" [(ngModel)]="otherBusinessUnit"
+                                    placeholder="Please Specify Business Unit" size="70"
+                                    class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary">
+                            </div>
                         </div>
-                        <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                            <label for="cpReport">Report/Dashboard</label>
-                        </div>
-                        <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
-                            <p-checkbox [binary]="true" [(ngModel)]="requesterInfo.cpReport"
-                                inputId="cpReport"></p-checkbox>
-                        </div>
-                        <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                            <label for="cpTransactionPlatform">Downstream Transaction Platform</label>
-                        </div>
-                        <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
-                            <p-checkbox [binary]="true" [(ngModel)]="requesterInfo.cpTransactionPlatform"
-                                inputId="cpTransactionPlatform"></p-checkbox>
-                        </div>
-
 
                         <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
                             <label for="goLiveApproach" required class="asterisk-if-mandatory"
@@ -108,48 +124,82 @@
                                 [(ngModel)]="requesterInfo.approvedBudget" [value]="false">
                             <label for="no">No</label>
                             <div *ngIf="!requesterInfo.approvedBudget">
-                                <label for="no" >(Note : This demand may not be taken forward)</label>
+                                <label for="no">(Note : This demand may not be taken forward)</label>
                             </div>
                         </div>
 
-                        <div class="col-12 xs:col-12 sm:col-12 lg:col-12 xl:col-12" *ngIf="requesterInfo.approvedBudget" style="display: inline-flex;">
+                        <div class="col-12 xs:col-12 sm:col-12 lg:col-12 xl:col-12" *ngIf="requesterInfo.approvedBudget"
+                            style="display: inline-flex;">
                             <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                                <label for="clarityProjectId" required class="asterisk-if-mandatory">Clarity Project Id</label>
+                                <label for="clarityProjectId" required class="asterisk-if-mandatory">Clarity Project
+                                    Id</label>
                             </div>
                             <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
-                                <input id="clarityProjectId" type="text" [(ngModel)]="requesterInfo.clarityProjectId" size="60"
+                                <input id="clarityProjectId" type="text" [(ngModel)]="requesterInfo.clarityProjectId"
+                                    size="60"
                                     class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary">
                             </div>
                         </div>
 
                         <div class="col-12 xs:col-12 sm:col-12 lg:col-12 xl:col-12">
-                            <p-fieldset legend="Stakeholders">
+                            <p-fieldset legend="Consumption Pattern(How do you want the data to be consumed)?">
                                 <div class="grid">
                                     <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                                        <label for="role">Role</label>
+                                        <label for="cpAPI">Via API</label>
                                     </div>
                                     <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
-                                        <label for="email">Email</label>
+                                        <p-checkbox [binary]="true" [(ngModel)]="requesterInfo.cpAPI"
+                                            inputId="cpAPI"></p-checkbox>
                                     </div>
-
-                                    <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9" style="display: inline-flex;"
-                                        *ngFor="let item of requesterInfo.spoc">
-                                        <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                                            <input pInputText id="spocRole2" [(ngModel)]="item.role"
-                                                aria-describedby="program-help" />
-                                        </div>
-                                        <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
-                                            <input pInputText id="spocEmail2" [(ngModel)]="item.email" type="email"
-                                                (blur)="eventService.checkEmailValue(item.email)"
-                                                aria-describedby="program-help" />
-                                        </div>
+                                    <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
+                                        <label for="cpReport">Via Report/Dashboard</label>
                                     </div>
-
+                                    <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
+                                        <p-checkbox [binary]="true" [(ngModel)]="requesterInfo.cpReport"
+                                            inputId="cpReport"></p-checkbox>
+                                    </div>
+                                    <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
+                                        <label for="cpTransactionPlatform">Via Downstream Transaction Platform</label>
+                                    </div>
+                                    <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
+                                        <p-checkbox [binary]="true" [(ngModel)]="requesterInfo.cpTransactionPlatform"
+                                            inputId="cpTransactionPlatform"></p-checkbox>
+                                    </div>
                                 </div>
                             </p-fieldset>
                         </div>
+
+                        <div class="grid">
+                            <div class="col-12 xs:col-12 sm:col-12 lg:col-12 xl:col-12">
+                                <p-fieldset legend="Stakeholders">
+                                    <div class="grid">
+                                        <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
+                                            <label for="role">Role</label>
+                                        </div>
+                                        <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
+                                            <label for="email">Email</label>
+                                        </div>
+
+                                        <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9"
+                                            style="display: inline-flex;" *ngFor="let item of requesterInfo.spoc">
+                                            <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
+                                                <input pInputText id="spocRole2" [(ngModel)]="item.role"
+                                                    aria-describedby="program-help" />
+                                            </div>
+                                            <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
+                                                <input pInputText id="spocEmail2" [(ngModel)]="item.email" type="email"
+                                                    (blur)="eventService.checkEmailValue(item.email)"
+                                                    aria-describedby="program-help" />
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </p-fieldset>
+                            </div>
+                        </div>
                     </div>
                 </p-fieldset>
+
             </div>
         </div>
     </ng-template>
