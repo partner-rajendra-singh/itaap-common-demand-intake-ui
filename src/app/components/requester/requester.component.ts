@@ -46,7 +46,7 @@ export class RequesterComponent implements OnInit {
   }
 
   ngOnInit() {
-    if (!this.isAnotherRequester) {
+    if (!this.isAnotherRequester && this.eventService.isNewDemand) {
       this.demandIntakeService.getDemandInformation().requesterInfo.requestedBy = this.authService.currentUserValue.email;
       this.demandIntakeService.getDemandInformation().introduction.requestedBy = this.authService.currentUserValue.email;
     }
