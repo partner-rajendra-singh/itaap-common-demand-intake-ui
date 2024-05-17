@@ -26,10 +26,10 @@ export class DemandIntakeService {
 
   constructor(private http: HttpClient, private router: Router, private authService: AuthService, private messageService: MessageService,
     private eventService: EventService) {
-    if (this.demandInformation.requesterInfo.requestedBy == '') {
-      this.demandInformation.requesterInfo.requestedBy = this.authService.currentUserValue.email;
-      this.demandInformation.introduction.requestedBy = this.authService.currentUserValue.email;
-    }
+    // if (this.demandInformation.requesterInfo.requestedBy == '') {
+    //   this.demandInformation.requesterInfo.requestedBy = this.authService.currentUserValue.email;
+    //   this.demandInformation.introduction.requestedBy = this.authService.currentUserValue.email;
+    // }
   }
 
   getDemandInformation() {
