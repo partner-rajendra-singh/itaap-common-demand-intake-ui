@@ -7,6 +7,8 @@ import { AuthService } from 'src/app/services/auth.service';
 import { EventService } from 'src/app/services/event.service';
 import { Market } from 'src/app/enums/market';
 import { BusinessUnit } from 'src/app/enums/businessUnit';
+import { RequesterInfo } from 'src/app/models/requester-info';
+import { Introduction } from 'src/app/models/introduction';
 
 interface Domain {
   key: string;
@@ -19,14 +21,17 @@ interface Domain {
 })
 export class RequesterComponent implements OnInit {
 
-  requesterInfo: any;
+  requesterInfo!: RequesterInfo;
   visibleSaveButton!: boolean;
   domainList!: Domain[];
   selectedDomain!: Domain;
   marketList!: string[];
-  selectedMarket!: string;
+  selectedMarket!: string[];
+  otherMarket!: string;
   businessUnitList!: string[];
-  selectedBusinessUnit!: string;
+  selectedBusinessUnit!: string[];
+  otherBusinessUnit!: string;
+  isAnotherRequester!: boolean;
 
   constructor(private authService: AuthService, public demandIntakeService: DemandIntakeService, private router: Router, private messageService: MessageService, public eventService: EventService) {
     if (authService.isRequester()) {
@@ -41,19 +46,38 @@ export class RequesterComponent implements OnInit {
   }
 
   ngOnInit() {
+    if (!this.isAnotherRequester) {
+      this.demandIntakeService.getDemandInformation().requesterInfo.requestedBy = this.authService.currentUserValue.email;
+      this.demandIntakeService.getDemandInformation().introduction.requestedBy = this.authService.currentUserValue.email;
+    }
+
     this.requesterInfo = this.demandIntakeService.getDemandInformation().requesterInfo;
     this.marketList = Object.values(Market);
     this.businessUnitList = Object.values(BusinessUnit);
 
-    this.selectedMarket = this.getMarketValue(this.demandIntakeService.getDemandInformation().requesterInfo.market);
-    if (!this.selectedMarket && !this.eventService.isNewDemand) {
-      this.selectedMarket = 'Other';
+    // this.demandIntakeService.getDemandInformation().requesterInfo.market = ['Global', 'North America', 'Greater China']
+    console.log("market->", this.demandIntakeService.getDemandInformation().requesterInfo.market)
+    this.selectedMarket = this.getMarketValueArray(this.demandIntakeService.getDemandInformation().requesterInfo.market);
+    if ((!this.selectedMarket || this.selectedMarket.length == 0) && !this.eventService.isNewDemand) {
+      this.selectedMarket.push('Other');
     }
 
-    this.selectedBusinessUnit = this.getBUValue(this.demandIntakeService.getDemandInformation().requesterInfo.businessUnit);
-    if (!this.selectedBusinessUnit && !this.eventService.isNewDemand) {
-      this.selectedBusinessUnit = 'Other';
+    // this.selectedMarket = this.getMarketValue(this.demandIntakeService.getDemandInformation().requesterInfo.market);
+    // if (!this.selectedMarket && !this.eventService.isNewDemand) {
+    //   this.selectedMarket = 'Other';
+    // }
+
+    // this.demandIntakeService.getDemandInformation().requesterInfo.businessUnit = ['Sleep & Respiratory Care', 'Personal Health']
+    console.log("BU->", this.demandIntakeService.getDemandInformation().requesterInfo.businessUnit)
+    this.selectedBusinessUnit = this.getBUValueArray(this.demandIntakeService.getDemandInformation().requesterInfo.businessUnit);
+    if ((!this.selectedBusinessUnit || this.selectedBusinessUnit.length == 0) && !this.eventService.isNewDemand) {
+      this.selectedBusinessUnit.push('Other');
     }
+
+    // this.selectedBusinessUnit = this.getBUValue(this.demandIntakeService.getDemandInformation().requesterInfo.businessUnit);
+    // if (!this.selectedBusinessUnit && !this.eventService.isNewDemand) {
+    //   this.selectedBusinessUnit = 'Other';
+    // }
 
     this.demandIntakeService.getRequesterDomain().pipe(
       map((response: any) => {
@@ -72,27 +96,60 @@ export class RequesterComponent implements OnInit {
     console.log("RequesterComponent Init: ", this.demandIntakeService.demandInformation)
   }
 
+  requesterChange(event: any) {
+    // console.log("this.isAnotherRequester ", this.isAnotherRequester)
+    if (!this.isAnotherRequester) {
+      this.demandIntakeService.getDemandInformation().requesterInfo.requestedBy = this.authService.currentUserValue.email;
+      this.demandIntakeService.getDemandInformation().introduction.requestedBy = this.authService.currentUserValue.email;
+    } else {
+      this.demandIntakeService.getDemandInformation().requesterInfo.requestedBy = "";
+      this.demandIntakeService.getDemandInformation().introduction.requestedBy = "";
+    }
+  }
+
   getSelectedDomain(): Domain {
     let platform = this.domainList.find(item => item.key === this.demandIntakeService.getDemandInformation().requesterInfo.domain);
     if (!platform && !this.eventService.isNewDemand) {
-      this.selectedDomain = { key: 'Other', value: 'Other' };
+      return { key: 'Other', value: 'Other' };
+    } else if (!platform) {
+      return { key: '', value: '' };
     }
+
     return JSON.parse(JSON.stringify(platform)) as Domain;
   }
 
   nextPage() {
-    if (this.requesterInfo.program != '' && this.selectedDomain && this.requesterInfo.requestDate != '') {
+    console.log("selectedMarket : ", this.selectedMarket)
+    if (this.selectedMarket.length > 0 && this.selectedBusinessUnit.length > 0 && this.selectedDomain && this.requesterInfo.requestedDate && this.requesterInfo.requestedBy != '' && this.requesterInfo.requesterRole != '') {
       if (this.selectedDomain.key != 'Other') {
         this.requesterInfo.domain = this.selectedDomain.key;
       }
 
-      if (this.getMarketKey(this.selectedMarket) != 'Other') {
-        this.requesterInfo.market = this.getMarketKey(this.selectedMarket);
+      let other = this.getMarketKeyArray(this.selectedMarket).find(item => item == 'Other');
+      if (other) {
+        const indexOther = this.selectedMarket.indexOf('Other');
+        this.selectedMarket.splice(indexOther, 1);
+        this.requesterInfo.market.push(this.otherMarket);
       }
+      this.selectedMarket.forEach(item => this.requesterInfo.market.push(this.getMarketKey(item)));
+      this.selectedMarket = Array.from(new Set(this.selectedMarket))
 
-      if (this.getBUKey(this.selectedBusinessUnit) != 'Other') {
-        this.requesterInfo.businessUnit = this.getBUKey(this.selectedBusinessUnit);
+      // if (this.getMarketKey(this.selectedMarket) != 'Other') {
+      //   this.requesterInfo.market = this.getMarketKey(this.selectedMarket);
+      // }
+
+      let other1 = this.getBUKeyArray(this.selectedBusinessUnit).find(item => item == 'Other');
+      if (other1) {
+        const indexOther = this.selectedBusinessUnit.indexOf('Other');
+        this.selectedBusinessUnit.splice(indexOther, 1);
+        this.requesterInfo.businessUnit.push(this.otherBusinessUnit);
       }
+      this.selectedBusinessUnit.forEach(item => this.requesterInfo.businessUnit.push(this.getBUKey(item)));
+      this.selectedBusinessUnit = Array.from(new Set(this.selectedBusinessUnit))
+
+      // if (this.getBUKey(this.selectedBusinessUnit) != 'Other') {
+      //   this.requesterInfo.businessUnit = this.getBUKey(this.selectedBusinessUnit);
+      // }
 
       this.demandIntakeService.demandInformation.requesterInfo = this.requesterInfo;
 
@@ -101,10 +158,27 @@ export class RequesterComponent implements OnInit {
       } else {
         this.router.navigate(['demand-intake/requirement/' + this.demandIntakeService.demandInformation.introduction.demandIntakeId]);
       }
-      
+
     } else {
       this.messageService.add({ severity: 'warn', summary: 'Error', detail: 'Please fill required fields!' });
     }
+  }
+
+  isOtherMarketSelected(): boolean {
+    let other = this.getMarketKeyArray(this.selectedMarket).find(item => item == 'Other');
+    if (other && other.length > 0) {
+      return true;
+    }
+    return false;
+  }
+
+
+  isOtherBUSelected(): boolean {
+    let other = this.getBUKeyArray(this.selectedBusinessUnit).find(item => item == 'Other');
+    if (other && other.length > 0) {
+      return true;
+    }
+    return false;
   }
 
   prevPage() {
@@ -120,13 +194,31 @@ export class RequesterComponent implements OnInit {
       this.requesterInfo.domain = this.selectedDomain.key;
     }
 
-    if (this.getMarketKey(this.selectedMarket) != 'Other') {
-      this.requesterInfo.market = this.getMarketKey(this.selectedMarket);
+    let other = this.getMarketKeyArray(this.selectedMarket).find(item => item == 'Other');
+    if (other) {
+      const indexOther = this.selectedMarket.indexOf('Other');
+      this.selectedMarket.splice(indexOther, 1);
+      this.requesterInfo.market.push(this.otherMarket);
     }
+    this.selectedMarket.forEach(item => this.requesterInfo.market.push(this.getMarketKey(item)));
+    this.selectedMarket = Array.from(new Set(this.selectedMarket))
 
-    if (this.getBUKey(this.selectedBusinessUnit) != 'Other') {
-      this.requesterInfo.businessUnit = this.getBUKey(this.selectedBusinessUnit);
+    // if (this.getMarketKey(this.selectedMarket) != 'Other') {
+    //   this.requesterInfo.market = this.getMarketKey(this.selectedMarket);
+    // }
+
+    let other1 = this.getBUKeyArray(this.selectedBusinessUnit).find(item => item == 'Other');
+    if (other1) {
+      const indexOther = this.selectedBusinessUnit.indexOf('Other');
+      this.selectedBusinessUnit.splice(indexOther, 1);
+      this.requesterInfo.businessUnit.push(this.otherBusinessUnit);
     }
+    this.selectedBusinessUnit.forEach(item => this.requesterInfo.businessUnit.push(this.getBUKey(item)));
+    this.selectedBusinessUnit = Array.from(new Set(this.selectedBusinessUnit))
+
+    // if (this.getBUKey(this.selectedBusinessUnit) != 'Other') {
+    //   this.requesterInfo.businessUnit = this.getBUKey(this.selectedBusinessUnit);
+    // }
 
     this.demandIntakeService.saveDemandWithAttachment()
       .pipe(first())
@@ -146,9 +238,63 @@ export class RequesterComponent implements OnInit {
     return s;
   }
 
+  getMarketValueArray(array: string[]): string[] {
+    let output: string[] = [];
+    array.forEach(key => {
+      const status = Object.keys(Market).indexOf(key as unknown as Market);
+      let s = Object.values(Market)[status];
+      if (s) {
+        output.push(s);
+      } else {
+        output.push('Other');
+        this.otherMarket = key;
+      }
+    })
+
+    return output;
+  }
+
+  getBUValueArray(array: string[]): string[] {
+    let output: string[] = [];
+    array.forEach(key => {
+      const status = Object.keys(BusinessUnit).indexOf(key as unknown as BusinessUnit);
+      let s = Object.values(BusinessUnit)[status];
+      if (s) {
+        output.push(s);
+      } else {
+        output.push('Other');
+        this.otherBusinessUnit = key;
+      }
+    })
+
+    return output;
+  }
+
   getMarketKey(value: string): string {
     const index = Object.values(Market).indexOf(value as unknown as Market);
     return Object.keys(Market)[index];
+  }
+
+  getMarketKeyArray(array: string[]): string[] {
+    let output: string[] = [];
+    array.forEach(value => {
+      const index = Object.values(Market).indexOf(value as unknown as Market);
+      let s = Object.keys(Market)[index];
+      output.push(s);
+    })
+
+    return output;
+  }
+
+  getBUKeyArray(array: string[]): string[] {
+    let output: string[] = [];
+    array.forEach(value => {
+      const index = Object.values(BusinessUnit).indexOf(value as unknown as BusinessUnit);
+      let s = Object.keys(BusinessUnit)[index];
+      output.push(s);
+    })
+
+    return output;
   }
 
   getBUValue(key: string): string {

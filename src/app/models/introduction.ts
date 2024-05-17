@@ -5,4 +5,6 @@ export class Introduction {
     requestedBy: string = '';
     status!: string;
     statusLabel: string = '';
+
+    isDocReferred: boolean = false;
 }

@@ -49,6 +49,8 @@ import { TableModule } from 'primeng/table';
 import { ViewDemandsComponent } from './components/view-demands/view-demands.component';
 import { DialogModule } from 'primeng/dialog';
 import { ProgressBarModule } from 'primeng/progressbar';
+import { ChipModule } from 'primeng/chip';
+import { MultiSelectModule } from 'primeng/multiselect';
 
 @NgModule({
   declarations: [
@@ -99,7 +101,9 @@ import { ProgressBarModule } from 'primeng/progressbar';
     ConfirmDialogModule,
     TableModule,
     DialogModule,
-    ProgressBarModule
+    ProgressBarModule,
+    ChipModule,
+    MultiSelectModule
   ],
   providers: [DemandIntakeService, MessageService,AuthGuard,AuthService,ConfirmationService],
   bootstrap: [AppComponent]

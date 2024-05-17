@@ -25,7 +25,12 @@ export class DemandIntakeService {
   attachments = Array(5);
 
   constructor(private http: HttpClient, private router: Router, private authService: AuthService, private messageService: MessageService,
-    private eventService: EventService) { }
+    private eventService: EventService) {
+    if (this.demandInformation.requesterInfo.requestedBy == '') {
+      this.demandInformation.requesterInfo.requestedBy = this.authService.currentUserValue.email;
+      this.demandInformation.introduction.requestedBy = this.authService.currentUserValue.email;
+    }
+  }
 
   getDemandInformation() {
     return this.demandInformation;
@@ -127,7 +132,6 @@ export class DemandIntakeService {
     return result;
   }
 
-
   validateRequest(isSave: boolean): boolean {
 
     if (isSave) {
@@ -143,7 +147,7 @@ export class DemandIntakeService {
         this.router.navigate(['demand-intake/introduction']);
         return false;
 
-      } else if (this.demandInformation.requesterInfo.program == '' || this.demandInformation.requesterInfo.domain == '' || !this.validateSpoc() || (this.demandInformation.requesterInfo.approvedBudget && this.demandInformation.requesterInfo.clarityProjectId == '')) {
+      } else if (this.demandInformation.requesterInfo.requestedBy == '' && this.demandInformation.requesterInfo.requesterRole == '' || this.demandInformation.requesterInfo.market.length == 0 && this.demandInformation.requesterInfo.businessUnit.length == 0 && this.demandInformation.requesterInfo.domain == '' || !this.validateSpoc() || (this.demandInformation.requesterInfo.approvedBudget && this.demandInformation.requesterInfo.clarityProjectId == '')) {
         this.messageService.add({ severity: 'warn', summary: 'Error', detail: 'Please fill required fields!' });
         this.router.navigate(['demand-intake/requester']);
         return false;
@@ -198,7 +202,7 @@ export class DemandIntakeService {
         })
       };
 
-      this.demandInformation.introduction.requestedBy = this.authService.currentUserValue.email;
+      // this.demandInformation.requesterInfo.requestedBy = this.authService.currentUserValue.email;
       // console.log("attachments: ", this.attachments);
       const formData: FormData = new FormData();
       for (let i = 0; i < this.attachments.length; i++) {
@@ -235,9 +239,9 @@ export class DemandIntakeService {
         })
       };
 
-      if (this.demandInformation.introduction.requestedBy == '') {
-        this.demandInformation.introduction.requestedBy = this.authService.currentUserValue.email;
-      }
+      // if (this.demandInformation.introduction.requestedBy == '') {
+      //   this.demandInformation.introduction.requestedBy = this.authService.currentUserValue.email;
+      // }
 
       if (this.authService.isDM() && this.demandInformation.demandManagerInfo.decisionBy == '') {
         this.demandInformation.demandManagerInfo.decisionBy = this.authService.currentUserValue.email;
