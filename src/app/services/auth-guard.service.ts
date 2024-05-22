@@ -18,7 +18,7 @@ export class AuthGuard implements CanActivate, CanActivateChild {
 
   private checkAuth(state: RouterStateSnapshot): boolean {
     const currentUser = this.authService.currentUserValue;
-    if (currentUser.isAuthenticated) {
+    if (currentUser && currentUser.isAuthenticated && new Date().getTime() < currentUser.expireTime.getTime()) {
       return true;
     } else {
       this.router.navigate(['/login']);
