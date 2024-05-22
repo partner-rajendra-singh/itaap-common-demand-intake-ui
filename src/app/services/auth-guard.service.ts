@@ -18,6 +18,10 @@ export class AuthGuard implements CanActivate, CanActivateChild {
 
   private checkAuth(state: RouterStateSnapshot): boolean {
     const currentUser = this.authService.currentUserValue;
+    if(currentUser){
+      currentUser.expireTime = new Date(currentUser.expireTime);
+    }
+
     if (currentUser && currentUser.isAuthenticated && new Date().getTime() < currentUser.expireTime.getTime()) {
       return true;
     } else {

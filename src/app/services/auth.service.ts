@@ -43,6 +43,18 @@ export class AuthService {
     return this.currentUserValue.isAdmin;
   }
 
+  getCurrentUserRole(): string {
+    if (this.isDM()) {
+      return "DEMAND_MANAGER";
+    } else if (this.isCCB()) {
+      return "CCB_MEMBER";
+    }else if (this.isAdmin()) {
+      return "ADMIN";
+    }
+
+    return "REQUESTER";
+  }
+
   login(email: string, token: string) {
     let url = this.baseUrl + '/common/demand-intake/login/';
     let headerOptions = {
@@ -59,6 +71,7 @@ export class AuthService {
           // store user details and jwt token in local storage to keep user logged in between page refreshes
           localStorage.setItem('currentUser', JSON.stringify(user));
           this.currentUserSubject.next(user);
+          window.location.reload();
         }
         return user;
       }));
@@ -78,8 +91,6 @@ export class AuthService {
     return this.http.post<any>(url, { email }, headerOptions)
       .pipe(map(user => {
         console.log("getOTP() Response :", user)
-
-
         // store user details and jwt token in local storage to keep user logged in between page refreshes
         localStorage.setItem('currentUser', JSON.stringify(user));
         this.currentUserSubject.next(user);
@@ -90,10 +101,9 @@ export class AuthService {
   }
 
   isAuthenticatedUser(): boolean {
-    const d = new Date();
-    d.setHours(d.getHours()+1);
-    this.currentUserValue.expireTime = d;
-    console.log("Token Live : ", new Date().getTime() < this.currentUserValue.expireTime.getTime())
+    if (this.currentUserValue) {
+      this.currentUserValue.expireTime = new Date(this.currentUserValue.expireTime);
+    }
     return (this.currentUserValue != null && this.currentUserValue.isAuthenticated && new Date().getTime() < this.currentUserValue.expireTime.getTime());
   }
 

@@ -54,9 +54,87 @@ export class DemandIntakeService {
           demand.demandManagerInfo.decisionDate = new Date(demand.demandManagerInfo.decisionDate);
         }
 
-        // if (demand.solutionDirectionInfo == null) {
-        //   demand.solutionDirectionInfo = new SolutionDirection;
-        // }
+        if (demand.solutionDirectionInfo.length == 0) {
+          demand.solutionDirectionInfo = [
+            {
+              solution: 'integration',
+              value: false,
+              dmEmail: '',
+              decisionDate: new Date,
+              decision: '',
+              remarks: ''
+            },
+            {
+              solution: 'dataModelling',
+              value: false,
+              dmEmail: '',
+              decisionDate: new Date,
+              decision: '',
+              remarks: ''
+            },
+            {
+              solution: 'adlL1',
+              value: false,
+              dmEmail: '',
+              decisionDate: new Date,
+              decision: '',
+              remarks: ''
+            },
+            {
+              solution: 'adlL2',
+              value: false,
+              dmEmail: '',
+              decisionDate: new Date,
+              decision: '',
+              remarks: ''
+            },
+            {
+              solution: 'gold',
+              value: false,
+              dmEmail: '',
+              decisionDate: new Date,
+              decision: '',
+              remarks: ''
+            },
+            {
+              solution: 'mdm',
+              value: false,
+              dmEmail: '',
+              decisionDate: new Date,
+              decision: '',
+              remarks: ''
+            }
+            , {
+              solution: 'ia',
+              value: false,
+              dmEmail: '',
+              decisionDate: new Date,
+              decision: '',
+              remarks: ''
+            }
+            , {
+              solution: 'dataQuality',
+              value: false,
+              dmEmail: '',
+              decisionDate: new Date,
+              decision: '',
+              remarks: ''
+            }, {
+              solution: 'informatica',
+              value: false,
+              dmEmail: '',
+              decisionDate: new Date,
+              decision: '',
+              remarks: ''
+            }, {
+              solution: 'azureSynapse',
+              value: false,
+              dmEmail: '',
+              decisionDate: new Date,
+              decision: '',
+              remarks: ''
+            }];
+        }
 
         if (demand.eADIInfo == null) {
           demand.eADIInfo = new EADI;
@@ -159,8 +237,8 @@ export class DemandIntakeService {
       }
 
       if (this.authService.isDM() || this.authService.isCCB()) {
-        let adlL1 = this.demandInformation.solutionDirectionInfo.find(item => item.solution==='adlL1');
-        let dataQuality = this.demandInformation.solutionDirectionInfo.find(item => item.solution==='dataQuality');
+        let adlL1 = this.demandInformation.solutionDirectionInfo.find(item => item.solution === 'adlL1');
+        let dataQuality = this.demandInformation.solutionDirectionInfo.find(item => item.solution === 'dataQuality');
 
         if (adlL1 && adlL1.value && !this.eventService.checkEmailValue(this.demandInformation.eADIInfo.adlL1.sourceEmail)) {
           this.messageService.add({ severity: 'warn', summary: 'Error', detail: 'Please fill required fields!' });
