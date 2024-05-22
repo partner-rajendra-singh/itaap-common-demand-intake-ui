@@ -416,23 +416,47 @@
                                 </div>
 
                                 <div class="grid">
-                                <div class="col-4 xs:col-4 sm:col-4 lg:col-4 xl:col-4">
-                                    <label required for="workbench" style="width: 100px">Which workbench Gold will be
-                                        created?</label>
+                                    <div class="col-4 xs:col-4 sm:col-4 lg:col-4 xl:col-4">
+                                        <label required for="workbench" style="width: 100px">Which workbench Gold will
+                                            be
+                                            created?</label>
+                                    </div>
+                                    <div class="col-8 xs:col-8 sm:col-8 lg:col-8 xl:col-8">
+                                        <input required id="workbench" type="text" [(ngModel)]="eADIInfo.gold.workbench"
+                                            size="70"
+                                            class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary" />
+                                    </div>
                                 </div>
-                                <div class="col-8 xs:col-8 sm:col-8 lg:col-8 xl:col-8">
-                                    <input required id="workbench" type="text" [(ngModel)]="eADIInfo.gold.workbench"
-                                        size="70"
-                                        class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary" />
-                                </div>
-                            </div>       
 
                             </div>
                         </div>
                     </p-tabPanel>
                     <p-tabPanel header="MDM" *ngIf="showTab('mdm')">
-                        <div>
-                            <h2>TBD</h2>
+                        <div class="grid">
+                            <div class="col-12 xs:col-12 sm:col-12 lg:col-12 xl:col-12">
+                                <label required><b>Provide details on</b></label>
+                            </div>
+                            <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
+                                <label required for="bpdh" style="width: 100px">BPDH/FIORI</label>
+                            </div>
+                            <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
+                                <textarea id="bpdh" rows="3" cols="78" [(ngModel)]="eADIInfo.mdm.bpdh"
+                                    pInputTextarea></textarea>
+                            </div>
+                            <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
+                                <label required for="pdh" style="width: 100px">PDH</label>
+                            </div>
+                            <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
+                                <textarea id="pdh" rows="3" cols="78" [(ngModel)]="eADIInfo.mdm.pdh"
+                                    pInputTextarea></textarea>
+                            </div>
+                            <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
+                                <label required for="fordh" style="width: 100px">FORDH</label>
+                            </div>
+                            <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
+                                <textarea id="fordh" rows="3" cols="78" [(ngModel)]="eADIInfo.mdm.fordh"
+                                    pInputTextarea></textarea>
+                            </div>
                         </div>
                     </p-tabPanel>
                     <p-tabPanel header="I&A" *ngIf="showTab('ia')">
