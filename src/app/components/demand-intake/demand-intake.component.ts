@@ -122,7 +122,7 @@ export class DemandIntakeComponent implements OnInit {
                     visible: (!this.eventService.isMyDemand && this.authService.isCCB())
                         || (this.authService.isRequester() && this.eventService.isMyDemand &&
                             (this.demandIntakeService.demandInformation.introduction.status == 'CCB_HOLD' || this.demandIntakeService.demandInformation.introduction.status == 'ACCEPTED' || this.demandIntakeService.demandInformation.introduction.status == 'REJECTED'))
-                            ||(!this.eventService.isMyDemand && this.authService.isDM() && this.demandIntakeService.demandInformation.introduction.status != 'PENDING_WITH_CCB'),
+                            ||(!this.eventService.isMyDemand && this.authService.isDM() && this.demandIntakeService.demandInformation.introduction.status != 'PENDING_WITH_CCB' && this.demandIntakeService.demandInformation.introduction.status != 'PENDING_WITH_DM'),
                 }
             ];
         }
