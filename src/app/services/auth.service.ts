@@ -45,9 +45,9 @@ export class AuthService {
 
   getCurrentUserRole(): string {
     if (this.isDM()) {
-      return "DEMAND_MANAGER";
+      return "DEMAND MANAGER";
     } else if (this.isCCB()) {
-      return "CCB_MEMBER";
+      return "CCB MEMBER";
     }else if (this.isAdmin()) {
       return "ADMIN";
     }
