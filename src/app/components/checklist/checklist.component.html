@@ -59,12 +59,10 @@
                                         [(ngModel)]="eADIInfo.dataModel.dataModelType" value="New Model">
                                     <label for="dm1">New Model</label> &nbsp;
                                     <input type="radio" id="dm2" name="dataModelType"
-                                        [(ngModel)]="eADIInfo.dataModel.dataModelType"
-                                        value="Change To Existing Model">
+                                        [(ngModel)]="eADIInfo.dataModel.dataModelType" value="Change To Existing Model">
                                     <label for="dm2">Change To Existing Model</label> &nbsp;
                                     <input type="radio" id="dm3" name="dataModelType"
-                                        [(ngModel)]="eADIInfo.dataModel.dataModelType"
-                                        value="Target Date Postponement">
+                                        [(ngModel)]="eADIInfo.dataModel.dataModelType" value="Target Date Postponement">
                                     <label for="dm3">Target Date Postponement</label>
                                 </div>
 
@@ -381,7 +379,55 @@
                     </p-tabPanel>
                     <p-tabPanel header="ADL Gold" *ngIf="showTab('gold')">
                         <div>
-                            <h2>TBD</h2>
+                            <div class="grid">
+                                <div class="col-8 xs:col-8 sm:col-8 lg:col-8 xl:col-8">
+                                    <label for="kpiRequired" required style="width:100px">Does your application need
+                                        KPI/Specific to business requirement which is not covered in ADL L2? </label>
+                                </div>
+                                <div class="col-4 xs:col-4 sm:col-4 lg:col-4 xl:col-4">
+                                    <input type="radio" id="Yes" name="kpiRequired"
+                                        [(ngModel)]="eADIInfo.gold.kpiRequired" [value]="true">
+                                    <label for="Yes">Yes</label>
+                                    <input type="radio" id="No" name="kpiRequired" checked="checked"
+                                        [(ngModel)]="eADIInfo.gold.kpiRequired" [value]="false">
+                                    <label for="No">No</label>
+                                </div>
+
+                                <div class="col-8 xs:col-8 sm:col-8 lg:col-8 xl:col-8">
+                                    <label for="aggregation" required style="width:100px">Is there any
+                                        aggregation/derivation from ADL L2? </label>
+                                </div>
+                                <div class="col-4 xs:col-4 sm:col-4 lg:col-4 xl:col-4">
+                                    <input type="radio" id="Yes" name="aggregation"
+                                        [(ngModel)]="eADIInfo.gold.aggregation" [value]="true">
+                                    <label for="Yes">Yes</label>
+                                    <input type="radio" id="No" name="aggregation" checked="checked"
+                                        [(ngModel)]="eADIInfo.gold.aggregation" [value]="false">
+                                    <label for="No">No</label>
+                                </div>
+
+                                <div class="col-8 xs:col-8 sm:col-8 lg:col-8 xl:col-8"></div>
+                                <div class="col-4 xs:col-4 sm:col-4 lg:col-4 xl:col-4"
+                                    *ngIf="eADIInfo.gold.aggregation==true">
+                                    <input required id="aggregationInfo" type="text"
+                                        placeholder="Specify Aggregation Information"
+                                        [(ngModel)]="eADIInfo.gold.aggregationInfo" size="40"
+                                        class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary" />
+                                </div>
+
+                                <div class="grid">
+                                <div class="col-4 xs:col-4 sm:col-4 lg:col-4 xl:col-4">
+                                    <label required for="workbench" style="width: 100px">Which workbench Gold will be
+                                        created?</label>
+                                </div>
+                                <div class="col-8 xs:col-8 sm:col-8 lg:col-8 xl:col-8">
+                                    <input required id="workbench" type="text" [(ngModel)]="eADIInfo.gold.workbench"
+                                        size="70"
+                                        class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary" />
+                                </div>
+                            </div>       
+
+                            </div>
                         </div>
                     </p-tabPanel>
                     <p-tabPanel header="MDM" *ngIf="showTab('mdm')">
@@ -396,21 +442,22 @@
                                     <label required for="location" style="width: 100px">Location of the Report</label>
                                 </div>
                                 <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
-                                    <input required id="location" type="text"
-                                        [(ngModel)]="eADIInfo.ia.location" size="70"
+                                    <input required id="location" type="text" [(ngModel)]="eADIInfo.ia.location"
+                                        size="70"
                                         class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary" />
                                 </div>
                                 <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                                    <label required for="team" style="width: 100px">Team for which Report is Required</label>
+                                    <label required for="team" style="width: 100px">Team for which Report is
+                                        Required</label>
                                 </div>
                                 <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
-                                    <input required id="team" type="text"
-                                        [(ngModel)]="eADIInfo.ia.team" size="70"
+                                    <input required id="team" type="text" [(ngModel)]="eADIInfo.ia.team" size="70"
                                         class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary" />
                                 </div>
 
                                 <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                                    <label for="newReportRequired" required style="width:100px">New Report Required?</label>
+                                    <label for="newReportRequired" required style="width:100px">New Report
+                                        Required?</label>
                                 </div>
                                 <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
                                     <input type="radio" id="Yes" name="newReportRequired" checked="checked"
@@ -422,28 +469,32 @@
                                 </div>
 
                                 <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                                    <label required for="reportDescription" style="width: 100px">Report Description</label>
+                                    <label required for="reportDescription" style="width: 100px">Report
+                                        Description</label>
                                 </div>
                                 <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
                                     <textarea id="reportDescription" rows="3" cols="78"
                                         [(ngModel)]="eADIInfo.ia.reportDescription" pInputTextarea></textarea>
                                 </div>
                                 <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                                    <label required for="reportUsage" style="width: 100px">Report Usage (can be used as reference/can be leveraged)</label>
+                                    <label required for="reportUsage" style="width: 100px">Report Usage (can be used as
+                                        reference/can be leveraged)</label>
                                 </div>
                                 <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
-                                    <textarea id="reportUsage" rows="3" cols="78"
-                                        [(ngModel)]="eADIInfo.ia.reportUsage" pInputTextarea></textarea>
+                                    <textarea id="reportUsage" rows="3" cols="78" [(ngModel)]="eADIInfo.ia.reportUsage"
+                                        pInputTextarea></textarea>
                                 </div>
                                 <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                                    <label required for="businessCase" style="width: 100px">Business Case (why report is required?)</label>
+                                    <label required for="businessCase" style="width: 100px">Business Case (why report is
+                                        required?)</label>
                                 </div>
                                 <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
                                     <textarea id="businessCase" rows="3" cols="78"
                                         [(ngModel)]="eADIInfo.ia.businessCase" pInputTextarea></textarea>
                                 </div>
                                 <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                                    <label required for="refreshFrequency" style="width: 100px">Refresh Frequency</label>
+                                    <label required for="refreshFrequency" style="width: 100px">Refresh
+                                        Frequency</label>
                                 </div>
                                 <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
                                     <input required id="refreshFrequency" type="text"
@@ -465,16 +516,17 @@
                                     <label required for="projectCode" style="width: 100px">Project Code</label>
                                 </div>
                                 <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
-                                    <input required id="projectCode" type="text"
-                                        [(ngModel)]="eADIInfo.ia.projectCode" size="70"
+                                    <input required id="projectCode" type="text" [(ngModel)]="eADIInfo.ia.projectCode"
+                                        size="70"
                                         class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary" />
                                 </div>
                                 <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                                    <label required for="reportTool" style="width: 100px">Tool of preference for Report to be built in </label>
+                                    <label required for="reportTool" style="width: 100px">Tool of preference for Report
+                                        to be built in </label>
                                 </div>
                                 <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
-                                    <input required id="reportTool" type="text"
-                                        [(ngModel)]="eADIInfo.ia.reportTool" size="70"
+                                    <input required id="reportTool" type="text" [(ngModel)]="eADIInfo.ia.reportTool"
+                                        size="70"
                                         class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary" />
                                 </div>
 
@@ -484,14 +536,15 @@
                                 <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
                                     <p-checkbox [binary]="true" [(ngModel)]="eADIInfo.ia.designReportAttached"
                                         inputId="designReportAttached"></p-checkbox>
-                                </div> 
+                                </div>
                                 <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
                                     <label for="cdmConsumed">Existing CDM to be consumed?</label>
                                 </div>
                                 <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
                                     <p-checkbox [binary]="true" [(ngModel)]="eADIInfo.ia.cdmConsumed"
                                         inputId="cdmConsumed"></p-checkbox>
-                                </div> <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
+                                </div>
+                                <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
                                     <label for="datasetConsumed">Existing Datasets to be consumed?</label>
                                 </div>
                                 <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
@@ -573,7 +626,8 @@
                                     </div>
                                     <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
                                         <textarea id="dataRuleDescription" rows="3" cols="78"
-                                            [(ngModel)]="eADIInfo.dataQuality.dataRuleDescription" pInputTextarea></textarea>
+                                            [(ngModel)]="eADIInfo.dataQuality.dataRuleDescription"
+                                            pInputTextarea></textarea>
                                     </div>
 
                                     <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
@@ -620,8 +674,14 @@
                         </div>
                     </p-tabPanel>
                     <p-tabPanel header="Informatica PWC" *ngIf="showTab('informatica')">
-                        <div>
-                            <h2>TBD</h2>
+                        <div class="grid">
+                            <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
+                                <label required for="etlRequirements" style="width: 100px">ETL Requirements</label>
+                            </div>
+                            <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
+                                <textarea id="reportDescription" rows="3" cols="78"
+                                    [(ngModel)]="eADIInfo.informatica.etlRequirements" pInputTextarea></textarea>
+                            </div>
                         </div>
                     </p-tabPanel>
                     <p-tabPanel header="Azure Synapse DWH" *ngIf="showTab('azureSynapse')">

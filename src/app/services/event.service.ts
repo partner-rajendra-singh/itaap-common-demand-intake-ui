@@ -1,6 +1,7 @@
 import { EventEmitter, Injectable } from '@angular/core';
 import { SolutionDirection } from '../models/solution-direction';
 import { MessageService } from 'primeng/api';
+import { SolutionDirection1 } from '../models/solution-direction1';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +11,7 @@ export class EventService {
   progressBarEvent = new EventEmitter();
   isNewDemand : boolean = true;
   isMyDemand : boolean = true;
-  solutionDirectionValue : SolutionDirection = new SolutionDirection;
+  solutionDirectionValue : SolutionDirection1[] = new Array();
   selectedDemandTabIndex: any = 0;
   selectedEADITabIndex: any = 0;
   today : Date =  new Date();

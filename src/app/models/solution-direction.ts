@@ -9,4 +9,5 @@ export class SolutionDirection {
     dataQuality: boolean = false;
     informatica: boolean = false;
     azureSynapse: boolean = false;
+    
 }

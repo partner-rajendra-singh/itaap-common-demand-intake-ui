@@ -5,8 +5,7 @@
       <div class="col-12 xs:col-12 sm:col-12 lg:col-12 xl:col-12">
         <div class="grid">
           <div class="col-4 xs:col-4 sm:col-4 lg:col-4 xl:col-4">
-            <label required for="isDocReferred" class="asterisk-if-mandatory" style="width: 100px">Have you checked available solution(s) in <a target="_blank" href="https://www.google.com/">this</a> catalog?</label>
-              
+            <label required for="isDocReferred" class="asterisk-if-mandatory" style="width: 100px">Have you checked available solution(s) in <a target="_blank" href="https://share.philips.com/sites/STS020210604094742/Pages/ADLDemandFunnelGrid.aspx">this</a> catalog?</label>
           </div>
           <div class="col-8 xs:col-8 sm:col-8 lg:col-8 xl:col-8">
             <input type="radio" id="Yes" name="isDocReferred" [(ngModel)]="demandInfo.isDocReferred" [value]="true">
@@ -15,6 +14,17 @@
               [value]="false">
             <label for="No">No</label> &nbsp;
             <label>(If you are able to find an existing solution then no need to raise a new demand.)</label>
+          </div>
+
+          <div class="col-4 xs:col-4 sm:col-4 lg:col-4 xl:col-4">
+            <label required for="architectAligned" class="asterisk-if-mandatory" style="width: 100px">Architect aligned?</label>
+          </div>
+          <div class="col-8 xs:col-8 sm:col-8 lg:col-8 xl:col-8">
+            <input type="radio" id="Yes" name="architectAligned" [(ngModel)]="demandInfo.architectAligned" [value]="true">
+            <label for="Yes">Yes</label>
+            <input type="radio" id="No" name="architectAligned"  [(ngModel)]="demandInfo.architectAligned"
+              [value]="false" checked="checked">
+            <label for="No">No</label> &nbsp;
           </div>
 
         </div>
