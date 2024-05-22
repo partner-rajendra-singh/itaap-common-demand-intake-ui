@@ -25,11 +25,12 @@ export class DemandManagerComponent {
   solutionDirectionList!: SolutionDirection1[];
 
   constructor(private eventService: EventService, public demandIntakeService: DemandIntakeService, private router: Router, private messageService: MessageService,
-    private authService: AuthService) {
+    public authService: AuthService) {
 
     if (authService.isDM()) {
       this.visibleNextButton = false;
       this.domain = this.authService.currentUserValue.domain;
+      this.demandIntakeService.demandInformation.demandManagerInfo.domain = this.domain;
       if (this.demandIntakeService.getDemandInformation().introduction.status == 'ACCEPTED' || this.demandIntakeService.getDemandInformation().introduction.status == 'REJECTED') {
         this.visibleSubmitButton = false;
       } else if (!this.eventService.isMyDemand && this.demandIntakeService.demandInformation.introduction.status == 'PENDING_WITH_CCB'){
