@@ -5,6 +5,7 @@ import { DataQuality } from "./data-quality";
 import { Gold } from "./gold";
 import { IA } from "./ia";
 import { Informatica } from "./informatica";
+import { MDM } from "./mdm";
 
 export class EADI {
     platformsCapabilityDef: string = '';
@@ -20,4 +21,5 @@ export class EADI {
     ia: IA = new IA;
     gold: Gold = new Gold;
     informatica: Informatica = new Informatica;
+    mdm: MDM = new MDM;
 }
