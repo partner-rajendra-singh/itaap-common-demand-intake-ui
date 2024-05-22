@@ -60,11 +60,6 @@ export class DemandManagerComponent {
     this.solutionDirectionList = this.demandIntakeService.getDemandInformation().solutionDirectionInfo.filter(item => item.value == true);
   }
 
-  onTabChange(event: any) {
-    console.log("event",event)
-    this.selectedDecision = this.getDecisionValue(this.demandIntakeService.getDemandInformation().demandManagerInfo.decision);
-  }
-
   prevPage() {
     if (this.eventService.isNewDemand) {
       this.router.navigate(['demand-intake/attachment']);
@@ -125,9 +120,4 @@ export class DemandManagerComponent {
     return s;
   }
 
-  // getDecisionObjectForCCB(decisionKey : string) : DemandIntakeDecision{
-  //   const decision = Object.keys(ApproverDomain).indexOf(decisionKey as unknown as ApproverDomain);
-  //   let s = Object.values(ApproverDomain)[decision];
-  //   return {""};
-  // }
 }

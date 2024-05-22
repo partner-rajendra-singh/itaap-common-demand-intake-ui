@@ -30,7 +30,7 @@
           </p-tabPanel>
         </p-tabView>
 
-        <p-tabView *ngIf="authService.isCCB()" (onChange)="onTabChange($event)">
+        <p-tabView *ngIf="authService.isCCB()">
           <p-tabPanel header="Demand Manager ({{getDomainValue(item.solution)}})"
             *ngFor="let item of solutionDirectionList ; let i =index">
             <div class="grid">
