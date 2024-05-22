@@ -25,7 +25,7 @@ export class DemandManagerComponent {
 
     if (authService.isDM()) {
       this.visibleNextButton = false;
-      if (this.demandIntakeService.getDemandInformation().introduction.status == 'ACCEPTED' || this.demandIntakeService.getDemandInformation().introduction.status == 'REJECTED') {
+      if ((this.demandIntakeService.getDemandInformation().introduction.status == 'ACCEPTED' || this.demandIntakeService.getDemandInformation().introduction.status == 'REJECTED') || (!this.eventService.isMyDemand && this.demandIntakeService.demandInformation.introduction.status == 'PENDING_WITH_CCB')) {
         this.visibleSubmitButton = false;
       } else {
         this.visibleSubmitButton = true;

@@ -2,6 +2,7 @@ export class RequesterInfo {
   requestedBy: string = '';
   requesterRole: string = '';
   program: string = '';
+  project: string = '';
   domain: string = '';
   requestedDate: Date = new Date();
   businessUnit: string[] = [];

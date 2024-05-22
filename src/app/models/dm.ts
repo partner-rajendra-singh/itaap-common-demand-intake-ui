@@ -3,4 +3,5 @@ export class DM {
     decision: string = '';
     remarks: string = '';
     decisionBy: string = '';
+    domain: string = '';
 }

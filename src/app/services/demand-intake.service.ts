@@ -54,9 +54,9 @@ export class DemandIntakeService {
           demand.demandManagerInfo.decisionDate = new Date(demand.demandManagerInfo.decisionDate);
         }
 
-        if (demand.solutionDirectionInfo == null) {
-          demand.solutionDirectionInfo = new SolutionDirection;
-        }
+        // if (demand.solutionDirectionInfo == null) {
+        //   demand.solutionDirectionInfo = new SolutionDirection;
+        // }
 
         if (demand.eADIInfo == null) {
           demand.eADIInfo = new EADI;
@@ -147,7 +147,7 @@ export class DemandIntakeService {
         this.router.navigate(['demand-intake/introduction']);
         return false;
 
-      } else if (this.demandInformation.requesterInfo.requestedBy == '' && this.demandInformation.requesterInfo.requesterRole == '' || this.demandInformation.requesterInfo.market.length == 0 && this.demandInformation.requesterInfo.businessUnit.length == 0 && this.demandInformation.requesterInfo.domain == '' || !this.validateSpoc() || (this.demandInformation.requesterInfo.approvedBudget && this.demandInformation.requesterInfo.clarityProjectId == '')) {
+      } else if (this.demandInformation.requesterInfo.requestedBy == '' && this.demandInformation.requesterInfo.project == '' && this.demandInformation.requesterInfo.requesterRole == '' || this.demandInformation.requesterInfo.market.length == 0 && this.demandInformation.requesterInfo.businessUnit.length == 0 && this.demandInformation.requesterInfo.domain == '' || !this.validateSpoc() || (this.demandInformation.requesterInfo.approvedBudget && this.demandInformation.requesterInfo.clarityProjectId == '')) {
         this.messageService.add({ severity: 'warn', summary: 'Error', detail: 'Please fill required fields!' });
         this.router.navigate(['demand-intake/requester']);
         return false;
@@ -159,11 +159,14 @@ export class DemandIntakeService {
       }
 
       if (this.authService.isDM() || this.authService.isCCB()) {
-        if (this.demandInformation.solutionDirectionInfo.adlL1 && !this.eventService.checkEmailValue(this.demandInformation.eADIInfo.adlL1.sourceEmail)) {
+        let adlL1 = this.demandInformation.solutionDirectionInfo.find(item => item.solution==='adlL1');
+        let dataQuality = this.demandInformation.solutionDirectionInfo.find(item => item.solution==='dataQuality');
+
+        if (adlL1 && adlL1.value && !this.eventService.checkEmailValue(this.demandInformation.eADIInfo.adlL1.sourceEmail)) {
           this.messageService.add({ severity: 'warn', summary: 'Error', detail: 'Please fill required fields!' });
           this.router.navigate(['demand-intake/checklist']);
           return false;
-        } else if (this.demandInformation.solutionDirectionInfo.dataQuality && (!this.eventService.checkEmailValue(this.demandInformation.eADIInfo.dataQuality.bpoEmail) || !this.eventService.checkEmailValue(this.demandInformation.eADIInfo.dataQuality.dataCleaningSpocEmail))) {
+        } else if (dataQuality && dataQuality.value && (!this.eventService.checkEmailValue(this.demandInformation.eADIInfo.dataQuality.bpoEmail) || !this.eventService.checkEmailValue(this.demandInformation.eADIInfo.dataQuality.dataCleaningSpocEmail))) {
           this.messageService.add({ severity: 'warn', summary: 'Error', detail: 'Please fill required fields!' });
           this.router.navigate(['demand-intake/checklist']);
           return false;
