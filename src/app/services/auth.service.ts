@@ -55,7 +55,6 @@ export class AuthService {
     return this.http.post<any>(url, { email, token }, headerOptions)
       .pipe(map(user => {
         console.log("login() Response :", user)
-        // user.role = 'DEMAND_MANAGER';
         if (user && user.token && user.isAuthenticated) {
           // store user details and jwt token in local storage to keep user logged in between page refreshes
           localStorage.setItem('currentUser', JSON.stringify(user));
@@ -91,7 +90,11 @@ export class AuthService {
   }
 
   isAuthenticatedUser(): boolean {
-    return (this.currentUserValue != null && this.currentUserValue.isAuthenticated);
+    const d = new Date();
+    d.setHours(d.getHours()+1);
+    this.currentUserValue.expireTime = d;
+    console.log("Token Live : ", new Date().getTime() < this.currentUserValue.expireTime.getTime())
+    return (this.currentUserValue != null && this.currentUserValue.isAuthenticated && new Date().getTime() < this.currentUserValue.expireTime.getTime());
   }
 
   logout(): void {
