@@ -99,7 +99,7 @@ export class SolutionDirectionComponent {
 
   isAnySD(): boolean {
 
-    return this.solutionDirectionInfo.filter(item => item.value===true).length > 0;
+    return this.solutionDirectionInfo.filter(item => item.value == true).length > 0;
 
     // return (this.solutionDirectionInfo.integration || this.solutionDirectionInfo.dataModelling || this.solutionDirectionInfo.adlL1 ||
     //   this.solutionDirectionInfo.adlL2 || this.solutionDirectionInfo.gold || this.solutionDirectionInfo.mdm ||

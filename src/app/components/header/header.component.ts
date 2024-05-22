@@ -13,12 +13,11 @@ export class HeaderComponent implements OnInit{
   constructor(private authService: AuthService, private eventService: EventService) {}
 
   ngOnInit(){
-    // if (this.authService.currentUserValue && this.authService.currentUserValue.isAuthenticated) {
-    //   this.user = this.authService.currentUserValue.email;
-    // }
+    if (this.authService.isAuthenticatedUser()) {
+      this.user = this.authService.currentUserValue.email;
+    }
 
     this.eventService.progressBarEvent.subscribe(response => {
-      // console.log("progressBarEvent", response);
       this.isProgressing = response;
     })
     
