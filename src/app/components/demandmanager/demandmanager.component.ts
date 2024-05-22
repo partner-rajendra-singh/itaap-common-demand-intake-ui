@@ -7,6 +7,8 @@ import { first } from 'rxjs/operators';
 import { DemandIntakeDecision } from 'src/app/enums/demandIntakeDecision';
 import { EventService } from 'src/app/services/event.service';
 import { DM } from 'src/app/models/dm';
+import { ApproverDomain } from 'src/app/enums/approver-domain';
+import { SolutionDirection1 } from 'src/app/models/solution-direction1';
 
 @Component({
   selector: 'app-demandmanager',
@@ -19,15 +21,20 @@ export class DemandManagerComponent {
   visibleNextButton!: boolean;
   visibleSubmitButton!: boolean;
   demandManagerInfo!: DM;
+  domain: string = ''
+  solutionDirectionList!: SolutionDirection1[];
 
   constructor(private eventService: EventService, public demandIntakeService: DemandIntakeService, private router: Router, private messageService: MessageService,
     private authService: AuthService) {
 
     if (authService.isDM()) {
       this.visibleNextButton = false;
-      if ((this.demandIntakeService.getDemandInformation().introduction.status == 'ACCEPTED' || this.demandIntakeService.getDemandInformation().introduction.status == 'REJECTED') || (!this.eventService.isMyDemand && this.demandIntakeService.demandInformation.introduction.status == 'PENDING_WITH_CCB')) {
+      this.domain = this.authService.currentUserValue.domain;
+      if (this.demandIntakeService.getDemandInformation().introduction.status == 'ACCEPTED' || this.demandIntakeService.getDemandInformation().introduction.status == 'REJECTED') {
         this.visibleSubmitButton = false;
-      } else {
+      } else if (!this.eventService.isMyDemand && this.demandIntakeService.demandInformation.introduction.status == 'PENDING_WITH_CCB'){
+        this.visibleSubmitButton = true;
+      }else{
         this.visibleSubmitButton = true;
       }
     } else {
@@ -49,6 +56,7 @@ export class DemandManagerComponent {
     this.demandManagerInfo = this.demandIntakeService.getDemandInformation().demandManagerInfo;
     this.decisions = Object.values(DemandIntakeDecision);
     this.selectedDecision = this.getStatusValue(this.demandIntakeService.getDemandInformation().demandManagerInfo.decision);
+    this.solutionDirectionList = this.demandIntakeService.getDemandInformation().solutionDirectionInfo.filter(item => item.value == true);
   }
 
   prevPage() {
@@ -104,5 +112,10 @@ export class DemandManagerComponent {
     const index = Object.values(DemandIntakeDecision).indexOf(value as unknown as DemandIntakeDecision);
     return Object.keys(DemandIntakeDecision)[index];
   }
-
+  
+  getValue(key: string): string {
+    const status = Object.keys(ApproverDomain).indexOf(key as unknown as ApproverDomain);
+    let s = Object.values(ApproverDomain)[status];
+    return s;
+  }
 }
