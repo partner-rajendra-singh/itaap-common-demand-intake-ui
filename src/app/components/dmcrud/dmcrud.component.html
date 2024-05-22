@@ -26,7 +26,7 @@
                       <tr>
                         <td>{{ dm.email }}</td>
                         <td>{{ dm.status }}</td>
-                        <td>{{ dm.domain }}</td>
+                        <td>{{ getValue(dm.domain) }}</td>
                         <td>{{ dm.createdDate | date: 'MMM dd, yyyy'}} </td>
                         <td>{{ dm.updatedDate | date: 'MMM dd, yyyy'}}</td>
                         <td>
