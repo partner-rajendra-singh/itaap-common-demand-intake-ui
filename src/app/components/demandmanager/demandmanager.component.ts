@@ -56,8 +56,13 @@ export class DemandManagerComponent {
     this.demandIntakeService.getDemandInformation().demandManagerInfo.decisionDate = new Date(this.demandIntakeService.getDemandInformation().demandManagerInfo.decisionDate);
     this.demandManagerInfo = this.demandIntakeService.getDemandInformation().demandManagerInfo;
     this.decisions = Object.values(DemandIntakeDecision);
-    this.selectedDecision = this.getStatusValue(this.demandIntakeService.getDemandInformation().demandManagerInfo.decision);
+    this.selectedDecision = this.getDecisionValue(this.demandIntakeService.getDemandInformation().demandManagerInfo.decision);
     this.solutionDirectionList = this.demandIntakeService.getDemandInformation().solutionDirectionInfo.filter(item => item.value == true);
+  }
+
+  onTabChange(event: any) {
+    console.log("event",event)
+    this.selectedDecision = this.getDecisionValue(this.demandIntakeService.getDemandInformation().demandManagerInfo.decision);
   }
 
   prevPage() {
@@ -69,8 +74,8 @@ export class DemandManagerComponent {
   }
 
   nextPage() {
-    if (this.demandManagerInfo.decisionDate && this.selectedDecision != '' && this.demandManagerInfo.remarks != '') {
-      this.demandManagerInfo.decision = this.getStatusKey(this.selectedDecision);
+    // if (this.demandManagerInfo.decisionDate && this.selectedDecision != '' && this.demandManagerInfo.remarks != '') {
+      this.demandManagerInfo.decision = this.getDecisionKey(this.selectedDecision);
       this.demandIntakeService.getDemandInformation().demandManagerInfo = this.demandManagerInfo;
       if (this.eventService.isNewDemand) {
         this.router.navigate(['demand-intake/ccb']);
@@ -78,14 +83,14 @@ export class DemandManagerComponent {
         this.router.navigate(['demand-intake/ccb/' + this.demandIntakeService.demandInformation.introduction.demandIntakeId]);
       }
 
-    } else {
-      this.messageService.add({ severity: 'warn', summary: 'Error', detail: 'Please fill required fields!' });
-    }
+    // } else {
+    //   this.messageService.add({ severity: 'warn', summary: 'Error', detail: 'Please fill required fields!' });
+    // }
   }
 
   submitPage() {
     if (this.demandManagerInfo.decisionDate && this.selectedDecision != '' && this.demandManagerInfo.remarks != '') {
-      this.demandManagerInfo.decision = this.getStatusKey(this.selectedDecision);
+      this.demandManagerInfo.decision = this.getDecisionKey(this.selectedDecision);
       this.demandIntakeService.getDemandInformation().demandManagerInfo = this.demandManagerInfo;
 
       this.demandIntakeService.submitDemandWithAttachment()
@@ -103,20 +108,26 @@ export class DemandManagerComponent {
     }
   }
 
-  getStatusValue(key: string): string {
+  getDecisionValue(key: string): string {
     const status = Object.keys(DemandIntakeDecision).indexOf(key as unknown as DemandIntakeDecision);
     let s = Object.values(DemandIntakeDecision)[status];
     return s;
   }
 
-  getStatusKey(value: string): string {
+  getDecisionKey(value: string): string {
     const index = Object.values(DemandIntakeDecision).indexOf(value as unknown as DemandIntakeDecision);
     return Object.keys(DemandIntakeDecision)[index];
   }
   
-  getValue(key: string): string {
+  getDomainValue(key: string): string {
     const status = Object.keys(ApproverDomain).indexOf(key as unknown as ApproverDomain);
     let s = Object.values(ApproverDomain)[status];
     return s;
   }
+
+  // getDecisionObjectForCCB(decisionKey : string) : DemandIntakeDecision{
+  //   const decision = Object.keys(ApproverDomain).indexOf(decisionKey as unknown as ApproverDomain);
+  //   let s = Object.values(ApproverDomain)[decision];
+  //   return {""};
+  // }
 }

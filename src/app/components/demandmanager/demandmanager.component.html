@@ -4,7 +4,7 @@
     <div class="grid">
       <div class="col-12 xs:col-12 sm:col-12 lg:col-12 xl:col-12">
         <p-tabView *ngIf="!authService.isCCB()">
-          <p-tabPanel header="Demand Manager ({{getValue(domain)}})">
+          <p-tabPanel header="Demand Manager ({{getDomainValue(domain)}})">
             <div class="grid">
               <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
                 <label required class="asterisk-if-mandatory" for="decisionDate">Decision Date</label>
@@ -30,8 +30,8 @@
           </p-tabPanel>
         </p-tabView>
 
-        <p-tabView *ngIf="authService.isCCB()">
-          <p-tabPanel header="Demand Manager ({{getValue(item.solution)}})"
+        <p-tabView *ngIf="authService.isCCB()" (onChange)="onTabChange($event)">
+          <p-tabPanel header="Demand Manager ({{getDomainValue(item.solution)}})"
             *ngFor="let item of solutionDirectionList ; let i =index">
             <div class="grid">
               <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
@@ -45,8 +45,9 @@
                 <label required class="asterisk-if-mandatory" for="decision">Decision</label>
               </div>
               <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
-                <p-dropdown [options]="decisions" [(ngModel)]="item.decision" [disabled]="true"
-                  placeholder="Your decision"></p-dropdown>
+                <label>{{item.decision}}</label>
+                <!-- <p-dropdown [options]="decisions" [(ngModel)]="selectedDecision" [disabled]="true"
+                  placeholder="Your decision"></p-dropdown> -->
               </div>
               <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
                 <label required class="asterisk-if-mandatory" for="remarks">Remarks</label>
