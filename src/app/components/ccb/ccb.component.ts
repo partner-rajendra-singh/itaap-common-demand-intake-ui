@@ -18,7 +18,7 @@ export class CCBComponent {
   ccbInfo!: any;
   visibleSubmitButton: boolean = true;
 
-  constructor(private eventService: EventService, public demandIntakeService: DemandIntakeService, private router: Router, private messageService: MessageService, private authService: AuthService) { }
+  constructor(private eventService: EventService, public demandIntakeService: DemandIntakeService, private router: Router, private messageService: MessageService, public authService: AuthService) { }
 
   ngOnInit() {
     this.demandIntakeService.getDemandInformation().ccbInfo.decisionDate = new Date(this.demandIntakeService.getDemandInformation().ccbInfo.decisionDate);

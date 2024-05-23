@@ -6,6 +6,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { first } from 'rxjs/operators';
 import { EventService } from 'src/app/services/event.service';
 import * as FileSaver from 'file-saver';
+import { Attachment } from 'src/app/models/attachment';
 
 interface UploadEvent {
   originalEvent: Event;
@@ -63,7 +64,16 @@ export class AttachmentComponent {
   }
 
   ngOnInit() {
+    console.log("attachment demand", this.demandIntakeService.getDemandInformation())
     this.attachmentInfo = this.demandIntakeService.getDemandInformation().attachmentInfo;
+  }
+
+  addAttachment(){
+    this.attachmentInfo.push(new Attachment);
+  }
+
+  removeAttachment(){
+    this.attachmentInfo.pop();
   }
 
   savePage() {

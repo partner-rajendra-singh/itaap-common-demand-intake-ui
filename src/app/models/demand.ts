@@ -1,4 +1,5 @@
 
+import { Attachment } from "./attachment";
 import { CCB } from "./ccb";
 import { DM } from "./dm";
 import { EADI } from "./eadi";
@@ -100,32 +101,6 @@ export class Demand {
 	eADIInfo: EADI = new EADI;
 	demandManagerInfo: DM = new DM;
 	ccbInfo: CCB = new CCB;
-
-	attachmentInfo = [
-		{
-			file: File,
-			fileName: '',
-			description: '',
-			uploadedDate: new Date
-		}, {
-			file: File,
-			fileName: '',
-			description: '',
-			uploadedDate: new Date
-		}, {
-			file: File,
-			fileName: '',
-			description: '',
-			uploadedDate: new Date
-		}, {
-			file: File,
-			fileName: '',
-			description: '',
-			uploadedDate: new Date
-		}, {
-			file: File,
-			fileName: '',
-			description: '',
-			uploadedDate: new Date
-		}];
+	attachmentInfo: Attachment[] = Array(new Attachment);
+	
 }

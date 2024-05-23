@@ -8,6 +8,7 @@ import { EventService } from 'src/app/services/event.service';
 import { Market } from 'src/app/enums/market';
 import { BusinessUnit } from 'src/app/enums/businessUnit';
 import { RequesterInfo } from 'src/app/models/requester-info';
+import { Spoc } from 'src/app/models/spoc';
 
 interface Domain {
   key: string;
@@ -104,8 +105,24 @@ export class RequesterComponent implements OnInit {
     return JSON.parse(JSON.stringify(platform)) as Domain;
   }
 
+  addSpoc() {
+    this.requesterInfo.spoc.push(new Spoc);
+  }
+
+  removeSpoc() {
+    this.requesterInfo.spoc.pop();
+  }
+
   nextPage() {
-    console.log("selectedMarket : ", this.selectedMarket)
+    let movenext = true;
+    this.requesterInfo.spoc.forEach(item => {
+      if ((item.role != '' && item.email == '') || (item.role == '' && item.email != '')) {
+        this.messageService.add({ severity: 'warn', summary: 'Error', detail: 'Please fill stakeholder(s) properly!' });
+        movenext = false;
+      }
+    });
+
+    let movenext1 = true;
     if (this.requesterInfo.project != '' && this.selectedMarket.length > 0 && this.selectedBusinessUnit.length > 0 && this.selectedDomain && this.requesterInfo.requestedDate && this.requesterInfo.requestedBy != '' && this.requesterInfo.requesterRole != '') {
       if (this.selectedDomain.key != 'Other') {
         this.requesterInfo.domain = this.selectedDomain.key;
@@ -133,15 +150,28 @@ export class RequesterComponent implements OnInit {
 
       this.demandIntakeService.demandInformation.requesterInfo = this.requesterInfo;
 
+      // if (this.eventService.isNewDemand) {
+      //   this.router.navigate(['demand-intake/requirement']);
+      // } else {
+      //   this.router.navigate(['demand-intake/requirement/' + this.demandIntakeService.demandInformation.introduction.demandIntakeId]);
+      // }
+
+    } else {
+      movenext1 = false;
+      this.messageService.add({ severity: 'warn', summary: 'Error', detail: 'Please fill required fields!' });
+    }
+
+    if (movenext && movenext1) {
       if (this.eventService.isNewDemand) {
         this.router.navigate(['demand-intake/requirement']);
       } else {
         this.router.navigate(['demand-intake/requirement/' + this.demandIntakeService.demandInformation.introduction.demandIntakeId]);
       }
-
     } else {
       this.messageService.add({ severity: 'warn', summary: 'Error', detail: 'Please fill required fields!' });
     }
+
+
   }
 
   isOtherMarketSelected(): boolean {
