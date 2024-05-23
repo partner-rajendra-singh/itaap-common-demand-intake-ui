@@ -25,7 +25,7 @@ export class DMCRUDComponent {
   constructor(public demandIntakeService: DemandIntakeService, private messageService: MessageService, public eventService: EventService, public adminService: AdminService) { }
 
   ngOnInit() {
-
+    this.adminService.approver = new Approver;
     this.domains = Object.values(ApproverDomain);
     this.selectedDomain = this.getValue(this.demandIntakeService.getDemandInformation().demandManagerInfo.domain);
 
