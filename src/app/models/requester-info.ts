@@ -4,6 +4,7 @@ export class RequesterInfo {
   requestedBy: string = '';
   requesterRole: string = '';
   program: string = '';
+  isDemandPOC: boolean = false;
   project: string = '';
   domain: string = '';
   requestedDate: Date = new Date();

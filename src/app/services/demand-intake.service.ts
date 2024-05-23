@@ -185,7 +185,7 @@ export class DemandIntakeService {
         this.router.navigate(['demand-intake/introduction']);
         return false;
 
-      } else if (this.demandInformation.requesterInfo.requestedBy == '' && this.demandInformation.requesterInfo.project == '' && this.demandInformation.requesterInfo.requesterRole == '' || this.demandInformation.requesterInfo.market.length == 0 && this.demandInformation.requesterInfo.businessUnit.length == 0 && this.demandInformation.requesterInfo.domain == '' || !this.validateSpoc() || (this.demandInformation.requesterInfo.approvedBudget && this.demandInformation.requesterInfo.clarityProjectId == '')) {
+      } else if (this.demandInformation.requesterInfo.requestedBy == '' && (this.demandInformation.requesterInfo.isDemandPOC && this.demandInformation.requesterInfo.project == '') && this.demandInformation.requesterInfo.requesterRole == '' || this.demandInformation.requesterInfo.market.length == 0 && this.demandInformation.requesterInfo.businessUnit.length == 0 && this.demandInformation.requesterInfo.domain == '' || !this.validateSpoc() || (this.demandInformation.requesterInfo.approvedBudget && this.demandInformation.requesterInfo.clarityProjectId == '')) {
         this.messageService.add({ severity: 'warn', summary: 'Error', detail: 'Please fill required fields!' });
         this.router.navigate(['demand-intake/requester']);
         return false;

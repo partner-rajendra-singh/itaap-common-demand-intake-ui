@@ -26,6 +26,7 @@ export class CCBCRUDComponent {
   constructor(private messageService: MessageService, public eventService: EventService, public adminService: AdminService) { }
 
   ngOnInit() {
+    this.adminService.approver = new Approver;
     this.adminService.getAllCCB().pipe(
       map((response: any) => {
         this.ccbList = response;

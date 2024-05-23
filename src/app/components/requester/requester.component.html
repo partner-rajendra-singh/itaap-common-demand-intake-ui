@@ -47,8 +47,24 @@
                             <input id="program" type="text" [(ngModel)]="requesterInfo.program" size="60"
                                 class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary">
                         </div>
+
                         <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
+                            <label for="isDemandPOC" required class="asterisk-if-mandatory">Is Demand a POC?</label>
+                        </div>
+                        <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
+                            <input type="radio" id="yes" name="isDemandPOC" [(ngModel)]="requesterInfo.isDemandPOC"
+                                [value]="true">
+                            <label for="yes">Yes</label>
+                            <input type="radio" id="no" name="isDemandPOC" checked="checked"
+                                [(ngModel)]="requesterInfo.isDemandPOC" [value]="false">
+                            <label for="no">No</label>
+                        </div>
+
+                        <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3" *ngIf="requesterInfo.isDemandPOC==false">
                             <label for="project" required class="asterisk-if-mandatory">Project</label>
+                        </div>
+                        <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3" *ngIf="requesterInfo.isDemandPOC==true">
+                            <label for="project">Project</label>
                         </div>
                         <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
                             <input id="project" type="text" [(ngModel)]="requesterInfo.project" size="60"
@@ -128,7 +144,7 @@
                             <input type="radio" id="no" name="approvedBudget" checked="checked"
                                 [(ngModel)]="requesterInfo.approvedBudget" [value]="false">
                             <label for="no">No</label>
-                            <div *ngIf="!requesterInfo.approvedBudget">
+                            <div *ngIf="!requesterInfo.approvedBudget && requesterInfo.isDemandPOC==false">
                                 <label for="no">(Note : This demand may not be taken forward)</label>
                             </div>
                         </div>
