@@ -108,6 +108,7 @@ export class DMCRUDComponent {
 
   onUpdate() {
     this.eventService.progressBarEvent.emit(true);
+    this.adminService.approver.domain = this.getKey(this.selectedDomain);
     if (this.adminService.validateApproverRequest()) {
       this.adminService.updateApprover('DEMAND_MANAGER')
         .pipe(first())
