@@ -60,7 +60,6 @@ export class RequesterComponent implements OnInit {
       this.selectedMarket.push('Other');
     }
 
-
     console.log("BU->", this.demandIntakeService.getDemandInformation().requesterInfo.businessUnit)
     this.selectedBusinessUnit = this.getBUValueArray(this.demandIntakeService.getDemandInformation().requesterInfo.businessUnit);
     if ((!this.selectedBusinessUnit || this.selectedBusinessUnit.length == 0) && !this.eventService.isNewDemand) {
@@ -120,6 +119,7 @@ export class RequesterComponent implements OnInit {
       }
       this.selectedMarket.forEach(item => this.requesterInfo.market.push(this.getMarketKey(item)));
       this.selectedMarket = Array.from(new Set(this.selectedMarket))
+      this.requesterInfo.market = Array.from(new Set(this.requesterInfo.market))
 
       let other1 = this.getBUKeyArray(this.selectedBusinessUnit).find(item => item == 'Other');
       if (other1) {
@@ -128,7 +128,8 @@ export class RequesterComponent implements OnInit {
         this.requesterInfo.businessUnit.push(this.otherBusinessUnit);
       }
       this.selectedBusinessUnit.forEach(item => this.requesterInfo.businessUnit.push(this.getBUKey(item)));
-      this.selectedBusinessUnit = Array.from(new Set(this.selectedBusinessUnit))
+      this.selectedBusinessUnit = Array.from(new Set(this.selectedBusinessUnit));
+      this.requesterInfo.businessUnit = Array.from(new Set(this.requesterInfo.businessUnit));
 
       this.demandIntakeService.demandInformation.requesterInfo = this.requesterInfo;
 
