@@ -1,6 +1,7 @@
 import { Spoc } from "./spoc";
 
 export class RequesterInfo {
+  isAnotherRequester: boolean = false;
   requestedBy: string = '';
   requesterRole: string = '';
   program: string = '';

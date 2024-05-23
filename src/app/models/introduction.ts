@@ -7,4 +7,5 @@ export class Introduction {
     statusLabel: string = '';
 
     isDocReferred: boolean = false;
+    architectAligned: boolean = false;
 }

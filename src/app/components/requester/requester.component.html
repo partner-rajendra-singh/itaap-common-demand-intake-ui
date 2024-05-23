@@ -12,11 +12,11 @@
                                 you are raising demand on behalf then enter their email address & role?</label>
                         </div>
                         <div class="col-6 xs:col-6 sm:col-6 lg:col-6 xl:col-6">
-                            <input type="radio" id="yes" name="isAnotherRequester" [(ngModel)]="isAnotherRequester"
+                            <input type="radio" id="yes" name="isAnotherRequester" [(ngModel)]="requesterInfo.isAnotherRequester"
                                 [value]="true" (change)="requesterChange($event)">
                             <label for="yes">Yes</label>
                             <input type="radio" id="no" name="isAnotherRequester" checked="checked"
-                                [(ngModel)]="isAnotherRequester" [value]="false" (change)="requesterChange($event)">
+                                [(ngModel)]="requesterInfo.isAnotherRequester" [value]="false" (change)="requesterChange($event)">
                             <label for="no">No</label>
                         </div>
                         <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
