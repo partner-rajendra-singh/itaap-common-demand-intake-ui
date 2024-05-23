@@ -30,7 +30,7 @@
           </p-tabPanel>
         </p-tabView>
 
-        <p-tabView *ngIf="authService.isCCB()">
+        <p-tabView *ngIf="authService.isCCB() || authService.isRequester() || authService.isAdmin()">
           <p-tabPanel header="Demand Manager ({{getDomainValue(item.solution)}})"
             *ngFor="let item of solutionDirectionList ; let i =index">
             <div class="grid">
@@ -45,7 +45,6 @@
                 <label required class="asterisk-if-mandatory" for="decision">Decision</label>
               </div>
               <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
-                <!-- <label>{{item.decision}}</label> -->
                 <p-dropdown [options]="decisions" [(ngModel)]="item.decision" [disabled]="true"
                   placeholder="Your decision"></p-dropdown>
               </div>
