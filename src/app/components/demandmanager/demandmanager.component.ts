@@ -33,16 +33,16 @@ export class DemandManagerComponent {
       this.demandIntakeService.demandInformation.demandManagerInfo.domain = this.domain;
       if (this.demandIntakeService.getDemandInformation().introduction.status == 'ACCEPTED' || this.demandIntakeService.getDemandInformation().introduction.status == 'REJECTED') {
         this.visibleSubmitButton = false;
-      } else if (!this.eventService.isMyDemand && this.demandIntakeService.demandInformation.introduction.status == 'PENDING_WITH_CCB'){
+      } else if (!this.eventService.isMyDemand && this.demandIntakeService.demandInformation.introduction.status == 'PENDING_WITH_CCB') {
         this.visibleSubmitButton = true;
-      }else{
+      } else {
         this.visibleSubmitButton = true;
       }
     } else {
       if ((this.authService.isRequester() && this.eventService.isMyDemand)
         && (this.demandIntakeService.demandInformation.introduction.status == 'CCB_HOLD' || this.demandIntakeService.demandInformation.introduction.status == 'ACCEPTED' || this.demandIntakeService.demandInformation.introduction.status == 'REJECTED')) {
         this.visibleNextButton = true;
-      } else if ((!this.eventService.isNewDemand && (this.authService.isCCB() || this.authService.isAdmin()))
+      } else if ((!this.eventService.isNewDemand && this.eventService.isMyDemand && this.authService.isCCB())
         && (this.demandIntakeService.demandInformation.introduction.status == 'PENDING_WITH_CCB' || this.demandIntakeService.demandInformation.introduction.status == 'CCB_HOLD' || this.demandIntakeService.demandInformation.introduction.status == 'ACCEPTED' || this.demandIntakeService.demandInformation.introduction.status == 'REJECTED')) {
         this.visibleNextButton = true;
       } else {
@@ -59,7 +59,7 @@ export class DemandManagerComponent {
     this.selectedDecision = this.getDecisionValue(this.demandIntakeService.getDemandInformation().demandManagerInfo.decision);
     this.solutionDirectionList = this.demandIntakeService.getDemandInformation().solutionDirectionInfo.filter(item => item.value == true);
 
-    this.solutionDirectionList.forEach(item =>{
+    this.solutionDirectionList.forEach(item => {
       item.decisionDate = new Date(item.decisionDate);
       item.decision = this.getDecisionValue(item.decision);
     })
@@ -75,13 +75,13 @@ export class DemandManagerComponent {
 
   nextPage() {
     // if (this.demandManagerInfo.decisionDate && this.selectedDecision != '' && this.demandManagerInfo.remarks != '') {
-      this.demandManagerInfo.decision = this.getDecisionKey(this.selectedDecision);
-      this.demandIntakeService.getDemandInformation().demandManagerInfo = this.demandManagerInfo;
-      if (this.eventService.isNewDemand) {
-        this.router.navigate(['demand-intake/ccb']);
-      } else {
-        this.router.navigate(['demand-intake/ccb/' + this.demandIntakeService.demandInformation.introduction.demandIntakeId]);
-      }
+    this.demandManagerInfo.decision = this.getDecisionKey(this.selectedDecision);
+    this.demandIntakeService.getDemandInformation().demandManagerInfo = this.demandManagerInfo;
+    if (this.eventService.isNewDemand) {
+      this.router.navigate(['demand-intake/ccb']);
+    } else {
+      this.router.navigate(['demand-intake/ccb/' + this.demandIntakeService.demandInformation.introduction.demandIntakeId]);
+    }
 
     // } else {
     //   this.messageService.add({ severity: 'warn', summary: 'Error', detail: 'Please fill required fields!' });
@@ -118,7 +118,7 @@ export class DemandManagerComponent {
     const index = Object.values(DemandIntakeDecision).indexOf(value as unknown as DemandIntakeDecision);
     return Object.keys(DemandIntakeDecision)[index];
   }
-  
+
   getDomainValue(key: string): string {
     const status = Object.keys(ApproverDomain).indexOf(key as unknown as ApproverDomain);
     let s = Object.values(ApproverDomain)[status];

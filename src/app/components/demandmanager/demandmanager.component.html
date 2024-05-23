@@ -3,7 +3,7 @@
   <ng-template pTemplate="content">
     <div class="grid">
       <div class="col-12 xs:col-12 sm:col-12 lg:col-12 xl:col-12">
-        <p-tabView *ngIf="!authService.isCCB()">
+        <p-tabView *ngIf="authService.isDM()">
           <p-tabPanel header="Demand Manager ({{getDomainValue(domain)}})">
             <div class="grid">
               <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
@@ -30,7 +30,7 @@
           </p-tabPanel>
         </p-tabView>
 
-        <p-tabView *ngIf="authService.isCCB() || authService.isRequester() || authService.isAdmin()">
+        <p-tabView *ngIf="!authService.isDM()">
           <p-tabPanel header="Demand Manager ({{getDomainValue(item.solution)}})"
             *ngFor="let item of solutionDirectionList ; let i =index">
             <div class="grid">
