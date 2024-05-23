@@ -6,11 +6,6 @@ import { EventService } from 'src/app/services/event.service';
 import { RefreshFrequency } from 'src/app/enums/refreshFrequency';
 import { LoadStrategy } from 'src/app/enums/loadStrategy';
 
-interface EADITab {
-  index: number,
-  name: string,
-  visible: boolean
-}
 
 @Component({
   selector: 'app-checklist',
@@ -23,7 +18,6 @@ export class ChecklistComponent {
   selectedFrequency!: string;
   loadStrategies!: string[];
   selectedLoadStrategy!: string;
-  tabs: EADITab[] = [];
   visibleTabs: any = [];
 
   constructor(public demandIntakeService: DemandIntakeService, private router: Router, private messageService: MessageService, public eventService: EventService) { }
@@ -31,7 +25,6 @@ export class ChecklistComponent {
   ngOnInit() {
     console.log("ChecklistComponent ", this.eventService.solutionDirectionValue);
     this.visibleTabs = this.eventService.solutionDirectionValue.filter(item => item.value===true);
-    // this.setTabsVisibility();
 
     this.eADIInfo = this.demandIntakeService.getDemandInformation().eADIInfo;
     this.refreshFrequencies = Object.values(RefreshFrequency);
@@ -45,28 +38,10 @@ export class ChecklistComponent {
     }
   }
 
-  setTabsVisibility() {
-    // this.tabs.push({ index: 0, name: 'integration', visible: this.eventService.solutionDirectionValue.integration });
-    // this.tabs.push({ index: 1, name: 'dataModelling', visible: this.eventService.solutionDirectionValue.dataModelling });
-    // this.tabs.push({ index: 2, name: 'adlL1', visible: this.eventService.solutionDirectionValue.adlL1 });
-    // this.tabs.push({ index: 3, name: 'adlL2', visible: this.eventService.solutionDirectionValue.adlL2 });
-    // this.tabs.push({ index: 4, name: 'gold', visible: this.eventService.solutionDirectionValue.gold });
-    // this.tabs.push({ index: 5, name: 'mdm', visible: this.eventService.solutionDirectionValue.mdm });
-    // this.tabs.push({ index: 6, name: 'ia', visible: this.eventService.solutionDirectionValue.ia });
-    // this.tabs.push({ index: 7, name: 'dataQuality', visible: this.eventService.solutionDirectionValue.dataQuality });
-    // this.tabs.push({ index: 8, name: 'informatica', visible: this.eventService.solutionDirectionValue.informatica });
-    // this.tabs.push({ index: 9, name: 'azureSynapse', visible: this.eventService.solutionDirectionValue.azureSynapse });
-
-    this.visibleTabs = this.tabs.filter(item => item.visible);
-    // this.tabs.filter(item => item.name =='integration').at(0).visible
-  }
-
   nextPage() {
     this.demandIntakeService.getDemandInformation().eADIInfo = this.eADIInfo;
     this.eADIInfo.adlL1.frequency = this.getFrequencyKey(this.selectedFrequency);
     this.eADIInfo.adlL1.loadStrategy = this.getStrategyKey(this.selectedLoadStrategy);
-
-    console.log("**", this.demandIntakeService.getDemandInformation())
 
     if (this.eventService.selectedEADITabIndex < this.visibleTabs.length - 1) {
       this.eventService.selectedEADITabIndex += 1;
@@ -80,7 +55,6 @@ export class ChecklistComponent {
   }
 
   onTabChange(event: any) {
-    console.log("tab index : ", event.index);
     this.eventService.selectedEADITabIndex = event.index;
   }
 
@@ -102,19 +76,6 @@ export class ChecklistComponent {
       return obj.value;
     };
     return false;
-
-    // switch (name) {
-    //   case 'integration': return this.eventService.solutionDirectionValue.integration;
-    //   case 'dataModelling': return this.eventService.solutionDirectionValue.dataModelling;
-    //   case 'adlL1': return this.eventService.solutionDirectionValue.adlL1;
-    //   case 'adlL2': return this.eventService.solutionDirectionValue.adlL2;
-    //   case 'gold': return this.eventService.solutionDirectionValue.gold;
-    //   case 'mdm': return this.eventService.solutionDirectionValue.mdm;
-    //   case 'ia': return this.eventService.solutionDirectionValue.ia;
-    //   case 'dataQuality': return this.eventService.solutionDirectionValue.dataQuality;
-    //   case 'informatica': return this.eventService.solutionDirectionValue.informatica;
-    //   case 'azureSynapse': return this.eventService.solutionDirectionValue.azureSynapse;
-    // }
 
   }
 

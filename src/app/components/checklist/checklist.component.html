@@ -257,7 +257,7 @@
                                         </div>
                                     </div>
                                 </p-fieldset>
-
+                                <br>
                                 <p-fieldset legend="Data Feed Details">
                                     <div class="grid">
                                         <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
@@ -603,6 +603,7 @@
                                     </div>
                                 </div>
                             </p-fieldset>
+                            <br>
                             <p-fieldset legend="BPO Information">
                                 <div class="grid">
                                     <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
@@ -624,6 +625,7 @@
                                     </div>
                                 </div>
                             </p-fieldset>
+                            <br>
                             <p-fieldset legend="Other">
                                 <div class="grid">
                                     <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
@@ -709,8 +711,14 @@
                         </div>
                     </p-tabPanel>
                     <p-tabPanel header="Azure Synapse DWH" *ngIf="showTab('azureSynapse')">
-                        <div>
-                            <h2>TBD</h2>
+                        <div class="grid">
+                            <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
+                                <label required for="azureRequirements" style="width: 100px">Azure Synapse Requirements</label>
+                            </div>
+                            <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
+                                <textarea id="azureRequirements" rows="3" cols="78"
+                                    [(ngModel)]="eADIInfo.azureSynapse.azureRequirements" pInputTextarea></textarea>
+                            </div>
                         </div>
                     </p-tabPanel>
                 </p-tabView>

@@ -6,13 +6,13 @@ import { Demand } from '../models/demand';
 import { Router } from '@angular/router';
 import { AuthService } from './auth.service';
 import { DM } from '../models/dm';
-import { SolutionDirection } from '../models/solution-direction';
 import { CCB } from '../models/ccb';
 import { EADI } from '../models/eadi';
 import { throwError } from 'rxjs';
 import { MessageService } from 'primeng/api';
 import { AllDemands } from '../models/all-demands';
 import { EventService } from './event.service';
+import { Attachment } from '../models/attachment';
 
 
 @Injectable({
@@ -25,12 +25,7 @@ export class DemandIntakeService {
   attachments = Array(5);
 
   constructor(private http: HttpClient, private router: Router, private authService: AuthService, private messageService: MessageService,
-    private eventService: EventService) {
-    // if (this.demandInformation.requesterInfo.requestedBy == '') {
-    //   this.demandInformation.requesterInfo.requestedBy = this.authService.currentUserValue.email;
-    //   this.demandInformation.introduction.requestedBy = this.authService.currentUserValue.email;
-    // }
-  }
+    private eventService: EventService) { }
 
   getDemandInformation() {
     return this.demandInformation;
@@ -151,44 +146,7 @@ export class DemandIntakeService {
       }
 
       if (demand.attachmentInfo == null) {
-        demand.attachmentInfo = [
-          {
-            file: File,
-            fileName: '',
-            description: '',
-            uploadedDate: new Date
-          }, {
-            file: File,
-            fileName: '',
-            description: '',
-            uploadedDate: new Date
-          }, {
-            file: File,
-            fileName: '',
-            description: '',
-            uploadedDate: new Date
-          }, {
-            file: File,
-            fileName: '',
-            description: '',
-            uploadedDate: new Date
-          }, {
-            file: File,
-            fileName: '',
-            description: '',
-            uploadedDate: new Date
-          }];
-      }
-
-      if (demand.attachmentInfo.length < 5) {
-        for (let i = demand.attachmentInfo.length; i < 5; i++) {
-          demand.attachmentInfo[i] = {
-            file: File,
-            fileName: '',
-            description: '',
-            uploadedDate: new Date
-          }
-        }
+        demand.attachmentInfo = Array(new Attachment);
       }
 
       demand.requesterInfo.requestedDate = new Date(demand.requesterInfo.requestedDate)
@@ -202,7 +160,9 @@ export class DemandIntakeService {
   validateSpoc(): boolean {
     var result = true;
     this.demandInformation.requesterInfo.spoc.forEach(s => {
-      if (!this.eventService.checkEmailValue(s.email)) {
+      if ((s.role != '' && s.email == '') || (s.role == '' && s.email != '')) {
+        result = false;
+      } else if (!this.eventService.checkEmailValue(s.email)) {
         result = false;
       }
     });

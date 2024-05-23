@@ -1,5 +1,6 @@
 import { ADLL1 } from "./aldl1";
 import { ADLL2 } from "./aldl2";
+import { AzureSynapse } from "./azure-synapse";
 import { DataModel } from "./data-model";
 import { DataQuality } from "./data-quality";
 import { Gold } from "./gold";
@@ -22,4 +23,5 @@ export class EADI {
     gold: Gold = new Gold;
     informatica: Informatica = new Informatica;
     mdm: MDM = new MDM;
+    azureSynapse: AzureSynapse = new AzureSynapse; 
 }

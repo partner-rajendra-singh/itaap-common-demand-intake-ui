@@ -1,3 +1,5 @@
+import { Spoc } from "./spoc";
+
 export class RequesterInfo {
   requestedBy: string = '';
   requesterRole: string = '';
@@ -12,24 +14,5 @@ export class RequesterInfo {
   cpTransactionPlatform: boolean = false;
   approvedBudget: boolean = false;
   clarityProjectId: string = "";
-  spoc = [{
-    email: '',
-    role: ''
-  },
-  {
-    email: '',
-    role: ''
-  },
-  {
-    email: '',
-    role: ''
-  },
-  {
-    email: '',
-    role: ''
-  },
-  {
-    email: '',
-    role: ''
-  }];
+  spoc: Spoc[] = Array(new Spoc);
 }

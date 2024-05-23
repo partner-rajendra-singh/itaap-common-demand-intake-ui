@@ -25,6 +25,7 @@ export class AuthGuard implements CanActivate, CanActivateChild {
     if (currentUser && currentUser.isAuthenticated && new Date().getTime() < currentUser.expireTime.getTime()) {
       return true;
     } else {
+      alert("Your token expired!")
       this.router.navigate(['/login']);
       return false;
     }

@@ -16,16 +16,27 @@ export class SolutionDirectionComponent {
 
   solutionDirectionInfo!: SolutionDirection1[];
   sdInfo: SolutionDirection = new SolutionDirection;
+  dmDomain: string = ''
 
   constructor(private authService: AuthService, public demandIntakeService: DemandIntakeService, private router: Router, private messageService: MessageService, private eventService: EventService) { }
 
   ngOnInit() {
     console.log("SolutionDirectionComponent Init: ", this.demandIntakeService.demandInformation)
+    
     this.solutionDirectionInfo = this.demandIntakeService.getDemandInformation().solutionDirectionInfo;
     this.eventService.solutionDirectionValue = this.solutionDirectionInfo;
     this.solutionDirectionInfo.forEach(item => {
       this.setLocalSD(item);
-    })
+    });
+    this.dmDomain = this.authService.currentUserValue.domain;
+  }
+
+  getSDVisibility(solution: string): boolean {
+    if (solution == this.dmDomain) {
+      return true;
+    }
+    
+    return false;
   }
 
   setLocalSD(sd: SolutionDirection1) {

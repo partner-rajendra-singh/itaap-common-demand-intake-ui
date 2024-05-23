@@ -16,8 +16,7 @@ export class LoginComponent {
   token !: string;
   otpSent: boolean = false;
 
-  constructor(public eventService: EventService, private router: Router, private messageService: MessageService, private authService: AuthService) {
-  }
+  constructor(public eventService: EventService, private router: Router, private messageService: MessageService, private authService: AuthService) { }
 
   getOTP() {
     this.authService.getOTP(this.email)
