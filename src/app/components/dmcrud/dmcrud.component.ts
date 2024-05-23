@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { MessageService } from 'primeng/api';
 import { catchError, first, map, throwError } from 'rxjs';
 import { ApproverDomain } from 'src/app/enums/approver-domain';
@@ -63,6 +62,7 @@ export class DMCRUDComponent {
 
   showUpdateDMDialog(dm: Approver) {
     this.selectedDomain = this.getValue(dm.domain);
+    dm.domain = this.getKey(this.selectedDomain);
     this.adminService.setApprover(dm);
     this.visibleUpdateDMDialog = true;
   }
@@ -108,6 +108,7 @@ export class DMCRUDComponent {
 
   onUpdate() {
     this.eventService.progressBarEvent.emit(true);
+    this.adminService.approver.domain = this.getKey(this.selectedDomain);
     if (this.adminService.validateApproverRequest()) {
       this.adminService.updateApprover('DEMAND_MANAGER')
         .pipe(first())

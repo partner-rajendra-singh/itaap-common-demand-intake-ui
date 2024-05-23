@@ -101,6 +101,7 @@ export class AdminService {
     this.approver.email = user.email;
     this.approver.status = user.status;
     this.approver.role = user.role;
+    this.approver.domain = user.domain;
     this.approver.createdDate = user.createdDate;
     this.approver.updatedDate = user.updatedDate;
 

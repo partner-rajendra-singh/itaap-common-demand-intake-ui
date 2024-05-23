@@ -3,15 +3,7 @@ import { MessageService } from 'primeng/api';
 import { map, catchError, throwError, first } from 'rxjs';
 import { Approver } from 'src/app/models/approver';
 import { AdminService } from 'src/app/services/admin.service';
-import { DemandIntakeService } from 'src/app/services/demand-intake.service';
 import { EventService } from 'src/app/services/event.service';
-
-interface CCB {
-  email: string;
-  status: string;
-  createdOn: string;
-  updatedOn: string;
-}
 
 @Component({
   selector: 'app-ccbcrud',

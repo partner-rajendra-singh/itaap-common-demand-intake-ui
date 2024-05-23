@@ -123,7 +123,7 @@ export class RequesterComponent implements OnInit {
     });
 
     let movenext1 = true;
-    if (this.requesterInfo.isDemandPOC && (!this.requesterInfo.isDemandPOC && this.requesterInfo.project != '') && this.selectedMarket.length > 0 && this.selectedBusinessUnit.length > 0 && this.selectedDomain && this.requesterInfo.requestedDate && this.requesterInfo.requestedBy != '' && this.requesterInfo.requesterRole != '') {
+    if ((this.requesterInfo.isDemandPOC || (!this.requesterInfo.isDemandPOC && this.requesterInfo.project != '')) && this.selectedMarket.length > 0 && this.selectedBusinessUnit.length > 0 && this.selectedDomain && this.requesterInfo.requestedDate && this.requesterInfo.requestedBy != '' && this.requesterInfo.requesterRole != '') {
       if (this.selectedDomain.key != 'Other') {
         this.requesterInfo.domain = this.selectedDomain.key;
       }
