@@ -18,7 +18,7 @@ export class CCBComponent {
   ccbInfo!: any;
   visibleSubmitButton: boolean = true;
 
-  constructor(private eventService: EventService, public demandIntakeService: DemandIntakeService, private router: Router, private messageService: MessageService, public authService: AuthService) { }
+  constructor(public eventService: EventService, public demandIntakeService: DemandIntakeService, private router: Router, private messageService: MessageService, public authService: AuthService) { }
 
   ngOnInit() {
     this.demandIntakeService.getDemandInformation().ccbInfo.decisionDate = new Date(this.demandIntakeService.getDemandInformation().ccbInfo.decisionDate);
@@ -26,7 +26,7 @@ export class CCBComponent {
     this.decisions = Object.values(DemandIntakeDecision);
     this.selectedDecision = this.getStatusValue(this.demandIntakeService.getDemandInformation().ccbInfo.decision);
 
-    if(this.demandIntakeService.getDemandInformation().introduction.status == 'ACCEPTED' || this.demandIntakeService.getDemandInformation().introduction.status == 'REJECTED'){
+    if(this.demandIntakeService.getDemandInformation().introduction.status == 'CCB_HOLD' || this.demandIntakeService.getDemandInformation().introduction.status == 'ACCEPTED' || this.demandIntakeService.getDemandInformation().introduction.status == 'REJECTED'){
       this.visibleSubmitButton = false;
     }
   }

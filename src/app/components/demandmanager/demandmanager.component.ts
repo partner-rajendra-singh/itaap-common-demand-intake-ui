@@ -35,17 +35,25 @@ export class DemandManagerComponent {
         this.visibleSubmitButton = false;
       } else if ((!this.eventService.isMyDemand && !this.eventService.isStakeholderDemand) && this.demandIntakeService.demandInformation.introduction.status == 'PENDING_WITH_CCB') {
         this.visibleSubmitButton = true;
-      } else {
+      }  else if ((this.eventService.isMyDemand || this.eventService.isStakeholderDemand) && this.demandIntakeService.demandInformation.introduction.status == 'PENDING_WITH_CCB') {
+        this.visibleSubmitButton = false;
+      }else if ((this.eventService.isMyDemand || this.eventService.isStakeholderDemand) && this.demandIntakeService.demandInformation.introduction.status == 'CCB_HOLD' || this.demandIntakeService.demandInformation.introduction.status == 'ACCEPTED' || this.demandIntakeService.demandInformation.introduction.status == 'REJECTED') {
+        this.visibleSubmitButton = false;
+        this.visibleNextButton = true;
+      }else {
         this.visibleSubmitButton = true;
       }
     } else {
       if ((this.authService.isRequester() && (this.eventService.isMyDemand || this.eventService.isStakeholderDemand))
         && (this.demandIntakeService.demandInformation.introduction.status == 'CCB_HOLD' || this.demandIntakeService.demandInformation.introduction.status == 'ACCEPTED' || this.demandIntakeService.demandInformation.introduction.status == 'REJECTED')) {
         this.visibleNextButton = true;
-      } else if ((!this.eventService.isNewDemand && this.authService.isCCB())
+      } else if ((!this.eventService.isNewDemand && !this.eventService.isMyDemand && this.authService.isCCB())
         && (this.demandIntakeService.demandInformation.introduction.status == 'PENDING_WITH_CCB' || this.demandIntakeService.demandInformation.introduction.status == 'CCB_HOLD' || this.demandIntakeService.demandInformation.introduction.status == 'ACCEPTED' || this.demandIntakeService.demandInformation.introduction.status == 'REJECTED')) {
         this.visibleNextButton = true;
-      } else {
+      } else if((!this.eventService.isNewDemand && this.eventService.isMyDemand && this.authService.isCCB())
+        && (this.demandIntakeService.demandInformation.introduction.status == 'CCB_HOLD' || this.demandIntakeService.demandInformation.introduction.status == 'ACCEPTED' || this.demandIntakeService.demandInformation.introduction.status == 'REJECTED')){
+          this.visibleNextButton = true;
+      }else {
         this.visibleNextButton = false;
       }
       this.visibleSubmitButton = false;

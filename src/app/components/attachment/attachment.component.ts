@@ -41,45 +41,46 @@ export class AttachmentComponent {
       }
 
     } else {
-      if (authService.isDM()) {
+      if (authService.isDM() || authService.isCCB()) {
+        this.visibleSaveButton = false;
         if (this.eventService.isNewDemand) {
           this.visibleNextButton = false;
-          this.visibleSaveButton = false;
           this.visibleSubmitButton = true;
-        } else if ((this.eventService.isMyDemand || this.eventService.isStakeholderDemand) && this.demandIntakeService.getDemandInformation().introduction.status != 'DRAFT') {
-          this.visibleNextButton = false;
-          this.visibleSaveButton = false;
+        } else if ((this.eventService.isMyDemand || this.eventService.isStakeholderDemand) && this.demandIntakeService.getDemandInformation().introduction.status != 'DRAFT' && this.demandIntakeService.getDemandInformation().introduction.status != 'PENDING_WITH_DM') {
+          this.visibleNextButton = true;
           this.visibleSubmitButton = false;
-        } else {
+        } else if(!this.eventService.isMyDemand && !this.eventService.isStakeholderDemand && this.demandIntakeService.getDemandInformation().introduction.status != 'DRAFT'){
+          this.visibleNextButton = true;
+          this.visibleSubmitButton = false;
+        }else{
           this.visibleNextButton = false;
-          this.visibleSaveButton = false;
-          this.visibleSubmitButton = true;
+          this.visibleSubmitButton = false;
         }
       }
-      if (authService.isCCB()) {
-        if (this.eventService.isNewDemand) {
-          this.visibleNextButton = false;
-          this.visibleSaveButton = false;
-          this.visibleSubmitButton = true;
-        } else {
-          if ((this.eventService.isMyDemand || this.eventService.isStakeholderDemand)) {
+      // if (authService.isCCB()) {
+      //   if (this.eventService.isNewDemand) {
+      //     this.visibleNextButton = false;
+      //     this.visibleSaveButton = false;
+      //     this.visibleSubmitButton = true;
+      //   } else {
+      //     if ((this.eventService.isMyDemand || this.eventService.isStakeholderDemand)) {
 
-            this.visibleSaveButton = false;
-            if (this.demandIntakeService.getDemandInformation().introduction.status == 'DRAFT') {
-              this.visibleNextButton = false;
-              this.visibleSubmitButton = true;
-            } else {
-              this.visibleNextButton = false;
-              this.visibleSubmitButton = false;
-            }
+      //       this.visibleSaveButton = false;
+      //       if (this.demandIntakeService.getDemandInformation().introduction.status == 'DRAFT') {
+      //         this.visibleNextButton = false;
+      //         this.visibleSubmitButton = true;
+      //       } else {
+      //         this.visibleNextButton = false;
+      //         this.visibleSubmitButton = false;
+      //       }
 
-          } else {
-            this.visibleNextButton = true;
-            this.visibleSaveButton = true;
-            this.visibleSubmitButton = false;
-          }
-        }
-      }
+      //     } else {
+      //       this.visibleNextButton = true;
+      //       this.visibleSaveButton = true;
+      //       this.visibleSubmitButton = false;
+      //     }
+      //   }
+      // }
 
     }
 
