@@ -33,7 +33,7 @@ export class DemandManagerComponent {
       this.demandIntakeService.demandInformation.demandManagerInfo.domain = this.domain;
       if (this.demandIntakeService.getDemandInformation().introduction.status == 'ACCEPTED' || this.demandIntakeService.getDemandInformation().introduction.status == 'REJECTED') {
         this.visibleSubmitButton = false;
-      } else if (!this.eventService.isMyDemand && this.demandIntakeService.demandInformation.introduction.status == 'PENDING_WITH_CCB') {
+      } else if ((!this.eventService.isMyDemand && !this.eventService.isStakeholderDemand) && this.demandIntakeService.demandInformation.introduction.status == 'PENDING_WITH_CCB') {
         this.visibleSubmitButton = true;
       } else {
         this.visibleSubmitButton = true;

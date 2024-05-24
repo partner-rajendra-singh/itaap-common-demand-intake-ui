@@ -11,6 +11,7 @@ export class EventService {
   progressBarEvent = new EventEmitter();
   isNewDemand : boolean = true;
   isMyDemand : boolean = true;
+  isStakeholderDemand: boolean = false;
   solutionDirectionValue : SolutionDirection1[] = new Array();
   selectedDemandTabIndex: any = 0;
   selectedEADITabIndex: any = 0;

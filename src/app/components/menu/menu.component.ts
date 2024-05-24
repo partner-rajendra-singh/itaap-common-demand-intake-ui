@@ -54,6 +54,7 @@ export class MenuComponent implements OnInit {
     newDemand() {
         this.eventService.isNewDemand = true;
         this.eventService.isMyDemand = true;
+        this.eventService.isStakeholderDemand = false;
         console.log("MenuComponent1 isNewDemand, isMyDemand ", this.eventService.isNewDemand, this.eventService.isMyDemand);
         
         this.demandIntakeService.setDemand(new Demand(), true);
