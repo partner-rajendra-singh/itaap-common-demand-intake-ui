@@ -12,14 +12,14 @@
                                 you are raising demand on behalf then enter their email address & role?</label>
                         </div>
                         <div class="col-6 xs:col-6 sm:col-6 lg:col-6 xl:col-6">
-                            <input type="radio" id="yes" name="isAnotherRequester"
+                            <input type="radio" name="isAnotherRequester"
                                 [(ngModel)]="requesterInfo.isAnotherRequester" [value]="true"
                                 (change)="requesterChange($event)">
-                            <label for="yes">Yes</label>
-                            <input type="radio" id="no" name="isAnotherRequester" checked="checked"
+                            <label>Yes</label>
+                            <input type="radio" name="isAnotherRequester" checked="checked"
                                 [(ngModel)]="requesterInfo.isAnotherRequester" [value]="false"
                                 (change)="requesterChange($event)">
-                            <label for="no">No</label>
+                            <label>No</label>
                         </div>
                         <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
                             <label for="email" required class="asterisk-if-mandatory">Email</label>
@@ -54,12 +54,12 @@
                             <label for="isDemandPOC" required class="asterisk-if-mandatory">Is Demand a POC?</label>
                         </div>
                         <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
-                            <input type="radio" id="yes" name="isDemandPOC" [(ngModel)]="requesterInfo.isDemandPOC"
+                            <input type="radio" name="isDemandPOC" [(ngModel)]="requesterInfo.isDemandPOC"
                                 [value]="true">
-                            <label for="yes">Yes</label>
-                            <input type="radio" id="no" name="isDemandPOC" checked="checked"
+                            <label>Yes</label>
+                            <input type="radio" name="isDemandPOC" checked="checked"
                                 [(ngModel)]="requesterInfo.isDemandPOC" [value]="false">
-                            <label for="no">No</label>
+                            <label>No</label>
                         </div>
 
                         <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3" *ngIf="requesterInfo.isDemandPOC==false">
@@ -140,14 +140,14 @@
                                 style="width:100px">Approved budget for this demand?</label>
                         </div>
                         <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
-                            <input type="radio" id="yes" name="approvedBudget"
+                            <input type="radio" name="approvedBudget"
                                 [(ngModel)]="requesterInfo.approvedBudget" [value]="true">
-                            <label for="yes">Yes</label>
-                            <input type="radio" id="no" name="approvedBudget" checked="checked"
+                            <label>Yes</label>
+                            <input type="radio" name="approvedBudget" checked="checked"
                                 [(ngModel)]="requesterInfo.approvedBudget" [value]="false">
-                            <label for="no">No</label>
+                            <label>No</label>
                             <div *ngIf="!requesterInfo.approvedBudget && requesterInfo.isDemandPOC==false">
-                                <label for="no">(Note : This demand may not be taken forward)</label>
+                                <label>(Note : This demand may not be taken forward)</label>
                             </div>
                         </div>
 

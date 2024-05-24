@@ -86,15 +86,15 @@
                                     <label for="modelType">Model Type</label>
                                 </div>
                                 <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
-                                    <input type="radio" id="dm1" name="modelType" checked="checked"
+                                    <input type="radio" id="mt1" name="modelType" checked="checked"
                                         [(ngModel)]="eADIInfo.dataModel.modelType" value="Conceptual">
-                                    <label for="dm1">Conceptual</label> &nbsp;
-                                    <input type="radio" id="dm2" name="modelType"
+                                    <label for="mt1">Conceptual</label> &nbsp;
+                                    <input type="radio" id="mt2" name="modelType"
                                         [(ngModel)]="eADIInfo.dataModel.modelType" value="Logical">
-                                    <label for="dm2">Logical</label> &nbsp;
-                                    <input type="radio" id="dm3" name="modelType"
+                                    <label for="mt2">Logical</label> &nbsp;
+                                    <input type="radio" id="mt3" name="modelType"
                                         [(ngModel)]="eADIInfo.dataModel.modelType" value="Physical">
-                                    <label for="dm3">Physical</label>
+                                    <label for="mt3">Physical</label>
                                 </div>
 
                                 <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
@@ -149,15 +149,15 @@
                                     <label for="dataDemandType">Data Demand Type</label>
                                 </div>
                                 <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
-                                    <input type="radio" id="dm1" name="dataDemandType"
+                                    <input type="radio" id="dt1" name="dataDemandType"
                                         [(ngModel)]="eADIInfo.adlL1.dataDemandType" value="New Data Set Onboarding">
-                                    <label for="dm1">New Data Set Onboarding</label> &nbsp;
-                                    <input type="radio" id="dm2" name="dataDemandType"
+                                    <label for="dt1">New Data Set Onboarding</label> &nbsp;
+                                    <input type="radio" id="dt2" name="dataDemandType"
                                         [(ngModel)]="eADIInfo.adlL1.dataDemandType" value="Data Set Enhancement">
-                                    <label for="dm2">Data Set Enhancement (addition of tables/fields)</label> &nbsp;
-                                    <input type="radio" id="dm3" name="dataDemandType"
+                                    <label for="dt2">Data Set Enhancement (addition of tables/fields)</label> &nbsp;
+                                    <input type="radio" id="dt3" name="dataDemandType"
                                         [(ngModel)]="eADIInfo.adlL1.dataDemandType" value="Data Set Modifications">
-                                    <label for="dm3">Data Set Modifications</label>
+                                    <label for="dt3">Data Set Modifications</label>
                                 </div>
 
                                 <p-fieldset legend="Source Details">
@@ -385,12 +385,12 @@
                                         KPI/Specific to business requirement which is not covered in ADL L2? </label>
                                 </div>
                                 <div class="col-4 xs:col-4 sm:col-4 lg:col-4 xl:col-4">
-                                    <input type="radio" id="Yes" name="kpiRequired"
+                                    <input type="radio" name="kpiRequired"
                                         [(ngModel)]="eADIInfo.gold.kpiRequired" [value]="true">
-                                    <label for="Yes">Yes</label>
-                                    <input type="radio" id="No" name="kpiRequired" checked="checked"
+                                    <label>Yes</label>
+                                    <input type="radio" name="kpiRequired" checked="checked"
                                         [(ngModel)]="eADIInfo.gold.kpiRequired" [value]="false">
-                                    <label for="No">No</label>
+                                    <label>No</label>
                                 </div>
 
                                 <div class="col-8 xs:col-8 sm:col-8 lg:col-8 xl:col-8">
@@ -398,12 +398,12 @@
                                         aggregation/derivation from ADL L2? </label>
                                 </div>
                                 <div class="col-4 xs:col-4 sm:col-4 lg:col-4 xl:col-4">
-                                    <input type="radio" id="Yes" name="aggregation"
+                                    <input type="radio" name="aggregation"
                                         [(ngModel)]="eADIInfo.gold.aggregation" [value]="true">
-                                    <label for="Yes">Yes</label>
-                                    <input type="radio" id="No" name="aggregation" checked="checked"
+                                    <label>Yes</label>
+                                    <input type="radio" name="aggregation" checked="checked"
                                         [(ngModel)]="eADIInfo.gold.aggregation" [value]="false">
-                                    <label for="No">No</label>
+                                    <label>No</label>
                                 </div>
 
                                 <div class="col-8 xs:col-8 sm:col-8 lg:col-8 xl:col-8"></div>
@@ -484,12 +484,12 @@
                                         Required?</label>
                                 </div>
                                 <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
-                                    <input type="radio" id="Yes" name="newReportRequired" checked="checked"
+                                    <input type="radio" name="newReportRequired" checked="checked"
                                         [(ngModel)]="eADIInfo.ia.newReportRequired" [value]="true">
-                                    <label for="Yes">Yes</label>
-                                    <input type="radio" id="No" name="newReportRequired"
+                                    <label>Yes</label>
+                                    <input type="radio" name="newReportRequired"
                                         [(ngModel)]="eADIInfo.ia.newReportRequired" [value]="false">
-                                    <label for="No">No</label>
+                                    <label>No</label>
                                 </div>
 
                                 <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
