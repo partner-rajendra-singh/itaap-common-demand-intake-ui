@@ -8,11 +8,11 @@
             <label required for="isDocReferred" class="asterisk-if-mandatory" style="width: 100px">Have you checked available solution(s) in <a target="_blank" href="https://share.philips.com/sites/STS020210604094742/Pages/ADLDemandFunnelGrid.aspx">this</a> catalog?</label>
           </div>
           <div class="col-8 xs:col-8 sm:col-8 lg:col-8 xl:col-8">
-            <input type="radio" id="Yes" name="isDocReferred" [(ngModel)]="demandInfo.isDocReferred" [value]="true">
-            <label for="Yes">Yes</label>
-            <input type="radio" id="No" name="isDocReferred" checked="checked" [(ngModel)]="demandInfo.isDocReferred"
+            <input type="radio" name="isDocReferred" [(ngModel)]="demandInfo.isDocReferred" [value]="true">
+            <label>Yes</label>
+            <input type="radio" name="isDocReferred" checked="checked" [(ngModel)]="demandInfo.isDocReferred"
               [value]="false">
-            <label for="No">No</label> &nbsp;
+            <label>No</label> &nbsp;
             <label>(If you are able to find an existing solution then no need to raise a new demand.)</label>
           </div>
 
@@ -20,11 +20,11 @@
             <label required for="architectAligned" class="asterisk-if-mandatory" style="width: 100px">Architect aligned?</label>
           </div>
           <div class="col-8 xs:col-8 sm:col-8 lg:col-8 xl:col-8">
-            <input type="radio" id="Yes" name="architectAligned" [(ngModel)]="demandInfo.architectAligned" [value]="true">
-            <label for="Yes">Yes</label>
-            <input type="radio" id="No" name="architectAligned" checked="checked" [(ngModel)]="demandInfo.architectAligned"
+            <input type="radio" name="architectAligned" [(ngModel)]="demandInfo.architectAligned" [value]="true">
+            <label>Yes</label>
+            <input type="radio" name="architectAligned" checked="checked" [(ngModel)]="demandInfo.architectAligned"
               [value]="false">
-            <label for="No">No</label>
+            <label>No</label>
           </div>
 
         </div>
