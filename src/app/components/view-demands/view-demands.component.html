@@ -65,8 +65,8 @@
                 </div>
             </p-tabPanel>
             <p-tabPanel header="Demands Belongs To Me As Stakeholder">
-                <div class="card" *ngIf="allDemands.stakeHolderDemands">
-                    <p-table [value]="allDemands.stakeHolderDemands" selectionMode="single" [(selection)]="selectedDemand" (onRowSelect)="onDemandSelect($event, false, true)" [tableStyle]="{ 'min-width': '40rem' }"  [paginator]="true" [rows]="10">
+                <div class="card" *ngIf="allDemands.stakeholderDemands">
+                    <p-table [value]="allDemands.stakeholderDemands" selectionMode="single" [(selection)]="selectedDemand" (onRowSelect)="onDemandSelect($event, false, true)" [tableStyle]="{ 'min-width': '40rem' }"  [paginator]="true" [rows]="10">
                         <ng-template pTemplate="header">
                             <tr>
                                 <th pSortableColumn="actionTime">Demand Intake Id <p-sortIcon field="demandIntakeId"></p-sortIcon></th>
