@@ -14,6 +14,7 @@ export class EventService {
   solutionDirectionValue : SolutionDirection1[] = new Array();
   selectedDemandTabIndex: any = 0;
   selectedEADITabIndex: any = 0;
+  selectedRequirementsTabIndex: any = 0;
   today : Date =  new Date();
   goLiveMinDate : Date = new Date(this.today.setDate(this.today.getDate() + 1));
   currentDemandIntakeId!: any;

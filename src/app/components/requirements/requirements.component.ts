@@ -14,8 +14,7 @@ import { EventService } from 'src/app/services/event.service';
 export class RequirementsComponent implements OnInit {
 
     constructor(public demandIntakeService: DemandIntakeService, private router: Router, private messageService: MessageService,
-        private authService: AuthService, public eventService: EventService
-    ) {
+        private authService: AuthService, public eventService: EventService) {
         if (authService.isRequester()) {
             if (this.demandIntakeService.getDemandInformation().introduction.status != 'DRAFT' && this.demandIntakeService.getDemandInformation().introduction.status != null) {
                 this.visibleSaveButton = false;
@@ -41,6 +40,10 @@ export class RequirementsComponent implements OnInit {
         this.requirementComplianceInfo = this.demandIntakeService.getDemandInformation().requirementComplianceInfo;
     }
 
+    onTabChange(event: any) {
+        this.eventService.selectedRequirementsTabIndex = event.index;
+    }
+
     nextPage() {
 
         if (this.requirementFunctionalInfo.statement != '' && this.requirementFunctionalInfo.scope != '' && this.requirementFunctionalInfo.businessValue != '' && this.requirementFunctionalInfo.goLiveApproach != '') {
@@ -48,23 +51,30 @@ export class RequirementsComponent implements OnInit {
             this.demandIntakeService.getDemandInformation().requirementNonFunctionalInfo = this.requirementNonFunctionalInfo;
             this.demandIntakeService.getDemandInformation().requirementComplianceInfo = this.requirementComplianceInfo;
 
-            if (this.authService.isRequester()) {
-                if (this.eventService.isNewDemand) {
-                    this.router.navigate(['demand-intake/attachment']);
-                } else {
-                    if (this.eventService.isMyDemand && (this.demandIntakeService.demandInformation.introduction.status != 'DRAFT' && this.demandIntakeService.demandInformation.introduction.status != 'PENDING_WITH_DM')) {
-                        this.router.navigate(['demand-intake/solution-direction/' + this.demandIntakeService.demandInformation.introduction.demandIntakeId]);
+            if (this.eventService.selectedRequirementsTabIndex < 2) {
+                this.eventService.selectedRequirementsTabIndex += 1;
+            } else {
+                if (this.authService.isRequester()) {
+                    if (this.eventService.isNewDemand) {
+                        this.router.navigate(['demand-intake/attachment']);
                     } else {
-                        this.router.navigate(['demand-intake/attachment/' + this.demandIntakeService.demandInformation.introduction.demandIntakeId]);
+                        if (this.eventService.isMyDemand && (this.demandIntakeService.demandInformation.introduction.status != 'DRAFT' && this.demandIntakeService.demandInformation.introduction.status != 'PENDING_WITH_DM')) {
+                            this.router.navigate(['demand-intake/solution-direction/' + this.demandIntakeService.demandInformation.introduction.demandIntakeId]);
+                        } else {
+                            this.router.navigate(['demand-intake/attachment/' + this.demandIntakeService.demandInformation.introduction.demandIntakeId]);
+                        }
+                    }
+                } else {
+                    if (this.eventService.isNewDemand) {
+                        this.router.navigate(['demand-intake/solution-direction']);
+                    } else {
+                        this.router.navigate(['demand-intake/solution-direction/' + this.demandIntakeService.demandInformation.introduction.demandIntakeId]);
                     }
                 }
-            } else {
-                if (this.eventService.isNewDemand) {
-                    this.router.navigate(['demand-intake/solution-direction']);
-                } else {
-                    this.router.navigate(['demand-intake/solution-direction/' + this.demandIntakeService.demandInformation.introduction.demandIntakeId]);
-                }
+
             }
+
+
         } else {
             this.messageService.add({ severity: 'warn', summary: 'Error', detail: 'Please fill required fields!' });
         }
@@ -75,10 +85,14 @@ export class RequirementsComponent implements OnInit {
     }
 
     prevPage() {
-        if (this.eventService.isNewDemand) {
-            this.router.navigate(['demand-intake/requester']);
+        if (this.eventService.selectedRequirementsTabIndex > 0) {
+            this.eventService.selectedRequirementsTabIndex -= 1;
         } else {
-            this.router.navigate(['demand-intake/requester/' + this.demandIntakeService.demandInformation.introduction.demandIntakeId]);
+            if (this.eventService.isNewDemand) {
+                this.router.navigate(['demand-intake/requester']);
+            } else {
+                this.router.navigate(['demand-intake/requester/' + this.demandIntakeService.demandInformation.introduction.demandIntakeId]);
+            }
         }
     }
 

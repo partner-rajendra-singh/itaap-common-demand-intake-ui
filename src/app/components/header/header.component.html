@@ -6,7 +6,8 @@
     </div>
     <div class="col-4 xs:col-4 sm:col-4 lg:col-4 xl:col-4" *ngIf="user" style="display: inline-flex;">
       <i class="pi pi-user" style="font-size: 1.5rem; margin-top: 0.4rem; margin-right: 1rem;"> </i>
-      <h4 style="margin-right: 1rem;margin-top: 0.4rem;">Welcome {{user}}<br>({{userRole}})</h4>
+      <h4 *ngIf="dmDomain==''" style="margin-right: 1rem;margin-top: 0.4rem;">Welcome {{user}}<br>({{userRole}})</h4>
+      <h4 *ngIf="dmDomain!=''" style="margin-right: 1rem;margin-top: 0.4rem;">Welcome {{user}}<br>({{userRole}} -> {{dmDomain}}) </h4>
     </div>
   </div>
   <div class="col-12 xs:col-12 sm:col-12 lg:col-12 xl:col-12" style="margin-top: -2.2rem;">
