@@ -113,16 +113,17 @@ export class DemandIntakeComponent implements OnInit {
                 {
                     label: 'DM',
                     command: () => this.routeToDM(),
-                    visible: (!this.eventService.isMyDemand && (this.authService.isDM() || this.authService.isCCB()))
-                        || (this.authService.isRequester() && (this.eventService.isMyDemand || this.eventService.isStakeholderDemand) &&
+                    visible: (!this.eventService.isMyDemand && (this.authService.isDM() || this.authService.isCCB())) ||
+                        ((this.eventService.isMyDemand || this.eventService.isStakeholderDemand) &&
                             (this.demandIntakeService.demandInformation.introduction.status != 'DRAFT' && this.demandIntakeService.demandInformation.introduction.status != 'PENDING_WITH_DM')),
                 },
                 {
                     label: 'CCB',
+                    command:() => this.routeToCCB(),
                     visible: (!this.eventService.isMyDemand && this.authService.isCCB())
-                        || (this.authService.isRequester() && (this.eventService.isMyDemand || this.eventService.isStakeholderDemand) &&
+                        || ((this.eventService.isMyDemand || this.eventService.isStakeholderDemand) &&
                             (this.demandIntakeService.demandInformation.introduction.status == 'CCB_HOLD' || this.demandIntakeService.demandInformation.introduction.status == 'ACCEPTED' || this.demandIntakeService.demandInformation.introduction.status == 'REJECTED'))
-                            ||(!this.eventService.isMyDemand && this.authService.isDM() && this.demandIntakeService.demandInformation.introduction.status != 'PENDING_WITH_CCB' && this.demandIntakeService.demandInformation.introduction.status != 'PENDING_WITH_DM'),
+                        || (!this.eventService.isMyDemand && this.authService.isDM() && this.demandIntakeService.demandInformation.introduction.status != 'PENDING_WITH_CCB' && this.demandIntakeService.demandInformation.introduction.status != 'PENDING_WITH_DM'),
                 }
             ];
         }
