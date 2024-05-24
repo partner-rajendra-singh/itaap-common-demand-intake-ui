@@ -41,13 +41,13 @@ export class AttachmentComponent {
       }
 
     } else {
-      if(authService.isDM() || authService.isCCB()){
+      if (authService.isDM()) {
         if (this.eventService.isNewDemand) {
           this.visibleNextButton = false;
           this.visibleSaveButton = false;
           this.visibleSubmitButton = true;
-        } else if ((this.eventService.isMyDemand || this.eventService.isStakeholderDemand) && this.demandIntakeService.getDemandInformation().introduction.status != 'DRAFT' && this.demandIntakeService.getDemandInformation().introduction.status != 'PENDING_WITH_DM') {
-          this.visibleNextButton = true;
+        } else if ((this.eventService.isMyDemand || this.eventService.isStakeholderDemand) && this.demandIntakeService.getDemandInformation().introduction.status != 'DRAFT') {
+          this.visibleNextButton = false;
           this.visibleSaveButton = false;
           this.visibleSubmitButton = false;
         } else {
@@ -56,8 +56,32 @@ export class AttachmentComponent {
           this.visibleSubmitButton = true;
         }
       }
+      if (authService.isCCB()) {
+        if (this.eventService.isNewDemand) {
+          this.visibleNextButton = false;
+          this.visibleSaveButton = false;
+          this.visibleSubmitButton = true;
+        } else {
+          if ((this.eventService.isMyDemand || this.eventService.isStakeholderDemand)) {
 
+            this.visibleSaveButton = false;
+            if (this.demandIntakeService.getDemandInformation().introduction.status == 'DRAFT') {
+              this.visibleNextButton = false;
+              this.visibleSubmitButton = true;
+            } else {
+              this.visibleNextButton = false;
+              this.visibleSubmitButton = false;
+            }
+
+          } else {
+            this.visibleNextButton = true;
+            this.visibleSaveButton = true;
+            this.visibleSubmitButton = false;
+          }
+        }
       }
+
+    }
 
     if (this.eventService.isStakeholderDemand && !this.eventService.isNewDemand && !this.eventService.isMyDemand) {
       this.visibleSubmitButton = false;

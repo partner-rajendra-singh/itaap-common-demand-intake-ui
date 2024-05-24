@@ -211,13 +211,13 @@ export class DemandIntakeService {
         }
       }
 
-      if (this.authService.isDM() && !this.eventService.isNewDemand) {
+      if (this.authService.isDM() && !this.eventService.isNewDemand && !this.eventService.isMyDemand) {
         if (this.demandInformation.demandManagerInfo.decision == null || this.demandInformation.demandManagerInfo.remarks == '') {
           this.messageService.add({ severity: 'warn', summary: 'Error', detail: 'Please fill required fields!' });
           this.router.navigate(['demand-intake/demandmanager']);
           return false;
         }
-      } else if (this.authService.isCCB() && !this.eventService.isNewDemand) {
+      } else if (this.authService.isCCB() && !this.eventService.isNewDemand && !this.eventService.isMyDemand) {
         if (this.demandInformation.ccbInfo.decision == '' || this.demandInformation.ccbInfo.remarks == '') {
           this.messageService.add({ severity: 'warn', summary: 'Error', detail: 'Please fill required fields!' });
           this.router.navigate(['demand-intake/ccb']);

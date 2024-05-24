@@ -56,6 +56,10 @@ export class ViewDemandsComponent {
     this.allDemands.pendingDemands.forEach(demand => {
       demand.introduction.statusLabel = this.getDemandStatus(demand.introduction.status);
     });
+
+    this.allDemands.stakeholderDemands.forEach(demand => {
+      demand.introduction.statusLabel = this.getDemandStatus(demand.introduction.status);
+    });
   }
 
   getDemandStatus(status: string): string {

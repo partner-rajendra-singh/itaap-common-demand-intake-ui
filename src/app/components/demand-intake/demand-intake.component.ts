@@ -95,14 +95,14 @@ export class DemandIntakeComponent implements OnInit {
                     label: 'Solution Direction',
                     command: () => this.routeToSD(),
                     visible: this.authService.isDM() || this.authService.isCCB()
-                        || (this.authService.isRequester() && this.eventService.isMyDemand &&
+                        || (this.authService.isRequester() && (this.eventService.isMyDemand || this.eventService.isStakeholderDemand) &&
                             (this.demandIntakeService.demandInformation.introduction.status != 'DRAFT' && this.demandIntakeService.demandInformation.introduction.status != 'PENDING_WITH_DM')),
                 },
                 {
                     label: 'EADI',
                     command: () => this.routeToEADI(),
                     visible: (this.authService.isDM() || this.authService.isCCB())
-                        || (this.authService.isRequester() && this.eventService.isMyDemand &&
+                        || (this.authService.isRequester() && (this.eventService.isMyDemand || this.eventService.isStakeholderDemand) &&
                             (this.demandIntakeService.demandInformation.introduction.status != 'DRAFT' && this.demandIntakeService.demandInformation.introduction.status != 'PENDING_WITH_DM')),
                 },
                 {
