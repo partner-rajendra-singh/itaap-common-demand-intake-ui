@@ -56,6 +56,10 @@ export class ViewDemandsComponent {
     this.allDemands.pendingDemands.forEach(demand => {
       demand.introduction.statusLabel = this.getDemandStatus(demand.introduction.status);
     });
+
+    this.allDemands.stakeholderDemands.forEach(demand => {
+      demand.introduction.statusLabel = this.getDemandStatus(demand.introduction.status);
+    });
   }
 
   getDemandStatus(status: string): string {
@@ -72,9 +76,10 @@ export class ViewDemandsComponent {
     return status;
   }
 
-  onDemandSelect(event: any, isMyDemand: boolean) {
-    console.log("selectedDemand: ", this.selectedDemand, isMyDemand)
+  onDemandSelect(event: any, isMyDemand: boolean, isStakeholderDemand: boolean) {
+    console.log("selectedDemand, isMyDemand, isStakeholderDemand", this.selectedDemand, isMyDemand, isStakeholderDemand)
     this.eventService.isMyDemand = isMyDemand;
+    this.eventService.isStakeholderDemand = isStakeholderDemand;
     this.eventService.isNewDemand = false;
     this.demandIntakeService.setDemand(this.selectedDemand, false);
 

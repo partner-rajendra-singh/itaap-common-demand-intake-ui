@@ -8,11 +8,6 @@ import { EventService } from 'src/app/services/event.service';
 import * as FileSaver from 'file-saver';
 import { Attachment } from 'src/app/models/attachment';
 
-interface UploadEvent {
-  originalEvent: Event;
-  files: Blob[];
-}
-
 @Component({
   selector: 'app-attachment',
   templateUrl: './attachment.component.html',
@@ -21,7 +16,6 @@ interface UploadEvent {
 export class AttachmentComponent {
 
   attachmentInfo: any;
-
   submitted: boolean = false;
   visibleNextButton!: boolean;
   visibleSaveButton!: boolean;
@@ -33,7 +27,7 @@ export class AttachmentComponent {
 
     if (authService.isRequester()) {
 
-      if (!this.eventService.isNewDemand && this.eventService.isMyDemand && (this.demandIntakeService.demandInformation.introduction.status != 'DRAFT' && this.demandIntakeService.demandInformation.introduction.status != 'PENDING_WITH_DM')) {
+      if (!this.eventService.isNewDemand && (this.eventService.isMyDemand || this.eventService.isStakeholderDemand) && (this.demandIntakeService.demandInformation.introduction.status != 'DRAFT' && this.demandIntakeService.demandInformation.introduction.status != 'PENDING_WITH_DM')) {
         this.visibleNextButton = true;
       } else {
         this.visibleNextButton = false;
@@ -47,19 +41,50 @@ export class AttachmentComponent {
       }
 
     } else {
-      if (this.eventService.isNewDemand) {
-        this.visibleNextButton = false;
-        this.visibleSaveButton = false;
-        this.visibleSubmitButton = true;
-      } else if (this.eventService.isMyDemand) {
-        this.visibleNextButton = false;
-        this.visibleSaveButton = false;
-        this.visibleSubmitButton = false;
-      } else {
-        this.visibleNextButton = true;
-        this.visibleSaveButton = false;
-        this.visibleSubmitButton = false;
+      if (authService.isDM()) {
+        if (this.eventService.isNewDemand) {
+          this.visibleNextButton = false;
+          this.visibleSaveButton = false;
+          this.visibleSubmitButton = true;
+        } else if ((this.eventService.isMyDemand || this.eventService.isStakeholderDemand) && this.demandIntakeService.getDemandInformation().introduction.status != 'DRAFT') {
+          this.visibleNextButton = false;
+          this.visibleSaveButton = false;
+          this.visibleSubmitButton = false;
+        } else {
+          this.visibleNextButton = false;
+          this.visibleSaveButton = false;
+          this.visibleSubmitButton = true;
+        }
       }
+      if (authService.isCCB()) {
+        if (this.eventService.isNewDemand) {
+          this.visibleNextButton = false;
+          this.visibleSaveButton = false;
+          this.visibleSubmitButton = true;
+        } else {
+          if ((this.eventService.isMyDemand || this.eventService.isStakeholderDemand)) {
+
+            this.visibleSaveButton = false;
+            if (this.demandIntakeService.getDemandInformation().introduction.status == 'DRAFT') {
+              this.visibleNextButton = false;
+              this.visibleSubmitButton = true;
+            } else {
+              this.visibleNextButton = false;
+              this.visibleSubmitButton = false;
+            }
+
+          } else {
+            this.visibleNextButton = true;
+            this.visibleSaveButton = true;
+            this.visibleSubmitButton = false;
+          }
+        }
+      }
+
+    }
+
+    if (this.eventService.isStakeholderDemand && !this.eventService.isNewDemand && !this.eventService.isMyDemand) {
+      this.visibleSubmitButton = false;
     }
   }
 
@@ -68,11 +93,11 @@ export class AttachmentComponent {
     this.attachmentInfo = this.demandIntakeService.getDemandInformation().attachmentInfo;
   }
 
-  addAttachment(){
+  addAttachment() {
     this.attachmentInfo.push(new Attachment);
   }
 
-  removeAttachment(){
+  removeAttachment() {
     this.attachmentInfo.pop();
   }
 
@@ -136,7 +161,6 @@ export class AttachmentComponent {
     }
   }
 
-
   onUpload(event: any, index: any) {
     for (let file of event.files) {
       // this.attachmentInfo[index].fileName = file;
@@ -196,6 +220,5 @@ export class AttachmentComponent {
     }
     return type;
   }
-
 
 }

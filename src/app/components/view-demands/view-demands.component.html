@@ -6,7 +6,7 @@
         <p-tabView [activeIndex]="eventService.selectedDemandTabIndex">
             <p-tabPanel header="My Demands">
                 <div class="card" *ngIf="allDemands.myDemands">
-                    <p-table [value]="allDemands.myDemands" selectionMode="single" [(selection)]="selectedDemand" (onRowSelect)="onDemandSelect($event, true)" [tableStyle]="{ 'min-width': '40rem' }"  [paginator]="true" [rows]="10">
+                    <p-table [value]="allDemands.myDemands" selectionMode="single" [(selection)]="selectedDemand" (onRowSelect)="onDemandSelect($event, true, false)" [tableStyle]="{ 'min-width': '40rem' }"  [paginator]="true" [rows]="10">
                         <ng-template pTemplate="header">
                             <tr>
                                 <th pSortableColumn="actionTime">Demand Intake Id <p-sortIcon field="demandIntakeId"></p-sortIcon></th>
@@ -35,7 +35,7 @@
             </p-tabPanel>
             <p-tabPanel header="Pending Demands" *ngIf="!isRequester" >
                 <div class="card" *ngIf="allDemands.pendingDemands">
-                    <p-table [value]="allDemands.pendingDemands" selectionMode="single" [(selection)]="selectedDemand" (onRowSelect)="onDemandSelect($event, false)" [tableStyle]="{ 'min-width': '40rem' }"  [paginator]="true" [rows]="10">
+                    <p-table [value]="allDemands.pendingDemands" selectionMode="single" [(selection)]="selectedDemand" (onRowSelect)="onDemandSelect($event, false, false)" [tableStyle]="{ 'min-width': '40rem' }"  [paginator]="true" [rows]="10">
                         <ng-template pTemplate="header">
                             <tr>
                                 <th pSortableColumn="actionTime">Demand Intake Id <p-sortIcon field="demandIntakeId"></p-sortIcon></th>
@@ -64,6 +64,36 @@
 
                 </div>
             </p-tabPanel>
+            <p-tabPanel header="Demands Belongs To Me As Stakeholder">
+                <div class="card" *ngIf="allDemands.stakeholderDemands">
+                    <p-table [value]="allDemands.stakeholderDemands" selectionMode="single" [(selection)]="selectedDemand" (onRowSelect)="onDemandSelect($event, false, true)" [tableStyle]="{ 'min-width': '40rem' }"  [paginator]="true" [rows]="10">
+                        <ng-template pTemplate="header">
+                            <tr>
+                                <th pSortableColumn="actionTime">Demand Intake Id <p-sortIcon field="demandIntakeId"></p-sortIcon></th>
+                                <th pSortableColumn="topicId">Title <p-sortIcon field="title"></p-sortIcon></th>
+                                <th pSortableColumn="actionTime">Request Date <p-sortIcon field="requestedDate"></p-sortIcon></th>
+                                <th pSortableColumn="actionTime">Requested By <p-sortIcon field="requestedBy"></p-sortIcon></th>
+                                <th pSortableColumn="actionTime">Status <p-sortIcon field="status"></p-sortIcon></th>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-demand let-ri="rowIndex" let-columns="columns" >
+                            <tr [pSelectableRow]="demand">
+                                <td>{{ demand.introduction['demandIntakeId'] }}</td>
+                                <td>{{ demand.introduction['title'] }}</td>
+                                <td>{{ demand.requesterInfo['requestedDate']  | date: 'MMM dd, yyyy'}}</td>
+                                <td>{{ demand.introduction['requestedBy'] }}</td>
+                                <td>{{ demand.introduction['statusLabel'] }}</td>
+                            </tr>
+                        </ng-template>
+                    </p-table> 
+
+                    <div *ngIf="allDemands.stakeholderDemands.length == 0">
+                        <p>You dont have any Demands!</p>
+                    </div>
+                </div>
+
+            </p-tabPanel>
+            
         </p-tabView>
         </div>
     </div>
