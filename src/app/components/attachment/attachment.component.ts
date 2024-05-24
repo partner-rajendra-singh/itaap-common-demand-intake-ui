@@ -41,20 +41,23 @@ export class AttachmentComponent {
       }
 
     } else {
-      if (this.eventService.isNewDemand) {
-        this.visibleNextButton = false;
-        this.visibleSaveButton = false;
-        this.visibleSubmitButton = true;
-      } else if (this.eventService.isMyDemand || this.eventService.isStakeholderDemand) {
-        this.visibleNextButton = false;
-        this.visibleSaveButton = false;
-        this.visibleSubmitButton = false;
-      } else {
-        this.visibleNextButton = true;
-        this.visibleSaveButton = false;
-        this.visibleSubmitButton = false;
+      if(authService.isDM() || authService.isCCB()){
+        if (this.eventService.isNewDemand) {
+          this.visibleNextButton = false;
+          this.visibleSaveButton = false;
+          this.visibleSubmitButton = true;
+        } else if ((this.eventService.isMyDemand || this.eventService.isStakeholderDemand) && this.demandIntakeService.getDemandInformation().introduction.status != 'DRAFT' && this.demandIntakeService.getDemandInformation().introduction.status != 'PENDING_WITH_DM') {
+          this.visibleNextButton = true;
+          this.visibleSaveButton = false;
+          this.visibleSubmitButton = false;
+        } else {
+          this.visibleNextButton = false;
+          this.visibleSaveButton = false;
+          this.visibleSubmitButton = true;
+        }
       }
-    }
+
+      }
 
     if (this.eventService.isStakeholderDemand && !this.eventService.isNewDemand && !this.eventService.isMyDemand) {
       this.visibleSubmitButton = false;
