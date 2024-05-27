@@ -16,7 +16,7 @@ export class SolutionDirectionComponent {
 
   solutionDirectionInfo!: SolutionDirection1[];
   sdInfo: SolutionDirection = new SolutionDirection;
-  dmDomain: string = ''
+  dmDomainList: string[] = [];
 
   constructor(private authService: AuthService, public demandIntakeService: DemandIntakeService, private router: Router, private messageService: MessageService, private eventService: EventService) { }
 
@@ -28,11 +28,11 @@ export class SolutionDirectionComponent {
     this.solutionDirectionInfo.forEach(item => {
       this.setLocalSD(item);
     });
-    this.dmDomain = this.authService.currentUserValue.domain;
+    this.dmDomainList = this.authService.currentUserValue.domain;
   }
 
   getSDVisibility(solution: string): boolean {
-    if (solution == this.dmDomain) {
+    if (this.dmDomainList.includes('solution')) {
       return true;
     }
     

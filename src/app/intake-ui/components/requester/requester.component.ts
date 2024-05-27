@@ -33,7 +33,7 @@ export class RequesterComponent implements OnInit {
   otherBusinessUnit!: string;
   isAnotherRequester!: boolean;
 
-  constructor(private authService: AuthService, public demandIntakeService: DemandIntakeService, private router: Router, private messageService: MessageService, public eventService: EventService) {
+  constructor(public authService: AuthService, public demandIntakeService: DemandIntakeService, private router: Router, private messageService: MessageService, public eventService: EventService) {
     if (authService.isRequester()) {
       if (this.demandIntakeService.getDemandInformation().introduction.status != 'DRAFT' && this.demandIntakeService.getDemandInformation().introduction.status != null) {
         this.visibleSaveButton = false;

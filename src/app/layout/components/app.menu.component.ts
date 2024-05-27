@@ -31,7 +31,7 @@ export class AppMenuComponent implements OnInit {
           { label: 'New', icon: 'pi pi-fw pi-plus', command: () => this.newDemand() },
           { label: 'View', icon: 'pi pi-fw pi-search', routerLink: ["/view"] },
           { label: 'Report', icon: 'pi pi-fw pi-file-excel', routerLink: ["/report"], visible: false },
-          { label: 'Chart', icon: 'pi pi-chart-pie', routerLink: ["/chart"], visible: false }
+          { label: 'Chart', icon: 'pi pi-chart-pie', routerLink: ["/chart"], visible: true }
         ],
         expanded: true
       },

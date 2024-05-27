@@ -14,14 +14,14 @@ import { SolutionDirection1 } from '../../models/solution-direction1';
   selector: 'app-demandmanager',
   templateUrl: './demandmanager.component.html'
 })
-export class DemandManagerComponent implements OnInit{
+export class DemandManagerComponent implements OnInit {
 
   decisions!: string[];
   selectedDecision!: string;
   visibleNextButton!: boolean;
   visibleSubmitButton!: boolean;
   demandManagerInfo!: DM;
-  domain: string = ''
+  domain: string[] = [];
   solutionDirectionList!: SolutionDirection1[];
 
   constructor(private eventService: EventService, public demandIntakeService: DemandIntakeService, private router: Router, private messageService: MessageService,
@@ -35,12 +35,12 @@ export class DemandManagerComponent implements OnInit{
         this.visibleSubmitButton = false;
       } else if ((!this.eventService.isMyDemand && !this.eventService.isStakeholderDemand) && this.demandIntakeService.demandInformation.introduction.status == 'PENDING_WITH_CCB') {
         this.visibleSubmitButton = true;
-      }  else if ((this.eventService.isMyDemand || this.eventService.isStakeholderDemand) && this.demandIntakeService.demandInformation.introduction.status == 'PENDING_WITH_CCB') {
+      } else if ((this.eventService.isMyDemand || this.eventService.isStakeholderDemand) && this.demandIntakeService.demandInformation.introduction.status == 'PENDING_WITH_CCB') {
         this.visibleSubmitButton = false;
-      }else if ((this.eventService.isMyDemand || this.eventService.isStakeholderDemand) && this.demandIntakeService.demandInformation.introduction.status == 'CCB_HOLD' || this.demandIntakeService.demandInformation.introduction.status == 'ACCEPTED' || this.demandIntakeService.demandInformation.introduction.status == 'REJECTED') {
+      } else if ((this.eventService.isMyDemand || this.eventService.isStakeholderDemand) && this.demandIntakeService.demandInformation.introduction.status == 'CCB_HOLD' || this.demandIntakeService.demandInformation.introduction.status == 'ACCEPTED' || this.demandIntakeService.demandInformation.introduction.status == 'REJECTED') {
         this.visibleSubmitButton = false;
         this.visibleNextButton = true;
-      }else {
+      } else {
         this.visibleSubmitButton = true;
       }
     } else {
@@ -50,10 +50,10 @@ export class DemandManagerComponent implements OnInit{
       } else if ((!this.eventService.isNewDemand && !this.eventService.isMyDemand && this.authService.isCCB())
         && (this.demandIntakeService.demandInformation.introduction.status == 'PENDING_WITH_CCB' || this.demandIntakeService.demandInformation.introduction.status == 'CCB_HOLD' || this.demandIntakeService.demandInformation.introduction.status == 'ACCEPTED' || this.demandIntakeService.demandInformation.introduction.status == 'REJECTED')) {
         this.visibleNextButton = true;
-      } else if((!this.eventService.isNewDemand && this.eventService.isMyDemand && this.authService.isCCB())
-        && (this.demandIntakeService.demandInformation.introduction.status == 'CCB_HOLD' || this.demandIntakeService.demandInformation.introduction.status == 'ACCEPTED' || this.demandIntakeService.demandInformation.introduction.status == 'REJECTED')){
-          this.visibleNextButton = true;
-      }else {
+      } else if ((!this.eventService.isNewDemand && this.eventService.isMyDemand && this.authService.isCCB())
+        && (this.demandIntakeService.demandInformation.introduction.status == 'CCB_HOLD' || this.demandIntakeService.demandInformation.introduction.status == 'ACCEPTED' || this.demandIntakeService.demandInformation.introduction.status == 'REJECTED')) {
+        this.visibleNextButton = true;
+      } else {
         this.visibleNextButton = false;
       }
       this.visibleSubmitButton = false;
@@ -131,6 +131,20 @@ export class DemandManagerComponent implements OnInit{
     const status = Object.keys(ApproverDomain).indexOf(key as unknown as ApproverDomain);
     let s = Object.values(ApproverDomain)[status];
     return s;
+  }
+
+  getDomainValueList(keys: string[]): string {
+    let outputList: string = '';
+    keys.forEach(key => {
+      const index = Object.keys(ApproverDomain).indexOf(key as unknown as ApproverDomain);
+      outputList += Object.values(ApproverDomain)[index];
+      outputList += ', ';
+    });
+
+    outputList = outputList.trim();
+    outputList = outputList.slice(0, outputList.length - 1)
+
+    return outputList;
   }
 
 }

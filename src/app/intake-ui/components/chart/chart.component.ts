@@ -14,12 +14,15 @@ export class ChartComponent implements OnInit {
 
     data: any;
     options: any;
+    fromDate: Date = new Date();
+    toDate: Date = new Date();
 
     constructor() {
 
     }
 
     ngOnInit() {
+        this.fromDate.setDate(this.fromDate.getDate() - 15);
         const documentStyle = getComputedStyle(document.documentElement);
         const textColor = documentStyle.getPropertyValue('--text-color');
         const textColorSecondary = documentStyle.getPropertyValue('--text-color-secondary');

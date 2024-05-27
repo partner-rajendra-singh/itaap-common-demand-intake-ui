@@ -22,7 +22,7 @@ export class AppTopBarComponent implements OnInit {
   user: string = '';
   userRole: string = '';
   isProgressing = false;
-  dmDomain: string = '';
+  dmDomainList: string[] = [];
 
   constructor(private router: Router,
     public layoutService: LayoutService,
@@ -30,11 +30,15 @@ export class AppTopBarComponent implements OnInit {
     private eventService: EventService) {
   }
   ngOnInit(): void {
+    this.dmDomainList = [];
     if (this.authService.isAuthenticatedUser()) {
       this.user = this.authService.currentUserValue.email;
       this.userRole = this.authService.getCurrentUserRole();
       if (this.authService.isDM()) {
-        this.dmDomain = this.getDomainValue(this.authService.currentUserValue.domain);
+        this.authService.currentUserValue.domain.forEach(item => {
+          this.dmDomainList.push(this.getDomainValue(item));
+        })
+        
       }
     }
 

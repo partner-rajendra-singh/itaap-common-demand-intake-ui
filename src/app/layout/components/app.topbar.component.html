@@ -24,8 +24,8 @@
         animationDuration=".5s" />
       <div class="mr-2" style="align-self: center; text-align: end">
         <span class="font-medium text-xl">{{user}}</span>
-        <div *ngIf="dmDomain==''">{{userRole}}</div>
-        <div *ngIf="dmDomain!=''">{{userRole}} | {{dmDomain}}</div>
+        <div *ngIf="dmDomainList.length==0">{{userRole}}</div>
+        <div *ngIf="dmDomainList.length>0">{{userRole}} | {{dmDomainList}}</div>
       </div>
       <div style="align-self: center;">
         <i class="pi pi-user" style="font-size: 1.5rem; margin: 0.4rem; margin-left: 1rem;"> </i>

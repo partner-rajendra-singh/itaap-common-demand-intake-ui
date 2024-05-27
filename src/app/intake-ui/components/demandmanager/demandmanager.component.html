@@ -4,7 +4,7 @@
     <div class="grid">
       <div class="col-12 xs:col-12 sm:col-12 lg:col-12 xl:col-12">
         <p-tabView *ngIf="authService.isDM()">
-          <p-tabPanel header="Demand Manager ({{getDomainValue(domain)}})">
+          <p-tabPanel header="Demand Manager ({{getDomainValueList(domain)}})">
             <div class="grid">
               <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
                 <label required class="asterisk-if-mandatory" for="decisionDate">Decision Date</label>

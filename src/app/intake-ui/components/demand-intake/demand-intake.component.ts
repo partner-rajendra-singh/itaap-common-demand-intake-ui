@@ -65,12 +65,12 @@ export class DemandIntakeComponent implements OnInit {
                     visible: true
                 },
                 {
-                    label: 'DM',
+                    label: 'Demand Manager',
                     routerLink: 'demandmanager',
                     visible: (!this.eventService.isNewDemand && !this.eventService.isMyDemand && (this.authService.isDM() || this.authService.isCCB())),
                 },
                 {
-                    label: 'CCB',
+                    label: 'CCB Member',
                     routerLink: 'ccb',
                     visible: (!this.eventService.isNewDemand && !this.eventService.isMyDemand && this.authService.isCCB()),
                 }

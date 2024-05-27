@@ -1,8 +1,8 @@
 export enum ApproverDomain {
     integration = 'Integration/ITaaP',
     dataModelling = 'Data Modelling',
-    adlL1 = 'Adl L1',
-    adlL2 = 'Adl L2',
+    adlL1 = 'ADL L1',
+    adlL2 = 'ADL L2',
     gold = 'Gold',
     mdm = 'MDM',
     ia = 'I&A',

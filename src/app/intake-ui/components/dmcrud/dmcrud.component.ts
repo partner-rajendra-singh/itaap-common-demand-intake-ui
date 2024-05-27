@@ -26,7 +26,7 @@ export class DMCRUDComponent {
   ngOnInit() {
     this.adminService.approver = new Approver;
     this.domains = Object.values(ApproverDomain);
-    this.selectedDomain = this.getValue(this.demandIntakeService.getDemandInformation().demandManagerInfo.domain);
+    // this.selectedDomain = this.getValue(this.demandIntakeService.getDemandInformation().demandManagerInfo.domain);
 
     this.adminService.getAllDM().pipe(
       map((response: any) => {
@@ -78,38 +78,40 @@ export class DMCRUDComponent {
   onSubmit() {
     this.eventService.progressBarEvent.emit(true);
     console.log("this.selectedDomain", this.selectedDomain)
-    if (this.selectedDomain && this.selectedDomain != '') {
-      this.adminService.approver.domain = this.getKey(this.selectedDomain);
-      if (this.adminService.validateApproverRequest()) {
-        this.adminService.addApprover('DEMAND_MANAGER')
-          .pipe(first())
-          .subscribe(
-            response => {
-              this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Demand Manager is added successfully!' });
-              this.closeAddDMDialog();
-              this.ngOnInit();
-            },
-            error => {
-              this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Failed to add Demand Manager!' });
-              this.eventService.progressBarEvent.emit(false);
-              this.closeAddDMDialog();
-              this.ngOnInit();
-            });
+    // if (this.selectedDomain && this.selectedDomain != '') {
 
-      } else {
-        this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Please fill the all the fields!' });
-        this.eventService.progressBarEvent.emit(false);
-      }
+    if (this.adminService.validateApproverRequest()) {
+      this.adminService.approver.domain = this.getKey(this.adminService.approver.domain);
+      this.adminService.addApprover('DEMAND_MANAGER')
+        .pipe(first())
+        .subscribe(
+          response => {
+            this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Demand Manager is added successfully!' });
+            this.closeAddDMDialog();
+            this.ngOnInit();
+          },
+          error => {
+            this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Failed to add Demand Manager!' });
+            this.eventService.progressBarEvent.emit(false);
+            this.closeAddDMDialog();
+            this.ngOnInit();
+          });
+
     } else {
       this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Please fill the all the fields!' });
       this.eventService.progressBarEvent.emit(false);
     }
+    // } else {
+    //   this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Please fill the all the fields!' });
+    //   this.eventService.progressBarEvent.emit(false);
+    // }
   }
 
   onUpdate() {
     this.eventService.progressBarEvent.emit(true);
-    this.adminService.approver.domain = this.getKey(this.selectedDomain);
+
     if (this.adminService.validateApproverRequest()) {
+      this.adminService.approver.domain = this.getKey(this.adminService.approver.domain);
       this.adminService.updateApprover('DEMAND_MANAGER')
         .pipe(first())
         .subscribe(

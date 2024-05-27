@@ -6,5 +6,5 @@ export class User {
     role!: string;
     otpSent!: boolean;
     expireTime!: Date;
-    domain!: string;
+    domain!: string[];
 }
