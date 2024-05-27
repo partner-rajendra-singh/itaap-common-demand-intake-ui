@@ -98,3 +98,10 @@ img {
   align-items: center;
   text-align: center;
 }
+.p-steps .p-steps-item:before {
+  border-top: 0px solid #dee2e6 !important;
+}
+
+.p-steps .p-steps-item .p-menuitem-link .p-steps-number {
+  border-radius: 17px !important;
+}

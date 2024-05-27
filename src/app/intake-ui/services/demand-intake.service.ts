@@ -24,6 +24,7 @@ export class DemandIntakeService {
   baseUrl: string = environment.baseUrl;
   demandInformation = new Demand();
   attachments = Array(5);
+  isNew!: boolean
 
   constructor(private http: HttpClient, private router: Router, private authService: AuthService, private messageService: MessageService,
     private eventService: EventService) { }
@@ -38,6 +39,7 @@ export class DemandIntakeService {
 
   setDemand(demand: Demand, isNew: boolean) {
     if (isNew) {
+      this.isNew = true;
       this.attachments = [];
       this.demandInformation = new Demand();
     } else {
