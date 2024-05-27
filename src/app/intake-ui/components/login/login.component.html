@@ -1,0 +1,33 @@
+<p-toast></p-toast>
+<div class="surface-ground flex align-items-center justify-content-center min-h-screen min-w-screen overflow-hidden">
+    <div class="flex flex-column align-items-center justify-content-center">
+        <div
+            style="border-radius:56px; padding:0.3rem; background: linear-gradient(180deg, var(--primary-color) 10%, rgba(33, 150, 243, 0) 30%);">
+            <div class="w-full surface-card py-8 px-5 sm:px-8" style="border-radius:53px">
+                <div class="text-center mb-5">
+                    <img src="assets/images/philips-logo.png" alt="Image" height="100" class="mb-3">
+                    <div class="text-600 text-xl font-medium mb-3">Welcome!</div>
+                    <div class="text-900 text-4xl font-medium mb-3">EADI</div>
+                    <div class="text-900 text-2xl font-medium mb-3">Demand Intake Tool</div>
+                    <span class="text-600 font-medium">Sign in to continue</span>
+                </div>
+
+                <div class="md:w-30rem">
+                    <label for="email1" class="block text-900 text-xl font-medium mb-2">Email</label>
+                    <div class="p-inputgroup mb-5 w-full">
+                        <input id="email1" type="email" [(ngModel)]='email' (blur)="eventService.checkEmailValue(email)"
+                            placeholder="Email address" pInputText style="padding:1rem" [disabled]="otpSent" />
+                        <button pButton pRipple type="button" label="Get OTP" (click)="getOTP()" [disabled]="otpSent"></button>
+                    </div>
+                    <div *ngIf="otpSent">
+                        <label for="password1" class="block text-900 font-medium text-xl mb-2">OTP</label>
+                        <input styleClass="mb-5" style="padding:1rem" pInputText class="mb-5 w-full" id="otp"
+                            [(ngModel)]='token' type="password"
+                            placeholder="Enter OTP received on your email address" />
+                        <button pButton pRipple label="Sign In" class="w-full p-3 text-xl" (click)="login()"></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
