@@ -13,6 +13,7 @@ import { MessageService } from 'primeng/api';
 import { AllDemands } from '../models/all-demands';
 import { EventService } from './event.service';
 import { Attachment } from '../models/attachment';
+import { Introduction } from '../models/introduction';
 
 
 @Injectable({
@@ -242,9 +243,6 @@ export class DemandIntakeService {
           'X-Correlation-ID': 'abc'
         })
       };
-
-      // this.demandInformation.requesterInfo.requestedBy = this.authService.currentUserValue.email;
-      // console.log("attachments: ", this.attachments);
       const formData: FormData = new FormData();
       for (let i = 0; i < this.attachments.length; i++) {
         if (this.attachments[i]) {
@@ -254,7 +252,9 @@ export class DemandIntakeService {
       formData.append('demand', JSON.stringify(this.demandInformation));
 
       console.log("formdata demand, files", formData.get('demand'), formData.get('files'))
-      return this.http.post<any>(url, formData, headerOptions)
+      return this
+        .http
+        .post<Introduction>(url, formData, headerOptions)
         .pipe(map(response => {
           console.log("saveDemandWithAttachment() Response :", response)
           this.eventService.progressBarEvent.emit(false);
@@ -343,18 +343,15 @@ export class DemandIntakeService {
 
   getAttachmentsById(fileId: number) {
     this.eventService.progressBarEvent.emit(true);
-    let url = this.baseUrl + '/common/demand-intake/attachment' + `/download/${fileId}`;
-    `/download/${fileId}`
-    let headerOptions = {
+    let url = this.baseUrl + '/common/demand-intake/attachment/download/' + fileId;
+    return this.http.get(url, {
+      responseType: 'blob',
+      observe: 'response',
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         'X-Correlation-ID': 'abc',
         'Requester': this.authService.currentUserValue.email
       })
-    };
-    return this.http.get(url, {
-      responseType: 'blob',
-      observe: 'response'
     });
   }
 
@@ -374,7 +371,7 @@ export class DemandIntakeService {
   getAttachmentUploadURL() {
     return this.baseUrl
       + `/common/demand-intake/attachment/upload/${this.demandInformation.introduction.demandIntakeId}`
-      +`/uploadedBy?=${this.demandInformation.introduction.requestedBy}`
+      + `?uploadedBy=${this.demandInformation.introduction.requestedBy}`
   }
 
 }

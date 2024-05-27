@@ -54,7 +54,10 @@ export class IntroductionComponent {
       .subscribe(
         response => {
           this.messageService.add({ key: 'success', severity: 'success', summary: 'Success', detail: 'Demand Saved Successfully!' });
-          this.router.navigate(['view']);
+          // this.router.navigate(['view']);
+          this.demandIntakeService.demandInformation.introduction.demandIntakeId = response.demandIntakeId;
+          this.demandIntakeService.demandInformation.introduction.requestedBy = response.requestedBy;
+          this.router.navigate(['demand-intake/requester']);
         },
         error => {
           this.messageService.add({ key: 'error', severity: 'error', summary: 'Error', detail: 'Demand Failed to Save!' });

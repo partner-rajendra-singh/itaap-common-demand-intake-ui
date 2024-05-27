@@ -5,9 +5,8 @@ import { MessageService, PrimeNGConfig } from 'primeng/api';
 import { AuthService } from '../../services/auth.service';
 import { first } from 'rxjs/operators';
 import { EventService } from '../../services/event.service';
-import * as FileSaver from 'file-saver';
 import { Attachment } from '../../models/attachment';
-import { Demand } from '../../models/demand';
+import { HttpHeaders } from '@angular/common/http';
 
 @Component({
   selector: 'app-attachment',
@@ -17,12 +16,13 @@ import { Demand } from '../../models/demand';
 export class AttachmentComponent implements OnInit {
   attachmentInfo: Attachment[] = [];
 
-  fileUploadUrl: string = "";
+  fileUploadUrl!: string;
   submitted: boolean = false;
   visibleNextButton!: boolean;
   visibleSaveButton!: boolean;
   visibleSubmitButton!: boolean;
   index: any;
+  httpHeaders: HttpHeaders = new HttpHeaders;
 
   constructor(private config: PrimeNGConfig,
     public demandIntakeService: DemandIntakeService, private router: Router,
@@ -71,6 +71,10 @@ export class AttachmentComponent implements OnInit {
   ngOnInit() {
     console.log("attachment demand", this.demandIntakeService.getDemandInformation())
     this.attachmentInfo = this.demandIntakeService.getDemandInformation().attachmentInfo;
+    this.fileUploadUrl = this.demandIntakeService.getAttachmentUploadURL();
+    this.httpHeaders.set('X-Correlation-ID', 'abc');
+    this.httpHeaders.set('Access-Control-Allow-Origin', 'http://localhost:4200')
+    console.log("this.fileUploadUrl -> " + this.fileUploadUrl);
   }
 
   addAttachment() {
@@ -95,6 +99,7 @@ export class AttachmentComponent implements OnInit {
   }
 
   submitPage() {
+    this.uploadEvent(this.uploadCallback);
     this.demandIntakeService.submitDemandWithAttachment()
       .pipe(first())
       .subscribe(
@@ -168,6 +173,7 @@ export class AttachmentComponent implements OnInit {
 
             window.URL.revokeObjectURL(link.href);
             link.remove();
+            this.eventService.progressBarEvent.emit(false);
           }
           else {
             console.log("Unable to extract file")
@@ -212,16 +218,16 @@ export class AttachmentComponent implements OnInit {
     return type;
   }
 
-  getFileUploadURL(demandIntake:Demand) {
-
-  }
   files = [];
 
   totalSize: number = 0;
 
   totalSizePercent: number = 0;
 
-  choose(event: any, callback: any) {
+  uploadCallback: any;
+
+  choose(event: any, callback: any, uploadCallback: any) {
+    this.uploadCallback = uploadCallback;
     callback();
   }
 
