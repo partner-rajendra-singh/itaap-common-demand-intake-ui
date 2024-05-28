@@ -340,6 +340,16 @@ export class DemandIntakeService {
     });
   }
 
+  deleteAttachmentsById(fileId: number) {
+    let url = this.baseUrl + '/common/demand-intake/attachment/delete/' + fileId;
+    let headerOptions = {
+      headers: new HttpHeaders({
+        'X-Correlation-ID': 'abc',
+      })
+    };
+    return this.http.get<any>(url, headerOptions);
+  }
+
   getRequesterDomain() {
     this.eventService.progressBarEvent.emit(true);
     let url = this.baseUrl + '/common/demand-intake/domain';
