@@ -7,7 +7,7 @@ import { first } from 'rxjs/operators';
 import { EventService } from '../../services/event.service';
 import { Attachment } from '../../models/attachment';
 import { HttpHeaders } from '@angular/common/http';
-import { FileUploadHandlerEvent } from 'primeng/fileupload';
+import { FileUploadEvent, FileUploadHandlerEvent } from 'primeng/fileupload';
 
 @Component({
   selector: 'app-attachment',
@@ -178,6 +178,17 @@ export class AttachmentComponent implements OnInit {
       )
   }
 
+  deleteAttachment(index: any) {
+    this.demandIntakeService
+      .deleteAttachmentsById(index)
+      .subscribe(
+        response => {
+          console.log(response);
+          this.messageService.add({ severity: 'info', summary: 'Success', detail: '' + response, life: 3000 });
+        }
+      )
+  }
+
   downloadAttachment(index: any, fileName: string) {
     this.demandIntakeService
       .getAttachmentsById(index)
@@ -229,7 +240,7 @@ export class AttachmentComponent implements OnInit {
     this.totalSizePercent = 0;
   }
 
-  onTemplatedUpload() {
+  onTemplatedUpload(event: FileUploadEvent) {
     this.messageService.add({ severity: 'info', summary: 'Success', detail: 'File Uploaded', life: 3000 });
   }
 

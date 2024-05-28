@@ -6,7 +6,7 @@
     <div class="col-12 xs:col-12 sm:col-12 lg:col-12 xl:col-12">
         <p-fieldset legend="Attachments" *ngIf="visibleSubmitButton || visibleNextButton || eventService.isStakeholderDemand">
             <p-fileUpload name="files" [url]="fileUploadUrl" [multiple]="true" [headers]="httpHeaders"
-                [withCredentials]="true" [customUpload]="false" (onUpload)="onTemplatedUpload()"
+                [withCredentials]="true" [customUpload]="false" (onUpload)="onTemplatedUpload($event)"
                 (uploadHandler)="customUploadHandler($event)" (onSelect)="onSelectedFiles($event)">
                 <ng-template pTemplate="header" let-files let-chooseCallback="chooseCallback"
                     let-clearCallback="clearCallback" let-uploadCallback="uploadCallback">
@@ -68,8 +68,8 @@
                                 <span class="font-semibold">{{ file.name }}</span>
                                 <div>{{ formatSize(file.size) }}</div>
                                 <!-- <p-badge value="Completed" class="mt-3" severity="success"></p-badge> -->
-                                <p-button icon="pi pi-times" (onClick)="removeUploadedFileCallback(index)"
-                                    (rounded)="true" (outlined)="true" severity="danger" />
+                                <!-- <p-button icon="pi pi-times" (onClick)="removeUploadedFileCallback(index)"
+                                    (rounded)="true" (outlined)="true" severity="danger" /> -->
                             </div>
                         </div>
                     </div>
@@ -100,24 +100,25 @@
                 </ng-template>
                 <ng-template pTemplate="body" let-attachment>
                     <tr>
-                        <td>{{ attachment.description }}</td>
+                        <td class="text-900 font-semibold">{{ attachment.fileName }}</td>
                         <td>{{ attachment.uploadedBy }}</td>
                         <td>{{ attachment.uploadedDate | date: 'MMM dd, yyyy' }}</td>
                         <td>{{formatSize(attachment.size)}}</td>
                         <td class="justify-content-between">
                             <button pButton pRipple icon="pi pi-download"
-                                class="p-button-rounded p-button-sm p-button-success mr-2"></button>
-                            <button pButton pRipple icon="pi pi-trash"
-                                class="p-button-rounded p-button-sm p-button-warning"
+                                class="p-button-rounded p-button-sm p-button-success mr-2"
                                 (click)="downloadAttachment(attachment.attachmentId, attachment.fileName)"></button>
+                            <button pButton pRipple icon="pi pi-trash"
+                                (click)="deleteAttachment(attachment.attachmentId)"
+                                class="p-button-rounded p-button-sm p-button-warning"></button>
                         </td>
                     </tr>
                 </ng-template>
                 <ng-template pTemplate="emptymessage">
                     <tr>
-                      <td colspan="5">No attachments.</td>
+                        <td colspan="5">No attachments.</td>
                     </tr>
-                  </ng-template>
+                </ng-template>
             </p-table>
         </div>
     </div>
