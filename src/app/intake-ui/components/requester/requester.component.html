@@ -29,7 +29,6 @@
                                 (blur)="eventService.checkEmailValue(requesterInfo.requestedBy)"
                                 [disabled]="(eventService.isMyDemand && !requesterInfo.isAnotherRequester) || (!authService.isRequester() && !eventService.isMyDemand)"
                                 class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary">
-                                <label>{{(eventService.isMyDemand && !requesterInfo.isAnotherRequester)}}</label>
                         </div>
                         <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
                             <label for="role" required class="asterisk-if-mandatory">Role</label>
