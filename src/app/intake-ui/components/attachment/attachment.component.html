@@ -6,7 +6,8 @@
         <div class="col-12 xs:col-12 sm:col-12 lg:col-12 xl:col-12">
             <p-fieldset legend="Attachments">
                 <p-fileUpload name="files" [url]="fileUploadUrl" [multiple]="true" [headers]="httpHeaders"
-                    [withCredentials]="true" (onUpload)="onTemplatedUpload()" (onSelect)="onSelectedFiles($event)">
+                    [withCredentials]="true" [customUpload]="false" (onUpload)="onTemplatedUpload()"
+                    (uploadHandler)="customUploadHandler($event)" (onSelect)="onSelectedFiles($event)">
                     <ng-template pTemplate="header" let-files let-chooseCallback="chooseCallback"
                         let-clearCallback="clearCallback" let-uploadCallback="uploadCallback">
                         <div class="flex flex-wrap align-items-center flex-1 gap-2">
@@ -39,6 +40,10 @@
                                     </div>
                                     <span class="font-semibold">{{ file.name }}</span>
                                     <div>{{ formatSize(file.size) }}</div>
+                                    <div class="p-inputgroup w-full">
+                                        <input #desc type="text" pInputText placeholder="Description" />
+                                        <p-button icon="pi pi-check" (onClick)="setDescription(desc, file)"></p-button>
+                                    </div>
                                     <!-- <p-badge value="Pending" severity="warning"></p-badge> -->
                                     <p-button icon="pi pi-times"
                                         (click)="onRemoveTemplatingFile($event, file, removeFileCallback, index)"
@@ -77,8 +82,36 @@
                 </p-fileUpload>
 
             </p-fieldset>
-            <div class="mt-5">
-                <p-fieldset legend="Uploaded Files">
+            <div class="card mt-5 mb-5">
+                <h5>Uploaded Files <label (click)="getAllAttachmentsByDemandId()"><i class="p-link pi pi-refresh"></i></label>
+                </h5>
+                <p-table [value]="attachmentInfo" [tableStyle]="{ 'min-width': '50rem' }">
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th>File Name</th>
+                            <th>Uploaded By</th>
+                            <th>Uploaded Date</th>
+                            <th>Size</th>
+                            <th style="width: 10%"></th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-attachment>
+                        <tr>
+                            <td>{{ attachment.description }}</td>
+                            <td>{{ attachment.uploadedBy }}</td>
+                            <td>{{ attachment.uploadedDate | date: 'MMM dd, yyyy' }}</td>
+                            <td>{{formatSize(attachment.size)}}</td>
+                            <td class="justify-content-between">
+                                <button pButton pRipple icon="pi pi-download"
+                                    class="p-button-rounded p-button-sm p-button-success mr-2"></button>
+                                <button pButton pRipple icon="pi pi-trash"
+                                    class="p-button-rounded p-button-sm p-button-warning"
+                                    (click)="downloadAttachment(attachment.attachmentId, attachment.fileName)"></button>
+                            </td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+                <!-- <p-fieldset legend="Uploaded Files">
                     <div class="grid mt-5">
                         <div class="col-12" style="display: inline-flex;">
                             <div class="col-4 text-900 text-xl font-medium">
@@ -122,7 +155,7 @@
                             </div>
                         </div>
                     </div>
-                </p-fieldset>
+                </p-fieldset> -->
             </div>
         </div>
     </div>
