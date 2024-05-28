@@ -178,13 +178,19 @@ export class AttachmentComponent implements OnInit {
       )
   }
 
-  deleteAttachment(index: any) {
+  deleteAttachment(index: any, fileName: string) {
+
     this.demandIntakeService
       .deleteAttachmentsById(index)
       .subscribe(
         response => {
           console.log(response);
           this.messageService.add({ severity: 'info', summary: 'Success', detail: response.attachmentResponse, life: 3000 });
+          this.getAllAttachmentsByDemandId();
+        },
+        error => {
+          console.log(error);
+          this.messageService.add({ severity: 'error', summary: 'Error', detail: 'File : ' + fileName + ' : ' + error.statusText, life: 3000 });
         }
       )
   }
