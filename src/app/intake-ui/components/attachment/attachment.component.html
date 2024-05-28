@@ -4,7 +4,7 @@
 
 <div class="grid">
     <div class="col-12 xs:col-12 sm:col-12 lg:col-12 xl:col-12">
-        <p-fieldset legend="Attachments" *ngIf="visibleSubmitButton || visibleNextButton">
+        <p-fieldset legend="Attachments" *ngIf="visibleSubmitButton || visibleNextButton || eventService.isStakeholderDemand">
             <p-fileUpload name="files" [url]="fileUploadUrl" [multiple]="true" [headers]="httpHeaders"
                 [withCredentials]="true" [customUpload]="false" (onUpload)="onTemplatedUpload()"
                 (uploadHandler)="customUploadHandler($event)" (onSelect)="onSelectedFiles($event)">
@@ -14,13 +14,13 @@
                         <p-button (onClick)="choose($event, chooseCallback, uploadCallback)" icon="pi pi-images"
                             [rounded]="true" [outlined]="true" label="Select"></p-button>
                         <p-button (onClick)="uploadEvent(uploadCallback)"
-                            *ngIf="!eventService.isNewDemand && (visibleSubmitButton || visibleNextButton)"
+                            *ngIf="!eventService.isNewDemand && (visibleSubmitButton || visibleNextButton || eventService.isStakeholderDemand)"
                             icon="pi pi-cloud-upload" [rounded]="true" [outlined]="true" severity="success"
                             [disabled]="(!files || files.length === 0)" label="Upload"></p-button>
                         <p-button (onClick)="clearCallback()" icon="pi pi-times" [rounded]="true" [outlined]="true"
                             severity="danger" label="Reset" [disabled]="!files || files.length === 0"></p-button>
                         <span class="text-500 font-medium"
-                            *ngIf="eventService.isNewDemand && (visibleSubmitButton || visibleNextButton) && files.length > 0">*Click
+                            *ngIf="eventService.isNewDemand && (visibleSubmitButton || visibleNextButton || eventService.isStakeholderDemand) && files.length > 0">*Click
                             Submit to save all
                             attachments</span>
                     </div>
