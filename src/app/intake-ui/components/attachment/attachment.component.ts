@@ -184,7 +184,7 @@ export class AttachmentComponent implements OnInit {
       .subscribe(
         response => {
           console.log(response);
-          this.messageService.add({ severity: 'info', summary: 'Success', detail: '' + response, life: 3000 });
+          this.messageService.add({ severity: 'info', summary: 'Success', detail: response.attachmentResponse, life: 3000 });
         }
       )
   }
