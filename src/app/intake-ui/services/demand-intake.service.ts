@@ -149,7 +149,7 @@ export class DemandIntakeService {
       }
 
       if (demand.attachmentInfo == null) {
-        demand.attachmentInfo = Array(new Attachment);
+        demand.attachmentInfo = Array();
       }
 
       demand.requesterInfo.requestedDate = new Date(demand.requesterInfo.requestedDate)
@@ -200,14 +200,15 @@ export class DemandIntakeService {
       }
 
       if (this.authService.isDM() || this.authService.isCCB()) {
+        let atleastOneSDSelected = this.demandInformation.solutionDirectionInfo.filter(item => item.value === true);
         let adlL1 = this.demandInformation.solutionDirectionInfo.find(item => item.solution === 'adlL1');
         let dataQuality = this.demandInformation.solutionDirectionInfo.find(item => item.solution === 'dataQuality');
 
-        if (adlL1 && adlL1.value && !this.eventService.checkEmailValue(this.demandInformation.eADIInfo.adlL1.sourceEmail)) {
+        if (atleastOneSDSelected.length == 0 || (adlL1 && adlL1.value && !this.eventService.checkEmailValue(this.demandInformation.eADIInfo.adlL1.sourceEmail))) {
           this.messageService.add({ severity: 'warn', summary: 'Error', detail: 'Please fill required fields!' });
           this.router.navigate(['demand-intake/checklist']);
           return false;
-        } else if (dataQuality && dataQuality.value && (!this.eventService.checkEmailValue(this.demandInformation.eADIInfo.dataQuality.bpoEmail) || !this.eventService.checkEmailValue(this.demandInformation.eADIInfo.dataQuality.dataCleaningSpocEmail))) {
+        } else if (atleastOneSDSelected.length == 0 || (dataQuality && dataQuality.value && (!this.eventService.checkEmailValue(this.demandInformation.eADIInfo.dataQuality.bpoEmail) || !this.eventService.checkEmailValue(this.demandInformation.eADIInfo.dataQuality.dataCleaningSpocEmail)))) {
           this.messageService.add({ severity: 'warn', summary: 'Error', detail: 'Please fill required fields!' });
           this.router.navigate(['demand-intake/checklist']);
           return false;
@@ -358,7 +359,7 @@ export class DemandIntakeService {
       + `?uploadedBy=${this.authService.currentUserValue.email}`
   }
 
-  uploadAttachments(files: any) {
+  uploadAttachments(formData: any) {
     this.eventService.progressBarEvent.emit(true);
     let headerOptions = {
       headers: new HttpHeaders({
@@ -368,12 +369,12 @@ export class DemandIntakeService {
     };
     return this
       .http
-      .post<any>(this.getAttachmentUploadURL(), files, headerOptions)
-      .pipe(map(response => {
-        console.log("submitDemandWithAttachment() Response :", response)
+      .post<any>(this.getAttachmentUploadURL(), formData, headerOptions)
+      .subscribe(response => {
+        console.log("submitDemandWithAttachment() Response : ", response)
         this.eventService.progressBarEvent.emit(false);
         return response;
-      }));
+      });
   }
 }
 

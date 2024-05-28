@@ -27,7 +27,7 @@ export class AttachmentComponent implements OnInit {
 
   constructor(private config: PrimeNGConfig,
     public demandIntakeService: DemandIntakeService, private router: Router,
-    private messageService: MessageService, private authService: AuthService, private eventService: EventService
+    private messageService: MessageService, private authService: AuthService, public eventService: EventService
   ) {
 
     if (authService.isRequester()) {
@@ -204,7 +204,7 @@ export class AttachmentComponent implements OnInit {
       )
   }
 
-  files = [];
+  files: any = [];
 
   totalSize: number = 0;
 
@@ -239,6 +239,8 @@ export class AttachmentComponent implements OnInit {
       this.totalSize += parseInt(this.formatSize(file.size));
     });
     this.totalSizePercent = this.totalSize / 10;
+
+    // this.demandIntakeService.uploadAttachments(this.files);
   }
 
   uploadEvent(callback: any) {
@@ -263,6 +265,11 @@ export class AttachmentComponent implements OnInit {
   }
 
   customUploadHandler($event: FileUploadHandlerEvent) {
-    this.demandIntakeService.uploadAttachments(this.files);
+    let formData = new FormData();
+
+    for (let i = 0; i < this.files.length; i++) {
+      formData.append('files', this.files[i], this.files[i].name);
+    }
+    this.demandIntakeService.uploadAttachments(formData);
   }
 }

@@ -26,7 +26,7 @@ export class ViewDemandsComponent {
     console.log("ViewDemandsComponent isMyDemand", this.eventService.isMyDemand)
     this.isRequester = this.authService.isRequester();
     if (!this.isRequester) {
-      this.eventService.selectedDemandTabIndex = 0;
+      this.eventService.selectedDemandTabIndex = 1;
     }
 
     this.demandIntakeService.getAllDemands().pipe(
