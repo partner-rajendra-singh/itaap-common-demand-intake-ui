@@ -99,6 +99,6 @@ export class Demand {
 	eADIInfo: EADI = new EADI;
 	demandManagerInfo: DM = new DM;
 	ccbInfo: CCB = new CCB;
-	attachmentInfo: Attachment[] = Array(new Attachment);
+	attachmentInfo: Attachment[] = Array();
 	
 }
