@@ -26,7 +26,7 @@ export class AppComponent {
 
   ngOnInit() {
     this.primengConfig.ripple = true;
-    if (this.currentUser) {
+    if (this.isAuthenticated()) {
       this.router.navigate(['/view']);
     } else {
       this.router.navigate(['/login']);

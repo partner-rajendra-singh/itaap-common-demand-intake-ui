@@ -17,7 +17,7 @@ export class DemandIntakeComponent implements OnInit {
 
     constructor(private activatedRoute: ActivatedRoute, 
         private router: Router, public messageService: MessageService, 
-        public demandIntakeService: DemandIntakeService, private eventService: EventService, private authService: AuthService) {
+        public demandIntakeService: DemandIntakeService, private eventService: EventService, public authService: AuthService) {
         const demandIntakeId = this.activatedRoute.snapshot.paramMap.get('demandIntakeId');
         this.eventService.currentDemandIntakeId = this.demandIntakeService.demandInformation.introduction.demandIntakeId;
     }

@@ -38,8 +38,8 @@ export class DemandIntakeService {
   }
 
   setDemand(demand: Demand, isNew: boolean) {
+    this.isNew = isNew;
     if (isNew) {
-      this.isNew = true;
       this.attachments = [];
       this.demandInformation = new Demand();
     } else {
@@ -235,7 +235,7 @@ export class DemandIntakeService {
 
   saveDemandWithAttachment() {
     this.eventService.progressBarEvent.emit(true);
-    console.log("saveDemandWithAttachment: ", this.demandInformation)
+    console.log("saveDemandWithAttachment: REQUEST -> ", this.demandInformation)
 
     if (this.validateRequest(true)) {
 
@@ -245,18 +245,9 @@ export class DemandIntakeService {
           'X-Correlation-ID': 'abc'
         })
       };
-      const formData: FormData = new FormData();
-      for (let i = 0; i < this.attachments.length; i++) {
-        if (this.attachments[i]) {
-          formData.append('files', this.attachments[i]);
-        }
-      }
-      formData.append('demand', JSON.stringify(this.demandInformation));
-
-      console.log("formdata demand, files", formData.get('demand'), formData.get('files'))
       return this
         .http
-        .post<Introduction>(url, formData, headerOptions)
+        .post<Introduction>(url, this.demandInformation, headerOptions)
         .pipe(map(response => {
           console.log("saveDemandWithAttachment() Response :", response)
           this.eventService.progressBarEvent.emit(false);
@@ -294,16 +285,8 @@ export class DemandIntakeService {
         this.demandInformation.ccbInfo.decisionBy = this.authService.currentUserValue.email;
       }
 
-      console.log("attachments: ", this.attachments);
-      const formData: FormData = new FormData();
-      for (let i = 0; i < this.attachments.length; i++) {
-        if (this.attachments[i]) {
-          formData.append('files', this.attachments[i]);
-        }
-      }
-      formData.append('demand', JSON.stringify(this.demandInformation));
-
-      return this.http.post<any>(url, formData, headerOptions)
+      return this.http
+        .post<any>(url, this.demandInformation, headerOptions)
         .pipe(map(response => {
           console.log("submitDemandWithAttachment() Response :", response)
           this.eventService.progressBarEvent.emit(false);
@@ -331,8 +314,7 @@ export class DemandIntakeService {
   }
 
   getAllAttachmentsByDemandId(demandId: number) {
-    this.eventService.progressBarEvent.emit(true);
-    let url = this.baseUrl + '/common/demand-intake/attachment/fetch/all/{demandIntakeId}';
+    let url = this.baseUrl + '/common/demand-intake/attachment/fetch/all/' + demandId;
     let headerOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
@@ -373,8 +355,25 @@ export class DemandIntakeService {
   getAttachmentUploadURL() {
     return this.baseUrl
       + `/common/demand-intake/attachment/upload/${this.demandInformation.introduction.demandIntakeId}`
-      + `?uploadedBy=${this.demandInformation.introduction.requestedBy}`
+      + `?uploadedBy=${this.authService.currentUserValue.email}`
   }
 
+  uploadAttachments(files: any) {
+    this.eventService.progressBarEvent.emit(true);
+    let headerOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'X-Correlation-ID': 'abc',
+      })
+    };
+    return this
+      .http
+      .post<any>(this.getAttachmentUploadURL(), files, headerOptions)
+      .pipe(map(response => {
+        console.log("submitDemandWithAttachment() Response :", response)
+        this.eventService.progressBarEvent.emit(false);
+        return response;
+      }));
+  }
 }
 

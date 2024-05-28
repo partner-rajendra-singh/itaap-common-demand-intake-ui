@@ -7,6 +7,7 @@ import { first } from 'rxjs/operators';
 import { EventService } from '../../services/event.service';
 import { Attachment } from '../../models/attachment';
 import { HttpHeaders } from '@angular/common/http';
+import { FileUploadHandlerEvent } from 'primeng/fileupload';
 
 @Component({
   selector: 'app-attachment',
@@ -69,6 +70,7 @@ export class AttachmentComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log("this.demandIntakeService.isNew -> " + this.demandIntakeService.isNew)
     console.log("attachment demand", this.demandIntakeService.getDemandInformation())
     this.attachmentInfo = this.demandIntakeService.getDemandInformation().attachmentInfo;
     this.fileUploadUrl = this.demandIntakeService.getAttachmentUploadURL();
@@ -86,6 +88,9 @@ export class AttachmentComponent implements OnInit {
   }
 
   savePage() {
+    if (this.files.length > 0) {
+      this.uploadEvent(this.uploadCallback);
+    }
     this.demandIntakeService.saveDemandWithAttachment()
       .pipe(first())
       .subscribe(
@@ -158,6 +163,21 @@ export class AttachmentComponent implements OnInit {
     this.messageService.add({ severity: 'info', summary: 'Success', detail: 'Files Uploaded Successfully!' });
   }
 
+  setDescription(description: HTMLInputElement, file: any) {
+    file.description = description.value;
+    description.disabled = true;
+  }
+
+  getAllAttachmentsByDemandId() {
+    this.demandIntakeService
+      .getAllAttachmentsByDemandId(this.demandIntakeService.demandInformation.introduction.demandIntakeId)
+      .subscribe(
+        response => {
+          this.attachmentInfo = response;
+        }
+      )
+  }
+
   downloadAttachment(index: any, fileName: string) {
     this.demandIntakeService
       .getAttachmentsById(index)
@@ -182,42 +202,6 @@ export class AttachmentComponent implements OnInit {
           }
         }
       )
-  }
-
-  extToMimes(ext: string) {
-    let type = undefined;
-    switch (ext) {
-      case 'jpg':
-        type = 'image/jpg'
-        break;
-      case 'png':
-        type = 'image/png'
-        break;
-      case 'jpeg':
-        type = 'image/jpeg'
-        break;
-      case 'txt':
-        type = 'text/plain'
-        break;
-      case 'xls':
-        type = 'application/vnd.ms-excel'
-        break;
-      case 'doc':
-        type = 'application/msword'
-        break;
-      case 'xlsx':
-        type = 'application/vnd.ms-excel'
-        break;
-      case 'pdf':
-        type = 'application/pdf'
-        break;
-      case 'pptx':
-        type = 'application/pptx'
-        break;
-      default:
-
-    }
-    return type;
   }
 
   files = [];
@@ -276,5 +260,9 @@ export class AttachmentComponent implements OnInit {
       return `${formattedSize} ${sizes[i]}`;
     }
     return "";
+  }
+
+  customUploadHandler($event: FileUploadHandlerEvent) {
+    this.demandIntakeService.uploadAttachments(this.files);
   }
 }
