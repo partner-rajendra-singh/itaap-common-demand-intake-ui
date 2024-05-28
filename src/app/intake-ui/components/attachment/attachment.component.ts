@@ -47,7 +47,7 @@ export class AttachmentComponent implements OnInit {
     } else {
       if (authService.isDM() || authService.isCCB()) {
         this.visibleSaveButton = false;
-        if (this.eventService.isNewDemand) {
+        if (this.eventService.isNewDemand || this.eventService.isMyDemand || this.eventService.isStakeholderDemand) {
           this.visibleNextButton = false;
           this.visibleSubmitButton = true;
         } else if ((this.eventService.isMyDemand || this.eventService.isStakeholderDemand) && this.demandIntakeService.getDemandInformation().introduction.status != 'DRAFT' && this.demandIntakeService.getDemandInformation().introduction.status != 'PENDING_WITH_DM') {

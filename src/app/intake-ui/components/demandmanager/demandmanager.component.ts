@@ -35,7 +35,10 @@ export class DemandManagerComponent implements OnInit {
         this.visibleSubmitButton = false;
       } else if ((!this.eventService.isMyDemand && !this.eventService.isStakeholderDemand) && this.demandIntakeService.demandInformation.introduction.status == 'PENDING_WITH_CCB') {
         this.visibleSubmitButton = true;
-      } else if ((this.eventService.isMyDemand || this.eventService.isStakeholderDemand) && this.demandIntakeService.demandInformation.introduction.status == 'PENDING_WITH_CCB') {
+      } else if ((!this.eventService.isMyDemand && !this.eventService.isStakeholderDemand) && (this.demandIntakeService.demandInformation.introduction.status == 'REJECTED' || this.demandIntakeService.demandInformation.introduction.status == 'ACCEPTED'|| this.demandIntakeService.demandInformation.introduction.status == 'CCB_HOLD')) {
+        this.visibleNextButton = true;
+        this.visibleSubmitButton = false;
+      }else if ((this.eventService.isMyDemand || this.eventService.isStakeholderDemand) && this.demandIntakeService.demandInformation.introduction.status == 'PENDING_WITH_CCB') {
         this.visibleSubmitButton = false;
       } else if ((this.eventService.isMyDemand || this.eventService.isStakeholderDemand) && this.demandIntakeService.demandInformation.introduction.status == 'CCB_HOLD' || this.demandIntakeService.demandInformation.introduction.status == 'ACCEPTED' || this.demandIntakeService.demandInformation.introduction.status == 'REJECTED') {
         this.visibleSubmitButton = false;

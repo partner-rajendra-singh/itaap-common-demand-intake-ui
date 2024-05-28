@@ -52,6 +52,12 @@ $gutter: 1rem; //for primeflex grid system
   }
 }
 
+label.asterisk-if-mandatory::after {
+  content: " *";
+  color: red;
+}
+
+
 .textOverflow {
   overflow: hidden;
   text-overflow: ellipsis;
@@ -98,6 +104,7 @@ img {
   align-items: center;
   text-align: center;
 }
+
 .p-steps .p-steps-item:before {
   border-top: 0px solid #dee2e6 !important;
 }
