@@ -30,7 +30,10 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.scss"
+              "src/styles.scss",
+              "node_modules/primeflex/primeflex.scss",
+              "node_modules/primeicons/primeicons.css",
+              "node_modules/primeng/resources/primeng.min.css"
             ],
             "scripts": []
           },
@@ -130,7 +133,7 @@
       }
     }
   },
-	"cli": {
-		"analytics": false
-	}
+  "cli": {
+    "analytics": false
+  }
 }

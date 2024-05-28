@@ -1,0 +1,43 @@
+<div class="layout-topbar">
+  <a class="layout-topbar-logo" routerLink="/view">
+    <div class="flex" style="align-self: center; align-items: center;">
+      <img src="assets/images/philips-logo.png" alt="logo">
+      <div style="align-self: center; margin-left: 1rem;">
+        <span class="font-medium text-xl">EADI</span>
+        <div class="font-medium text-lg">Demand Intake Tool</div>
+      </div>
+    </div>
+  </a>
+  <button #menubutton class="p-link layout-menu-button layout-topbar-button" (click)="layoutService.onMenuToggle()">
+    <i class="pi pi-bars"></i>
+  </button>
+
+  <button #topbarmenubutton class="p-link layout-topbar-menu-button layout-topbar-button"
+    (click)="layoutService.showProfileSidebar()">
+    <i class="pi pi-ellipsis-v"></i>
+  </button>
+
+  <div #topbarmenu class="layout-topbar-menu"
+    [ngClass]="{'layout-topbar-menu-mobile-active': layoutService.state.profileSidebarVisible}">
+    <div class="flex" style="align-self: center;">
+      <p-progressSpinner styleClass="w-4rem h-4rem" strokeWidth="8" fill="var(--surface-ground)" *ngIf="isProgressing"
+        animationDuration=".5s" />
+      <div class="mr-2" style="align-self: center; text-align: end">
+        <span class="font-medium text-xl">{{user}}</span>
+        <div *ngIf="dmDomainList.length==0">{{userRole}}</div>
+        <div *ngIf="dmDomainList.length>0">{{userRole}} | {{dmDomainList}}</div>
+      </div>
+      <div style="align-self: center;">
+        <i class="pi pi-user" style="font-size: 1.5rem; margin: 0.4rem; margin-left: 1rem;"> </i>
+      </div>
+      <!-- <div>
+        <p-dropdown id="filterDeveloperDropdown" placeholder="User" [options]="allDevelopers" optionLabel="name"
+          [(ngModel)]="user" (onChange)="setUserId()"></p-dropdown>
+      </div> -->
+    </div>
+    <button class="p-link layout-topbar-button" (click)="logout($event)">
+      <i class="pi pi-sign-out"></i>
+      <span>Sign Out</span>
+    </button>
+  </div>
+</div>

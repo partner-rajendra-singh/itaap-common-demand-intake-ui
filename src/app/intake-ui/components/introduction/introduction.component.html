@@ -1,0 +1,62 @@
+<p-toast></p-toast>
+
+<div class="grid">
+  <div class="col-12 xs:col-12 sm:col-12 lg:col-12 xl:col-12">
+    <div class="grid">
+      <div class="col-4 xs:col-4 sm:col-4 lg:col-4 xl:col-4">
+        <label required for="isDocReferred" class="asterisk-if-mandatory" style="width: 100px">Have you checked
+          available solution(s) in <a target="_blank"
+            href="https://share.philips.com/sites/STS020210604094742/Pages/ADLDemandFunnelGrid.aspx">this</a>
+          catalog?</label>
+      </div>
+      <div class="col-8 xs:col-8 sm:col-8 lg:col-8 xl:col-8">
+        <input type="radio" name="isDocReferred" [(ngModel)]="demandInfo.isDocReferred" [value]="true">
+        <label>Yes</label>
+        <input type="radio" name="isDocReferred" checked="checked" [(ngModel)]="demandInfo.isDocReferred"
+          [value]="false">
+        <label>No</label> &nbsp;
+        <label>(If you are able to find an existing solution then no need to raise a new demand.)</label>
+      </div>
+
+      <div class="col-4 xs:col-4 sm:col-4 lg:col-4 xl:col-4">
+        <label required for="architectAligned" class="asterisk-if-mandatory" style="width: 100px">Architect
+          aligned?</label>
+      </div>
+      <div class="col-8 xs:col-8 sm:col-8 lg:col-8 xl:col-8">
+        <input type="radio" name="architectAligned" [(ngModel)]="demandInfo.architectAligned" [value]="true">
+        <label>Yes</label>
+        <input type="radio" name="architectAligned" checked="checked" [(ngModel)]="demandInfo.architectAligned"
+          [value]="false">
+        <label>No</label>
+      </div>
+
+    </div>
+    <p-fieldset legend="Introduction">
+      <div class="grid">
+        <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
+          <label required for="title" class="asterisk-if-mandatory" style="width: 100px">Demand Title</label>
+        </div>
+        <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
+          <input required id="title" type="text" [(ngModel)]="demandInfo.title" size="70"
+            class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary" />
+        </div>
+        <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
+          <label required for="description" class="asterisk-if-mandatory" style="width: 100px">Description</label>
+        </div>
+        <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
+          <textarea id="description" rows="3" cols="78" [(ngModel)]="demandInfo.description" pInputTextarea></textarea>
+        </div>
+      </div>
+    </p-fieldset>
+  </div>
+</div>
+
+
+<div class="grid grid-nogutter justify-content-between" *ngIf="visibleSaveButton">
+  <p-button label="Save For Later" (onClick)="savePage()" iconPos="left"></p-button>
+  <p-button label="Next" (onClick)="savePage()" icon="pi pi-angle-right" iconPos="right"></p-button>
+</div>
+<div class="grid grid-nogutter justify-content-end" *ngIf="!visibleSaveButton">
+  <p-button label="Next" *ngIf="demandIntakeService.isNew" (onClick)="savePage()" icon="pi pi-angle-right" iconPos="right"></p-button>
+  <p-button label="Next" *ngIf="!demandIntakeService.isNew" (onClick)="nextPage()" icon="pi pi-angle-right" iconPos="right"></p-button>
+</div>

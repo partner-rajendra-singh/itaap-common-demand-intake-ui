@@ -1,0 +1,136 @@
+<p-toast></p-toast>
+<p-toast key="success"></p-toast>
+<p-toast key="error"></p-toast>
+<div class="card">
+    <div class="grid">
+        <div class="col-12 xs:col-12 sm:col-12 lg:col-12 xl:col-12">
+            <p-fieldset legend="Attachments">
+                <p-fileUpload name="files" [url]="fileUploadUrl" [multiple]="true" [headers]="httpHeaders"
+                    [withCredentials]="true" (onUpload)="onTemplatedUpload()" (onSelect)="onSelectedFiles($event)">
+                    <ng-template pTemplate="header" let-files let-chooseCallback="chooseCallback"
+                        let-clearCallback="clearCallback" let-uploadCallback="uploadCallback">
+                        <div class="flex flex-wrap align-items-center flex-1 gap-2">
+                            <p-button (onClick)="choose($event, chooseCallback, uploadCallback)" icon="pi pi-images"
+                                [rounded]="true" [outlined]="true" label="Select"></p-button>
+                            <p-button (onClick)="uploadEvent(uploadCallback)" *ngIf="!demandIntakeService.isNew"
+                                icon="pi pi-cloud-upload" [rounded]="true" [outlined]="true" severity="success"
+                                [disabled]="(!files || files.length === 0)" label="Upload"></p-button>
+                            <p-button (onClick)="clearCallback()" icon="pi pi-times" [rounded]="true" [outlined]="true"
+                                severity="danger" label="Reset" [disabled]="!files || files.length === 0"></p-button>
+                            <span class="text-500 font-medium"
+                                *ngIf="demandIntakeService.isNew && files.length > 0">*Click Submit to save all
+                                attachments</span>
+                        </div>
+                    </ng-template>
+                    <ng-template pTemplate="content" let-files let-uploadedFiles="uploadedFiles"
+                        let-removeFileCallback="removeFileCallback"
+                        let-removeUploadedFileCallback="removeUploadedFileCallback">
+                        <div *ngIf="files?.length > 0">
+                            <h5>Pending</h5>
+                            <div class="flex flex-wrap p-0 sm:p-5 gap-5">
+                                <div *ngFor="let file of files; let i = index"
+                                    class="card m-0 px-6 flex flex-column border-1 surface-border align-items-center gap-3">
+                                    <div *ngIf="file.type.startsWith('image')">
+                                        <img role="presentation" [alt]="file.name" [src]="file.objectURL" width="100"
+                                            height="50" />
+                                    </div>
+                                    <div *ngIf="!file.type.startsWith('image')">
+                                        <i class="pi pi-file" style="font-size: 3rem"></i>
+                                    </div>
+                                    <span class="font-semibold">{{ file.name }}</span>
+                                    <div>{{ formatSize(file.size) }}</div>
+                                    <!-- <p-badge value="Pending" severity="warning"></p-badge> -->
+                                    <p-button icon="pi pi-times"
+                                        (click)="onRemoveTemplatingFile($event, file, removeFileCallback, index)"
+                                        (rounded)="true" (outlined)="true" severity="danger" />
+                                </div>
+                            </div>
+                        </div>
+                        <div *ngIf="uploadedFiles?.length > 0">
+                            <h5>Completed</h5>
+                            <div class="flex flex-wrap p-0 sm:p-5 gap-5">
+                                <div *ngFor="let file of uploadedFiles; let i = index"
+                                    class="card m-0 px-6 flex flex-column border-1 surface-border align-items-center gap-3">
+                                    <div *ngIf="file.type.startsWith('image')">
+                                        <img role="presentation" [alt]="file.name" [src]="file.objectURL" width="100"
+                                            height="50" />
+                                    </div>
+                                    <div *ngIf="!file.type.startsWith('image')">
+                                        <i class="pi pi-file" style="font-size: 3rem"></i>
+                                    </div>
+                                    <span class="font-semibold">{{ file.name }}</span>
+                                    <div>{{ formatSize(file.size) }}</div>
+                                    <!-- <p-badge value="Completed" class="mt-3" severity="success"></p-badge> -->
+                                    <p-button icon="pi pi-times" (onClick)="removeUploadedFileCallback(index)"
+                                        (rounded)="true" (outlined)="true" severity="danger" />
+                                </div>
+                            </div>
+                        </div>
+                    </ng-template>
+                    <ng-template pTemplate="file"> </ng-template>
+                    <ng-template pTemplate="empty">
+                        <div class="flex align-items-center justify-content-center flex-column">
+                            <i class="pi pi-cloud-upload border-2 border-circle p-5 text-5xl text-400 border-400"></i>
+                            <p class="mt-4 mb-0">Drag and drop files to here to upload.</p>
+                        </div>
+                    </ng-template>
+                </p-fileUpload>
+
+            </p-fieldset>
+            <div class="mt-5">
+                <p-fieldset legend="Uploaded Files">
+                    <div class="grid mt-5">
+                        <div class="col-12" style="display: inline-flex;">
+                            <div class="col-4 text-900 text-xl font-medium">
+                                <span id="program" aria-describedby="program-help">Filename</span>
+                            </div>
+                            <div class="col-2 text-900 text-xl font-medium">
+                                <span id="program" aria-describedby="program-help">Size</span>
+                            </div>
+                            <div class="col-2 text-900 text-xl font-medium">
+                                <label for="uploadDate">Date</label>
+                            </div>
+                            <div class="col-2 text-900 text-xl font-medium">
+                                <span icon="pi pi-download" label="download">Download</span>
+                            </div>
+                            <div class="col-2 text-900 text-xl font-medium">
+                                <span id="program" aria-describedby="program-help">Uploaded By</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="grid mt-5">
+                        <div class="col-12" style="display: inline-flex;"
+                            *ngFor="let item of attachmentInfo ; let i=index">
+                            <div class="col-4">
+                                <span id="program" aria-describedby="program-help">{{item.description}}</span>
+                            </div>
+                            <div class="col-2">
+                                <span id="program" aria-describedby="program-help">{{formatSize(item.size)}}</span>
+                            </div>
+                            <div class="col-2"
+                                *ngIf="demandIntakeService.demandInformation.attachmentInfo[i].description!=''">
+                                <label for="uploadDate">{{item.uploadedDate | date: 'MMM dd, yyyy' }}</label>
+                            </div>
+                            <div class="col-2"
+                                *ngIf="demandIntakeService.demandInformation.attachmentInfo[i].description!=''">
+                                <button pButton pRipple icon="pi pi-download" label="download"
+                                    class="p-button-info p-button-text p-button-sm mr-2"
+                                    (click)="downloadAttachment(item.attachmentId, item.fileName)"></button>
+                            </div>
+                            <div class="col-2">
+                                <span id="program" aria-describedby="program-help">{{item.uploadedBy}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </p-fieldset>
+            </div>
+        </div>
+    </div>
+
+    <div class="grid grid-nogutter justify-content-between">
+        <p-button label="Back" (onClick)="prevPage()" icon="pi pi-angle-left"></p-button>
+        <p-button label="Next" *ngIf="visibleNextButton" (onClick)="nextPage()" icon="pi pi-angle-right"></p-button>
+        <p-button label="Save For Later" *ngIf="visibleSaveButton" (onClick)="savePage()" iconPos="right"></p-button>
+        <p-button label="Submit" *ngIf="visibleSubmitButton" (onClick)="submitPage()" iconPos="right"></p-button>
+    </div>
+</div>
