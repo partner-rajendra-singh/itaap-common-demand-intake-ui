@@ -99,7 +99,9 @@ export class AttachmentComponent implements OnInit {
   }
 
   submitPage() {
-    this.uploadEvent(this.uploadCallback);
+    if (this.files.length > 0) {
+      this.uploadEvent(this.uploadCallback);
+    }
     this.demandIntakeService.submitDemandWithAttachment()
       .pipe(first())
       .subscribe(

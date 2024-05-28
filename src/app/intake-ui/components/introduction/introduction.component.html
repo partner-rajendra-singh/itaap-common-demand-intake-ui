@@ -57,5 +57,6 @@
   <p-button label="Next" (onClick)="savePage()" icon="pi pi-angle-right" iconPos="right"></p-button>
 </div>
 <div class="grid grid-nogutter justify-content-end" *ngIf="!visibleSaveButton">
-  <p-button label="Next" (onClick)="nextPage()" icon="pi pi-angle-right" iconPos="right"></p-button>
+  <p-button label="Next" *ngIf="demandIntakeService.isNew" (onClick)="savePage()" icon="pi pi-angle-right" iconPos="right"></p-button>
+  <p-button label="Next" *ngIf="!demandIntakeService.isNew" (onClick)="nextPage()" icon="pi pi-angle-right" iconPos="right"></p-button>
 </div>
