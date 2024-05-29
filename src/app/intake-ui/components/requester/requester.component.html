@@ -63,10 +63,10 @@
                         </div>
 
                         <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3" *ngIf="requesterInfo.isDemandPOC==false">
-                            <label for="project" required class="asterisk-if-mandatory">Project</label>
+                            <label for="project" required class="asterisk-if-mandatory">Project Name</label>
                         </div>
                         <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3" *ngIf="requesterInfo.isDemandPOC==true">
-                            <label for="project">Project</label>
+                            <label for="project">Project Name</label>
                         </div>
                         <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
                             <input id="project" type="text" [(ngModel)]="requesterInfo.project" size="60"

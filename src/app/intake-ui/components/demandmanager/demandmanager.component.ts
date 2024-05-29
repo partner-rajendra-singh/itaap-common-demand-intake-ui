@@ -25,13 +25,15 @@ export class DemandManagerComponent implements OnInit {
   solutionDirectionList!: SolutionDirection1[];
 
   constructor(private eventService: EventService, public demandIntakeService: DemandIntakeService, private router: Router, private messageService: MessageService,
-    public authService: AuthService) {
+    public authService: AuthService) {}
 
-    if (authService.isDM()) {
+  ngOnInit() {
+    if (this.authService.isDM()) {
       this.visibleNextButton = false;
       this.domain = this.authService.currentUserValue.domain;
       this.demandIntakeService.demandInformation.demandManagerInfo.domain = this.domain;
       if (this.demandIntakeService.getDemandInformation().introduction.status == 'ACCEPTED' || this.demandIntakeService.getDemandInformation().introduction.status == 'REJECTED') {
+        this.visibleNextButton = true;
         this.visibleSubmitButton = false;
       } else if ((!this.eventService.isMyDemand && !this.eventService.isStakeholderDemand) && this.demandIntakeService.demandInformation.introduction.status == 'PENDING_WITH_CCB') {
         this.visibleSubmitButton = true;
@@ -61,9 +63,7 @@ export class DemandManagerComponent implements OnInit {
       }
       this.visibleSubmitButton = false;
     }
-  }
 
-  ngOnInit() {
     this.demandIntakeService.getDemandInformation().demandManagerInfo.decisionDate = new Date(this.demandIntakeService.getDemandInformation().demandManagerInfo.decisionDate);
     this.demandManagerInfo = this.demandIntakeService.getDemandInformation().demandManagerInfo;
     this.decisions = Object.values(DemandIntakeDecision);
