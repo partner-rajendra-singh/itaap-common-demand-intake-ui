@@ -26,7 +26,7 @@ export class DemandIntakeService {
   attachments = Array(5);
   isNew!: boolean
 
-  constructor(private http: HttpClient, private router: Router, private authService: AuthService, private messageService: MessageService,
+  constructor(public http: HttpClient, private router: Router, private authService: AuthService, private messageService: MessageService,
     private eventService: EventService) { }
 
   getDemandInformation() {
@@ -315,6 +315,7 @@ export class DemandIntakeService {
   }
 
   getAllAttachmentsByDemandId(demandId: number) {
+    this.eventService.progressBarEvent.emit(true);
     let url = this.baseUrl + '/common/demand-intake/attachment/fetch/all/' + demandId;
     let headerOptions = {
       headers: new HttpHeaders({
@@ -369,22 +370,26 @@ export class DemandIntakeService {
       + `?uploadedBy=${this.authService.currentUserValue.email}`
   }
 
-  uploadAttachments(formData: any) {
+  uploadAttachments(files: any) {
+    let formData = new FormData();
+
+    for (let i = 0; i < files.length; i++) {
+      formData.append('files', files[i], files[i].name);
+    }
+
     this.eventService.progressBarEvent.emit(true);
-    let headerOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        'X-Correlation-ID': 'abc',
-      })
-    };
     return this
       .http
-      .post<any>(this.getAttachmentUploadURL(), formData, headerOptions)
-      .subscribe(response => {
-        console.log("submitDemandWithAttachment() Response : ", response)
-        this.eventService.progressBarEvent.emit(false);
-        return response;
-      });
+      .request(
+        'post',
+        this.getAttachmentUploadURL(),
+        {
+          body: formData,
+          headers: new HttpHeaders({
+            'Content-Type': 'application/json',
+            'X-Correlation-ID': 'abc',
+          })
+        });
   }
 }
 
