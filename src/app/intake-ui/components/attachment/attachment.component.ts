@@ -70,6 +70,7 @@ export class AttachmentComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.getAllAttachmentsByDemandId();
     console.log("this.demandIntakeService.isNew -> " + this.demandIntakeService.isNew)
     console.log("attachment demand", this.demandIntakeService.getDemandInformation())
     this.attachmentInfo = this.demandIntakeService.getDemandInformation().attachmentInfo;
@@ -174,6 +175,7 @@ export class AttachmentComponent implements OnInit {
       .subscribe(
         response => {
           this.attachmentInfo = response;
+          this.eventService.progressBarEvent.emit(false);
         }
       )
   }
@@ -222,9 +224,8 @@ export class AttachmentComponent implements OnInit {
   }
 
   files: any = [];
-
+  uploadedFiles: any = [];
   totalSize: number = 0;
-
   totalSizePercent: number = 0;
 
   uploadCallback: any;
@@ -256,8 +257,7 @@ export class AttachmentComponent implements OnInit {
       this.totalSize += parseInt(this.formatSize(file.size));
     });
     this.totalSizePercent = this.totalSize / 10;
-
-    // this.demandIntakeService.uploadAttachments(this.files);
+    this.customUploadHandler();
   }
 
   uploadEvent(callback: any) {
@@ -281,12 +281,40 @@ export class AttachmentComponent implements OnInit {
     return "";
   }
 
-  customUploadHandler($event: FileUploadHandlerEvent) {
+  customUploadHandler() {
     let formData = new FormData();
 
     for (let i = 0; i < this.files.length; i++) {
       formData.append('files', this.files[i], this.files[i].name);
     }
-    this.demandIntakeService.uploadAttachments(formData);
+    this.demandIntakeService
+      .http
+      .post<any>(this.demandIntakeService.getAttachmentUploadURL(), formData)
+      .subscribe((response) => {
+        this.uploadedFiles.push(...this.files);
+        this.files.splice(0, this.files.length);
+        this.messageService.add({ severity: 'info', summary: 'Success', detail: response.attachmentResponse, life: 3000 });
+        this.getAllAttachmentsByDemandId();
+      })
+  }
+
+  clonedAttachments: { [s: number]: Attachment } = {};
+
+  onDescRowEdit(attachment: Attachment) {
+    throw new Error('Method not implemented.');
+  }
+
+  onRowEditInit(attachment: Attachment) {
+    this.clonedAttachments[attachment.attachmentId] = { ...attachment };
+  }
+
+  onRowEditSave(attachment: Attachment) {
+      delete this.clonedAttachments[attachment.attachmentId];
+      this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Attachment is updated' });
+  }
+
+  onRowEditCancel(attachment: Attachment, index: number) {
+    this.attachmentInfo[index] = this.clonedAttachments[attachment.attachmentId];
+    delete this.clonedAttachments[attachment.attachmentId];
   }
 }
