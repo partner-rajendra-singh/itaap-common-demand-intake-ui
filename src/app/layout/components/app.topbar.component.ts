@@ -47,6 +47,8 @@ export class AppTopBarComponent implements OnInit {
     })
   }
 
+  enableLogOutTooltip(){ }
+
   getDomainValue(key: string): string {
     const status = Object.keys(ApproverDomain).indexOf(key as unknown as ApproverDomain);
     let s = Object.values(ApproverDomain)[status];
