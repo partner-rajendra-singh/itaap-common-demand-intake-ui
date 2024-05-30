@@ -18,11 +18,13 @@ import { DMCRUDComponent } from './intake-ui/components/dmcrud/dmcrud.component'
 import { CCBCRUDComponent } from './intake-ui/components/ccbcrud/ccbcrud.component';
 import { AuthGuard } from './intake-ui/services/auth-guard.service';
 import { MainAppLayoutComponent } from './layout/main.app.layout.component';
+import { MsalGuard } from '@azure/msal-angular';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
   {
-    path: '', component: MainAppLayoutComponent,
+    path: '', component: MainAppLayoutComponent, 
+    // canActivate: [MsalGuard],
     children: [
       { path: 'view', component: ViewDemandsComponent },
       { path: 'report', component: WipComponent, canActivate: [AuthGuard] },

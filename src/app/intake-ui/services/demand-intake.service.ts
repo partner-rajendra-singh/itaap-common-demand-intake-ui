@@ -391,5 +391,12 @@ export class DemandIntakeService {
           })
         });
   }
+  getDemandStatusValue(demandStatus: string) {
+    return demandStatus.toLowerCase();
+  }
+
+  getApproverStatusValue(userStatus: string) {
+    return userStatus.toLowerCase();
+  }
 }
 

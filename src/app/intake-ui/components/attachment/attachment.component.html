@@ -119,9 +119,9 @@
                             <button pButton pRipple icon="pi pi-times" pCancelEditableRow *ngIf="editing"
                                 class="p-button-rounded p-button-sm p-button-danger mr-2"
                                 (click)="onRowEditCancel(attachment, ri)" ></button>
-                            <!-- <button pButton pRipple icon="pi pi-pencil" pInitEditableRow *ngIf="!editing"
+                            <button pButton pRipple icon="pi pi-pencil" pInitEditableRow *ngIf="!editing"
                                 class="p-button-rounded p-button-sm p-button-text mr-2"
-                                (click)="onRowEditInit(attachment)"></button> -->
+                                (click)="onRowEditInit(attachment)"></button>
                             <button pButton pRipple icon="pi pi-download" *ngIf="!editing"
                                 class="p-button-rounded p-button-sm p-button-success mr-2"
                                 (click)="downloadAttachment(attachment.attachmentId, attachment.fileName)"></button>
