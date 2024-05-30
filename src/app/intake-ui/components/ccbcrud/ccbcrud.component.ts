@@ -4,18 +4,19 @@ import { map, catchError, throwError, first } from 'rxjs';
 import { Approver } from '../../models/approver';
 import { AdminService } from '../../services/admin.service';
 import { EventService } from '../../services/event.service';
+import { DemandIntakeService } from '../../services/demand-intake.service';
 
 @Component({
   selector: 'app-ccbcrud',
   templateUrl: './ccbcrud.component.html',
 })
-export class CCBCRUDComponent implements OnInit{
+export class CCBCRUDComponent implements OnInit {
 
   ccbList!: Approver[];
   visibleAddCCBDialog!: boolean;
   visibleUpdateCCBDialog!: boolean;
 
-  constructor(private messageService: MessageService, public eventService: EventService, public adminService: AdminService) { }
+  constructor(public demandIntakeService: DemandIntakeService, private messageService: MessageService, public eventService: EventService, public adminService: AdminService) { }
 
   ngOnInit() {
     this.adminService.approver = new Approver;

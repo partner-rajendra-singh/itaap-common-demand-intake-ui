@@ -1,48 +1,49 @@
 <p-toast></p-toast>
-<div class="grid">
+<div class="card grid">
   <div class="col-12 xs:col-12 sm:col-12 lg:col-12 xl:col-12">
-    <p-card>
-      <ng-template pTemplate="content">
-        <div class="grid">
-          <div class="col-12 xs:col-12 sm:col-12 lg:col-12 xl:col-12">
-            <p-fieldset legend="Add/Remove CCB Member">
-              <div class="grid">
-                <div class="col-12 xs:col-12 sm:col-12 lg:col-12 xl:col-12">
-                  <div *ngIf="ccbList.length == 0">
-                    <p>No CCB Members configured, please Add CCB Member!</p>
-                  </div>
-                  <p-table [value]="ccbList" *ngIf="ccbList.length > 0">
-                    <ng-template pTemplate="header">
-                      <tr>
-                        <th>Email Address</th>
-                        <th>Status</th>
-                        <th>Created On</th>
-                        <th>Updated On</th>
-                        <th>Action</th>
-                      </tr>
-                    </ng-template>
-                    <ng-template pTemplate="body" let-ccb>
-                      <tr>
-                        <td>{{ ccb.email }}</td>
-                        <td>{{ ccb.status }}</td>
-                        <td>{{ ccb.createdDate | date: 'MMM dd, yyyy' }}</td>
-                        <td>{{ ccb.updatedDate | date: 'MMM dd, yyyy' }}</td>
-                        <td>
-                          <p-button icon="pi pi-user-edit" (onClick)="showUpdateCCBDialog(ccb)"></p-button>
-                        </td>
-                      </tr>
-                    </ng-template>
-                  </p-table>
-                </div>
+    <div class="grid">
+      <div class="col-12 xs:col-12 sm:col-12 lg:col-12 xl:col-12">
+        <p-fieldset legend="Add/Remove CCB Member">
+          <div class="grid">
+            <div class="col-12 xs:col-12 sm:col-12 lg:col-12 xl:col-12">
+              <div *ngIf="ccbList.length == 0">
+                <p>No CCB Members configured, please Add CCB Member!</p>
               </div>
-              <div class="col-12 xs:col-12 sm:col-12 lg:col-12 xl:col-12">
-                <p-button label="Add" icon="pi pi-plus" (onClick)="showAddCCBDialog()"></p-button>
-              </div>
-            </p-fieldset>
+              <p-table [value]="ccbList" *ngIf="ccbList.length > 0">
+                <ng-template pTemplate="header">
+                  <tr>
+                    <th>Email Address</th>
+                    <th>Status</th>
+                    <th>Created On</th>
+                    <th>Updated On</th>
+                    <th>Action</th>
+                  </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-ccb>
+                  <tr>
+                    <td>{{ ccb.email }}</td>
+                    <td>
+                      <span
+                        [class]="'align-self-center approver-badge status-' + demandIntakeService.getApproverStatusValue(ccb.status)">
+                        {{ccb.status}}
+                      </span>
+                    </td>
+                    <td>{{ ccb.createdDate | date: 'MMM dd, yyyy' }}</td>
+                    <td>{{ ccb.updatedDate | date: 'MMM dd, yyyy' }}</td>
+                    <td>
+                      <p-button icon="pi pi-user-edit" (onClick)="showUpdateCCBDialog(ccb)"></p-button>
+                    </td>
+                  </tr>
+                </ng-template>
+              </p-table>
+            </div>
           </div>
-        </div>
-      </ng-template>
-    </p-card>
+          <div class="col-12 xs:col-12 sm:col-12 lg:col-12 xl:col-12">
+            <p-button label="Add" icon="pi pi-plus" (onClick)="showAddCCBDialog()"></p-button>
+          </div>
+        </p-fieldset>
+      </div>
+    </div>
   </div>
 </div>
 

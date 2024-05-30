@@ -17,8 +17,6 @@ import { AppFooterComponent } from './components/app.footer.component';
 import { AppMenuComponent } from './components/app.menu.component';
 import { AppSidebarComponent } from './components/app.sidebar.component';
 import { ButtonModule } from 'primeng/button';
-// import { MsalModule } from '@azure/msal-angular';
-// import { InteractionType, PublicClientApplication } from '@azure/msal-browser';
 import { DropdownModule } from 'primeng/dropdown';
 import { ProgressBarModule } from 'primeng/progressbar';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
@@ -50,24 +48,6 @@ const isIE = window.navigator.userAgent.indexOf('MSIE ') > -1 || window.navigato
     DropdownModule,
     ProgressBarModule,
     ProgressSpinnerModule
-
-  //   MsalModule.forRoot(new PublicClientApplication({
-  //     auth: {
-  //       clientId: 'a08bafed-c04f-403e-bd0e-3029926ee183', // Application (client) ID from the app registration
-  //       authority: 'https://login.microsoftonline.com/common/', // The Azure cloud instance and the app's sign-in audience (tenant ID, common, organizations, or consumers)
-  //       redirectUri: 'http://localhost:4200/'// This is your redirect URI
-  //     },
-  //     cache: {
-  //       cacheLocation: 'localStorage',
-  //       storeAuthStateInCookie: isIE // Set to true for Internet Explorer 11
-  //     }
-  //   }), {
-  //     interactionType: InteractionType.Popup, // Msal Guard Configuration
-  //     authRequest: {
-  //       scopes: ["user.read"]
-  //     }
-  //   }, null)
-
   ],
   exports: [MainAppLayoutComponent]
 })
