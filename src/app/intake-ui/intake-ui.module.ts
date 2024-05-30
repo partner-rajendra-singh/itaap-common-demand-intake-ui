@@ -51,7 +51,6 @@ import { DropdownModule } from 'primeng/dropdown';
 import { SidebarModule } from 'primeng/sidebar';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { AttachmentComponent } from './components/attachment/attachment.component';
-import { MenuComponent } from './components/menu/menu.component';
 import { DemandIntakeComponent } from './components/demand-intake/demand-intake.component';
 import { RequesterComponent } from './components/requester/requester.component';
 import { RequirementsComponent } from './components/requirements/requirements.component';
@@ -77,7 +76,6 @@ import { InputOtpModule } from 'primeng/inputotp';
 @NgModule({
     declarations: [
     AttachmentComponent,
-    MenuComponent,
     DemandIntakeComponent,
     RequesterComponent,
     RequirementsComponent,

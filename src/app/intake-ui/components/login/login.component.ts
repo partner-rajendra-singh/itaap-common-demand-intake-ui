@@ -1,22 +1,30 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { DemandIntakeService } from '../../services/demand-intake.service';
 import { AuthService } from '../../services/auth.service';
 import { first } from 'rxjs/operators';
 import { EventService } from '../../services/event.service';
+import { MSAL_GUARD_CONFIG, MsalGuardConfiguration, MsalService } from '@azure/msal-angular';
+import { PopupRequest, AuthenticationResult } from '@azure/msal-browser';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html'
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
   title = 'itaap-demand-intake-ui';
   email !: string;
   token !: string;
   otpSent: boolean = false;
 
-  constructor(public eventService: EventService, private router: Router, private messageService: MessageService, private authService: AuthService) { }
+  constructor(public eventService: EventService, private router: Router, private messageService: MessageService, private authService: AuthService,
+    private msalAuthService: MsalService, @Inject(MSAL_GUARD_CONFIG) private msalGuardConfig: MsalGuardConfiguration
+  ) { }
+
+  ngOnInit(): void {
+    this.msalAuthService.handleRedirectObservable().subscribe();
+  }
 
   getOTP() {
     this.authService.getOTP(this.email)
@@ -37,7 +45,7 @@ export class LoginComponent {
 
   }
 
-  login() {
+  login(email: any, token: any) {
 
     this.authService.login(this.email, this.token)
       .pipe(first())
@@ -54,6 +62,19 @@ export class LoginComponent {
           this.messageService.add({ severity: 'error', summary: 'error', detail: 'Login Failed!' });
         });
 
+  }
+
+  ssoLogin() {
+    this.msalAuthService
+      .loginPopup({ ...this.msalGuardConfig.authRequest } as PopupRequest)
+      .subscribe((response: AuthenticationResult) => {
+        console.log(response);
+        this.login(response.account.username, response.accessToken),
+          this.router.navigate(['view']);
+      }, error => {
+        console.log(error);
+        this.messageService.add({ severity: 'error', summary: 'error', detail: 'Login Failed!' });
+      });
   }
 
 }

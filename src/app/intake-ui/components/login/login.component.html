@@ -12,6 +12,8 @@
                     <span class="text-600 font-medium">Sign in to continue</span>
                 </div>
 
+                <!-- <button pButton pRipple label="SSO Sign In" class="w-full p-3 text-xl" (click)="ssoLogin()"></button> -->
+
                 <div class="md:w-30rem">
                     <label for="email1" class="block text-900 text-xl font-medium mb-2">Email</label>
                     <div class="p-inputgroup mb-5 w-full">
@@ -24,7 +26,7 @@
                         <input styleClass="mb-5" style="padding:1rem" pInputText class="mb-5 w-full" id="otp"
                             [(ngModel)]='token' type="password"
                             placeholder="Enter OTP received on your email address" />
-                        <button pButton pRipple label="Sign In" class="w-full p-3 text-xl" (click)="login()"></button>
+                        <button pButton pRipple label="Sign In" class="w-full p-3 text-xl" (click)="login($event, $event)"></button>
                     </div>
                 </div>
             </div>

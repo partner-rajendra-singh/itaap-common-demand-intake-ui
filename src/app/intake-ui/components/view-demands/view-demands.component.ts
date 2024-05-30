@@ -19,7 +19,7 @@ export class ViewDemandsComponent {
   selectedDemand!: Demand;
   isRequester: boolean = false;
 
-  constructor(private authService: AuthService, private demandIntakeService: DemandIntakeService, private messageService: MessageService, private router: Router, public eventService: EventService) { }
+  constructor(private authService: AuthService, public demandIntakeService: DemandIntakeService, private messageService: MessageService, private router: Router, public eventService: EventService) { }
 
   ngOnInit() {
 
@@ -74,7 +74,6 @@ export class ViewDemandsComponent {
       case "ACCEPTED": return "Accepted";
       case "REJECTED": return "Rejected";
     }
-
     return status;
   }
 
