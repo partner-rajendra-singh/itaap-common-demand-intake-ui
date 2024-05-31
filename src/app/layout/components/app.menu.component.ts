@@ -1,4 +1,4 @@
-import { OnInit } from '@angular/core';
+import { Injector, OnInit } from '@angular/core';
 import { Component } from '@angular/core';
 import { LayoutService } from '../service/app.layout.service';
 import { AuthService } from 'src/app/intake-ui/services/auth.service';
@@ -6,10 +6,12 @@ import { DemandIntakeService } from 'src/app/intake-ui/services/demand-intake.se
 import { EventService } from 'src/app/intake-ui/services/event.service';
 import { Demand } from 'src/app/intake-ui/models/demand';
 import { Router } from '@angular/router';
+import { DemandIntakeComponent } from 'src/app/intake-ui/components/demand-intake/demand-intake.component';
 
 @Component({
   selector: 'app-menu',
-  templateUrl: './app.menu.component.html'
+  templateUrl: './app.menu.component.html',
+  providers: [DemandIntakeComponent]
 })
 export class AppMenuComponent implements OnInit {
 
@@ -19,7 +21,8 @@ export class AppMenuComponent implements OnInit {
     public layoutService: LayoutService,
     private authService: AuthService,
     private demandIntakeService: DemandIntakeService,
-    private eventService: EventService
+    private eventService: EventService,
+    private injector: Injector
   ) { }
 
   ngOnInit() {
@@ -52,22 +55,20 @@ export class AppMenuComponent implements OnInit {
         ],
         expanded: true,
         visible: this.authService.isAdmin()
-      },
-      // {
-      //   label: 'Logout',
-      //   icon: 'pi pi-power-off',
-      //   routerLink: ["/logout"]
-      // }
+      }
     ];
   }
 
   newDemand() {
+    const componentRef = this.injector.get(DemandIntakeComponent);
+    componentRef.ngOnDestroy();
+
     this.eventService.isNewDemand = true;
     this.eventService.isMyDemand = true;
     this.eventService.isStakeholderDemand = false;
     console.log("MenuComponent1 isNewDemand, isMyDemand ", this.eventService.isNewDemand, this.eventService.isMyDemand);
 
     this.demandIntakeService.setDemand(new Demand(), true);
-    this.router.navigate(['/demand-intake/introduction']);
+    this.router.navigate(['/demand-intake/']);
   }
 }

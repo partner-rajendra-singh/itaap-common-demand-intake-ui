@@ -49,15 +49,21 @@
   </div>
 </div>
 
-<p-dialog [(visible)]="visibleAddDMDialog" header="Add Demand Manager">
+<p-dialog [(visible)]="visibleAddDMDialog" header="Add Demand Manager" modal="true" style="width:50% !important; height:80% !important; top:25% !important; left: 30% !important;">
   <div class="flex flex-column px-8 py-5 gap-4" style="border-radius: 12px; background-color: #5c5c77;">
     <div class="inline-flex flex-column gap-2">
       <label for="email" class="text-primary-50 font-semibold">Email</label>
-      <input pInputText id="email" [(ngModel)]="adminService.approver.email" type="email"
+      <input pInputText id="email" [(ngModel)]="adminService.approver.email" type="email" size="40"
         (blur)="eventService.checkEmailValue(adminService.approver.email)"
         class="bg-black-alpha-20 border-none p-2 text-primary-50" />
     </div>
-    <div class="inline-flex flex-column gap-2">
+
+    <div class="inline-flex flex-column gap-3">
+      <label for="domain" class="text-primary-50 font-semibold">Domain</label>
+      <p-dropdown [options]="domains" [(ngModel)]="adminService.approver.domain" placeholder="Your Domain"></p-dropdown>
+    </div>
+    
+    <div class="inline-flex flex-column gap-3">
       <label for="status" class="text-primary-50 font-semibold">Status</label>
       <div class="flex flex-wrap gap-3">
         <div class="flex align-items-center">
@@ -70,13 +76,9 @@
         </div>
       </div>
     </div>
+    <div></div>
 
-    <div class="inline-flex flex-column gap-2">
-      <label for="domain" class="text-primary-50 font-semibold">Domain</label>
-      <p-dropdown [options]="domains" [(ngModel)]="adminService.approver.domain" placeholder="Your Domain"></p-dropdown>
-    </div>
-
-    <div class="flex align-items-center gap-2">
+    <div class="flex align-items-center gap-3">
       <p-button label="Save" (click)="onSubmit()" type="submit"
         styleClass="w-full text-primary-50 border-1 border-black-alpha-30 hover:bg-black-alpha-10 !important"
         class="w-full"></p-button>
@@ -84,17 +86,23 @@
         styleClass="w-full text-primary-50 border-1 border-black-alpha-30 hover:bg-black-alpha-10"
         class="w-full"></p-button>
     </div>
+    <div></div>
   </div>
 </p-dialog>
 
-<p-dialog [(visible)]="visibleUpdateDMDialog" header="Update Demand Manager">
+<p-dialog [(visible)]="visibleUpdateDMDialog" header="Update Demand Manager" modal="true">
   <div class="flex flex-column px-8 py-5 gap-4" style="border-radius: 12px; background-color: #5c5c77;">
     <div class="inline-flex flex-column gap-2">
       <label for="email" class="text-primary-50 font-semibold">Email</label>
-      <input pInputText id="email" [(ngModel)]="adminService.approver.email" type="email"
+      <input pInputText id="email" [(ngModel)]="adminService.approver.email" type="email" size="40"
         (blur)="eventService.checkEmailValue(adminService.approver.email)" [disabled]="true"
         class="bg-black-alpha-20 border-none p-2 text-primary-50" />
     </div>
+    <div class="inline-flex flex-column gap-2">
+      <label for="domain" class="text-primary-50 font-semibold">Domain</label>
+      <p-dropdown [options]="domains" [(ngModel)]="adminService.approver.domain" placeholder="Your Domain"></p-dropdown>
+    </div>
+
     <div class="inline-flex flex-column gap-2">
       <label for="status" class="text-primary-50 font-semibold">Status</label>
       <div class="flex flex-wrap gap-3">
@@ -108,11 +116,7 @@
         </div>
       </div>
     </div>
-
-    <div class="inline-flex flex-column gap-2">
-      <label for="domain" class="text-primary-50 font-semibold">Domain</label>
-      <p-dropdown [options]="domains" [(ngModel)]="adminService.approver.domain" placeholder="Your Domain"></p-dropdown>
-    </div>
+    <div></div>
 
     <div class="flex align-items-center gap-2">
       <p-button label="Save" (click)="onUpdate()" type="submit"
@@ -122,5 +126,6 @@
         styleClass="w-full text-primary-50 border-1 border-black-alpha-30 hover:bg-black-alpha-10"
         class="w-full"></p-button>
     </div>
+    <div></div>
   </div>
 </p-dialog>
