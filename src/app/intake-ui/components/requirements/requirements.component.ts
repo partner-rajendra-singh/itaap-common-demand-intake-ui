@@ -12,6 +12,11 @@ import { EventService } from '../../services/event.service';
     providers: [MessageService]
 })
 export class RequirementsComponent implements OnInit {
+    requirementFunctionalInfo!: any;
+    requirementNonFunctionalInfo!: any;
+    requirementComplianceInfo!: any;
+    visibleSaveButton!: boolean;
+    goLiveApproach!: string;
 
     constructor(public demandIntakeService: DemandIntakeService, private router: Router, private messageService: MessageService,
         private authService: AuthService, public eventService: EventService) {
@@ -26,18 +31,18 @@ export class RequirementsComponent implements OnInit {
         }
     }
 
-    requirementFunctionalInfo!: any;
-    requirementNonFunctionalInfo!: any;
-    requirementComplianceInfo!: any;
-    visibleSaveButton!: boolean;
-    goLiveApproach!: string;
-
-
     ngOnInit() {
+        this.eventService.goLiveMinDate = this.demandIntakeService.getDemandInformation().requirementFunctionalInfo.bglDate;
+        if(this.eventService.isNewDemand && this.eventService.isMyDemand){
+            let today = new Date();
+            this.demandIntakeService.getDemandInformation().requirementFunctionalInfo.bglDate = new Date(today.setDate(today.getDate() + 1));
+        }
+
         console.log("RequirementsComponent Init: ", this.demandIntakeService.demandInformation)
         this.requirementFunctionalInfo = this.demandIntakeService.getDemandInformation().requirementFunctionalInfo;
         this.requirementNonFunctionalInfo = this.demandIntakeService.getDemandInformation().requirementNonFunctionalInfo;
         this.requirementComplianceInfo = this.demandIntakeService.getDemandInformation().requirementComplianceInfo;
+
     }
 
     onTabChange(event: any) {

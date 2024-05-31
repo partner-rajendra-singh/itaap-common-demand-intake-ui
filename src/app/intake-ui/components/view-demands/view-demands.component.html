@@ -3,10 +3,21 @@
 <p-toast key="error"></p-toast>
 <div class="card grid">
     <div class="col-12 xs:col-12 sm:col-12 lg:col-12 xl:col-12">
-        <p-tabView [activeIndex]="eventService.selectedDemandTabIndex">
-            <p-tabPanel header="My Demands">
-                <div *ngIf="allDemands.myDemands">
-                    <p-table [value]="allDemands.myDemands" selectionMode="single" [(selection)]="selectedDemand"
+        <p-toolbar>
+            <div class="p-toolbar-group-center">
+                <p-dropdown appendTo="body" (onChange)="onCategoryChange()"  [options]="demandCategories" [(ngModel)]="selectedDemandCategory"
+                    placeholder="Filter Demand"></p-dropdown>
+            </div>
+        </p-toolbar>
+
+        <p-tabView [activeIndex]="eventService.selectedDemandTabIndex" (onChange)="onTabChange($event)">
+            <p-tabPanel header="My Demands ({{allCurrentMyDemands.length}})">
+                <!-- <p-button class="p-link layout-topbar-button" label="My Demands"
+                    badge="{{allDemands.myDemands.length}}">
+                </p-button>
+                <p-badge [value]="allDemands.myDemands.length" severity="success" /> -->
+                <div *ngIf="allCurrentMyDemands">
+                    <p-table [value]="allCurrentMyDemands" selectionMode="single" [(selection)]="selectedDemand"
                         (onRowSelect)="onDemandSelect($event, true, false)" [tableStyle]="{ 'min-width': '40rem' }"
                         [paginator]="true" [rows]="10">
                         <ng-template pTemplate="header">
@@ -38,15 +49,15 @@
                         </ng-template>
                     </p-table>
 
-                    <div *ngIf="allDemands.myDemands.length == 0">
+                    <div *ngIf="allCurrentMyDemands.length == 0">
                         <p>You dont have any Demands!</p>
                     </div>
                 </div>
 
             </p-tabPanel>
-            <p-tabPanel header="Pending Demands" *ngIf="!isRequester">
-                <div *ngIf="allDemands.pendingDemands">
-                    <p-table [value]="allDemands.pendingDemands" selectionMode="single" [(selection)]="selectedDemand"
+            <p-tabPanel header="Pending Demands ({{allCurrentPendingDemands.length}})" *ngIf="!isRequester">
+                <div *ngIf="allCurrentPendingDemands">
+                    <p-table [value]="allCurrentPendingDemands" selectionMode="single" [(selection)]="selectedDemand"
                         (onRowSelect)="onDemandSelect($event, false, false)" [tableStyle]="{ 'min-width': '40rem' }"
                         [paginator]="true" [rows]="10">
                         <ng-template pTemplate="header">
@@ -75,15 +86,15 @@
                         </ng-template>
                     </p-table>
 
-                    <div *ngIf="allDemands.pendingDemands.length == 0 && !isRequester">
+                    <div *ngIf="allCurrentPendingDemands.length == 0 && !isRequester">
                         <p>No Pending Demands!</p>
                     </div>
 
                 </div>
             </p-tabPanel>
-            <p-tabPanel header="My Demands as a Stakeholder">
-                <div *ngIf="allDemands.stakeholderDemands">
-                    <p-table [value]="allDemands.stakeholderDemands" selectionMode="single"
+            <p-tabPanel header="My Demands as a Stakeholder ({{allCurrentMyDemandsAsSH.length}})">
+                <div *ngIf="allCurrentMyDemandsAsSH">
+                    <p-table [value]="allCurrentMyDemandsAsSH" selectionMode="single"
                         [(selection)]="selectedDemand" (onRowSelect)="onDemandSelect($event, false, true)"
                         [tableStyle]="{ 'min-width': '40rem' }" [paginator]="true" [rows]="10">
                         <ng-template pTemplate="header">
@@ -110,7 +121,7 @@
                         </ng-template>
                     </p-table>
 
-                    <div *ngIf="allDemands.stakeholderDemands.length == 0">
+                    <div *ngIf="allCurrentMyDemandsAsSH.length == 0">
                         <p>You dont have any Demands!</p>
                     </div>
                 </div>

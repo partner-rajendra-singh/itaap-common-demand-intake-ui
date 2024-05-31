@@ -36,7 +36,9 @@
       </div> -->
     </div>
     <button class="p-link layout-topbar-button" (click)="logout($event)">
-      <i class="pi pi-sign-out"></i>
+      <div (mouseover)="enableLogOutTooltip()" title="Sign Out">
+        <i class="pi pi-sign-out"></i>
+      </div>
       <span>Sign Out</span>
     </button>
   </div>

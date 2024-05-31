@@ -95,10 +95,8 @@ import { InputOtpModule } from 'primeng/inputotp';
     ],
     imports: [
       CommonModule,
-  
       FormsModule,
       ReactiveFormsModule,
-  
       HttpClientModule,
       CardModule,
       CalendarModule,
@@ -144,7 +142,6 @@ import { InputOtpModule } from 'primeng/inputotp';
       ProgressBarModule,
       ProgressSpinnerModule,
       TabMenuModule,
-      
       InputNumberModule,
       AvatarGroupModule,
       SelectButtonModule,
