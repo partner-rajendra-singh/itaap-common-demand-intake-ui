@@ -5,17 +5,26 @@
     <div class="col-12 xs:col-12 sm:col-12 lg:col-12 xl:col-12">
         <p-toolbar>
             <div class="p-toolbar-group-center">
-                <p-dropdown appendTo="body" (onChange)="onCategoryChange()"  [options]="demandCategories" [(ngModel)]="selectedDemandCategory"
-                    placeholder="Filter Demand"></p-dropdown>
+                <div class="col-9">
+                    <label>Filter Demand by your action</label>
+                </div>
+                <div class="col-3">
+                    <p-dropdown appendTo="body" (onChange)="onCategoryChange()" [options]="demandCategories"
+                        [(ngModel)]="selectedDemandCategory" placeholder="Filter Demand"></p-dropdown>
+                </div>
             </div>
         </p-toolbar>
 
         <p-tabView [activeIndex]="eventService.selectedDemandTabIndex" (onChange)="onTabChange($event)">
-            <p-tabPanel header="My Demands ({{allCurrentMyDemands.length}})">
-                <!-- <p-button class="p-link layout-topbar-button" label="My Demands"
-                    badge="{{allDemands.myDemands.length}}">
-                </p-button>
-                <p-badge [value]="allDemands.myDemands.length" severity="success" /> -->
+            <p-tabPanel>
+                <ng-template pTemplate="header">
+                    <div class="flex flex-wrap gap-2">
+                        <span>My Demands </span>
+                        <p-badge *ngIf="allCurrentMyDemands.length > 0" value="{{allCurrentMyDemands.length}}"
+                            severity="success" />
+                    </div>
+                </ng-template>
+
                 <div *ngIf="allCurrentMyDemands">
                     <p-table [value]="allCurrentMyDemands" selectionMode="single" [(selection)]="selectedDemand"
                         (onRowSelect)="onDemandSelect($event, true, false)" [tableStyle]="{ 'min-width': '40rem' }"
@@ -48,17 +57,24 @@
                             </tr>
                         </ng-template>
                         <ng-template pTemplate="emptymessage">
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td>You dont have any demand!</td>
-                                </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td>You dont have any demand!</td>
+                            </tr>
                         </ng-template>
                     </p-table>
                 </div>
 
             </p-tabPanel>
-            <p-tabPanel header="Pending Demands ({{allCurrentPendingDemands.length}})" *ngIf="!isRequester">
+            <p-tabPanel *ngIf="!isRequester">
+                <ng-template pTemplate="header">
+                    <div class="flex flex-wrap gap-2">
+                        <span>Pending Demands</span>
+                        <p-badge *ngIf="allCurrentPendingDemands.length > 0" value="{{allCurrentPendingDemands.length}}"
+                            severity="success" />
+                    </div>
+                </ng-template>
                 <div *ngIf="allCurrentPendingDemands">
                     <p-table [value]="allCurrentPendingDemands" selectionMode="single" [(selection)]="selectedDemand"
                         (onRowSelect)="onDemandSelect($event, false, false)" [tableStyle]="{ 'min-width': '40rem' }"
@@ -97,11 +113,18 @@
                     </p-table>
                 </div>
             </p-tabPanel>
-            <p-tabPanel header="My Demands as a Stakeholder ({{allCurrentMyDemandsAsSH.length}})">
+            <p-tabPanel>
+                <ng-template pTemplate="header">
+                    <div class="flex flex-wrap gap-2">
+                        <span>My Demands as a Stakeholder</span>
+                        <p-badge *ngIf="allCurrentMyDemandsAsSH.length > 0" value="{{allCurrentMyDemandsAsSH.length}}"
+                            severity="success" />
+                    </div>
+                </ng-template>
                 <div *ngIf="allCurrentMyDemandsAsSH">
-                    <p-table [value]="allCurrentMyDemandsAsSH" selectionMode="single"
-                        [(selection)]="selectedDemand" (onRowSelect)="onDemandSelect($event, false, true)"
-                        [tableStyle]="{ 'min-width': '40rem' }" [paginator]="true" [rows]="10">
+                    <p-table [value]="allCurrentMyDemandsAsSH" selectionMode="single" [(selection)]="selectedDemand"
+                        (onRowSelect)="onDemandSelect($event, false, true)" [tableStyle]="{ 'min-width': '40rem' }"
+                        [paginator]="true" [rows]="10">
                         <ng-template pTemplate="header">
                             <tr>
                                 <th pSortableColumn="actionTime">Demand Intake Id <p-sortIcon

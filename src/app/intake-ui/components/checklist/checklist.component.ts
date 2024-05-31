@@ -24,7 +24,14 @@ export class ChecklistComponent implements OnInit {
 
   ngOnInit() {
     console.log("ChecklistComponent ", this.eventService.solutionDirectionValue);
-    this.visibleTabs = this.eventService.solutionDirectionValue.filter(item => item.value===true);
+    if (this.eventService.solutionDirectionValue.length == 0) {
+      if (this.eventService.isNewDemand) {
+        this.router.navigate(['demand-intake/solution-direction/']);
+      } else {
+        this.router.navigate(['demand-intake/solution-direction/' + this.demandIntakeService.demandInformation.introduction.demandIntakeId]);
+      }
+    }
+    this.visibleTabs = this.eventService.solutionDirectionValue.filter(item => item.value === true);
 
     this.eADIInfo = this.demandIntakeService.getDemandInformation().eADIInfo;
     this.refreshFrequencies = Object.values(RefreshFrequency);

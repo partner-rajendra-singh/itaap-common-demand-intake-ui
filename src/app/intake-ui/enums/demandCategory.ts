@@ -1,5 +1,5 @@
 export enum DemandCategory {
   ALL = 'All',
-  COMPLETED = 'Completed',
-  IN_PROGRESS = 'In Progress'
+  ACTION_COMPLETED = 'Action Completed',
+  ACTION_IN_PROGRESS = 'Pending for Your Action'
 }
