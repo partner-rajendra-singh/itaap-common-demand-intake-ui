@@ -6,6 +6,7 @@ import { first } from 'rxjs/operators';
 import { DemandIntakeDecision } from '../../enums/demand-intake-decision';
 import { AuthService } from '../../services/auth.service';
 import { EventService } from '../../services/event.service';
+import { CCB } from '../../models/ccb';
 
 @Component({
   selector: 'app-ccb',
@@ -15,17 +16,19 @@ export class CCBComponent implements OnInit {
 
   decisions!: string[];
   selectedDecision!: string;
-  ccbInfo!: any;
+  ccbInfo!: CCB;
   visibleSubmitButton: boolean = true;
 
   constructor(public eventService: EventService, public demandIntakeService: DemandIntakeService, private router: Router, private messageService: MessageService, public authService: AuthService) { }
 
   ngOnInit() {
-    this.demandIntakeService.getDemandInformation().ccbInfo.decisionDate = new Date(this.demandIntakeService.getDemandInformation().ccbInfo.decisionDate);
-    this.ccbInfo = this.demandIntakeService.getDemandInformation().ccbInfo;
-    this.decisions = Object.values(DemandIntakeDecision);
-    this.selectedDecision = this.getStatusValue(this.demandIntakeService.getDemandInformation().ccbInfo.decision);
-
+    if(this.demandIntakeService.getDemandInformation().ccbInfo != null){
+      this.demandIntakeService.getDemandInformation().ccbInfo.decisionDate = new Date(this.demandIntakeService.getDemandInformation().ccbInfo.decisionDate);
+      this.ccbInfo = this.demandIntakeService.getDemandInformation().ccbInfo;
+      this.decisions = Object.values(DemandIntakeDecision);
+      this.selectedDecision = this.getStatusValue(this.demandIntakeService.getDemandInformation().ccbInfo.decision);
+    }
+   
     if (this.demandIntakeService.getDemandInformation().introduction.status == 'CCB_HOLD' || this.demandIntakeService.getDemandInformation().introduction.status == 'ACCEPTED' || this.demandIntakeService.getDemandInformation().introduction.status == 'REJECTED') {
       this.visibleSubmitButton = false;
     }
@@ -40,7 +43,7 @@ export class CCBComponent implements OnInit {
   }
 
   submitPage() {
-    if (this.ccbInfo.decisionDate != '' && this.selectedDecision != '' && this.ccbInfo.remarks != '') {
+    if (this.selectedDecision != '' && this.ccbInfo.remarks != '') {
       this.ccbInfo.decision = this.getStatusKey(this.selectedDecision);
       this.demandIntakeService.getDemandInformation().ccbInfo = this.ccbInfo;
 

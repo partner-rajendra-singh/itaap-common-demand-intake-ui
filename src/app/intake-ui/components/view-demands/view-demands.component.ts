@@ -81,7 +81,7 @@ export class ViewDemandsComponent {
 
   onCategoryChange() {
     this.selectedDemandStatus = DemandStatus.ALL;
-    console.log("Tab index -> category", this.eventService.selectedDemandTabIndex, this.selectedDemandCategory)
+    // console.log("Tab index -> category", this.eventService.selectedDemandTabIndex, this.selectedDemandCategory)
 
     let statusList: string[];
     if (this.authService.isRequester()) {
