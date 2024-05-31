@@ -7,6 +7,7 @@ import { NavigationExtras, Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { AllDemands } from '../../models/all-demands';
 import { EventService } from '../../services/event.service';
+import { DemandCategory } from '../../enums/demandCategory';
 
 @Component({
   selector: 'app-view-demands',
@@ -18,10 +19,21 @@ export class ViewDemandsComponent {
   columns!: any;
   selectedDemand!: Demand;
   isRequester: boolean = false;
+  demandCategories!: string[];
+  selectedDemandCategory!: string;
+  allCurrentMyDemands!: Demand[];
+  allCurrentMyDemandsAsSH!: Demand[];
+  allCurrentPendingDemands!: Demand[];
+  currentMyDemandCount: number = 0;
+  currentMyDemandAsSHCount: number = 0;
+  currentPendingDemandCount: number = 0;
 
   constructor(private authService: AuthService, public demandIntakeService: DemandIntakeService, private messageService: MessageService, private router: Router, public eventService: EventService) { }
 
   ngOnInit() {
+
+    this.demandCategories = Object.values(DemandCategory);
+    this.selectedDemandCategory = DemandCategory.ALL;
 
     console.log("ViewDemandsComponent isMyDemand", this.eventService.isMyDemand)
     this.isRequester = this.authService.isRequester();
@@ -29,10 +41,16 @@ export class ViewDemandsComponent {
       this.eventService.selectedDemandTabIndex = 1;
     }
 
+    this.fetchAllDemands();
+
+  }
+
+  fetchAllDemands() {
     this.demandIntakeService.getAllDemands().pipe(
       map((response: any) => {
         this.allDemands = response;
         this.setStatusLabel();
+        this.onCategoryChange();
 
         this.errorData = "";
         console.log('getAllDemands() Response :', this.allDemands);
@@ -46,6 +64,40 @@ export class ViewDemandsComponent {
       })
     ).subscribe();
 
+  }
+
+  onCategoryChange() {
+    console.log("Tab index -> category", this.eventService.selectedDemandTabIndex, this.selectedDemandCategory)
+
+    let statusList: string[];
+    if (this.authService.isRequester()) {
+      statusList = ["DRAFT"];
+    } else if (this.authService.isDM()) {
+      statusList = ["PENDING_WITH_DM", "DM_HOLD", "PENDING_WITH_CCB"];
+    } else if (this.authService.isCCB()) {
+      statusList = ["PENDING_WITH_CCB", "CCB_HOLD"];
+    }
+
+    //filtering demands
+    this.allCurrentMyDemands = this.allDemands.myDemands;
+    this.allCurrentMyDemandsAsSH = this.allDemands.stakeholderDemands;
+    this.allCurrentPendingDemands = this.allDemands.pendingDemands;
+
+    if (this.selectedDemandCategory == DemandCategory.IN_PROGRESS) {
+      this.allCurrentMyDemands = this.allCurrentMyDemands.filter(item => statusList.find(s => s == item.introduction.status));
+      this.allCurrentMyDemandsAsSH = this.allCurrentMyDemandsAsSH.filter(item => statusList.find(s => s == item.introduction.status));
+      this.allCurrentPendingDemands = this.allCurrentPendingDemands.filter(item => statusList.find(s => s == item.introduction.status));
+
+    } else if (this.selectedDemandCategory == DemandCategory.COMPLETED) {
+      this.allCurrentMyDemands = this.allCurrentMyDemands.filter(item => !statusList.find(s => s == item.introduction.status));
+      this.allCurrentMyDemandsAsSH = this.allCurrentMyDemandsAsSH.filter(item => !statusList.find(s => s == item.introduction.status));
+      this.allCurrentPendingDemands = this.allCurrentPendingDemands.filter(item => !statusList.find(s => s == item.introduction.status));
+    }
+
+  }
+
+  onTabChange(event: any) {
+    this.eventService.selectedDemandTabIndex = event.index;
   }
 
   setStatusLabel() {
