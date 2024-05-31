@@ -14,6 +14,7 @@ import { AllDemands } from '../models/all-demands';
 import { EventService } from './event.service';
 import { Attachment } from '../models/attachment';
 import { Introduction } from '../models/introduction';
+import { DemandStatus } from '../enums/demand-status';
 
 
 @Injectable({
@@ -391,12 +392,25 @@ export class DemandIntakeService {
           })
         });
   }
-  getDemandStatusValue(demandStatus: string) {
+  getDemandStatusValueInLower(demandStatus: string) {
     return demandStatus.toLowerCase();
   }
 
   getApproverStatusValue(userStatus: string) {
     return userStatus.toLowerCase();
   }
+
+  getDemandStatusValue(key: string): string {
+    const status = Object.keys(DemandStatus).indexOf(key as unknown as DemandStatus);
+    let s = Object.values(DemandStatus)[status];
+    return s;
+  }
+
+  getDemandStatusKey(value: string): string {
+    const index = Object.values(DemandStatus).indexOf(value as unknown as DemandStatus);
+    return Object.keys(DemandStatus)[index];
+  }
+
+
 }
 

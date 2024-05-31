@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { DemandIntakeService } from '../../services/demand-intake.service';
 import { MessageService } from 'primeng/api';
 import { first } from 'rxjs/operators';
-import { DemandIntakeDecision } from '../../enums/demandIntakeDecision';
+import { DemandIntakeDecision } from '../../enums/demand-intake-decision';
 import { AuthService } from '../../services/auth.service';
 import { EventService } from '../../services/event.service';
 

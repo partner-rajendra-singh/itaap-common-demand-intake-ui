@@ -4,7 +4,7 @@ import { DemandIntakeService } from '../../services/demand-intake.service';
 import { MessageService } from 'primeng/api';
 import { AuthService } from '../../services/auth.service';
 import { first } from 'rxjs/operators';
-import { DemandIntakeDecision } from '../../enums/demandIntakeDecision';
+import { DemandIntakeDecision } from '../../enums/demand-intake-decision';
 import { EventService } from '../../services/event.service';
 import { DM } from '../../models/dm';
 import { ApproverDomain } from '../../enums/approver-domain';
@@ -87,7 +87,6 @@ export class DemandManagerComponent implements OnInit {
   }
 
   nextPage() {
-    // if (this.demandManagerInfo.decisionDate && this.selectedDecision != '' && this.demandManagerInfo.remarks != '') {
     this.demandManagerInfo.decision = this.getDecisionKey(this.selectedDecision);
     this.demandIntakeService.getDemandInformation().demandManagerInfo = this.demandManagerInfo;
     if (this.eventService.isNewDemand) {
@@ -96,9 +95,6 @@ export class DemandManagerComponent implements OnInit {
       this.router.navigate(['demand-intake/ccb/' + this.demandIntakeService.demandInformation.introduction.demandIntakeId]);
     }
 
-    // } else {
-    //   this.messageService.add({ severity: 'warn', summary: 'Error', detail: 'Please fill required fields!' });
-    // }
   }
 
   submitPage() {

@@ -5,6 +5,7 @@ import { DemandIntakeService } from '../../services/demand-intake.service';
 import { AuthService } from '../../services/auth.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { EventService } from '../../services/event.service';
+import { DemandStatus } from '../../enums/demand-status';
 
 @Component({
     selector: 'app-demand-intake',
@@ -15,8 +16,8 @@ export class DemandIntakeComponent implements OnInit {
     items!: MenuItem[];
     subscription!: Subscription;
 
-    constructor(private activatedRoute: ActivatedRoute, 
-        private router: Router, public messageService: MessageService, 
+    constructor(private activatedRoute: ActivatedRoute,
+        private router: Router, public messageService: MessageService,
         public demandIntakeService: DemandIntakeService, public eventService: EventService, public authService: AuthService) {
         const demandIntakeId = this.activatedRoute.snapshot.paramMap.get('demandIntakeId');
         this.eventService.currentDemandIntakeId = this.demandIntakeService.demandInformation.introduction.demandIntakeId;
@@ -121,7 +122,7 @@ export class DemandIntakeComponent implements OnInit {
                 },
                 {
                     label: 'CCB',
-                    command:() => this.routeToCCB(),
+                    command: () => this.routeToCCB(),
                     visible: (!this.eventService.isMyDemand && this.authService.isCCB())
                         || ((this.eventService.isMyDemand || this.eventService.isStakeholderDemand) &&
                             (this.demandIntakeService.demandInformation.introduction.status == 'CCB_HOLD' || this.demandIntakeService.demandInformation.introduction.status == 'ACCEPTED' || this.demandIntakeService.demandInformation.introduction.status == 'REJECTED'))

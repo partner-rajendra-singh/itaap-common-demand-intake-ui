@@ -3,16 +3,26 @@
 <p-toast key="error"></p-toast>
 <div class="card grid">
     <div class="col-12 xs:col-12 sm:col-12 lg:col-12 xl:col-12">
-        <p-toolbar>
-            <div class="p-toolbar-group-center">
-                <div class="col-9">
+        <p-toolbar [style]="{ 'border-radius': '3rem', 'margin-bottom':'0.5rem', 'margin-top':'-1.5rem' }">
+            <div class="p-toolbar-group-start">
+                <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-9">
                     <label>Filter Demand by your action</label>
                 </div>
-                <div class="col-3">
+                <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
                     <p-dropdown appendTo="body" (onChange)="onCategoryChange()" [options]="demandCategories"
                         [(ngModel)]="selectedDemandCategory" placeholder="Filter Demand"></p-dropdown>
                 </div>
             </div>
+            <div class="p-toolbar-group-center">
+                <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-9">
+                    <label>Filter Demand by status</label>
+                </div>
+                <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
+                    <p-dropdown appendTo="body" (onChange)="onStatusChange()" [options]="demandStatusList"
+                        [(ngModel)]="selectedDemandStatus" placeholder="Filter Demand"></p-dropdown>
+                </div>
+            </div>
+            <div class="p-toolbar-group-end"></div>
         </p-toolbar>
 
         <p-tabView [activeIndex]="eventService.selectedDemandTabIndex" (onChange)="onTabChange($event)">
@@ -50,8 +60,8 @@
                                 <td>{{ demand.introduction['requestedBy'] }}</td>
                                 <td>
                                     <span [class]="'align-self-center demand-badge status-' 
-                                    + demandIntakeService.getDemandStatusValue(demand.introduction['status'])">
-                                        {{ demand.introduction['statusLabel'] }}
+                                    + demandIntakeService.getDemandStatusValueInLower(demand.introduction['status'])">
+                                        {{ demandIntakeService.getDemandStatusValue(demand.introduction['status'] )}}
                                     </span>
                                 </td>
                             </tr>
@@ -99,7 +109,7 @@
                                 <td>{{ demand.introduction['title'] }}</td>
                                 <td>{{ demand.requesterInfo['requestedDate'] | date: 'MMM dd, yyyy'}}</td>
                                 <td>{{ demand.introduction['requestedBy'] }}</td>
-                                <td>{{ demand.introduction['statusLabel'] }}</td>
+                                <td>{{demandIntakeService.getDemandStatusValue(demand.introduction['status'])}}</td>
 
                             </tr>
                         </ng-template>
@@ -144,7 +154,7 @@
                                 <td>{{ demand.introduction['title'] }}</td>
                                 <td>{{ demand.requesterInfo['requestedDate'] | date: 'MMM dd, yyyy'}}</td>
                                 <td>{{ demand.introduction['requestedBy'] }}</td>
-                                <td>{{ demand.introduction['statusLabel'] }}</td>
+                                <td>{{demandIntakeService.getDemandStatusValue(demand.introduction['status']) }}</td>
                             </tr>
                         </ng-template>
 

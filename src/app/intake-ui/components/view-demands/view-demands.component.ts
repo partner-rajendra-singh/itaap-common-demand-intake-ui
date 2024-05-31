@@ -3,11 +3,12 @@ import { DemandIntakeService } from '../../services/demand-intake.service';
 import { catchError, map, throwError } from 'rxjs';
 import { Demand } from '../../models/demand';
 import { MessageService } from 'primeng/api';
-import { NavigationExtras, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { AllDemands } from '../../models/all-demands';
 import { EventService } from '../../services/event.service';
-import { DemandCategory } from '../../enums/demandCategory';
+import { DemandCategory } from '../../enums/demand-category';
+import { DemandStatus } from '../../enums/demand-status';
 
 @Component({
   selector: 'app-view-demands',
@@ -24,6 +25,8 @@ export class ViewDemandsComponent {
   allCurrentMyDemands!: Demand[];
   allCurrentMyDemandsAsSH!: Demand[];
   allCurrentPendingDemands!: Demand[];
+  demandStatusList!: string[];
+  selectedDemandStatus!: string;
 
   constructor(private authService: AuthService, public demandIntakeService: DemandIntakeService, private messageService: MessageService, private router: Router, public eventService: EventService) { }
 
@@ -31,6 +34,8 @@ export class ViewDemandsComponent {
 
     this.demandCategories = Object.values(DemandCategory);
     this.selectedDemandCategory = DemandCategory.ALL;
+    this.demandStatusList = Object.values(DemandStatus);
+    this.selectedDemandStatus = DemandStatus.ALL;
 
     console.log("ViewDemandsComponent isMyDemand", this.eventService.isMyDemand)
     this.isRequester = this.authService.isRequester();
@@ -39,14 +44,12 @@ export class ViewDemandsComponent {
     }
 
     this.fetchAllDemands();
-
   }
 
   fetchAllDemands() {
     this.demandIntakeService.getAllDemands().pipe(
       map((response: any) => {
         this.allDemands = response;
-        this.setStatusLabel();
         this.onCategoryChange();
 
         this.errorData = "";
@@ -63,7 +66,21 @@ export class ViewDemandsComponent {
 
   }
 
+  onStatusChange() {
+    this.selectedDemandCategory = DemandCategory.ALL;
+    this.allCurrentMyDemands = this.allDemands.myDemands;
+    this.allCurrentMyDemandsAsSH = this.allDemands.stakeholderDemands;
+    this.allCurrentPendingDemands = this.allDemands.pendingDemands;
+
+    if (this.selectedDemandStatus != DemandStatus.ALL) {
+      this.allCurrentMyDemands = this.allCurrentMyDemands.filter(item => this.demandIntakeService.getDemandStatusKey(this.selectedDemandStatus) === item.introduction.status);
+      this.allCurrentMyDemandsAsSH = this.allCurrentMyDemandsAsSH.filter(item => this.demandIntakeService.getDemandStatusKey(this.selectedDemandStatus) === item.introduction.status);
+      this.allCurrentPendingDemands = this.allCurrentPendingDemands.filter(item => this.demandIntakeService.getDemandStatusKey(this.selectedDemandStatus) === item.introduction.status);
+    }
+  }
+
   onCategoryChange() {
+    this.selectedDemandStatus = DemandStatus.ALL;
     console.log("Tab index -> category", this.eventService.selectedDemandTabIndex, this.selectedDemandCategory)
 
     let statusList: string[];
@@ -97,35 +114,6 @@ export class ViewDemandsComponent {
     this.eventService.selectedDemandTabIndex = event.index;
   }
 
-  setStatusLabel() {
-    this.allDemands.myDemands.forEach(demand => {
-      demand.introduction.statusLabel = this.getDemandStatus(demand.introduction.status);
-    });
-
-    this.allDemands.pendingDemands.forEach(demand => {
-      demand.introduction.statusLabel = this.getDemandStatus(demand.introduction.status);
-    });
-
-    if (this.allDemands.stakeholderDemands != undefined) {
-      this.allDemands.stakeholderDemands.forEach(demand => {
-        demand.introduction.statusLabel = this.getDemandStatus(demand.introduction.status);
-      });
-    }
-  }
-
-  getDemandStatus(status: string): string {
-    switch (status) {
-      case "DRAFT": return "Draft";
-      case "PENDING_WITH_DM": return "Pending with Demand Manager";
-      case "DM_HOLD": return "Demand Manager kept on Hold";
-      case "PENDING_WITH_CCB": return "Pending with CCB";
-      case "CCB_HOLD": return "CCB Member kept on Hold";
-      case "ACCEPTED": return "Accepted";
-      case "REJECTED": return "Rejected";
-    }
-    return status;
-  }
-
   onDemandSelect(event: any, isMyDemand: boolean, isStakeholderDemand: boolean) {
     console.log("selectedDemand, isMyDemand, isStakeholderDemand", this.selectedDemand, isMyDemand, isStakeholderDemand)
     this.eventService.isMyDemand = isMyDemand;
@@ -135,6 +123,5 @@ export class ViewDemandsComponent {
 
     this.router.navigate(['/demand-intake/' + this.selectedDemand.introduction.demandIntakeId]);
   }
-
 
 }

@@ -4,8 +4,6 @@ export class Introduction {
 	description: string = '';
     requestedBy: string = '';
     status!: string;
-    statusLabel: string = '';
-
     isDocReferred: boolean = false;
     architectAligned: boolean = false;
 }
