@@ -42,6 +42,14 @@
                   [showIcon]="true"></p-calendar>
               </div>
               <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
+                <label required class="asterisk-if-mandatory" for="dmEmail">Decision By</label>
+              </div>
+              <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
+                <input id="project" type="text" [(ngModel)]="item.dmEmail" size="60" disabled="true"
+                class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary">
+              </div>
+
+              <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
                 <label required class="asterisk-if-mandatory" for="decision">Decision</label>
               </div>
               <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">

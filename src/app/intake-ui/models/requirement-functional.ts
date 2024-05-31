@@ -3,7 +3,7 @@ export class RequirementFunctional {
     scope: string = '';
     businessValue: string = '';
     goLiveApproach: string = 'oneTime';
-    bglDate!: Date;
+    bglDate: Date = new Date();
     sourceDetails: string = '';
 	targetDetails: string = '';
 	mappingRequirement: string = '';

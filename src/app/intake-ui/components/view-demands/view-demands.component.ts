@@ -24,9 +24,6 @@ export class ViewDemandsComponent {
   allCurrentMyDemands!: Demand[];
   allCurrentMyDemandsAsSH!: Demand[];
   allCurrentPendingDemands!: Demand[];
-  currentMyDemandCount: number = 0;
-  currentMyDemandAsSHCount: number = 0;
-  currentPendingDemandCount: number = 0;
 
   constructor(private authService: AuthService, public demandIntakeService: DemandIntakeService, private messageService: MessageService, private router: Router, public eventService: EventService) { }
 
