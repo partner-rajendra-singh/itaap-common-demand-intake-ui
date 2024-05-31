@@ -80,12 +80,12 @@ export class ViewDemandsComponent {
     this.allCurrentMyDemandsAsSH = this.allDemands.stakeholderDemands;
     this.allCurrentPendingDemands = this.allDemands.pendingDemands;
 
-    if (this.selectedDemandCategory == DemandCategory.IN_PROGRESS) {
+    if (this.selectedDemandCategory == DemandCategory.ACTION_IN_PROGRESS) {
       this.allCurrentMyDemands = this.allCurrentMyDemands.filter(item => statusList.find(s => s == item.introduction.status));
       this.allCurrentMyDemandsAsSH = this.allCurrentMyDemandsAsSH.filter(item => statusList.find(s => s == item.introduction.status));
       this.allCurrentPendingDemands = this.allCurrentPendingDemands.filter(item => statusList.find(s => s == item.introduction.status));
 
-    } else if (this.selectedDemandCategory == DemandCategory.COMPLETED) {
+    } else if (this.selectedDemandCategory == DemandCategory.ACTION_COMPLETED) {
       this.allCurrentMyDemands = this.allCurrentMyDemands.filter(item => !statusList.find(s => s == item.introduction.status));
       this.allCurrentMyDemandsAsSH = this.allCurrentMyDemandsAsSH.filter(item => !statusList.find(s => s == item.introduction.status));
       this.allCurrentPendingDemands = this.allCurrentPendingDemands.filter(item => !statusList.find(s => s == item.introduction.status));
