@@ -47,11 +47,14 @@
                                 </td>
                             </tr>
                         </ng-template>
+                        <ng-template pTemplate="emptymessage">
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td>You dont have any demand!</td>
+                                </tr>
+                        </ng-template>
                     </p-table>
-
-                    <div *ngIf="allCurrentMyDemands.length == 0">
-                        <p>You dont have any Demands!</p>
-                    </div>
                 </div>
 
             </p-tabPanel>
@@ -84,12 +87,14 @@
 
                             </tr>
                         </ng-template>
+                        <ng-template pTemplate="emptymessage">
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td>Hurray, you dont have any pending demand!</td>
+                            </tr>
+                        </ng-template>
                     </p-table>
-
-                    <div *ngIf="allCurrentPendingDemands.length == 0 && !isRequester">
-                        <p>No Pending Demands!</p>
-                    </div>
-
                 </div>
             </p-tabPanel>
             <p-tabPanel header="My Demands as a Stakeholder ({{allCurrentMyDemandsAsSH.length}})">
@@ -119,11 +124,15 @@
                                 <td>{{ demand.introduction['statusLabel'] }}</td>
                             </tr>
                         </ng-template>
-                    </p-table>
 
-                    <div *ngIf="allCurrentMyDemandsAsSH.length == 0">
-                        <p>You dont have any Demands!</p>
-                    </div>
+                        <ng-template pTemplate="emptymessage">
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td>You dont have any demand as a stakeholder!</td>
+                            </tr>
+                        </ng-template>
+                    </p-table>
                 </div>
 
             </p-tabPanel>
