@@ -19,14 +19,17 @@ import { CCBCRUDComponent } from './intake-ui/components/ccbcrud/ccbcrud.compone
 import { AuthGuard } from './intake-ui/services/auth-guard.service';
 import { MainAppLayoutComponent } from './layout/main.app.layout.component';
 import { MsalGuard } from '@azure/msal-angular';
+import { DashboardComponent } from './intake-ui/components/dashboard/dashboard.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
   {
-    path: '', component: MainAppLayoutComponent, 
+    path: '', component: MainAppLayoutComponent,
     // canActivate: [MsalGuard],
     children: [
+      { path: 'dashboard', component: DashboardComponent },
       { path: 'view', component: ViewDemandsComponent },
+
       { path: 'report', component: WipComponent, canActivate: [AuthGuard] },
       { path: 'chart', component: ChartComponent, canActivate: [AuthGuard] },
       { path: 'dmcrud', component: DMCRUDComponent, canActivate: [AuthGuard] },

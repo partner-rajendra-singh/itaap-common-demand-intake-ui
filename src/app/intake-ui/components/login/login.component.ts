@@ -40,6 +40,7 @@ export class LoginComponent implements OnInit {
           this.otpSent = true;
         },
         error => {
+          // this.messageService.add({ key: 'retry', severity: 'error', sticky: true, summary: error.statusText, detail: error.message });
           this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Please provide valid Email Id!' });
         });
 
@@ -59,9 +60,8 @@ export class LoginComponent implements OnInit {
           }
         },
         error => {
-          this.messageService.add({ severity: 'error', summary: 'error', detail: 'Login Failed!' });
+          this.messageService.add({ key: 'retry', severity: 'error', sticky: true, summary: error.statusText, detail: error.message });
         });
-
   }
 
   ssoLogin() {
@@ -75,6 +75,11 @@ export class LoginComponent implements OnInit {
         console.log(error);
         this.messageService.add({ severity: 'error', summary: 'error', detail: 'Login Failed!' });
       });
+  }
+
+  onRetry() {
+    this.login(this.email, this.token);
+    this.messageService.clear('retry');
   }
 
 }

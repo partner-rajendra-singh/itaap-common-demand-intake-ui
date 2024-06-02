@@ -109,7 +109,10 @@
                                 <td>{{ demand.introduction['title'] }}</td>
                                 <td>{{ demand.requesterInfo['requestedDate'] | date: 'MMM dd, yyyy'}}</td>
                                 <td>{{ demand.introduction['requestedBy'] }}</td>
-                                <td>{{demandIntakeService.getDemandStatusValue(demand.introduction['status'])}}</td>
+                                <td><span [class]="'align-self-center demand-badge status-' 
+                                    + demandIntakeService.getDemandStatusValue(demand.introduction['status'])">
+                                        {{ demand.introduction['statusLabel'] }}
+                                    </span></td>
 
                             </tr>
                         </ng-template>
@@ -154,7 +157,10 @@
                                 <td>{{ demand.introduction['title'] }}</td>
                                 <td>{{ demand.requesterInfo['requestedDate'] | date: 'MMM dd, yyyy'}}</td>
                                 <td>{{ demand.introduction['requestedBy'] }}</td>
-                                <td>{{demandIntakeService.getDemandStatusValue(demand.introduction['status']) }}</td>
+                                <td><span [class]="'align-self-center demand-badge status-' 
+                                    + demandIntakeService.getDemandStatusValue(demand.introduction['status'])">
+                                        {{ demand.introduction['statusLabel'] }}
+                                    </span></td>
                             </tr>
                         </ng-template>
 
