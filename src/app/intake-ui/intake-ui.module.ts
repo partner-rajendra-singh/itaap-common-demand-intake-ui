@@ -154,7 +154,7 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
     MultiSelectModule,
     ProgressSpinnerModule,
     StepperModule,
-    InputOtpModule
+    InputOtpModule,
   ]
 })
 export class IntakeUIComponentsModule { }

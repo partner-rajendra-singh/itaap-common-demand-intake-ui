@@ -28,8 +28,7 @@ const routes: Routes = [
     // canActivate: [MsalGuard],
     children: [
       { path: 'dashboard', component: DashboardComponent },
-      { path: 'view', component: ViewDemandsComponent },
-
+      { path: 'view', component: ViewDemandsComponent, canActivate: [AuthGuard] },
       { path: 'report', component: WipComponent, canActivate: [AuthGuard] },
       { path: 'chart', component: ChartComponent, canActivate: [AuthGuard] },
       { path: 'dmcrud', component: DMCRUDComponent, canActivate: [AuthGuard] },

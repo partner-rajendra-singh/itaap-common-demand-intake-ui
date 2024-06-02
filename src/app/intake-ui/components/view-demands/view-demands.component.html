@@ -3,7 +3,7 @@
 <p-toast key="error"></p-toast>
 <div class="card grid">
     <div class="col-12 xs:col-12 sm:col-12 lg:col-12 xl:col-12">
-        <p-toolbar [style]="{ 'border-radius': '3rem', 'margin-bottom':'0.5rem', 'margin-top':'-1.5rem' }">
+        <p-toolbar [style]="{ 'margin-bottom':'0.5rem', 'margin-top':'-1.5rem' }">
             <div class="p-toolbar-group-start">
                 <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-9">
                     <label>Filter Demand by your action</label>
@@ -36,9 +36,9 @@
                 </ng-template>
 
                 <div *ngIf="allCurrentMyDemands">
-                    <p-table [value]="allCurrentMyDemands" selectionMode="single" [(selection)]="selectedDemand"
-                        (onRowSelect)="onDemandSelect($event, true, false)" [tableStyle]="{ 'min-width': '40rem' }"
-                        [paginator]="true" [rows]="10">
+                    <p-table [value]="allCurrentMyDemands" styleClass="p-datatable-sm" selectionMode="single"
+                        [(selection)]="selectedDemand" (onRowSelect)="onDemandSelect($event, true, false)"
+                        [tableStyle]="{ 'min-width': '40rem' }" [paginator]="true" [rows]="10">
                         <ng-template pTemplate="header">
                             <tr>
                                 <th pSortableColumn="actionTime">Demand Intake Id <p-sortIcon
@@ -87,8 +87,8 @@
                 </ng-template>
                 <div *ngIf="allCurrentPendingDemands">
                     <p-table [value]="allCurrentPendingDemands" selectionMode="single" [(selection)]="selectedDemand"
-                        (onRowSelect)="onDemandSelect($event, false, false)" [tableStyle]="{ 'min-width': '40rem' }"
-                        [paginator]="true" [rows]="10">
+                        (onRowSelect)="onDemandSelect($event, false, false)" styleClass="p-datatable-sm"
+                        [tableStyle]="{ 'min-width': '40rem' }" [paginator]="true" [rows]="10">
                         <ng-template pTemplate="header">
                             <tr>
                                 <th pSortableColumn="actionTime">Demand Intake Id <p-sortIcon
@@ -112,8 +112,8 @@
                                 <td><span [class]="'align-self-center demand-badge status-' 
                                     + demandIntakeService.getDemandStatusValue(demand.introduction['status'])">
                                         {{ demand.introduction['statusLabel'] }}
-                                    </span></td>
-
+                                    </span>
+                                </td>
                             </tr>
                         </ng-template>
                         <ng-template pTemplate="emptymessage">
@@ -135,9 +135,9 @@
                     </div>
                 </ng-template>
                 <div *ngIf="allCurrentMyDemandsAsSH">
-                    <p-table [value]="allCurrentMyDemandsAsSH" selectionMode="single" [(selection)]="selectedDemand"
-                        (onRowSelect)="onDemandSelect($event, false, true)" [tableStyle]="{ 'min-width': '40rem' }"
-                        [paginator]="true" [rows]="10">
+                    <p-table [value]="allCurrentMyDemandsAsSH" styleClass="p-datatable-sm" selectionMode="single"
+                        [(selection)]="selectedDemand" (onRowSelect)="onDemandSelect($event, false, true)"
+                        [tableStyle]="{ 'min-width': '40rem' }" [paginator]="true" [rows]="10">
                         <ng-template pTemplate="header">
                             <tr>
                                 <th pSortableColumn="actionTime">Demand Intake Id <p-sortIcon

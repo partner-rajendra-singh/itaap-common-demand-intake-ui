@@ -31,7 +31,7 @@ export class ViewDemandsComponent {
   constructor(private authService: AuthService, public demandIntakeService: DemandIntakeService, private messageService: MessageService, private router: Router, public eventService: EventService) { }
 
   ngOnInit() {
-
+    this.fetchAllDemands();
     this.demandCategories = Object.values(DemandCategory);
     this.selectedDemandCategory = DemandCategory.ALL;
     this.demandStatusList = Object.values(DemandStatus);
@@ -42,8 +42,6 @@ export class ViewDemandsComponent {
     if (!this.isRequester) {
       this.eventService.selectedDemandTabIndex = 1;
     }
-
-    this.fetchAllDemands();
   }
 
   fetchAllDemands() {
