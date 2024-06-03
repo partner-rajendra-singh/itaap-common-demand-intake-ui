@@ -1,0 +1,175 @@
+<div class="col-12 grid">
+    <div class="col-12 md:col-12 lg:col-5">
+        <div class="card border-none surface-border m-0"
+            style="background: linear-gradient(226.42deg, #c5741f 8.93%, #673a13 110.98%);border-bottom-left-radius: inherit;border-bottom-right-radius: inherit;">
+            <div class="flex align-items-center justify-content-between">
+                <div class="flex align-items-center">
+                    <p-avatar size="large" shape="circle" styleclass="demand-badge status-pending_with_dm"
+                        class="p-element">
+                        <div
+                            class="demand-badge status-pending_with_dm p-avatar p-component p-avatar-circle p-avatar-lg">
+                            <span class="material-symbols-outlined p-avatar-icon">
+                                pending_actions
+                            </span>
+                        </div>
+                    </p-avatar>
+                    <span class="text-white text-xl ml-2">Pending</span>
+                </div>
+                <div class="flex align-items-center">
+                    <span class="block text-white font-bold text-6xl">{{allPendingDemands.length}}</span>
+                </div>
+            </div>
+        </div>
+        <div class="card" style="border-top-left-radius: inherit;border-top-right-radius: inherit;">
+            <p-table styleClass="p-datatable-sm" [value]="allPendingDemands" selectionMode="single"
+                [(selection)]="selectedDemand" (onRowSelect)="onDemandSelect($event, true, false)">
+                <ng-template pTemplate="body" let-demand>
+                    <tr [pSelectableRow]="demand">
+                        <td>{{ demand.introduction.demandIntakeId }}</td>
+                        <td class="textOverflow">{{ demand.introduction.title }}</td>
+                        <td style="width: 45%"><span [class]="'align-self-center demand-badge status-' 
+                            + demandIntakeService.getDemandStatusValueInLower(demand.introduction['status'])">
+                                {{ demandIntakeService.getDemandStatusValue(demand.introduction['status'] )}}
+                            </span></td>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="footer">
+                    <tr>
+                        <td colspan="3">
+                            <div class="flex align-items-center justify-content-between">
+                                <p-button label="See more" (onClick)="router.navigate(['/view'])"
+                                    icon="pi pi-ellipsis-h" [text]="true" size="small" iconPos="right" />
+                            </div>
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+    </div>
+    <div class="col-12 md:col-12 lg:col-7 grid">
+        <div class="col-12 md:col-6 lg:col-4">
+            <div class="card border-none surface-border m-0"
+                style="background: linear-gradient(226.42deg, #077abb 8.93%, #153375 110.98%);border-bottom-left-radius: inherit;border-bottom-right-radius: inherit;">
+                <div class="flex align-items-center justify-content-between">
+                    <div class="flex align-items-center">
+                        <p-avatar size="large" shape="circle" styleclass="demand-badge status-draft" class="p-element">
+                            <div class="demand-badge status-draft p-avatar p-component p-avatar-circle p-avatar-lg">
+                                <span class="material-symbols-outlined p-avatar-icon">
+                                    edit_document
+                                </span>
+                            </div>
+                        </p-avatar>
+                        <span class="text-white text-xl ml-2">Draft</span>
+                    </div>
+                    <div class="flex align-items-center">
+                        <span class="block text-white font-bold text-6xl">{{allDraftDemands.length}}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="card" style="border-top-left-radius: inherit;border-top-right-radius: inherit;">
+                <p-table [rows]="5" styleClass="p-datatable-sm" [value]="allDraftDemands">
+                    <ng-template pTemplate="body" let-demand>
+                        <tr>
+                            <td>{{ demand.introduction.demandIntakeId }}</td>
+                            <td>
+                                <div class="textOverflow">{{ demand.introduction.title }}</div>
+                            </td>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="footer">
+                        <tr>
+                            <td colspan="2">
+                                <div class="flex align-items-center justify-content-between">
+                                    <p-button label="See more" (onClick)="router.navigate(['/view'])"
+                                        icon="pi pi-ellipsis-h" [text]="true" size="small" iconPos="right" />
+                                </div>
+                            </td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </div>
+        </div>
+        <div class="col-12 md:col-6 lg:col-4">
+            <div class="card border-none surface-border m-0"
+                style="background: linear-gradient(226.42deg, #15876a 8.93%, #093d30 110.98%);border-bottom-left-radius: inherit;border-bottom-right-radius: inherit;">
+                <div class="flex align-items-center justify-content-between">
+                    <div class="flex align-items-center">
+                        <p-avatar size="large" shape="circle" styleclass="demand-badge status-accepted"
+                            class="p-element">
+                            <div class="demand-badge status-accepted p-avatar p-component p-avatar-circle p-avatar-lg">
+                                <span class="material-symbols-outlined p-avatar-icon">
+                                    task_alt
+                                </span>
+                            </div>
+                        </p-avatar>
+                        <span class="text-white text-xl ml-2">Accepted</span>
+                    </div>
+                    <div class="flex align-items-center">
+                        <span class="block text-white font-bold text-6xl">{{allAcceptedDemands.length}}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="card" style="border-top-left-radius: inherit;border-top-right-radius: inherit;">
+                <p-table styleClass="p-datatable-sm" [value]="allAcceptedDemands">
+                    <ng-template pTemplate="body" let-demand>
+                        <tr>
+                            <td>{{ demand.introduction.demandIntakeId }}</td>
+                            <td class="textOverflow">{{ demand.introduction.title }}</td>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="footer">
+                        <tr>
+                            <td colspan="2">
+                                <div class="flex align-items-center justify-content-between">
+                                    <p-button label="See more" (onClick)="router.navigate(['/view'])"
+                                        icon="pi pi-ellipsis-h" [text]="true" size="small" iconPos="right" />
+                                </div>
+                            </td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </div>
+        </div>
+        <div class="col-12 md:col-6 lg:col-4">
+            <div class="card border-none surface-border m-0"
+                style="background: linear-gradient(226.42deg, #a51a1a 8.93%, #6d1414 110.98%);border-bottom-left-radius: inherit;border-bottom-right-radius: inherit;">
+                <div class="flex align-items-center justify-content-between">
+                    <div class="flex align-items-center">
+                        <p-avatar size="large" shape="circle" styleclass="demand-badge status-rejected"
+                            class="p-element">
+                            <div class="demand-badge status-rejected p-avatar p-component p-avatar-circle p-avatar-lg">
+                                <span class="material-symbols-outlined p-avatar-icon">
+                                    block
+                                </span>
+                            </div>
+                        </p-avatar>
+                        <span class="text-white text-xl ml-2">Rejected</span>
+                    </div>
+                    <div class="flex align-items-center">
+                        <span class="block text-white font-bold text-6xl">{{allRejectedDemands.length}}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="card" style="border-top-left-radius: inherit;border-top-right-radius: inherit;">
+                <p-table [rows]="5" styleClass="p-datatable-sm" [value]="allRejectedDemands">
+                    <ng-template pTemplate="body" let-demand>
+                        <tr>
+                            <td>{{ demand.introduction.demandIntakeId }}</td>
+                            <td>{{ demand.introduction.title }}</td>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="footer">
+                        <tr>
+                            <td colspan="2">
+                                <div class="flex align-items-center justify-content-between">
+                                    <p-button label="See more" (onClick)="router.navigate(['/view'])"
+                                        icon="pi pi-ellipsis-h" [text]="true" size="small" iconPos="right" />
+                                </div>
+                            </td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </div>
+        </div>
+    </div>
+</div>

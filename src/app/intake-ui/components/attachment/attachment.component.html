@@ -11,7 +11,8 @@
             <h5 class="mb-2">Attachments <label (click)="getAllAttachmentsByDemandId()"><i
                         class="p-link pi pi-refresh"></i></label>
             </h5>
-            <p-table styleClass="p-datatable-sm" dataKey="id" [value]="attachmentInfo" editMode="row" [tableStyle]="{ 'min-width': '50rem' }">
+            <p-table styleClass="p-datatable-sm" dataKey="id" [value]="attachmentInfo" editMode="row"
+                [tableStyle]="{ 'min-width': '50rem' }">
                 <ng-template pTemplate="caption">
 
                     <p-fileUpload name="files" [url]="fileUploadUrl" [multiple]="true" [headers]="httpHeaders"
@@ -113,19 +114,21 @@
                         <td>{{ attachment.uploadedDate | date: 'MMM dd, yyyy hh:mm a' }}</td>
                         <td>{{formatSize(attachment.size)}}</td>
                         <td class="justify-content-between">
-                            <button pButton pRipple icon="pi pi-check" pSaveEditableRow *ngIf="editing"
+                            <button pButton pRipple icon="pi pi-check" pSaveEditableRow
+                                *ngIf="editing && authService.isRequester() && demandIntakeService.demandInformation.introduction.status === 'DRAFT'"
                                 class="p-button-rounded p-button-sm p-button-success mr-2"
                                 (click)="onRowEditSave(attachment)"></button>
                             <button pButton pRipple icon="pi pi-times" pCancelEditableRow *ngIf="editing"
                                 class="p-button-rounded p-button-sm p-button-danger mr-2"
-                                (click)="onRowEditCancel(attachment, ri)" ></button>
+                                (click)="onRowEditCancel(attachment, ri)"></button>
                             <button pButton pRipple icon="pi pi-pencil" pInitEditableRow *ngIf="!editing"
                                 class="p-button-rounded p-button-sm p-button-text mr-2"
                                 (click)="onRowEditInit(attachment)"></button>
                             <button pButton pRipple icon="pi pi-download" *ngIf="!editing"
                                 class="p-button-rounded p-button-sm p-button-success mr-2"
                                 (click)="downloadAttachment(attachment.attachmentId, attachment.fileName)"></button>
-                            <button pButton pRipple icon="pi pi-trash" *ngIf="!editing"
+                            <button pButton pRipple icon="pi pi-trash"
+                                *ngIf="!editing && attachment.requestedBy === authService.currentUserValue.email"
                                 (click)="deleteAttachment(attachment.attachmentId, attachment.fileName)"
                                 class="p-button-rounded p-button-sm p-button-warning"></button>
                         </td>

@@ -428,7 +428,5 @@ export class DemandIntakeService {
     const index = Object.values(DemandStatus).indexOf(value as unknown as DemandStatus);
     return Object.keys(DemandStatus)[index];
   }
-
-
 }
 

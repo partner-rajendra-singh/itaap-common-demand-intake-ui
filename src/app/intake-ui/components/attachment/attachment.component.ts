@@ -27,7 +27,7 @@ export class AttachmentComponent implements OnInit {
 
   constructor(private config: PrimeNGConfig,
     public demandIntakeService: DemandIntakeService, private router: Router,
-    private messageService: MessageService, private authService: AuthService, public eventService: EventService
+    private messageService: MessageService, public authService: AuthService, public eventService: EventService
   ) {
 
     if (authService.isRequester()) {

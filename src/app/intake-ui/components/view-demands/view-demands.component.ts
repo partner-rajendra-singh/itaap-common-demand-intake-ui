@@ -31,10 +31,10 @@ export class ViewDemandsComponent {
   constructor(private authService: AuthService, public demandIntakeService: DemandIntakeService, private messageService: MessageService, private router: Router, public eventService: EventService) { }
 
   ngOnInit() {
-
+    this.fetchAllDemands();
     this.demandCategories = Object.values(DemandCategory);
     this.selectedDemandCategory = DemandCategory.ALL;
-    this.demandStatusList = Object.values(DemandStatus);
+    this.demandStatusList = Object.keys(DemandStatus);
     this.selectedDemandStatus = DemandStatus.ALL;
 
     console.log("ViewDemandsComponent isMyDemand", this.eventService.isMyDemand)
@@ -42,8 +42,6 @@ export class ViewDemandsComponent {
     if (!this.isRequester) {
       this.eventService.selectedDemandTabIndex = 1;
     }
-
-    this.fetchAllDemands();
   }
 
   fetchAllDemands() {
@@ -67,20 +65,20 @@ export class ViewDemandsComponent {
   }
 
   onStatusChange() {
-    this.selectedDemandCategory = DemandCategory.ALL;
+    this.selectedDemandCategory = 'ALL';
     this.allCurrentMyDemands = this.allDemands.myDemands;
     this.allCurrentMyDemandsAsSH = this.allDemands.stakeholderDemands;
     this.allCurrentPendingDemands = this.allDemands.pendingDemands;
 
-    if (this.selectedDemandStatus != DemandStatus.ALL) {
-      this.allCurrentMyDemands = this.allCurrentMyDemands.filter(item => this.demandIntakeService.getDemandStatusKey(this.selectedDemandStatus) === item.introduction.status);
-      this.allCurrentMyDemandsAsSH = this.allCurrentMyDemandsAsSH.filter(item => this.demandIntakeService.getDemandStatusKey(this.selectedDemandStatus) === item.introduction.status);
-      this.allCurrentPendingDemands = this.allCurrentPendingDemands.filter(item => this.demandIntakeService.getDemandStatusKey(this.selectedDemandStatus) === item.introduction.status);
+    if (this.selectedDemandStatus != 'ALL') {
+      this.allCurrentMyDemands = this.allCurrentMyDemands.filter(item => this.selectedDemandStatus === item.introduction.status);
+      this.allCurrentMyDemandsAsSH = this.allCurrentMyDemandsAsSH.filter(item => this.selectedDemandStatus === item.introduction.status);
+      this.allCurrentPendingDemands = this.allCurrentPendingDemands.filter(item => this.selectedDemandStatus === item.introduction.status);
     }
   }
 
   onCategoryChange() {
-    this.selectedDemandStatus = DemandStatus.ALL;
+    this.selectedDemandStatus = 'ALL';
     // console.log("Tab index -> category", this.eventService.selectedDemandTabIndex, this.selectedDemandCategory)
 
 

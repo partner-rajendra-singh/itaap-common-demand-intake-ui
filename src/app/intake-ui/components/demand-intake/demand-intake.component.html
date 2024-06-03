@@ -9,14 +9,12 @@
           [class]="'text-750 font-medium text-xl align-self-center demand-badge status-' + demandIntakeService.getDemandStatusValueInLower(demandIntakeService.demandInformation.introduction.status)">
           {{demandIntakeService.demandInformation.introduction.demandIntakeId}}
         </span>
-        <!-- <span severity="success" class="text-750 font-medium text-xl"> -->
-        <!-- {{demandIntakeService.demandInformation.introduction.demandIntakeId}}</span> -->
       </div>
     </div>
     <div class="col-12 xs:col-1 sm:col-1 lg:col-1 xl:col-3">
       <span class="block text-500 font-medium mb-2">Demand Title</span>
-      <div class="justify-content-between">
-        <span class="text-750 font-medium text-xl">
+      <div class="justify-content-between textOverflow">
+        <span class="text-750 font-medium text-xl textOverflow">
           {{demandIntakeService.demandInformation.introduction.title}}</span>
       </div>
     </div>

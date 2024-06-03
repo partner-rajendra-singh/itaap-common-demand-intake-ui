@@ -23,7 +23,8 @@
       <p-progressSpinner styleClass="w-4rem h-4rem" strokeWidth="8" fill="var(--surface-ground)" *ngIf="isProgressing"
         animationDuration=".5s" />
       <div class="mr-2" style="align-self: center; text-align: end">
-        <span class="font-medium text-xl">{{user}}</span>
+        <div class="font-medium text-xl">{{user}}</div>
+        <span class="text-md">{{user}}</span>
         <div *ngIf="dmDomainList.length==0">{{userRole}}</div>
         <div *ngIf="dmDomainList.length>0">{{userRole}} | {{dmDomainList}}</div>
       </div>
@@ -34,12 +35,14 @@
         <p-dropdown id="filterDeveloperDropdown" placeholder="User" [options]="allDevelopers" optionLabel="name"
           [(ngModel)]="user" (onChange)="setUserId()"></p-dropdown>
       </div> -->
-    </div>
-    <button class="p-link layout-topbar-button" (click)="logout($event)">
-      <div (mouseover)="enableLogOutTooltip()" title="Sign Out">
-        <i class="pi pi-sign-out"></i>
+      <div style="align-self: center;">
+        <button class="p-link layout-topbar-button" (click)="logout($event)">
+          <div (mouseover)="enableLogOutTooltip()" title="Sign Out">
+            <i class="pi pi-sign-out"></i>
+          </div>
+          <span>Sign Out</span>
+        </button>
       </div>
-      <span>Sign Out</span>
-    </button>
+    </div>
   </div>
 </div>

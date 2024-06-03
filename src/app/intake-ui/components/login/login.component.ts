@@ -40,6 +40,7 @@ export class LoginComponent implements OnInit {
           this.otpSent = true;
         },
         error => {
+          // this.messageService.add({ key: 'retry', severity: 'error', sticky: true, summary: error.statusText, detail: error.message });
           this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Please provide valid Email Id!' });
         });
 
@@ -52,16 +53,15 @@ export class LoginComponent implements OnInit {
       .subscribe(
         data => {
           this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Login Successful!' });
-          if (this.authService.isDM() || this.authService.isCCB()) {
-            this.router.navigate(['view']);
-          } else {
-            this.router.navigate(['demand-intake']);
-          }
+          // if (this.authService.isDM() || this.authService.isCCB()) {
+          this.router.navigate(['dashboard']);
+          // } else {
+          // this.router.navigate(['demand-intake']);
+          // }
         },
         error => {
-          this.messageService.add({ severity: 'error', summary: 'error', detail: 'Login Failed!' });
+          this.messageService.add({ key: 'retry', severity: 'error', sticky: true, summary: error.statusText, detail: error.message });
         });
-
   }
 
   ssoLogin() {
@@ -70,11 +70,16 @@ export class LoginComponent implements OnInit {
       .subscribe((response: AuthenticationResult) => {
         console.log(response);
         this.login(response.account.username, response.accessToken),
-          this.router.navigate(['view']);
+          this.router.navigate(['dashboard']);
       }, error => {
         console.log(error);
         this.messageService.add({ severity: 'error', summary: 'error', detail: 'Login Failed!' });
       });
+  }
+
+  onRetry() {
+    this.login(this.email, this.token);
+    this.messageService.clear('retry');
   }
 
 }
