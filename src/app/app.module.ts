@@ -13,6 +13,7 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { MsalInterceptor, MSAL_INSTANCE, MSAL_GUARD_CONFIG, MSAL_INTERCEPTOR_CONFIG, MsalService, MsalGuard, MsalBroadcastService, MsalGuardConfiguration, MsalInterceptorConfiguration } from '@azure/msal-angular';
 import { PublicClientApplication, InteractionType } from '@azure/msal-browser';
 import { msalConfig } from './intake-ui/services/auth-config';
+import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 
 
 @NgModule({
@@ -26,6 +27,7 @@ import { msalConfig } from './intake-ui/services/auth-config';
     IntakeUIComponentsModule
   ],
   providers: [DemandIntakeService, MessageService, AuthGuard, AuthService, ConfirmationService,
+    { provide: LocationStrategy, useClass: HashLocationStrategy },
     {
       provide: HTTP_INTERCEPTORS,
       useClass: MsalInterceptor,
