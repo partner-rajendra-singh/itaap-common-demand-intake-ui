@@ -24,6 +24,7 @@ export class AttachmentComponent implements OnInit {
   visibleSubmitButton!: boolean;
   index: any;
   httpHeaders: HttpHeaders = new HttpHeaders;
+  isDeleteDisabled: boolean = true;
 
   constructor(private config: PrimeNGConfig,
     public demandIntakeService: DemandIntakeService, private router: Router,
@@ -54,7 +55,7 @@ export class AttachmentComponent implements OnInit {
         } else if ((this.eventService.isMyDemand || this.eventService.isStakeholderDemand) && this.demandIntakeService.getDemandInformation().introduction.status != 'DRAFT' && this.demandIntakeService.getDemandInformation().introduction.status != 'PENDING_WITH_DM') {
           this.visibleNextButton = true;
           this.visibleSubmitButton = false;
-        }else if ((this.eventService.isMyDemand || this.eventService.isStakeholderDemand) && this.demandIntakeService.getDemandInformation().introduction.status != 'DRAFT') {
+        } else if ((this.eventService.isMyDemand || this.eventService.isStakeholderDemand) && this.demandIntakeService.getDemandInformation().introduction.status != 'DRAFT') {
           this.visibleNextButton = false;
           this.visibleSubmitButton = false;
         } else if (!this.eventService.isMyDemand && !this.eventService.isStakeholderDemand && this.demandIntakeService.getDemandInformation().introduction.status != 'DRAFT') {
@@ -312,8 +313,8 @@ export class AttachmentComponent implements OnInit {
   }
 
   onRowEditSave(attachment: Attachment) {
-      delete this.clonedAttachments[attachment.attachmentId];
-      this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Attachment is updated' });
+    delete this.clonedAttachments[attachment.attachmentId];
+    this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Attachment is updated' });
   }
 
   onRowEditCancel(attachment: Attachment, index: number) {

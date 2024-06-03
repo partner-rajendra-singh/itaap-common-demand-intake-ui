@@ -154,8 +154,6 @@ export class ViewDemandsComponent {
     this.eventService.isStakeholderDemand = isStakeholderDemand;
     this.eventService.isNewDemand = false;
     this.demandIntakeService.setDemand(this.selectedDemand, false);
-
     this.router.navigate(['/demand-intake/' + this.selectedDemand.introduction.demandIntakeId]);
   }
-
 }
