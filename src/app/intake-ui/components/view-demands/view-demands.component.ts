@@ -34,7 +34,7 @@ export class ViewDemandsComponent {
     this.fetchAllDemands();
     this.demandCategories = Object.values(DemandCategory);
     this.selectedDemandCategory = DemandCategory.ALL;
-    this.demandStatusList = Object.values(DemandStatus);
+    this.demandStatusList = Object.keys(DemandStatus);
     this.selectedDemandStatus = DemandStatus.ALL;
 
     console.log("ViewDemandsComponent isMyDemand", this.eventService.isMyDemand)
@@ -71,9 +71,9 @@ export class ViewDemandsComponent {
     this.allCurrentPendingDemands = this.allDemands.pendingDemands;
 
     if (this.selectedDemandStatus != DemandStatus.ALL) {
-      this.allCurrentMyDemands = this.allCurrentMyDemands.filter(item => this.demandIntakeService.getDemandStatusKey(this.selectedDemandStatus) === item.introduction.status);
-      this.allCurrentMyDemandsAsSH = this.allCurrentMyDemandsAsSH.filter(item => this.demandIntakeService.getDemandStatusKey(this.selectedDemandStatus) === item.introduction.status);
-      this.allCurrentPendingDemands = this.allCurrentPendingDemands.filter(item => this.demandIntakeService.getDemandStatusKey(this.selectedDemandStatus) === item.introduction.status);
+      this.allCurrentMyDemands = this.allCurrentMyDemands.filter(item => this.selectedDemandStatus === item.introduction.status);
+      this.allCurrentMyDemandsAsSH = this.allCurrentMyDemandsAsSH.filter(item => this.selectedDemandStatus === item.introduction.status);
+      this.allCurrentPendingDemands = this.allCurrentPendingDemands.filter(item => this.selectedDemandStatus === item.introduction.status);
     }
   }
 
