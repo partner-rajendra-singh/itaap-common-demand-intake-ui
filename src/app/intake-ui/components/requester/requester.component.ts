@@ -55,13 +55,11 @@ export class RequesterComponent implements OnInit {
     this.marketList = Object.values(Market);
     this.businessUnitList = Object.values(BusinessUnit);
 
-    console.log("market->", this.demandIntakeService.getDemandInformation().requesterInfo.market)
     this.selectedMarket = this.getMarketValueArray(this.demandIntakeService.getDemandInformation().requesterInfo.market);
     if ((!this.selectedMarket || this.selectedMarket.length == 0) && !this.eventService.isNewDemand) {
       this.selectedMarket.push('Other');
     }
 
-    console.log("BU->", this.demandIntakeService.getDemandInformation().requesterInfo.businessUnit)
     this.selectedBusinessUnit = this.getBUValueArray(this.demandIntakeService.getDemandInformation().requesterInfo.businessUnit);
     if ((!this.selectedBusinessUnit || this.selectedBusinessUnit.length == 0) && !this.eventService.isNewDemand) {
       this.selectedBusinessUnit.push('Other');
@@ -150,12 +148,6 @@ export class RequesterComponent implements OnInit {
 
       this.demandIntakeService.demandInformation.requesterInfo = this.requesterInfo;
 
-      // if (this.eventService.isNewDemand) {
-      //   this.router.navigate(['demand-intake/requirement']);
-      // } else {
-      //   this.router.navigate(['demand-intake/requirement/' + this.demandIntakeService.demandInformation.introduction.demandIntakeId]);
-      // }
-
     } else {
       movenext1 = false;
     }
@@ -169,7 +161,6 @@ export class RequesterComponent implements OnInit {
     } else {
       this.messageService.add({ severity: 'warn', summary: 'Error', detail: 'Please fill required fields!' });
     }
-
 
   }
 
