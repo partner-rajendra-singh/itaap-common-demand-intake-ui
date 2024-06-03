@@ -128,7 +128,7 @@
                                 class="p-button-rounded p-button-sm p-button-success mr-2"
                                 (click)="downloadAttachment(attachment.attachmentId, attachment.fileName)"></button>
                             <button pButton pRipple icon="pi pi-trash"
-                                *ngIf="!editing && attachment.requestedBy === authService.currentUserValue.email"
+                                *ngIf="!editing && attachment.requestedBy == authService.currentUserValue.email"
                                 (click)="deleteAttachment(attachment.attachmentId, attachment.fileName)"
                                 class="p-button-rounded p-button-sm p-button-warning"></button>
                         </td>

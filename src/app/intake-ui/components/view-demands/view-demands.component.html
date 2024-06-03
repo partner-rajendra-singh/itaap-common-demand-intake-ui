@@ -83,9 +83,7 @@
                                         <span
                                             [class]="'align-self-center demand-badge status-' 
                                         + demandIntakeService.getDemandStatusValueInLower(demand.introduction['status'])">
-                                            {{
-                                            demandIntakeService.getDemandStatusValue(demand.introduction['status']
-                                            )}}
+                                            {{demandIntakeService.getDemandStatusValue(demand.introduction['status'])}}
                                         </span>
                                     </td>
                                 </tr>
@@ -137,8 +135,8 @@
                                     <td>{{ demand.requesterInfo['requestedDate'] | date: 'MMM dd, yyyy'}}</td>
                                     <td>{{ demand.introduction['requestedBy'] }}</td>
                                     <td><span [class]="'align-self-center demand-badge status-' 
-                                        + demandIntakeService.getDemandStatusValue(demand.introduction['status'])">
-                                            {{ demand.introduction['statusLabel'] }}
+                                    + demandIntakeService.getDemandStatusValueInLower(demand.introduction['status'])">
+                                            {{demandIntakeService.getDemandStatusValue(demand.introduction['status'])}}
                                         </span>
                                     </td>
                                 </tr>
@@ -187,8 +185,8 @@
                                     <td>{{ demand.requesterInfo['requestedDate'] | date: 'MMM dd, yyyy'}}</td>
                                     <td>{{ demand.introduction['requestedBy'] }}</td>
                                     <td><span [class]="'align-self-center demand-badge status-' 
-                                        + demandIntakeService.getDemandStatusValue(demand.introduction['status'])">
-                                            {{ demand.introduction['statusLabel'] }}
+                                    + demandIntakeService.getDemandStatusValueInLower(demand.introduction['status'])">
+                                            {{demandIntakeService.getDemandStatusValue(demand.introduction['status'])}}
                                         </span></td>
                                 </tr>
                             </ng-template>

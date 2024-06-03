@@ -21,7 +21,7 @@
             </div>
         </div>
         <div class="card" style="border-top-left-radius: inherit;border-top-right-radius: inherit;">
-            <p-table styleClass="p-datatable-sm" [value]="allPendingDemands" selectionMode="single"
+            <p-table styleClass="p-datatable-sm" [value]="allPendingDemands"
                 [(selection)]="selectedDemand" (onRowSelect)="onDemandSelect($event, true, false)">
                 <ng-template pTemplate="body" let-demand>
                     <tr [pSelectableRow]="demand">
