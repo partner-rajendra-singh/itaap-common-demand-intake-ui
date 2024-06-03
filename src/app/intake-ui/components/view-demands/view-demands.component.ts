@@ -65,12 +65,12 @@ export class ViewDemandsComponent {
   }
 
   onStatusChange() {
-    this.selectedDemandCategory = DemandCategory.ALL;
+    this.selectedDemandCategory = 'ALL';
     this.allCurrentMyDemands = this.allDemands.myDemands;
     this.allCurrentMyDemandsAsSH = this.allDemands.stakeholderDemands;
     this.allCurrentPendingDemands = this.allDemands.pendingDemands;
 
-    if (this.selectedDemandStatus != DemandStatus.ALL) {
+    if (this.selectedDemandStatus != 'ALL') {
       this.allCurrentMyDemands = this.allCurrentMyDemands.filter(item => this.selectedDemandStatus === item.introduction.status);
       this.allCurrentMyDemandsAsSH = this.allCurrentMyDemandsAsSH.filter(item => this.selectedDemandStatus === item.introduction.status);
       this.allCurrentPendingDemands = this.allCurrentPendingDemands.filter(item => this.selectedDemandStatus === item.introduction.status);
@@ -78,7 +78,7 @@ export class ViewDemandsComponent {
   }
 
   onCategoryChange() {
-    this.selectedDemandStatus = DemandStatus.ALL;
+    this.selectedDemandStatus = 'ALL';
     // console.log("Tab index -> category", this.eventService.selectedDemandTabIndex, this.selectedDemandCategory)
 
 

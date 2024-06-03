@@ -71,7 +71,9 @@
                     <ng-template pTemplate="body" let-demand>
                         <tr>
                             <td>{{ demand.introduction.demandIntakeId }}</td>
-                            <td class="textOverflow">{{ demand.introduction.title }}</td>
+                            <td>
+                                <div class="textOverflow">{{ demand.introduction.title }}</div>
+                            </td>
                         </tr>
                     </ng-template>
                     <ng-template pTemplate="footer">
