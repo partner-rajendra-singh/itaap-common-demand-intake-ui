@@ -27,6 +27,17 @@
               <textarea rows="2" cols="75" [(ngModel)]="ccbInfo.remarks" pInputTextarea
                 [disabled]="!authService.isCCB() || (authService.isCCB() && eventService.isMyDemand)"></textarea>
             </div>
+            <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
+              <label class="asterisk-if-mandatory">Demand Type</label>
+            </div>
+            <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
+              <input type="radio" name="isCrossFunctional" checked="checked" [(ngModel)]="ccbInfo.isCrossFunctional"
+                [value]="false">
+              <label>Fuctional</label> &nbsp;
+              <input type="radio" name="isCrossFunctional" [(ngModel)]="ccbInfo.isCrossFunctional"
+                [value]="true">
+              <label>Cross Fuctional</label> &nbsp;
+            </div>
           </div>
         </p-fieldset>
       </div>

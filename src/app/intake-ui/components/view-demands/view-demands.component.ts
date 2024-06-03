@@ -22,9 +22,9 @@ export class ViewDemandsComponent {
   isRequester: boolean = false;
   demandCategories!: string[];
   selectedDemandCategory!: string;
-  allCurrentMyDemands!: Demand[];
-  allCurrentMyDemandsAsSH!: Demand[];
-  allCurrentPendingDemands!: Demand[];
+  allCurrentMyDemands: Demand[] = [];
+  allCurrentMyDemandsAsSH: Demand[] = [];
+  allCurrentPendingDemands: Demand[] = [];
   demandStatusList!: string[];
   selectedDemandStatus!: string;
 
@@ -83,6 +83,7 @@ export class ViewDemandsComponent {
     this.selectedDemandStatus = DemandStatus.ALL;
     // console.log("Tab index -> category", this.eventService.selectedDemandTabIndex, this.selectedDemandCategory)
 
+
     let statusList: string[];
     if (this.authService.isRequester()) {
       statusList = ["DRAFT"];
@@ -102,10 +103,45 @@ export class ViewDemandsComponent {
       this.allCurrentMyDemandsAsSH = this.allCurrentMyDemandsAsSH.filter(item => statusList.find(s => s == item.introduction.status));
       this.allCurrentPendingDemands = this.allCurrentPendingDemands.filter(item => statusList.find(s => s == item.introduction.status));
 
+      let actionInProgressList: Demand[] = [];
+      if (this.authService.isDM()) {
+        this.allCurrentPendingDemands.forEach(demand => {
+          let dmList = demand.solutionDirectionInfo.filter(item => {
+            let yourDomainList = this.authService.currentUserValue.domain.filter(d => item.solution == d);
+            // console.log("yourDomainList", yourDomainList);
+            if ((yourDomainList.length > 0 && (item.decision == null || item.decision == '')) || (item.dmEmail === this.authService.currentUserValue.email && (item.decision !== 'APPROVED' && item.decision !== 'REJECTED'))) {
+              actionInProgressList.push(demand);
+            }
+          });
+          if (dmList.length > 0) {
+            actionInProgressList.push(demand);
+          }
+        });
+        console.log("actionInProgressList", actionInProgressList)
+        this.allCurrentPendingDemands = actionInProgressList;
+        console.log("this.allCurrentPendingDemands 1", this.allCurrentPendingDemands)
+      }
+
+
     } else if (this.selectedDemandCategory == DemandCategory.ACTION_COMPLETED) {
       this.allCurrentMyDemands = this.allCurrentMyDemands.filter(item => !statusList.find(s => s == item.introduction.status));
       this.allCurrentMyDemandsAsSH = this.allCurrentMyDemandsAsSH.filter(item => !statusList.find(s => s == item.introduction.status));
-      this.allCurrentPendingDemands = this.allCurrentPendingDemands.filter(item => !statusList.find(s => s == item.introduction.status));
+
+      let actionDoneList: Demand[] = [];
+      if (this.authService.isDM()) {
+        this.allCurrentPendingDemands.forEach(demand => {
+          let dmList = demand.solutionDirectionInfo.filter(item => item.dmEmail === this.authService.currentUserValue.email && (item.decision === 'APPROVED' || item.decision === 'REJECTED'));
+          if (dmList.length > 0) {
+            actionDoneList.push(demand);
+          }
+        });
+        console.log("actionDoneList", actionDoneList)
+        this.allCurrentPendingDemands = actionDoneList;
+        console.log("this.allCurrentPendingDemands 1", this.allCurrentPendingDemands)
+      } else {
+        this.allCurrentPendingDemands = this.allCurrentPendingDemands.filter(item => !statusList.find(s => s == item.introduction.status));
+      }
+
     }
 
   }
