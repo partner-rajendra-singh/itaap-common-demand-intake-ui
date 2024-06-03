@@ -15,6 +15,7 @@ import { EventService } from './event.service';
 import { Attachment } from '../models/attachment';
 import { Introduction } from '../models/introduction';
 import { DemandStatus } from '../enums/demand-status';
+import { ArchitectAlignment } from '../models/architect-alignment';
 
 
 @Injectable({
@@ -152,6 +153,9 @@ export class DemandIntakeService {
       if (demand.attachmentInfo == null) {
         demand.attachmentInfo = Array();
       }
+      if (demand.architectAlignmentInfo == null) {
+        demand.architectAlignmentInfo = Array(new ArchitectAlignment);
+      }
 
       demand.requesterInfo.requestedDate = new Date(demand.requesterInfo.requestedDate)
       demand.requirementFunctionalInfo.bglDate = new Date(demand.requirementFunctionalInfo.bglDate)
@@ -174,6 +178,20 @@ export class DemandIntakeService {
     return result;
   }
 
+  validateAlignement(): boolean {
+    var result = true;
+    this.demandInformation.architectAlignmentInfo.forEach(s => {
+      if ((s.email != '' && s.comment == '') || (s.email == '' && s.comment != '')) {
+        result = false;
+      } else if (!this.eventService.checkEmailValue(s.email)) {
+        result = false;
+      }
+    });
+
+    return result;
+  }
+
+
   validateRequest(isSave: boolean): boolean {
 
     if (isSave) {
@@ -184,7 +202,7 @@ export class DemandIntakeService {
       }
 
     } else {
-      if (this.demandInformation.introduction.title == '' || this.demandInformation.introduction.description == '') {
+      if (this.demandInformation.introduction.title == '' || this.demandInformation.introduction.description == '' || !this.validateAlignement()) {
         this.messageService.add({ severity: 'warn', summary: 'Error', detail: 'Please fill required fields!' });
         this.router.navigate(['demand-intake/introduction']);
         return false;
