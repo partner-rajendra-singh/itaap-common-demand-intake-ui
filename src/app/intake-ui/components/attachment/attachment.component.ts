@@ -9,6 +9,7 @@ import {Attachment} from '../../models/attachment';
 import {HttpHeaders} from '@angular/common/http';
 import {FileUploadEvent} from 'primeng/fileupload';
 
+
 @Component({
   selector: 'app-attachment',
   templateUrl: './attachment.component.html',
