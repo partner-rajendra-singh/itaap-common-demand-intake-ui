@@ -192,7 +192,8 @@ export class DemandIntakeService {
   }
 
 
-  validateRequest(isSave: boolean): boolean {
+  public validateRequest(isSave: boolean): boolean {
+    console.log("validateRequest ", isSave)
 
     if (isSave) {
       if (this.demandInformation.introduction.title == '' || this.demandInformation.introduction.description == '') {
@@ -284,7 +285,7 @@ export class DemandIntakeService {
     this.eventService.progressBarEvent.emit(true);
     console.log("submitDemandWithAttachment: ", this.demandInformation)
 
-    if (this.validateRequest(false)) {
+    // if (this.validateRequest(false)) {
 
       let url = this.baseUrl + '/common/demand-intake/submit';
       let headerOptions = {
@@ -312,10 +313,10 @@ export class DemandIntakeService {
           this.eventService.progressBarEvent.emit(false);
           return response;
         }));
-    } else {
-      this.eventService.progressBarEvent.emit(false);
-      return throwError(false);
-    }
+    // } else {
+    //   this.eventService.progressBarEvent.emit(false);
+    //   return throwError(false);
+    // }
 
   }
 

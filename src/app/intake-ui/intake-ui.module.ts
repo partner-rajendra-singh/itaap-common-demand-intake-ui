@@ -72,6 +72,7 @@ import { PanelMenuModule } from 'primeng/panelmenu';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { StepperModule } from 'primeng/stepper';
 import { InputOtpModule } from 'primeng/inputotp';
+import { ConfirmComponent } from './components/confirm/confirm.component';
 
 @NgModule({
     declarations: [
@@ -91,7 +92,8 @@ import { InputOtpModule } from 'primeng/inputotp';
     ChartComponent,
     DMCRUDComponent,
     CCBCRUDComponent,
-    ViewDemandsComponent
+    ViewDemandsComponent,
+    ConfirmComponent
     ],
     imports: [
       CommonModule,

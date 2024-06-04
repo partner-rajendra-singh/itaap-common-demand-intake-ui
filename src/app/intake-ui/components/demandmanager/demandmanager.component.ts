@@ -112,16 +112,8 @@ export class DemandManagerComponent implements OnInit {
       this.demandManagerInfo.decision = this.getDecisionKey(this.selectedDecision);
       this.demandIntakeService.getDemandInformation().demandManagerInfo = this.demandManagerInfo;
 
-      this.demandIntakeService.submitDemandWithAttachment()
-        .pipe(first())
-        .subscribe(
-          data => {
-            this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Demand Submitted Successfully!' });
-            this.router.navigate(['view']);
-          },
-          error => {
-            this.messageService.add({ severity: 'error', summary: 'error', detail: 'Demand Failed to Submit!' });
-          });
+      this.router.navigate(['demand-intake/confirm']);
+    
     } else {
       this.messageService.add({ severity: 'warn', summary: 'Error', detail: 'Please fill required fields!' });
     }
