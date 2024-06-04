@@ -73,9 +73,10 @@ import { MultiSelectModule } from 'primeng/multiselect';
 import { StepperModule } from 'primeng/stepper';
 import { InputOtpModule } from 'primeng/inputotp';
 import { ConfirmComponent } from './components/confirm/confirm.component';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
 
 @NgModule({
-    declarations: [
+  declarations: [
     AttachmentComponent,
     DemandIntakeComponent,
     RequesterComponent,
@@ -93,6 +94,7 @@ import { ConfirmComponent } from './components/confirm/confirm.component';
     DMCRUDComponent,
     CCBCRUDComponent,
     ViewDemandsComponent,
+    DashboardComponent,
     ConfirmComponent
     ],
     imports: [
@@ -156,5 +158,6 @@ import { ConfirmComponent } from './components/confirm/confirm.component';
       StepperModule,
       InputOtpModule
     ]
-  })
-  export class IntakeUIComponentsModule { }
+})
+export class IntakeUIComponentsModule { }
+

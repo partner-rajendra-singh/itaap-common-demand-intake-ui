@@ -20,14 +20,16 @@ import { AuthGuard } from './intake-ui/services/auth-guard.service';
 import { MainAppLayoutComponent } from './layout/main.app.layout.component';
 import { MsalGuard } from '@azure/msal-angular';
 import { ConfirmComponent } from './intake-ui/components/confirm/confirm.component';
+import { DashboardComponent } from './intake-ui/components/dashboard/dashboard.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
   {
-    path: '', component: MainAppLayoutComponent, 
+    path: '', component: MainAppLayoutComponent,
     // canActivate: [MsalGuard],
     children: [
-      { path: 'view', component: ViewDemandsComponent },
+      { path: 'dashboard', component: DashboardComponent },
+      { path: 'view', component: ViewDemandsComponent, canActivate: [AuthGuard] },
       { path: 'report', component: WipComponent, canActivate: [AuthGuard] },
       { path: 'chart', component: ChartComponent, canActivate: [AuthGuard] },
       { path: 'dmcrud', component: DMCRUDComponent, canActivate: [AuthGuard] },
