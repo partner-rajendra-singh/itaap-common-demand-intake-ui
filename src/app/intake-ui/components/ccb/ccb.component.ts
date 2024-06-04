@@ -29,7 +29,7 @@ export class CCBComponent implements OnInit {
       this.selectedDecision = this.getStatusValue(this.demandIntakeService.getDemandInformation().ccbInfo.decision);
     }
    
-    if (this.demandIntakeService.getDemandInformation().introduction.status == 'CCB_HOLD' || this.demandIntakeService.getDemandInformation().introduction.status == 'ACCEPTED' || this.demandIntakeService.getDemandInformation().introduction.status == 'REJECTED') {
+    if (this.demandIntakeService.getDemandInformation().introduction.status == 'ACCEPTED' || this.demandIntakeService.getDemandInformation().introduction.status == 'REJECTED') {
       this.visibleSubmitButton = false;
     }
   }
@@ -46,17 +46,8 @@ export class CCBComponent implements OnInit {
     if (this.selectedDecision != '' && this.ccbInfo.remarks != '') {
       this.ccbInfo.decision = this.getStatusKey(this.selectedDecision);
       this.demandIntakeService.getDemandInformation().ccbInfo = this.ccbInfo;
-
-      this.demandIntakeService.submitDemandWithAttachment()
-        .pipe(first())
-        .subscribe(
-          data => {
-            this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Demand Submitted Successfully!' });
-            this.router.navigate(['view']);
-          },
-          error => {
-            this.messageService.add({ severity: 'error', summary: 'error', detail: 'Demand Failed to Submit!' });
-          });
+      this.router.navigate(['demand-intake/confirm']);
+     
     } else {
       this.messageService.add({ severity: 'warn', summary: 'Error', detail: 'Please fill required fields!' });
     }

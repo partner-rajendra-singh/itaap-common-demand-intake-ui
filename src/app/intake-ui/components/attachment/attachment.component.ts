@@ -29,6 +29,7 @@ export class AttachmentComponent implements OnInit {
               public demandIntakeService: DemandIntakeService, private router: Router,
               private messageService: MessageService, public authService: AuthService, public eventService: EventService) {
     this.visibleAttachmentUpload = true;
+
     if (authService.isRequester()) {
       if (!this.eventService.isNewDemand && (this.eventService.isMyDemand || this.eventService.isStakeholderDemand)
         && this.demandIntakeService.demandInformation.introduction.status != 'DRAFT'
@@ -129,12 +130,17 @@ export class AttachmentComponent implements OnInit {
       .subscribe(
         response => {
           // setTimeout(() => {this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Demand Submitted Successfully!' });},1000)
-          this.messageService.add({severity: 'success', summary: 'Success', detail: 'Demand Submitted Successfully!'});
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Success',
+            detail: 'Demand Submitted Successfully!'
+          });
           this.router.navigate(['view']);
         },
         error => {
           this.messageService.add({severity: 'error', summary: 'Error', detail: 'Demand Failed to Submit!'});
         });
+    this.router.navigate(['demand-intake/confirm']);
   }
 
   prevPage() {

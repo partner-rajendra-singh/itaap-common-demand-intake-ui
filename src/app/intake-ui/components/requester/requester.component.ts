@@ -54,9 +54,9 @@ export class RequesterComponent implements OnInit {
     this.requesterInfo = this.demandIntakeService.getDemandInformation().requesterInfo;
     this.marketList = Object.values(Market);
     this.businessUnitList = Object.values(BusinessUnit);
-
     this.selectedMarket = this.getMarketValueArray(this.demandIntakeService.getDemandInformation().requesterInfo.market);
     this.selectedBusinessUnit = this.getBUValueArray(this.demandIntakeService.getDemandInformation().requesterInfo.businessUnit);
+
     this.demandIntakeService.getRequesterDomain().pipe(
       map((response: any) => {
         this.domainList = response;
