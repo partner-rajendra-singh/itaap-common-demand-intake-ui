@@ -126,21 +126,6 @@ export class AttachmentComponent implements OnInit {
     if (this.files.length > 0) {
       this.uploadEvent(this.uploadCallback);
     }
-    this.demandIntakeService.submitDemandWithAttachment()
-      .pipe(first())
-      .subscribe(
-        response => {
-          // setTimeout(() => {this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Demand Submitted Successfully!' });},1000)
-          this.messageService.add({
-            severity: 'success',
-            summary: 'Success',
-            detail: 'Demand Submitted Successfully!'
-          });
-          this.router.navigate(['view']);
-        },
-        error => {
-          this.messageService.add({severity: 'error', summary: 'Error', detail: 'Demand Failed to Submit!'});
-        });
     this.router.navigate(['demand-intake/confirm']);
   }
 

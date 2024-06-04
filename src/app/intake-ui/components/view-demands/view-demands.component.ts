@@ -1,20 +1,20 @@
-import {Component, OnInit} from '@angular/core';
-import {DemandIntakeService} from '../../services/demand-intake.service';
-import {catchError, map, throwError} from 'rxjs';
-import {Demand} from '../../models/demand';
-import {MessageService} from 'primeng/api';
-import {Router} from '@angular/router';
-import {AuthService} from '../../services/auth.service';
-import {AllDemands} from '../../models/all-demands';
-import {EventService} from '../../services/event.service';
-import {DemandCategory} from '../../enums/demand-category';
-import {DemandStatus} from '../../enums/demand-status';
+import { Component, OnInit } from '@angular/core';
+import { DemandIntakeService } from '../../services/demand-intake.service';
+import { catchError, map, throwError } from 'rxjs';
+import { Demand } from '../../models/demand';
+import { MessageService } from 'primeng/api';
+import { Router } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
+import { AllDemands } from '../../models/all-demands';
+import { EventService } from '../../services/event.service';
+import { DemandCategory } from '../../enums/demand-category';
+import { DemandStatus } from '../../enums/demand-status';
 
 @Component({
   selector: 'app-view-demands',
   templateUrl: './view-demands.component.html'
 })
-export class ViewDemandsComponent implements OnInit{
+export class ViewDemandsComponent implements OnInit {
   allDemands: AllDemands = new AllDemands;
   errorData: any;
   columns!: any;
@@ -80,15 +80,17 @@ export class ViewDemandsComponent implements OnInit{
   onCategoryChange() {
     this.selectedDemandStatus = 'ALL';
     // console.log("Tab index -> category", this.eventService.selectedDemandTabIndex, this.selectedDemandCategory)
-
-
     let statusList: string[];
+    let myStatusList: string[];
     if (this.authService.isRequester()) {
       statusList = ["DRAFT"];
+      myStatusList = ["DRAFT"];
     } else if (this.authService.isDM()) {
       statusList = ["PENDING_WITH_DM", "DM_HOLD", "PENDING_WITH_CCB"];
+      myStatusList = ["DRAFT"];
     } else if (this.authService.isCCB()) {
       statusList = ["PENDING_WITH_CCB", "CCB_HOLD"];
+      myStatusList = ["DRAFT"];
     }
 
     //filtering demands
@@ -97,22 +99,26 @@ export class ViewDemandsComponent implements OnInit{
     this.allCurrentPendingDemands = this.allDemands.pendingDemands;
 
     if (this.selectedDemandCategory == DemandCategory.ACTION_IN_PROGRESS) {
-      this.allCurrentMyDemands = this.allCurrentMyDemands.filter(item => statusList.find(s => s == item.introduction.status));
-      this.allCurrentMyDemandsAsSH = this.allCurrentMyDemandsAsSH.filter(item => statusList.find(s => s == item.introduction.status));
+      this.allCurrentMyDemands = this.allCurrentMyDemands.filter(item => myStatusList.find(s => s == item.introduction.status));
+      this.allCurrentMyDemandsAsSH = this.allCurrentMyDemandsAsSH.filter(item => myStatusList.find(s => s == item.introduction.status));
       this.allCurrentPendingDemands = this.allCurrentPendingDemands.filter(item => statusList.find(s => s == item.introduction.status));
 
       let actionInProgressList: Demand[] = [];
       if (this.authService.isDM()) {
+
+        this.allCurrentPendingDemands.filter(item => item.introduction.status === 'PENDING_WITH_CCB');
+
         this.allCurrentPendingDemands.forEach(demand => {
-          let dmList = demand.solutionDirectionInfo.filter(item => {
-            let yourDomainList = this.authService.currentUserValue.domain.filter(d => item.solution == d);
-            // console.log("yourDomainList", yourDomainList);
-            if ((yourDomainList.length > 0 && (item.decision == null || item.decision == '')) || (item.dmEmail === this.authService.currentUserValue.email && (item.decision !== 'APPROVED' && item.decision !== 'REJECTED'))) {
-              actionInProgressList.push(demand);
-            }
-          });
-          if (dmList.length > 0) {
+
+          if (demand.introduction.status !== 'PENDING_WITH_CCB') {
             actionInProgressList.push(demand);
+          } else {
+            let dmList = demand.solutionDirectionInfo.filter(item => {
+              if (item.decision != null && item.dmEmail === this.authService.currentUserValue.email && item.decision !== 'APPROVED' && item.decision !== 'REJECTED') {
+                actionInProgressList.push(demand);
+              }
+            });
+
           }
         });
         console.log("actionInProgressList", actionInProgressList)
@@ -122,8 +128,8 @@ export class ViewDemandsComponent implements OnInit{
 
 
     } else if (this.selectedDemandCategory == DemandCategory.ACTION_COMPLETED) {
-      this.allCurrentMyDemands = this.allCurrentMyDemands.filter(item => !statusList.find(s => s == item.introduction.status));
-      this.allCurrentMyDemandsAsSH = this.allCurrentMyDemandsAsSH.filter(item => !statusList.find(s => s == item.introduction.status));
+      this.allCurrentMyDemands = this.allCurrentMyDemands.filter(item => !myStatusList.find(s => s == item.introduction.status));
+      this.allCurrentMyDemandsAsSH = this.allCurrentMyDemandsAsSH.filter(item => !myStatusList.find(s => s == item.introduction.status));
 
       let actionDoneList: Demand[] = [];
       if (this.authService.isDM()) {
