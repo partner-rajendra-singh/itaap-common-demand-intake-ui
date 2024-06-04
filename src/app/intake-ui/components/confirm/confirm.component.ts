@@ -26,9 +26,9 @@ export class ConfirmComponent {
         this.messageService.add({ severity: 'error', summary: 'Rejected', detail: 'You have rejected', life: 1000 });
 
         let path = 'demand-intake/attachment';
-        if(this.authService.isDM()){
+        if (this.authService.isDM()) {
           path = 'demand-intake/demandmanager';
-        }else if(this.authService.isCCB()){
+        } else if (this.authService.isCCB()) {
           path = 'demand-intake/ccb';
         }
 
@@ -38,20 +38,16 @@ export class ConfirmComponent {
   }
 
   submitDemand() {
-    if (this.demandIntakeService.validateRequest(false)) {
-      this.demandIntakeService.submitDemandWithAttachment()
-        .pipe(first())
-        .subscribe(
-          data => {
-            this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Demand Submitted Successfully!' });
-            this.router.navigate(['view']);
-          },
-          error => {
-            this.messageService.add({ severity: 'error', summary: 'error', detail: 'Demand Failed to Submit!' });
-          });
-    } else {
-      this.eventService.progressBarEvent.emit(false);
-    }
+    this.demandIntakeService.submitDemandWithAttachment()
+      .pipe(first())
+      .subscribe(
+        data => {
+          this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Demand Submitted Successfully!' });
+          this.router.navigate(['view']);
+        },
+        error => {
+          this.messageService.add({ severity: 'error', summary: 'error', detail: 'Demand Failed to Submit!' });
+        });
   }
 
 }

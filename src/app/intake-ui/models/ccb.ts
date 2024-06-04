@@ -4,4 +4,5 @@ export class CCB {
     remarks: string = '';
     decisionBy: string = '';
     isCrossFunctional: boolean = false;
+    
 }

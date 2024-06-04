@@ -29,7 +29,7 @@ export class CCBComponent implements OnInit {
       this.selectedDecision = this.getStatusValue(this.demandIntakeService.getDemandInformation().ccbInfo.decision);
     }
    
-    if (this.demandIntakeService.getDemandInformation().introduction.status == 'CCB_HOLD' || this.demandIntakeService.getDemandInformation().introduction.status == 'ACCEPTED' || this.demandIntakeService.getDemandInformation().introduction.status == 'REJECTED') {
+    if (this.demandIntakeService.getDemandInformation().introduction.status == 'ACCEPTED' || this.demandIntakeService.getDemandInformation().introduction.status == 'REJECTED') {
       this.visibleSubmitButton = false;
     }
   }
