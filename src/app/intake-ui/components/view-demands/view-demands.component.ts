@@ -1,20 +1,20 @@
-import { Component } from '@angular/core';
-import { DemandIntakeService } from '../../services/demand-intake.service';
-import { catchError, map, throwError } from 'rxjs';
-import { Demand } from '../../models/demand';
-import { MessageService } from 'primeng/api';
-import { Router } from '@angular/router';
-import { AuthService } from '../../services/auth.service';
-import { AllDemands } from '../../models/all-demands';
-import { EventService } from '../../services/event.service';
-import { DemandCategory } from '../../enums/demand-category';
-import { DemandStatus } from '../../enums/demand-status';
+import {Component, OnInit} from '@angular/core';
+import {DemandIntakeService} from '../../services/demand-intake.service';
+import {catchError, map, throwError} from 'rxjs';
+import {Demand} from '../../models/demand';
+import {MessageService} from 'primeng/api';
+import {Router} from '@angular/router';
+import {AuthService} from '../../services/auth.service';
+import {AllDemands} from '../../models/all-demands';
+import {EventService} from '../../services/event.service';
+import {DemandCategory} from '../../enums/demand-category';
+import {DemandStatus} from '../../enums/demand-status';
 
 @Component({
   selector: 'app-view-demands',
   templateUrl: './view-demands.component.html'
 })
-export class ViewDemandsComponent {
+export class ViewDemandsComponent implements OnInit{
   allDemands: AllDemands = new AllDemands;
   errorData: any;
   columns!: any;

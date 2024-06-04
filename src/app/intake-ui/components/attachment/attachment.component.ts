@@ -1,13 +1,13 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { DemandIntakeService } from '../../services/demand-intake.service';
-import { MessageService, PrimeNGConfig } from 'primeng/api';
-import { AuthService } from '../../services/auth.service';
-import { first } from 'rxjs/operators';
-import { EventService } from '../../services/event.service';
-import { Attachment } from '../../models/attachment';
-import { HttpHeaders } from '@angular/common/http';
-import { FileUploadEvent, FileUploadHandlerEvent } from 'primeng/fileupload';
+import {Component, OnInit} from '@angular/core';
+import {Router} from '@angular/router';
+import {DemandIntakeService} from '../../services/demand-intake.service';
+import {MessageService, PrimeNGConfig} from 'primeng/api';
+import {AuthService} from '../../services/auth.service';
+import {first} from 'rxjs/operators';
+import {EventService} from '../../services/event.service';
+import {Attachment} from '../../models/attachment';
+import {HttpHeaders} from '@angular/common/http';
+import {FileUploadEvent} from 'primeng/fileupload';
 
 @Component({
   selector: 'app-attachment',
@@ -18,26 +18,27 @@ export class AttachmentComponent implements OnInit {
   attachmentInfo: Attachment[] = [];
 
   fileUploadUrl!: string;
-  submitted: boolean = false;
   visibleNextButton!: boolean;
   visibleSaveButton!: boolean;
   visibleSubmitButton!: boolean;
+  visibleAttachmentUpload!: boolean;
   index: any;
   httpHeaders: HttpHeaders = new HttpHeaders;
-  isDeleteDisabled: boolean = true;
 
   constructor(private config: PrimeNGConfig,
-    public demandIntakeService: DemandIntakeService, private router: Router,
-    private messageService: MessageService, public authService: AuthService, public eventService: EventService
-  ) {
-
+              public demandIntakeService: DemandIntakeService, private router: Router,
+              private messageService: MessageService, public authService: AuthService, public eventService: EventService) {
+    this.visibleAttachmentUpload = true;
     if (authService.isRequester()) {
-
-      if (!this.eventService.isNewDemand && (this.eventService.isMyDemand || this.eventService.isStakeholderDemand) && (this.demandIntakeService.demandInformation.introduction.status != 'DRAFT' && this.demandIntakeService.demandInformation.introduction.status != 'PENDING_WITH_DM')) {
+      if (!this.eventService.isNewDemand && (this.eventService.isMyDemand || this.eventService.isStakeholderDemand)
+        && this.demandIntakeService.demandInformation.introduction.status != 'DRAFT'
+        && this.demandIntakeService.demandInformation.introduction.status != 'PENDING_WITH_DM') {
         this.visibleNextButton = true;
+        this.visibleAttachmentUpload = false;
       } else {
         this.visibleNextButton = false;
         if (this.demandIntakeService.getDemandInformation().introduction.status != 'DRAFT' && this.demandIntakeService.getDemandInformation().introduction.status != null) {
+          this.visibleAttachmentUpload = false;
           this.visibleSaveButton = false;
           this.visibleSubmitButton = false;
         } else {
@@ -45,7 +46,6 @@ export class AttachmentComponent implements OnInit {
           this.visibleSubmitButton = true;
         }
       }
-
     } else {
       if (authService.isDM() || authService.isCCB()) {
         this.visibleSaveButton = false;
@@ -68,6 +68,11 @@ export class AttachmentComponent implements OnInit {
       }
     }
 
+    if (this.demandIntakeService.getDemandInformation().introduction.status == 'ACCEPTED'
+      || this.demandIntakeService.getDemandInformation().introduction.status == 'REJECTED') {
+      this.visibleAttachmentUpload = false;
+    }
+
     if (this.eventService.isStakeholderDemand && !this.eventService.isNewDemand && !this.eventService.isMyDemand) {
       this.visibleSubmitButton = false;
     }
@@ -84,12 +89,9 @@ export class AttachmentComponent implements OnInit {
     console.log("this.fileUploadUrl -> " + this.fileUploadUrl);
   }
 
-  addAttachment() {
-    this.attachmentInfo.push(new Attachment);
-  }
-
-  removeAttachment() {
-    this.attachmentInfo.pop();
+  isDeleteDisabled(attachment: Attachment): boolean {
+    return attachment.uploadedBy != this.authService.currentUserValue.email
+      && this.demandIntakeService.demandInformation.introduction.status != 'DRAFT';
   }
 
   savePage() {
@@ -100,11 +102,21 @@ export class AttachmentComponent implements OnInit {
       .pipe(first())
       .subscribe(
         response => {
-          this.messageService.add({ key: 'success', severity: 'success', summary: 'Success', detail: 'Demand Saved Successfully!' });
+          this.messageService.add({
+            key: 'success',
+            severity: 'success',
+            summary: 'Success',
+            detail: 'Demand Saved Successfully!'
+          });
           this.router.navigate(['view']);
         },
         error => {
-          this.messageService.add({ key: 'error', severity: 'error', summary: 'Error', detail: 'Demand Failed to Save!' });
+          this.messageService.add({
+            key: 'error',
+            severity: 'error',
+            summary: 'Error',
+            detail: 'Demand Failed to Save!'
+          });
         });
   }
 
@@ -117,13 +129,12 @@ export class AttachmentComponent implements OnInit {
       .subscribe(
         response => {
           // setTimeout(() => {this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Demand Submitted Successfully!' });},1000)
-          this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Demand Submitted Successfully!' });
+          this.messageService.add({severity: 'success', summary: 'Success', detail: 'Demand Submitted Successfully!'});
           this.router.navigate(['view']);
         },
         error => {
-          this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Demand Failed to Submit!' });
+          this.messageService.add({severity: 'error', summary: 'Error', detail: 'Demand Failed to Submit!'});
         });
-
   }
 
   prevPage() {
@@ -158,20 +169,18 @@ export class AttachmentComponent implements OnInit {
     }
   }
 
-  onUpload(event: any, index: any) {
-    for (let file of event.files) {
-      // this.attachmentInfo[index].fileName = file;
-      // this.attachmentInfo[index].uploadedDate = new Date();
-      this.demandIntakeService.attachments[index] = file;
-    }
-    console.log("attachments1: ", this.demandIntakeService.attachments);
-    this.messageService.add({ severity: 'info', summary: 'Success', detail: 'Files Uploaded Successfully!' });
-  }
-
-  setDescription(description: HTMLInputElement, file: any) {
-    file.description = description.value;
-    description.disabled = true;
-  }
+  // onUpload(event: any, index: any) {
+  //   for (let file of event.files) {
+  //     this.demandIntakeService.attachments[index] = file;
+  //   }
+  //   console.log("attachments1: ", this.demandIntakeService.attachments);
+  //   this.messageService.add({severity: 'info', summary: 'Success', detail: 'Files Uploaded Successfully!'});
+  // }
+  //
+  // setDescription(description: HTMLInputElement, file: any) {
+  //   file.description = description.value;
+  //   description.disabled = true;
+  // }
 
   getAllAttachmentsByDemandId() {
     this.demandIntakeService
@@ -191,12 +200,22 @@ export class AttachmentComponent implements OnInit {
       .subscribe(
         response => {
           console.log(response);
-          this.messageService.add({ severity: 'info', summary: 'Success', detail: response.attachmentResponse, life: 3000 });
+          this.messageService.add({
+            severity: 'info',
+            summary: 'Success',
+            detail: response.attachmentResponse,
+            life: 3000
+          });
           this.getAllAttachmentsByDemandId();
         },
         error => {
           console.log(error);
-          this.messageService.add({ severity: 'error', summary: 'Error', detail: 'File : ' + fileName + ' : ' + error.statusText, life: 3000 });
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Error',
+            detail: 'File : ' + fileName + ' : ' + error.statusText,
+            life: 3000
+          });
         }
       )
   }
@@ -209,7 +228,7 @@ export class AttachmentComponent implements OnInit {
           const fileNameFromUrl = "file";
           if (fileNameFromUrl) {
             const contentType = response.headers.get("Content-Type");
-            const blob = new Blob([response.body as BlobPart], { type: contentType as string });
+            const blob = new Blob([response.body as BlobPart], {type: contentType as string});
             const link = document.createElement("a");
             link.href = window.URL.createObjectURL(blob);
             link.download = fileName;
@@ -219,8 +238,7 @@ export class AttachmentComponent implements OnInit {
             window.URL.revokeObjectURL(link.href);
             link.remove();
             this.eventService.progressBarEvent.emit(false);
-          }
-          else {
+          } else {
             console.log("Unable to extract file")
           }
         }
@@ -252,7 +270,7 @@ export class AttachmentComponent implements OnInit {
   }
 
   onTemplatedUpload(event: FileUploadEvent) {
-    this.messageService.add({ severity: 'info', summary: 'Success', detail: 'File Uploaded', life: 3000 });
+    this.messageService.add({severity: 'info', summary: 'Success', detail: 'File Uploaded', life: 3000});
   }
 
   onSelectedFiles(event: any) {
@@ -287,7 +305,6 @@ export class AttachmentComponent implements OnInit {
 
   customUploadHandler() {
     let formData = new FormData();
-
     for (let i = 0; i < this.files.length; i++) {
       formData.append('files', this.files[i], this.files[i].name);
     }
@@ -297,7 +314,12 @@ export class AttachmentComponent implements OnInit {
       .subscribe((response) => {
         this.uploadedFiles.push(...this.files);
         this.files.splice(0, this.files.length);
-        this.messageService.add({ severity: 'info', summary: 'Success', detail: response.attachmentResponse, life: 3000 });
+        this.messageService.add({
+          severity: 'info',
+          summary: 'Success',
+          detail: response.attachmentResponse,
+          life: 3000
+        });
         this.getAllAttachmentsByDemandId();
       })
   }
@@ -309,12 +331,12 @@ export class AttachmentComponent implements OnInit {
   }
 
   onRowEditInit(attachment: Attachment) {
-    this.clonedAttachments[attachment.attachmentId] = { ...attachment };
+    this.clonedAttachments[attachment.attachmentId] = {...attachment};
   }
 
   onRowEditSave(attachment: Attachment) {
     delete this.clonedAttachments[attachment.attachmentId];
-    this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Attachment is updated' });
+    this.messageService.add({severity: 'success', summary: 'Success', detail: 'Attachment is updated'});
   }
 
   onRowEditCancel(attachment: Attachment, index: number) {

@@ -1,14 +1,14 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { DemandIntakeService } from '../../services/demand-intake.service';
-import { MessageService } from 'primeng/api';
-import { catchError, first, map, throwError } from 'rxjs';
-import { AuthService } from '../../services/auth.service';
-import { EventService } from '../../services/event.service';
-import { Market } from '../../enums/market';
-import { BusinessUnit } from '../../enums/businessUnit';
-import { RequesterInfo } from '../../models/requester-info';
-import { Spoc } from '../../models/spoc';
+import {Component, OnInit} from '@angular/core';
+import {Router} from '@angular/router';
+import {DemandIntakeService} from '../../services/demand-intake.service';
+import {MessageService} from 'primeng/api';
+import {catchError, first, map, throwError} from 'rxjs';
+import {AuthService} from '../../services/auth.service';
+import {EventService} from '../../services/event.service';
+import {Market} from '../../enums/market';
+import {BusinessUnit} from '../../enums/businessUnit';
+import {RequesterInfo} from '../../models/requester-info';
+import {Spoc} from '../../models/spoc';
 
 interface Domain {
   key: string;
@@ -29,7 +29,7 @@ export class RequesterComponent implements OnInit {
   selectedMarket!: string[];
   otherMarket!: string;
   businessUnitList!: string[];
-  selectedBusinessUnit!: string[];
+  selectedBusinessUnit: string[] = [];
   otherBusinessUnit!: string;
   isAnotherRequester!: boolean;
 
@@ -56,15 +56,7 @@ export class RequesterComponent implements OnInit {
     this.businessUnitList = Object.values(BusinessUnit);
 
     this.selectedMarket = this.getMarketValueArray(this.demandIntakeService.getDemandInformation().requesterInfo.market);
-    if ((!this.selectedMarket || this.selectedMarket.length == 0) && !this.eventService.isNewDemand) {
-      this.selectedMarket.push('Other');
-    }
-
     this.selectedBusinessUnit = this.getBUValueArray(this.demandIntakeService.getDemandInformation().requesterInfo.businessUnit);
-    if ((!this.selectedBusinessUnit || this.selectedBusinessUnit.length == 0) && !this.eventService.isNewDemand) {
-      this.selectedBusinessUnit.push('Other');
-    }
-
     this.demandIntakeService.getRequesterDomain().pipe(
       map((response: any) => {
         this.domainList = response;
@@ -95,11 +87,10 @@ export class RequesterComponent implements OnInit {
   getSelectedDomain(): Domain {
     let platform = this.domainList.find(item => item.key === this.demandIntakeService.getDemandInformation().requesterInfo.domain);
     if (!platform && !this.eventService.isNewDemand) {
-      return { key: 'Other', value: 'Other' };
+      return {key: 'Other', value: 'Other'};
     } else if (!platform) {
-      return { key: '', value: '' };
+      return {key: '', value: ''};
     }
-
     return JSON.parse(JSON.stringify(platform)) as Domain;
   }
 
@@ -115,7 +106,7 @@ export class RequesterComponent implements OnInit {
     let movenext = true;
     this.requesterInfo.spoc.forEach(item => {
       if ((item.role != '' && item.email == '') || (item.role == '' && item.email != '')) {
-        this.messageService.add({ severity: 'warn', summary: 'Error', detail: 'Please fill stakeholder(s) properly!' });
+        this.messageService.add({severity: 'warn', summary: 'Error', detail: 'Please fill stakeholder(s) properly!'});
         movenext = false;
       }
     });
@@ -159,7 +150,7 @@ export class RequesterComponent implements OnInit {
         this.router.navigate(['demand-intake/requirement/' + this.demandIntakeService.demandInformation.introduction.demandIntakeId]);
       }
     } else {
-      this.messageService.add({ severity: 'warn', summary: 'Error', detail: 'Please fill required fields!' });
+      this.messageService.add({severity: 'warn', summary: 'Error', detail: 'Please fill required fields!'});
     }
 
   }
@@ -215,11 +206,21 @@ export class RequesterComponent implements OnInit {
       .pipe(first())
       .subscribe(
         response => {
-          this.messageService.add({ key: 'success', severity: 'success', summary: 'Success', detail: 'Demand Saved Successfully!' });
+          this.messageService.add({
+            key: 'success',
+            severity: 'success',
+            summary: 'Success',
+            detail: 'Demand Saved Successfully!'
+          });
           this.router.navigate(['view']);
         },
         error => {
-          this.messageService.add({ key: 'error', severity: 'error', summary: 'Error', detail: 'Demand Failed to Save!' });
+          this.messageService.add({
+            key: 'error',
+            severity: 'error',
+            summary: 'Error',
+            detail: 'Demand Failed to Save!'
+          });
         });
   }
 
@@ -257,7 +258,6 @@ export class RequesterComponent implements OnInit {
         this.otherBusinessUnit = key;
       }
     })
-
     return output;
   }
 

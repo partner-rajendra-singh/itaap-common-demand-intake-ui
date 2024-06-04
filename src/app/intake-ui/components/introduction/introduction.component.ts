@@ -1,19 +1,18 @@
-import { Component } from '@angular/core';
-import { Router } from '@angular/router';
-import { DemandIntakeService } from '../../services/demand-intake.service';
-import { MessageService } from 'primeng/api';
-import { Introduction } from '../../models/introduction';
-import { first } from 'rxjs';
-import { AuthService } from '../../services/auth.service';
-import { EventService } from '../../services/event.service';
-import { ArchitectAlignment } from '../../models/architect-alignment';
-import { faL } from '@fortawesome/free-solid-svg-icons';
+import {Component, OnInit} from '@angular/core';
+import {Router} from '@angular/router';
+import {DemandIntakeService} from '../../services/demand-intake.service';
+import {MessageService} from 'primeng/api';
+import {Introduction} from '../../models/introduction';
+import {first} from 'rxjs';
+import {AuthService} from '../../services/auth.service';
+import {EventService} from '../../services/event.service';
+import {ArchitectAlignment} from '../../models/architect-alignment';
 
 @Component({
   selector: 'app-introduction',
   templateUrl: './introduction.component.html'
 })
-export class IntroductionComponent {
+export class IntroductionComponent implements OnInit {
 
   demandInfo!: Introduction;
   visibleSaveButton!: boolean;
@@ -49,7 +48,7 @@ export class IntroductionComponent {
     let movenext = true;
     this.architectAlignmentInfo.forEach(item => {
       if ((this.demandInfo.architectAligned) && (!this.eventService.checkEmailValue(item.email) || item.comment == '')) {
-        this.messageService.add({ severity: 'warn', summary: 'Error', detail: 'Please fill alignment properly!' });
+        this.messageService.add({severity: 'warn', summary: 'Error', detail: 'Please fill alignment properly!'});
         movenext = false;
       }
     });
@@ -61,7 +60,7 @@ export class IntroductionComponent {
       movenext1 = false;
     }
 
-    console.log("c**", movenext,movenext1)
+    console.log("c**", movenext, movenext1)
     if (movenext && movenext1) {
       if (this.eventService.isNewDemand) {
         this.router.navigate(['demand-intake/requester']);
@@ -69,12 +68,12 @@ export class IntroductionComponent {
         this.router.navigate(['demand-intake/requester/' + this.demandIntakeService.demandInformation.introduction.demandIntakeId]);
       }
     } else {
-      this.messageService.add({ severity: 'warn', summary: 'Error', detail: 'Please fill required fields!' });
+      this.messageService.add({severity: 'warn', summary: 'Error', detail: 'Please fill required fields!'});
     }
 
   }
 
-  validateIntroductionInfoAndSave(){
+  validateIntroductionInfoAndSave(saveAndNavigateToViewFlag: boolean) {
     console.log("Introduction : ", this.demandIntakeService.demandInformation)
     let movenext = true;
     this.architectAlignmentInfo.forEach(item => {
@@ -93,30 +92,44 @@ export class IntroductionComponent {
     if (movenext && movenext1) {
       if (this.eventService.isNewDemand) {
         //this.router.navigate(['demand-intake/requester']);
-        this.savePage();
+        this.savePage(saveAndNavigateToViewFlag);
       } else {
         this.router.navigate(['demand-intake/requester/' + this.demandIntakeService.demandInformation.introduction.demandIntakeId]);
       }
     } else {
-      this.messageService.add({ severity: 'warn', summary: 'Error', detail: 'Please fill required fields!' });
+      this.messageService.add({severity: 'warn', summary: 'Error', detail: 'Please fill required fields!'});
     }
   }
 
-  savePage() {
+  savePage(saveAndNavigateToViewFlag: boolean) {
     if (this.demandIntakeService.demandInformation.introduction.status != 'ACCEPTED' && this.demandIntakeService.demandInformation.introduction.status != 'REJECTED') {
-
+      this.demandIntakeService.getDemandInformation().introduction.requestedBy = this.authService.currentUserValue.email;
       this.demandIntakeService.saveDemandWithAttachment()
         .pipe(first())
         .subscribe(
           response => {
-            this.messageService.add({ key: 'success', severity: 'success', summary: 'Success', detail: 'Demand Saved Successfully!' });
+            this.messageService.add({
+              key: 'success',
+              severity: 'success',
+              summary: 'Success',
+              detail: 'Demand Saved Successfully!'
+            });
             // this.router.navigate(['view']);
             this.demandIntakeService.demandInformation.introduction.demandIntakeId = response.demandIntakeId;
             this.demandIntakeService.demandInformation.introduction.requestedBy = response.requestedBy;
-            this.router.navigate(['demand-intake/requester']);
+            if (saveAndNavigateToViewFlag) {
+              this.router.navigate(['view']);
+            } else {
+              this.router.navigate(['demand-intake/requester']);
+            }
           },
           error => {
-            this.messageService.add({ key: 'error', severity: 'error', summary: 'Error', detail: 'Demand Failed to Save!' });
+            this.messageService.add({
+              key: 'error',
+              severity: 'error',
+              summary: 'Error',
+              detail: 'Demand Failed to Save!'
+            });
           });
     }
   }
