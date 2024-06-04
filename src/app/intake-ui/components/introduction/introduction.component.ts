@@ -32,6 +32,7 @@ export class IntroductionComponent {
   }
 
   ngOnInit() {
+    this.demandIntakeService.getDemandInformation().introduction.currentUser = this.authService.currentUserValue.email;
     this.demandInfo = this.demandIntakeService.getDemandInformation().introduction;
     this.architectAlignmentInfo = this.demandIntakeService.getDemandInformation().architectAlignmentInfo;
   }

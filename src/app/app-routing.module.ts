@@ -19,6 +19,7 @@ import { CCBCRUDComponent } from './intake-ui/components/ccbcrud/ccbcrud.compone
 import { AuthGuard } from './intake-ui/services/auth-guard.service';
 import { MainAppLayoutComponent } from './layout/main.app.layout.component';
 import { MsalGuard } from '@azure/msal-angular';
+import { ConfirmComponent } from './intake-ui/components/confirm/confirm.component';
 import { DashboardComponent } from './intake-ui/components/dashboard/dashboard.component';
 
 const routes: Routes = [
@@ -39,6 +40,9 @@ const routes: Routes = [
           {
             path: '',
             component: IntroductionComponent
+          }, {
+            path: 'confirm',
+            component: ConfirmComponent
           },
           {
             path: 'introduction',

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { DemandIntakeService } from '../../services/demand-intake.service';
-import { MessageService, PrimeNGConfig } from 'primeng/api';
+import { ConfirmationService, MessageService, PrimeNGConfig } from 'primeng/api';
 import { AuthService } from '../../services/auth.service';
 import { first } from 'rxjs/operators';
 import { EventService } from '../../services/event.service';
@@ -26,7 +26,7 @@ export class AttachmentComponent implements OnInit {
   httpHeaders: HttpHeaders = new HttpHeaders;
 
   constructor(private config: PrimeNGConfig,
-    public demandIntakeService: DemandIntakeService, private router: Router,
+    public demandIntakeService: DemandIntakeService, private router: Router, private confirmationService: ConfirmationService,
     private messageService: MessageService, public authService: AuthService, public eventService: EventService
   ) {
 
@@ -111,17 +111,8 @@ export class AttachmentComponent implements OnInit {
     if (this.files.length > 0) {
       this.uploadEvent(this.uploadCallback);
     }
-    this.demandIntakeService.submitDemandWithAttachment()
-      .pipe(first())
-      .subscribe(
-        response => {
-          // setTimeout(() => {this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Demand Submitted Successfully!' });},1000)
-          this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Demand Submitted Successfully!' });
-          this.router.navigate(['view']);
-        },
-        error => {
-          this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Demand Failed to Submit!' });
-        });
+
+    this.router.navigate(['demand-intake/confirm']);
 
   }
 

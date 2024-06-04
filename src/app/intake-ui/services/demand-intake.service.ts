@@ -192,7 +192,8 @@ export class DemandIntakeService {
   }
 
 
-  validateRequest(isSave: boolean): boolean {
+  public validateRequest(isSave: boolean): boolean {
+    console.log("validateRequest ", isSave)
 
     if (isSave) {
       if (this.demandInformation.introduction.title == '' || this.demandInformation.introduction.description == '') {
