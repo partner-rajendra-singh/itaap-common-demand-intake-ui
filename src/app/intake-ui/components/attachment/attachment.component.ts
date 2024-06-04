@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {DemandIntakeService} from '../../services/demand-intake.service';
-import {MessageService, PrimeNGConfig} from 'primeng/api';
+import {ConfirmationService, MessageService, PrimeNGConfig} from 'primeng/api';
 import {AuthService} from '../../services/auth.service';
 import {first} from 'rxjs/operators';
 import {EventService} from '../../services/event.service';
@@ -28,7 +28,7 @@ export class AttachmentComponent implements OnInit {
 
   constructor(private config: PrimeNGConfig,
               public demandIntakeService: DemandIntakeService, private router: Router,
-              private messageService: MessageService, public authService: AuthService, public eventService: EventService) {
+              private messageService: MessageService, public authService: AuthService, public eventService: EventService,private confirmationService: ConfirmationService) {
     this.visibleAttachmentUpload = true;
 
     if (authService.isRequester()) {
