@@ -77,6 +77,15 @@ img {
   box-shadow: 0 3px 4px #0000001a, 0 24px 36px #0000000a;
 }
 
+.card-without-shadow {
+  background: var(--surface-card);
+  border: 1px solid var(--surface-border);
+  padding: 2rem;
+  margin-bottom: 2rem;
+  box-shadow: var(--card-shadow);
+  border-radius: 12px
+}
+
 .task-card {
   background: var(--surface-card);
   padding: 2rem;

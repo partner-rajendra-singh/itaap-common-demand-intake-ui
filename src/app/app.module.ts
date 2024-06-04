@@ -1,17 +1,27 @@
-import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
-import { DemandIntakeService } from './intake-ui/services/demand-intake.service';
-import { ConfirmationService, MessageService } from 'primeng/api';
-import { AuthService } from './intake-ui/services/auth.service';
-import { AuthGuard } from './intake-ui/services/auth-guard.service';
-import { MainAppLayoutModule } from './layout/main.app.layout.module';
-import { IntakeUIComponentsModule } from './intake-ui/intake-ui.module';
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { MsalInterceptor, MSAL_INSTANCE, MSAL_GUARD_CONFIG, MSAL_INTERCEPTOR_CONFIG, MsalService, MsalGuard, MsalBroadcastService, MsalGuardConfiguration, MsalInterceptorConfiguration } from '@azure/msal-angular';
-import { PublicClientApplication, InteractionType } from '@azure/msal-browser';
-import { msalConfig } from './intake-ui/services/auth-config';
+import {NgModule} from '@angular/core';
+import {BrowserModule} from '@angular/platform-browser';
+import {AppRoutingModule} from './app-routing.module';
+import {AppComponent} from './app.component';
+import {DemandIntakeService} from './intake-ui/services/demand-intake.service';
+import {ConfirmationService, MessageService} from 'primeng/api';
+import {AuthService} from './intake-ui/services/auth.service';
+import {AuthGuard} from './intake-ui/services/auth-guard.service';
+import {MainAppLayoutModule} from './layout/main.app.layout.module';
+import {IntakeUIComponentsModule} from './intake-ui/intake-ui.module';
+import {HTTP_INTERCEPTORS} from '@angular/common/http';
+import {
+  MSAL_GUARD_CONFIG,
+  MSAL_INSTANCE,
+  MSAL_INTERCEPTOR_CONFIG,
+  MsalBroadcastService,
+  MsalGuard,
+  MsalGuardConfiguration,
+  MsalInterceptor,
+  MsalInterceptorConfiguration,
+  MsalService
+} from '@azure/msal-angular';
+import {InteractionType, PublicClientApplication} from '@azure/msal-browser';
+import {msalConfig} from './intake-ui/services/auth-config';
 
 
 @NgModule({

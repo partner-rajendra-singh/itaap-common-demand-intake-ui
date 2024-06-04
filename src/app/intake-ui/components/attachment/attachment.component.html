@@ -3,150 +3,149 @@
 <p-toast key="error"></p-toast>
 
 <div class="grid">
-    <div class="col-12 xs:col-12 sm:col-12 lg:col-12 xl:col-12">
-        <!-- <p-fieldset legend="Attachments"
-            *ngIf="visibleSubmitButton || visibleNextButton || eventService.isStakeholderDemand">
-        </p-fieldset> -->
-        <div class="mb-5">
-            <h5 class="mb-2">Attachments <label (click)="getAllAttachmentsByDemandId()"><i
-                        class="p-link pi pi-refresh"></i></label>
-            </h5>
-            <p-table styleClass="p-datatable-sm" dataKey="id" [value]="attachmentInfo" editMode="row"
-                [tableStyle]="{ 'min-width': '50rem' }">
-                <ng-template pTemplate="caption">
-
-                    <p-fileUpload name="files" [url]="fileUploadUrl" [multiple]="true" [headers]="httpHeaders"
+  <div class="col-12 xs:col-12 sm:col-12 lg:col-12 xl:col-12">
+    <!-- <p-fieldset legend="Attachments"
+        *ngIf="visibleSubmitButton || visibleNextButton || eventService.isStakeholderDemand">
+    </p-fieldset> -->
+    <div class="mb-5">
+      <h5 class="mb-2">Attachments <label (click)="getAllAttachmentsByDemandId()"><i
+        class="p-link pi pi-refresh"></i></label>
+      </h5>
+      <p-table styleClass="p-datatable-sm" dataKey="id" [value]="attachmentInfo" editMode="row"
+               [tableStyle]="{ 'min-width': '50rem' }">
+        <ng-template pTemplate="caption" *ngIf="visibleAttachmentUpload">
+          <p-fileUpload name="files" [url]="fileUploadUrl" [multiple]="true" [headers]="httpHeaders"
                         [customUpload]="true" (onUpload)="onTemplatedUpload($event)"
                         (uploadHandler)="customUploadHandler()" (onSelect)="onSelectedFiles($event)">
-
-                        <ng-template pTemplate="header" let-files let-chooseCallback="chooseCallback"
-                            let-clearCallback="clearCallback" let-uploadCallback="uploadCallback">
-                            <div class="flex flex-wrap align-items-center justify-content-between">
-                                <p-button (onClick)="choose($event, chooseCallback, uploadCallback)" icon="pi pi-images"
-                                    [rounded]="true" [outlined]="true" label="Select"></p-button>
-                                <!-- <p-button (onClick)="uploadEvent(uploadCallback)"
-                                    *ngIf="!eventService.isNewDemand && (visibleSubmitButton || visibleNextButton || eventService.isStakeholderDemand)"
-                                    icon="pi pi-cloud-upload" [rounded]="true" [outlined]="true" severity="success"
-                                    [disabled]="(!files || files.length === 0)" label="Upload"></p-button>
-                                <p-button (onClick)="clearCallback()" icon="pi pi-times" [rounded]="true"
-                                    [outlined]="true" severity="danger" label="Reset"
-                                    [disabled]="!files || files.length === 0"></p-button> -->
-                            </div>
-                        </ng-template>
-                        <ng-template pTemplate="content" let-files let-removeFileCallback="removeFileCallback"
-                            let-removeUploadedFileCallback="removeUploadedFileCallback">
-                            <div *ngIf="files.length > 0">
-                                <h5>Pending</h5>
-                                <div class="flex flex-wrap p-0 sm:p-5 gap-5">
-                                    <div *ngFor="let file of files; let i = index"
-                                        class="card m-0 flex flex-wrap gap-3 border-1 surface-border align-items-center">
-                                        <div *ngIf="file.type.startsWith('image')">
-                                            <img role="presentation" [alt]="file.name" [src]="file.objectURL"
-                                                width="100" />
-                                        </div>
-                                        <div *ngIf="!file.type.startsWith('image')">
-                                            <i class="pi pi-file" style="font-size: 4rem"></i>
-                                        </div>
-                                        <div>
-                                            <span class="font-semibold">{{ file.name }}</span>
-                                            <div>{{ formatSize(file.size) }}</div>
-                                            <p-badge value="Pending" severity="warning"></p-badge>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div *ngIf="uploadedFiles.length > 0">
-                                <h5>Completed</h5>
-                                <div class="flex flex-wrap p-0 sm:p-5 gap-5">
-                                    <div *ngFor="let file of uploadedFiles; let i = index"
-                                        class="card m-0 flex flex-wrap border-1 surface-border align-items-center gap-3">
-                                        <div *ngIf="file.type.startsWith('image')">
-                                            <img role="presentation" [alt]="file.name" [src]="file.objectURL"
-                                                width="100" />
-                                        </div>
-                                        <div *ngIf="!file.type.startsWith('image')">
-                                            <i class="pi pi-file" style="font-size: 4rem"></i>
-                                        </div>
-                                        <div>
-                                            <span class="font-semibold">{{ file.name }}</span>
-                                            <div>{{ formatSize(file.size) }}</div>
-                                            <p-badge value="Completed" class="mt-3" severity="success"></p-badge>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </ng-template>
-                        <ng-template pTemplate="file"> </ng-template>
-                        <ng-template pTemplate="empty">
-                            <div class="flex gap-3 align-items-center justify-content-center flex-wrap">
-                                <i
-                                    class="pi pi-cloud-upload border-2 border-circle p-2 text-2xl text-400 border-400"></i>
-                                <span class="text-600 font-medium">Drag and drop files to here to upload.</span>
-                            </div>
-                        </ng-template>
-                    </p-fileUpload>
+            <ng-template pTemplate="header" let-files let-chooseCallback="chooseCallback"
+                         let-clearCallback="clearCallback" let-uploadCallback="uploadCallback">
+              <div class="flex flex-wrap align-items-center justify-content-between">
+                <p-button (onClick)="choose($event, chooseCallback, uploadCallback)" icon="pi pi-images"
+                          [rounded]="true" [outlined]="true" label="Select"></p-button>
+                <!-- <p-button (onClick)="uploadEvent(uploadCallback)"
+                    *ngIf="!eventService.isNewDemand && (visibleSubmitButton || visibleNextButton || eventService.isStakeholderDemand)"
+                    icon="pi pi-cloud-upload" [rounded]="true" [outlined]="true" severity="success"
+                    [disabled]="(!files || files.length === 0)" label="Upload"></p-button>
+                <p-button (onClick)="clearCallback()" icon="pi pi-times" [rounded]="true"
+                    [outlined]="true" severity="danger" label="Reset"
+                    [disabled]="!files || files.length === 0"></p-button> -->
+              </div>
+            </ng-template>
+            <ng-template pTemplate="content" let-files let-removeFileCallback="removeFileCallback"
+                         let-removeUploadedFileCallback="removeUploadedFileCallback">
+              <div *ngIf="files.length > 0">
+                <h5>Pending</h5>
+                <div class="flex flex-wrap p-0 sm:p-5 gap-5">
+                  <div *ngFor="let file of files; let i = index"
+                       class="card m-0 flex flex-wrap gap-3 border-1 surface-border align-items-center">
+                    <div *ngIf="file.type.startsWith('image')">
+                      <img role="presentation" [alt]="file.name" [src]="file.objectURL"
+                           width="100"/>
+                    </div>
+                    <div *ngIf="!file.type.startsWith('image')">
+                      <i class="pi pi-file" style="font-size: 4rem"></i>
+                    </div>
+                    <div>
+                      <span class="font-semibold">{{ file.name }}</span>
+                      <div>{{ formatSize(file.size) }}</div>
+                      <p-badge value="Pending" severity="warning"></p-badge>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div *ngIf="uploadedFiles.length > 0">
+                <h5>Completed</h5>
+                <div class="flex flex-wrap p-0 sm:p-5 gap-5">
+                  <div *ngFor="let file of uploadedFiles; let i = index"
+                       class="card m-0 flex flex-wrap border-1 surface-border align-items-center gap-3">
+                    <div *ngIf="file.type.startsWith('image')">
+                      <img role="presentation" [alt]="file.name" [src]="file.objectURL"
+                           width="100"/>
+                    </div>
+                    <div *ngIf="!file.type.startsWith('image')">
+                      <i class="pi pi-file" style="font-size: 4rem"></i>
+                    </div>
+                    <div>
+                      <span class="font-semibold">{{ file.name }}</span>
+                      <div>{{ formatSize(file.size) }}</div>
+                      <p-badge value="Completed" class="mt-3" severity="success"></p-badge>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </ng-template>
+            <ng-template pTemplate="file"></ng-template>
+            <ng-template pTemplate="empty">
+              <div class="flex gap-3 align-items-center justify-content-center flex-wrap">
+                <i
+                  class="pi pi-cloud-upload border-2 border-circle p-2 text-2xl text-400 border-400"></i>
+                <span class="text-600 font-medium">Drag and drop files to here to upload.</span>
+              </div>
+            </ng-template>
+          </p-fileUpload>
+        </ng-template>
+        <ng-template pTemplate="header" class="mt-3">
+          <tr>
+            <th>File Name</th>
+            <th>Description</th>
+            <th>Uploaded By</th>
+            <th>Role</th>
+            <th>Uploaded Date</th>
+            <th>Size</th>
+            <th style="width: 15%"></th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-attachment let-editing="editing" let-ri="rowIndex">
+          <tr [pEditableRow]="attachment">
+            <td class="text-900 font-semibold">{{ attachment.fileName }}</td>
+            <td>
+              <p-cellEditor>
+                <ng-template pTemplate="input">
+                  <input pInputText placeholder="Description" type="text"
+                         [(ngModel)]="attachment.description"/>
                 </ng-template>
-                <ng-template pTemplate="header" class="mt-3">
-                    <tr>
-                        <th>File Name</th>
-                        <th>Description</th>
-                        <th>Uploaded By</th>
-                        <th>Uploaded Date</th>
-                        <th>Size</th>
-                        <th style="width: 15%"></th>
-                    </tr>
+                <ng-template pTemplate="output">
+                  {{ attachment.description }}
                 </ng-template>
-                <ng-template pTemplate="body" let-attachment let-editing="editing" let-ri="rowIndex">
-                    <tr [pEditableRow]="attachment">
-                        <td class="text-900 font-semibold">{{ attachment.fileName }}</td>
-                        <td>
-                            <p-cellEditor>
-                                <ng-template pTemplate="input">
-                                    <input pInputText placeholder="Description" type="text"
-                                        [(ngModel)]="attachment.description" />
-                                </ng-template>
-                                <ng-template pTemplate="output">
-                                    {{ attachment.description }}
-                                </ng-template>
-                            </p-cellEditor>
-                        </td>
-                        <td>{{ attachment.uploadedBy }}</td>
-                        <td>{{ attachment.uploadedDate | date: 'MMM dd, yyyy hh:mm a' }}</td>
-                        <td>{{formatSize(attachment.size)}}</td>
-                        <td class="justify-content-between">
-                            <button pButton pRipple icon="pi pi-check" pSaveEditableRow
-                                *ngIf="editing && authService.isRequester() && demandIntakeService.demandInformation.introduction.status === 'DRAFT'"
-                                class="p-button-rounded p-button-sm p-button-success mr-2"
-                                (click)="onRowEditSave(attachment)"></button>
-                            <button pButton pRipple icon="pi pi-times" pCancelEditableRow *ngIf="editing"
-                                class="p-button-rounded p-button-sm p-button-danger mr-2"
-                                (click)="onRowEditCancel(attachment, ri)"></button>
-                            <button pButton pRipple icon="pi pi-pencil" pInitEditableRow *ngIf="!editing"
-                                class="p-button-rounded p-button-sm p-button-text mr-2"
-                                (click)="onRowEditInit(attachment)"></button>
-                            <button pButton pRipple icon="pi pi-download" *ngIf="!editing"
-                                class="p-button-rounded p-button-sm p-button-success mr-2"
-                                (click)="downloadAttachment(attachment.attachmentId, attachment.fileName)"></button>
-                            <button pButton pRipple icon="pi pi-trash"
-                                *ngIf="!editing && attachment.requestedBy === authService.currentUserValue.email"
-                                (click)="deleteAttachment(attachment.attachmentId, attachment.fileName)"
-                                class="p-button-rounded p-button-sm p-button-warning"></button>
-                        </td>
-                    </tr>
-                </ng-template>
-                <ng-template pTemplate="emptymessage">
-                    <tr>
-                        <td colspan="6">No attachments.</td>
-                    </tr>
-                </ng-template>
-            </p-table>
-        </div>
+              </p-cellEditor>
+            </td>
+            <td>{{ attachment.uploadedBy }}</td>
+            <td>{{ attachment.uploaderRole }}</td>
+            <td>{{ attachment.uploadedDate | date: 'MMM dd, yyyy hh:mm a' }}</td>
+            <td>{{ formatSize(attachment.size) }}</td>
+            <td class="justify-content-between">
+              <button pButton pRipple icon="pi pi-check" pSaveEditableRow
+                      *ngIf="editing && authService.isRequester() && demandIntakeService.demandInformation.introduction.status == 'DRAFT'"
+                      class="p-button-rounded p-button-sm p-button-success mr-2"
+                      (click)="onRowEditSave(attachment)"></button>
+              <button pButton pRipple icon="pi pi-times" pCancelEditableRow *ngIf="editing"
+                      class="p-button-rounded p-button-sm p-button-danger mr-2"
+                      (click)="onRowEditCancel(attachment, ri)"></button>
+              <button pButton pRipple icon="pi pi-pencil" pInitEditableRow *ngIf="!editing"
+                      class="p-button-rounded p-button-sm p-button-text mr-2"
+                      (click)="onRowEditInit(attachment)"></button>
+              <button pButton pRipple icon="pi pi-download" *ngIf="!editing"
+                      class="p-button-rounded p-button-sm p-button-success mr-2"
+                      (click)="downloadAttachment(attachment.attachmentId, attachment.fileName)"></button>
+              <button pButton pRipple icon="pi pi-trash" *ngIf="!editing" [disabled]="isDeleteDisabled(attachment)"
+                      (click)="deleteAttachment(attachment.attachmentId, attachment.fileName)"
+                      class="p-button-rounded p-button-sm p-button-warning"></button>
+            </td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+          <tr>
+            <td colspan="6">No attachments.</td>
+          </tr>
+        </ng-template>
+      </p-table>
     </div>
+  </div>
 </div>
 
 <div class="grid grid-nogutter justify-content-between">
-    <p-button label="Back" (onClick)="prevPage()" icon="pi pi-angle-left"></p-button>
-    <p-button label="Next" *ngIf="visibleNextButton" (onClick)="nextPage()" icon="pi pi-angle-right"></p-button>
-    <p-button label="Save For Later" *ngIf="visibleSaveButton" (onClick)="savePage()" iconPos="right"></p-button>
-    <p-button label="Raise Demand" *ngIf="visibleSubmitButton" (onClick)="submitPage()" iconPos="right"></p-button>
+  <p-button label="Back" (onClick)="prevPage()" icon="pi pi-angle-left"></p-button>
+  <p-button label="Next" *ngIf="visibleNextButton" (onClick)="nextPage()" icon="pi pi-angle-right"></p-button>
+  <p-button label="Save For Later" *ngIf="visibleSaveButton" (onClick)="savePage()" iconPos="right"></p-button>
+  <p-button label="Raise Demand" *ngIf="visibleSubmitButton" (onClick)="submitPage()" iconPos="right"></p-button>
 </div>
