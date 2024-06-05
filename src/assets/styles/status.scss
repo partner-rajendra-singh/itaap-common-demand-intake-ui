@@ -69,7 +69,12 @@
     color: #256029;
   }
 
-  &.status-rejected {
+  &.status-ccb_rejected {
+    background: #FFCDD2;
+    color: #C63737;
+  }
+
+  &.status-dm_rejected {
     background: #FFCDD2;
     color: #C63737;
   }

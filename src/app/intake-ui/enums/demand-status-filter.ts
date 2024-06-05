@@ -6,5 +6,8 @@ export enum DemandStatusFilter {
   PENDING_WITH_CCB = 'Pending with CCB',
   CCB_HOLD = 'CCB Member kept on Hold',
   ACCEPTED = 'Accepted',
-  REJECTED = 'Rejected'
+  DM_REJECTED = 'Rejected By Demand Manager',
+  CCB_REJECTED = 'Reject By CCB Member',
+  DM_MODIFICATION = 'Modification Requested by DM',
+  CCB_MODIFICATION = 'Modification Requested by CCB'
 }
