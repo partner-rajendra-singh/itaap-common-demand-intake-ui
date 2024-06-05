@@ -62,6 +62,7 @@ export class DemandManagerComponent implements OnInit {
         this.visibleSubmitButton = true;
       }
     } else {
+      this.visibleSubmitButton = false;
       if ((this.authService.isRequester() && (this.eventService.isMyDemand || this.eventService.isStakeholderDemand))
         && (this.demandIntakeService.demandInformation.introduction.status == DemandStatus.CCB_HOLD || this.demandIntakeService.demandInformation.introduction.status == DemandStatus.ACCEPTED || this.demandIntakeService.demandInformation.introduction.status == DemandStatus.CCB_REJECTED)) {
         this.visibleNextButton = true;
@@ -78,7 +79,6 @@ export class DemandManagerComponent implements OnInit {
       } else {
         this.visibleNextButton = false;
       }
-      this.visibleSubmitButton = false;
     }
 
     if (this.demandIntakeService.getDemandInformation().demandManagerInfo && this.demandIntakeService.getDemandInformation().demandManagerInfo != null) {
