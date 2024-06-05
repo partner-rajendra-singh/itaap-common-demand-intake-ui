@@ -28,7 +28,7 @@ export class AttachmentComponent implements OnInit {
 
   constructor(private config: PrimeNGConfig,
               public demandIntakeService: DemandIntakeService, private router: Router,
-              private messageService: MessageService, public authService: AuthService, public eventService: EventService,private confirmationService: ConfirmationService) {
+              private messageService: MessageService, public authService: AuthService, public eventService: EventService, private confirmationService: ConfirmationService) {
     this.visibleAttachmentUpload = true;
 
     if (authService.isRequester()) {
@@ -92,8 +92,26 @@ export class AttachmentComponent implements OnInit {
   }
 
   isDeleteDisabled(attachment: Attachment): boolean {
-    return attachment.uploadedBy != this.authService.currentUserValue.email
-      && this.demandIntakeService.demandInformation.introduction.status != 'DRAFT';
+    if (attachment.uploadedBy != this.authService.currentUserValue.email) {
+      return true;
+    }
+    if (this.demandIntakeService.isNew) {
+      return false;
+    }
+    if (this.authService.isRequester()) {
+      if (this.demandIntakeService.getDemandInformation().introduction.status && this.demandIntakeService.getDemandInformation().introduction.status != 'DRAFT') {
+        return true;
+      }
+    } else if (this.authService.isDM()) {
+      if (this.demandIntakeService.getDemandInformation().introduction.status != 'PENDING_WITH_DM') {
+        return true;
+      }
+    } else if (this.authService.isCCB()) {
+      if (this.demandIntakeService.getDemandInformation().introduction.status != 'PENDING_WITH_CCB') {
+        return true;
+      }
+    }
+    return false;
   }
 
   savePage() {
@@ -186,7 +204,6 @@ export class AttachmentComponent implements OnInit {
   }
 
   deleteAttachment(index: any, fileName: string) {
-
     this.demandIntakeService
       .deleteAttachmentsById(index)
       .subscribe(
@@ -206,6 +223,32 @@ export class AttachmentComponent implements OnInit {
             severity: 'error',
             summary: 'Error',
             detail: 'File : ' + fileName + ' : ' + error.statusText,
+            life: 3000
+          });
+        }
+      )
+  }
+
+  updateAttachment(attachment: Attachment) {
+    this.demandIntakeService
+      .updateAttachmentsById(attachment.attachmentId, attachment.description)
+      .subscribe(
+        response => {
+          console.log(response);
+          this.messageService.add({
+            severity: 'info',
+            summary: 'Success',
+            detail: response.attachmentResponse,
+            life: 3000
+          });
+          this.getAllAttachmentsByDemandId();
+        },
+        error => {
+          console.log(error);
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Error',
+            detail: 'File : ' + attachment.fileName + ' : ' + error.statusText,
             life: 3000
           });
         }
@@ -328,7 +371,7 @@ export class AttachmentComponent implements OnInit {
 
   onRowEditSave(attachment: Attachment) {
     delete this.clonedAttachments[attachment.attachmentId];
-    this.messageService.add({severity: 'success', summary: 'Success', detail: 'Attachment is updated'});
+    this.updateAttachment(attachment);
   }
 
   onRowEditCancel(attachment: Attachment, index: number) {
