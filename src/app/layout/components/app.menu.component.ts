@@ -68,6 +68,11 @@ export class AppMenuComponent implements OnInit {
     this.eventService.isStakeholderDemand = false;
     console.log("MenuComponent1 isNewDemand, isMyDemand ", this.eventService.isNewDemand, this.eventService.isMyDemand);
 
+    this.eventService.solutionDirectionValue = new Array();
+    this.eventService.selectedDemandTabIndex = 0;
+    this.eventService.selectedEADITabIndex = 0;
+    this.eventService.selectedRequirementsTabIndex = 0;
+
     this.demandIntakeService.setDemand(new Demand(), true);
     this.router.navigate(['/demand-intake/']);
   }

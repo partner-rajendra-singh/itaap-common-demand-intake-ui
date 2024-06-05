@@ -14,8 +14,9 @@ import {AllDemands} from '../models/all-demands';
 import {EventService} from './event.service';
 import {Attachment} from '../models/attachment';
 import {Introduction} from '../models/introduction';
-import {DemandStatus} from '../enums/demand-status';
+import {DemandStatusFilter} from '../enums/demand-status-filter';
 import {ArchitectAlignment} from '../models/architect-alignment';
+import { DemandIntakeDecision } from '../enums/demand-intake-decision';
 
 
 @Injectable({
@@ -39,7 +40,7 @@ export class DemandIntakeService {
   setDemandInformation(demandInformation: any) {
     this.demandInformation = demandInformation;
   }
-
+  
   setDemand(demand: Demand, isNew: boolean) {
     this.isNew = isNew;
     if (isNew) {
@@ -225,11 +226,11 @@ export class DemandIntakeService {
         let adlL1 = this.demandInformation.solutionDirectionInfo.find(item => item.solution === 'adlL1');
         let dataQuality = this.demandInformation.solutionDirectionInfo.find(item => item.solution === 'dataQuality');
 
-        if (atleastOneSDSelected.length == 0 || (adlL1 && adlL1.value && !this.eventService.checkEmailValue(this.demandInformation.eADIInfo.adlL1.sourceEmail))) {
+        if (this.authService.currentUserValue.domain.length > 0 && (atleastOneSDSelected.length == 0 || (adlL1 && adlL1.value && !this.eventService.checkEmailValue(this.demandInformation.eADIInfo.adlL1.sourceEmail)))) {
           this.messageService.add({severity: 'warn', summary: 'Error', detail: 'Please fill required fields!'});
           this.router.navigate(['demand-intake/checklist']);
           return false;
-        } else if (atleastOneSDSelected.length == 0 || (dataQuality && dataQuality.value && (!this.eventService.checkEmailValue(this.demandInformation.eADIInfo.dataQuality.bpoEmail) || !this.eventService.checkEmailValue(this.demandInformation.eADIInfo.dataQuality.dataCleaningSpocEmail)))) {
+        } else if (this.authService.currentUserValue.domain.length > 0 && (atleastOneSDSelected.length == 0 || (dataQuality && dataQuality.value && (!this.eventService.checkEmailValue(this.demandInformation.eADIInfo.dataQuality.bpoEmail) || !this.eventService.checkEmailValue(this.demandInformation.eADIInfo.dataQuality.dataCleaningSpocEmail))))) {
           this.messageService.add({severity: 'warn', summary: 'Error', detail: 'Please fill required fields!'});
           this.router.navigate(['demand-intake/checklist']);
           return false;
@@ -294,10 +295,6 @@ export class DemandIntakeService {
           'X-Correlation-ID': 'abc'
         })
       };
-
-      // if (this.demandInformation.introduction.requestedBy == '') {
-      //   this.demandInformation.introduction.requestedBy = this.authService.currentUserValue.email;
-      // }
 
       if (this.authService.isDM() && this.demandInformation.demandManagerInfo.decisionBy == '') {
         this.demandInformation.demandManagerInfo.decisionBy = this.authService.currentUserValue.email;
@@ -434,14 +431,14 @@ export class DemandIntakeService {
   }
 
   getDemandStatusValue(key: string): string {
-    const status = Object.keys(DemandStatus).indexOf(key as unknown as DemandStatus);
-    let s = Object.values(DemandStatus)[status];
+    const status = Object.keys(DemandStatusFilter).indexOf(key as unknown as DemandStatusFilter);
+    let s = Object.values(DemandStatusFilter)[status];
     return s;
   }
 
   getDemandStatusKey(value: string): string {
-    const index = Object.values(DemandStatus).indexOf(value as unknown as DemandStatus);
-    return Object.keys(DemandStatus)[index];
+    const index = Object.values(DemandStatusFilter).indexOf(value as unknown as DemandStatusFilter);
+    return Object.keys(DemandStatusFilter)[index];
   }
 }
 

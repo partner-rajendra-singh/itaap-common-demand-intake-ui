@@ -7,6 +7,7 @@ import { EventService } from '../../services/event.service';
 import { AuthService } from '../../services/auth.service';
 import { SolutionDirection1 } from '../../models/solution-direction1';
 import { SolutionDirection } from '../../models/solution-direction';
+import { DemandStatus } from '../../enums/demand-status';
 
 @Component({
   selector: 'app-solution-direction',
@@ -32,7 +33,12 @@ export class SolutionDirectionComponent {
   }
 
   getSDVisibility(solution: string): boolean {
-    if (this.dmDomainList.includes('solution')) {
+
+    if(this.demandIntakeService.demandInformation.introduction.status === DemandStatus.ACCEPTED || this.demandIntakeService.demandInformation.introduction.status === DemandStatus.DM_REJECTED || this.demandIntakeService.demandInformation.introduction.status === DemandStatus.CCB_REJECTED){
+      return false;
+    }
+    
+    if (this.dmDomainList.includes(solution)) {
       return true;
     }
     
@@ -109,15 +115,7 @@ export class SolutionDirectionComponent {
   }
 
   isAnySD(): boolean {
-
-    return this.solutionDirectionInfo.filter(item => item.value == true).length > 0;
-
-    // return (this.solutionDirectionInfo.integration || this.solutionDirectionInfo.dataModelling || this.solutionDirectionInfo.adlL1 ||
-    //   this.solutionDirectionInfo.adlL2 || this.solutionDirectionInfo.gold || this.solutionDirectionInfo.mdm ||
-    //   this.solutionDirectionInfo.ia || this.solutionDirectionInfo.dataQuality || this.solutionDirectionInfo.informatica
-    //   || this.solutionDirectionInfo.azureSynapse
-    // );
-
+    return this.dmDomainList.length == 0 || this.solutionDirectionInfo.filter(item => item.value == true).length > 0;
   }
 
 }

@@ -10,6 +10,7 @@ import { DM } from '../../models/dm';
 import { ApproverDomain } from '../../enums/approver-domain';
 import { SolutionDirection1 } from '../../models/solution-direction1';
 import { DemandDecision } from '../../models/demand-decision';
+import { DemandStatus } from '../../enums/demand-status';
 
 @Component({
   selector: 'app-demandmanager',
@@ -25,13 +26,20 @@ export class DemandManagerComponent implements OnInit {
   domain: string[] = [];
   solutionDirectionList!: SolutionDirection1[];
   dmActionDone: boolean = false;
+  submitDemandLabel!: string;
 
   constructor(private eventService: EventService, public demandIntakeService: DemandIntakeService, private router: Router, private messageService: MessageService,
     public authService: AuthService) { }
 
   ngOnInit() {
-    if (this.authService.isDM()) {
+    console.log("DemandManagerComponent ", this.demandIntakeService.demandInformation)
 
+    this.submitDemandLabel = 'Submit Demand';
+    if(this.demandIntakeService.getDemandInformation().introduction.status === DemandStatus.DM_MODIFICATION || this.demandIntakeService.getDemandInformation().introduction.status === DemandStatus.CCB_MODIFICATION){
+      this.submitDemandLabel = 'Update Demand';
+    }
+
+    if (this.authService.isDM()) {
       let dmList = this.demandIntakeService.demandInformation.solutionDirectionInfo.filter(item => item.dmEmail === this.authService.currentUserValue.email && (item.decision === 'APPROVED' || item.decision === 'REJECTED' ));
       if(dmList.length > 0){
         this.dmActionDone = true;
@@ -40,38 +48,45 @@ export class DemandManagerComponent implements OnInit {
       this.visibleNextButton = false;
       this.domain = this.authService.currentUserValue.domain;
       this.demandIntakeService.demandInformation.demandManagerInfo.domain = this.domain;
-      if (this.demandIntakeService.getDemandInformation().introduction.status == 'ACCEPTED' || this.demandIntakeService.getDemandInformation().introduction.status == 'REJECTED') {
+      if (this.demandIntakeService.getDemandInformation().introduction.status == DemandStatus.ACCEPTED || this.demandIntakeService.getDemandInformation().introduction.status == DemandStatus.CCB_REJECTED) {
         this.visibleNextButton = true;
         this.visibleSubmitButton = false;
-      } else if ((!this.eventService.isMyDemand && !this.eventService.isStakeholderDemand) && this.demandIntakeService.demandInformation.introduction.status == 'PENDING_WITH_CCB' && !this.dmActionDone) {
+      } else if (this.demandIntakeService.getDemandInformation().introduction.status == DemandStatus.DM_REJECTED) {
+        this.visibleNextButton = false;
+        this.visibleSubmitButton = false;
+      }else if ((!this.eventService.isMyDemand && !this.eventService.isStakeholderDemand) && this.demandIntakeService.demandInformation.introduction.status == DemandStatus.PENDING_WITH_CCB && !this.dmActionDone) {
         this.visibleSubmitButton = true;
-      } else if ((!this.eventService.isMyDemand && !this.eventService.isStakeholderDemand) && this.demandIntakeService.demandInformation.introduction.status == 'PENDING_WITH_CCB' && this.dmActionDone) {
+      } else if ((!this.eventService.isMyDemand && !this.eventService.isStakeholderDemand) && this.demandIntakeService.demandInformation.introduction.status == DemandStatus.PENDING_WITH_CCB && this.dmActionDone) {
         this.visibleSubmitButton = false;
-      }else if ((!this.eventService.isMyDemand && !this.eventService.isStakeholderDemand) && (this.demandIntakeService.demandInformation.introduction.status == 'REJECTED' || this.demandIntakeService.demandInformation.introduction.status == 'ACCEPTED' || this.demandIntakeService.demandInformation.introduction.status == 'CCB_HOLD')) {
+      }else if ((!this.eventService.isMyDemand && !this.eventService.isStakeholderDemand) && (this.demandIntakeService.demandInformation.introduction.status == DemandStatus.CCB_REJECTED || this.demandIntakeService.demandInformation.introduction.status == DemandStatus.ACCEPTED || this.demandIntakeService.demandInformation.introduction.status == DemandStatus.CCB_HOLD)) {
         this.visibleNextButton = true;
         this.visibleSubmitButton = false;
-      } else if ((this.eventService.isMyDemand || this.eventService.isStakeholderDemand) && this.demandIntakeService.demandInformation.introduction.status == 'PENDING_WITH_CCB') {
+      } else if ((this.eventService.isMyDemand || this.eventService.isStakeholderDemand) && this.demandIntakeService.demandInformation.introduction.status == DemandStatus.PENDING_WITH_CCB) {
         this.visibleSubmitButton = false;
-      } else if ((this.eventService.isMyDemand || this.eventService.isStakeholderDemand) && this.demandIntakeService.demandInformation.introduction.status == 'CCB_HOLD' || this.demandIntakeService.demandInformation.introduction.status == 'ACCEPTED' || this.demandIntakeService.demandInformation.introduction.status == 'REJECTED') {
+      } else if ((this.eventService.isMyDemand || this.eventService.isStakeholderDemand) && this.demandIntakeService.demandInformation.introduction.status == DemandStatus.CCB_HOLD || this.demandIntakeService.demandInformation.introduction.status == DemandStatus.ACCEPTED || this.demandIntakeService.demandInformation.introduction.status == DemandStatus.CCB_REJECTED) {
         this.visibleSubmitButton = false;
         this.visibleNextButton = true;
       } else {
         this.visibleSubmitButton = true;
       }
     } else {
+      this.visibleSubmitButton = false;
       if ((this.authService.isRequester() && (this.eventService.isMyDemand || this.eventService.isStakeholderDemand))
-        && (this.demandIntakeService.demandInformation.introduction.status == 'CCB_HOLD' || this.demandIntakeService.demandInformation.introduction.status == 'ACCEPTED' || this.demandIntakeService.demandInformation.introduction.status == 'REJECTED')) {
+        && (this.demandIntakeService.demandInformation.introduction.status == DemandStatus.CCB_HOLD || this.demandIntakeService.demandInformation.introduction.status == DemandStatus.ACCEPTED || this.demandIntakeService.demandInformation.introduction.status == DemandStatus.CCB_REJECTED)) {
         this.visibleNextButton = true;
-      } else if ((!this.eventService.isNewDemand && !this.eventService.isMyDemand && this.authService.isCCB())
-        && (this.demandIntakeService.demandInformation.introduction.status == 'PENDING_WITH_CCB' || this.demandIntakeService.demandInformation.introduction.status == 'CCB_HOLD' || this.demandIntakeService.demandInformation.introduction.status == 'ACCEPTED' || this.demandIntakeService.demandInformation.introduction.status == 'REJECTED')) {
+      } else  if ((this.authService.isRequester() && (this.eventService.isMyDemand || this.eventService.isStakeholderDemand))
+        && this.demandIntakeService.demandInformation.introduction.status == DemandStatus.DM_MODIFICATION ) {
+        this.visibleNextButton = false;
+        this.visibleSubmitButton = true;
+      }else if ((!this.eventService.isNewDemand && !this.eventService.isMyDemand && this.authService.isCCB())
+        && (this.demandIntakeService.demandInformation.introduction.status == DemandStatus.PENDING_WITH_CCB || this.demandIntakeService.demandInformation.introduction.status == DemandStatus.CCB_HOLD || this.demandIntakeService.demandInformation.introduction.status == DemandStatus.ACCEPTED || this.demandIntakeService.demandInformation.introduction.status == DemandStatus.CCB_REJECTED)) {
         this.visibleNextButton = true;
       } else if ((!this.eventService.isNewDemand && this.eventService.isMyDemand && this.authService.isCCB())
-        && (this.demandIntakeService.demandInformation.introduction.status == 'CCB_HOLD' || this.demandIntakeService.demandInformation.introduction.status == 'ACCEPTED' || this.demandIntakeService.demandInformation.introduction.status == 'REJECTED')) {
+        && (this.demandIntakeService.demandInformation.introduction.status == DemandStatus.CCB_HOLD || this.demandIntakeService.demandInformation.introduction.status == DemandStatus.ACCEPTED || this.demandIntakeService.demandInformation.introduction.status == DemandStatus.CCB_REJECTED)) {
         this.visibleNextButton = true;
       } else {
         this.visibleNextButton = false;
       }
-      this.visibleSubmitButton = false;
     }
 
     if (this.demandIntakeService.getDemandInformation().demandManagerInfo && this.demandIntakeService.getDemandInformation().demandManagerInfo != null) {
@@ -108,10 +123,12 @@ export class DemandManagerComponent implements OnInit {
   }
 
   submitPage() {
-    if (this.demandManagerInfo.decisionDate && this.selectedDecision != '' && this.demandManagerInfo.remarks != '') {
-      this.demandManagerInfo.decision = this.getDecisionKey(this.selectedDecision);
-      this.demandIntakeService.getDemandInformation().demandManagerInfo = this.demandManagerInfo;
+    if (this.demandIntakeService.demandInformation.introduction.status === DemandStatus.DM_MODIFICATION || (this.demandManagerInfo.decisionDate && this.selectedDecision != '' && this.demandManagerInfo.remarks != '')) {
+      if (this.demandIntakeService.demandInformation.introduction.status !== DemandStatus.DM_MODIFICATION){
+        this.demandManagerInfo.decision = this.getDecisionKey(this.selectedDecision);
+      }
 
+      this.demandIntakeService.getDemandInformation().demandManagerInfo = this.demandManagerInfo;
       this.router.navigate(['demand-intake/confirm']);
     
     } else {

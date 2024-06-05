@@ -9,6 +9,7 @@ import {Market} from '../../enums/market';
 import {BusinessUnit} from '../../enums/businessUnit';
 import {RequesterInfo} from '../../models/requester-info';
 import {Spoc} from '../../models/spoc';
+import { DemandStatus } from '../../enums/demand-status';
 
 interface Domain {
   key: string;
@@ -35,7 +36,7 @@ export class RequesterComponent implements OnInit {
 
   constructor(public authService: AuthService, public demandIntakeService: DemandIntakeService, private router: Router, private messageService: MessageService, public eventService: EventService) {
     if (authService.isRequester()) {
-      if (this.demandIntakeService.getDemandInformation().introduction.status != 'DRAFT' && this.demandIntakeService.getDemandInformation().introduction.status != null) {
+      if (this.demandIntakeService.getDemandInformation().introduction.status != DemandStatus.DRAFT && this.demandIntakeService.getDemandInformation().introduction.status != null) {
         this.visibleSaveButton = false;
       } else {
         this.visibleSaveButton = true;
@@ -60,7 +61,6 @@ export class RequesterComponent implements OnInit {
     this.demandIntakeService.getRequesterDomain().pipe(
       map((response: any) => {
         this.domainList = response;
-        console.log('getAllDemands() Response :', this.domainList);
         this.selectedDomain = this.getSelectedDomain();
         this.eventService.progressBarEvent.emit(false);
       }),

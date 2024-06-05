@@ -1,7 +1,7 @@
 <p-toast></p-toast>
 <p-toast key="success"></p-toast>
 <p-toast key="error"></p-toast>
-<div class="col-12 grid h-full">
+<div class="col-12 grid">
   <div class="col-12 md:col-12 lg:col-12">
     <div class="flex align-items-center justify-content-between">
       <div class="card col-12 flex align-items-center"
@@ -11,23 +11,23 @@
             <div class="col-12 md:col-12 lg:col-6">
               <span class="mr-3">Filter Demand by your action</span>
               <p-dropdown appendTo="body" (onChange)="onCategoryChange()" [options]="demandCategories"
-                          [(ngModel)]="selectedDemandCategory" placeholder="Filter Demand"></p-dropdown>
+                          [(ngModel)]="selectedDemandCategory" placeholder="Filter Demand"/>
             </div>
             <div class="col-12 md:col-12 lg:col-6">
               <span class="mr-3">Filter Demand by status</span>
-              <p-dropdown [(ngModel)]="selectedDemandStatus" [options]="demandStatusList"
-                          (onChange)="onStatusChange()" placeholder="Filter Demand">
+              <p-dropdown [(ngModel)]="selectedDemandStatus" [options]="demandStatusList" (onChange)="onStatusChange()"
+                          placeholder="Filter Demand">
                 <ng-template pTemplate="selectedItem">
                   <div *ngIf="selectedDemandStatus">
-                  <span
-                    [class]="'align-self-center demand-badge status-' + demandIntakeService.getDemandStatusValueInLower(selectedDemandStatus)">
+										<span
+                      [class]="'align-self-center demand-badge status-' + demandIntakeService.getDemandStatusValueInLower(selectedDemandStatus)">
                     {{ demandIntakeService.getDemandStatusValue(selectedDemandStatus) }}
                   </span>
                   </div>
                 </ng-template>
                 <ng-template let-option pTemplate="item">
-                <span
-                  [class]="'align-self-center demand-badge status-' + demandIntakeService.getDemandStatusValueInLower(option)">
+									<span
+                    [class]="'align-self-center demand-badge status-' + demandIntakeService.getDemandStatusValueInLower(option)">
                   {{ demandIntakeService.getDemandStatusValue(option) }}
                 </span>
                 </ng-template>
@@ -43,8 +43,7 @@
           <ng-template pTemplate="header">
             <div class="flex flex-wrap gap-2">
               <span>My Demands </span>
-              <p-badge *ngIf="allCurrentMyDemands.length > 0" value="{{allCurrentMyDemands.length}}"
-                       severity="success"/>
+              <p-badge value="{{allCurrentMyDemands.length}}" severity="success"/>
             </div>
           </ng-template>
 
@@ -104,8 +103,7 @@
           <ng-template pTemplate="header">
             <div class="flex flex-wrap gap-2">
               <span>Pending Demands</span>
-              <p-badge *ngIf="allCurrentPendingDemands.length > 0"
-                       value="{{allCurrentPendingDemands.length}}" severity="success"/>
+              <p-badge value="{{allCurrentPendingDemands.length}}" severity="success"/>
             </div>
           </ng-template>
           <div *ngIf="allCurrentPendingDemands">
@@ -163,8 +161,7 @@
           <ng-template pTemplate="header">
             <div class="flex flex-wrap gap-2">
               <span>My Demands as a Stakeholder</span>
-              <p-badge *ngIf="allCurrentMyDemandsAsSH.length > 0"
-                       value="{{allCurrentMyDemandsAsSH.length}}" severity="success"/>
+              <p-badge value="{{allCurrentMyDemandsAsSH.length}}" severity="success"/>
             </div>
           </ng-template>
           <div *ngIf="allCurrentMyDemandsAsSH">

@@ -7,6 +7,7 @@ import {first} from 'rxjs';
 import {AuthService} from '../../services/auth.service';
 import {EventService} from '../../services/event.service';
 import {ArchitectAlignment} from '../../models/architect-alignment';
+import { DemandStatus } from '../../enums/demand-status';
 
 @Component({
   selector: 'app-introduction',
@@ -20,7 +21,7 @@ export class IntroductionComponent implements OnInit {
 
   constructor(public eventService: EventService, private authService: AuthService, public demandIntakeService: DemandIntakeService, private router: Router, private messageService: MessageService) {
     if (authService.isRequester()) {
-      if (this.demandIntakeService.getDemandInformation().introduction.status != 'DRAFT' && this.demandIntakeService.getDemandInformation().introduction.status != null) {
+      if (this.demandIntakeService.getDemandInformation().introduction.status != DemandStatus.DRAFT && this.demandIntakeService.getDemandInformation().introduction.status != null) {
         this.visibleSaveButton = false;
       } else {
         this.visibleSaveButton = true;
@@ -31,7 +32,7 @@ export class IntroductionComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.demandIntakeService.getDemandInformation().introduction.currentUser = this.authService.currentUserValue.email;
+    this.demandIntakeService.getDemandInformation().introduction.updatedBy = this.authService.currentUserValue.email;
     this.demandInfo = this.demandIntakeService.getDemandInformation().introduction;
     this.architectAlignmentInfo = this.demandIntakeService.getDemandInformation().architectAlignmentInfo;
   }
@@ -103,7 +104,7 @@ export class IntroductionComponent implements OnInit {
   }
 
   savePage(saveAndNavigateToViewFlag: boolean) {
-    if (this.demandIntakeService.demandInformation.introduction.status != 'ACCEPTED' && this.demandIntakeService.demandInformation.introduction.status != 'REJECTED') {
+    if (this.demandIntakeService.demandInformation.introduction.status != DemandStatus.ACCEPTED && this.demandIntakeService.demandInformation.introduction.status != 'REJECTED') {
       this.demandIntakeService.getDemandInformation().introduction.requestedBy = this.authService.currentUserValue.email;
       this.demandIntakeService.saveDemandWithAttachment()
         .pipe(first())

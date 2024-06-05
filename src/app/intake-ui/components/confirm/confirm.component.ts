@@ -23,7 +23,7 @@ export class ConfirmComponent {
         this.submitDemand();
       },
       reject: () => {
-        this.messageService.add({ severity: 'error', summary: 'Rejected', detail: 'You have rejected', life: 1000 });
+        // this.messageService.add({ severity: 'error', summary: 'Rejected', detail: 'You have rejected', life: 1000 });
 
         let path = 'demand-intake/attachment';
         if (this.authService.isDM()) {

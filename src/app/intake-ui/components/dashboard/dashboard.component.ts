@@ -7,6 +7,7 @@ import { EventService } from '../../services/event.service';
 import { map, catchError, throwError } from 'rxjs';
 import { AllDemands } from '../../models/all-demands';
 import { Demand } from '../../models/demand';
+import { DemandStatus } from '../../enums/demand-status';
 
 @Component({
   selector: 'app-dashboard',
@@ -99,38 +100,38 @@ export class DashboardComponent implements OnInit {
     };
   }
   populateDemands() {
-    this.allDraftDemands = this.allCurrentMyDemands.filter(item => 'DRAFT' === item.introduction.status)
+    this.allDraftDemands = this.allCurrentMyDemands.filter(item => DemandStatus.DRAFT === item.introduction.status)
       .concat(
-        this.allCurrentPendingDemands.filter(item => 'DRAFT' === item.introduction.status),
-        this.allCurrentMyDemandsAsSH.filter(item => 'DRAFT' === item.introduction.status)
+        this.allCurrentPendingDemands.filter(item => DemandStatus.DRAFT === item.introduction.status),
+        this.allCurrentMyDemandsAsSH.filter(item => DemandStatus.DRAFT === item.introduction.status)
       );
-    this.allPendingDemands = this.allCurrentMyDemands.filter(item => 'PENDING_WITH_DM' === item.introduction.status)
+    this.allPendingDemands = this.allCurrentMyDemands.filter(item => DemandStatus.PENDING_WITH_DM === item.introduction.status)
       .concat(
-        this.allCurrentPendingDemands.filter(item => 'PENDING_WITH_DM' === item.introduction.status),
-        this.allCurrentMyDemandsAsSH.filter(item => 'PENDING_WITH_DM' === item.introduction.status),
+        this.allCurrentPendingDemands.filter(item => DemandStatus.PENDING_WITH_DM === item.introduction.status),
+        this.allCurrentMyDemandsAsSH.filter(item => DemandStatus.PENDING_WITH_DM === item.introduction.status),
 
-        this.allCurrentMyDemands.filter(item => 'DM_HOLD' === item.introduction.status),
-        this.allCurrentPendingDemands.filter(item => 'DM_HOLD' === item.introduction.status),
-        this.allCurrentMyDemandsAsSH.filter(item => 'DM_HOLD' === item.introduction.status),
+        this.allCurrentMyDemands.filter(item => DemandStatus.DM_HOLD === item.introduction.status),
+        this.allCurrentPendingDemands.filter(item => DemandStatus.DM_HOLD === item.introduction.status),
+        this.allCurrentMyDemandsAsSH.filter(item => DemandStatus.DM_HOLD === item.introduction.status),
 
-        this.allCurrentMyDemands.filter(item => 'PENDING_WITH_CCB' === item.introduction.status),
-        this.allCurrentPendingDemands.filter(item => 'PENDING_WITH_CCB' === item.introduction.status),
-        this.allCurrentMyDemandsAsSH.filter(item => 'PENDING_WITH_CCB' === item.introduction.status),
+        this.allCurrentMyDemands.filter(item => DemandStatus.PENDING_WITH_CCB === item.introduction.status),
+        this.allCurrentPendingDemands.filter(item => DemandStatus.PENDING_WITH_CCB === item.introduction.status),
+        this.allCurrentMyDemandsAsSH.filter(item => DemandStatus.PENDING_WITH_CCB === item.introduction.status),
 
-        this.allCurrentMyDemands.filter(item => 'CCB_HOLD' === item.introduction.status),
-        this.allCurrentPendingDemands.filter(item => 'CCB_HOLD' === item.introduction.status),
-        this.allCurrentMyDemandsAsSH.filter(item => 'CCB_HOLD' === item.introduction.status),
+        this.allCurrentMyDemands.filter(item => DemandStatus.CCB_HOLD === item.introduction.status),
+        this.allCurrentPendingDemands.filter(item => DemandStatus.CCB_HOLD === item.introduction.status),
+        this.allCurrentMyDemandsAsSH.filter(item => DemandStatus.CCB_HOLD === item.introduction.status),
 
       );
-    this.allAcceptedDemands = this.allCurrentMyDemands.filter(item => 'ACCEPTED' === item.introduction.status)
+    this.allAcceptedDemands = this.allCurrentMyDemands.filter(item => DemandStatus.ACCEPTED === item.introduction.status)
       .concat(
-        this.allCurrentPendingDemands.filter(item => 'ACCEPTED' === item.introduction.status),
-        this.allCurrentMyDemandsAsSH.filter(item => 'ACCEPTED' === item.introduction.status)
+        this.allCurrentPendingDemands.filter(item => DemandStatus.ACCEPTED === item.introduction.status),
+        this.allCurrentMyDemandsAsSH.filter(item => DemandStatus.ACCEPTED === item.introduction.status)
       );
-    this.allRejectedDemands = this.allCurrentMyDemands.filter(item => 'REJECTED' === item.introduction.status)
+    this.allRejectedDemands = this.allCurrentMyDemands.filter(item => DemandStatus.DM_REJECTED === item.introduction.status || DemandStatus.CCB_REJECTED === item.introduction.status)
       .concat(
-        this.allCurrentPendingDemands.filter(item => 'REJECTED' === item.introduction.status),
-        this.allCurrentMyDemandsAsSH.filter(item => 'REJECTED' === item.introduction.status)
+        this.allCurrentPendingDemands.filter(item => DemandStatus.DM_REJECTED === item.introduction.status || DemandStatus.CCB_REJECTED === item.introduction.status),
+        this.allCurrentMyDemandsAsSH.filter(item => DemandStatus.DM_REJECTED === item.introduction.status || DemandStatus.CCB_REJECTED === item.introduction.status)
       );
   }
 
@@ -142,7 +143,7 @@ export class DashboardComponent implements OnInit {
           this.eventService.progressBarEvent.emit(false);
           this.allDemands = response;
           this.errorData = "";
-          console.log('getAllDemands() Response :', this.allDemands);
+          console.log('Dashboard getAllDemands() Response :', this.allDemands);
           this.allCurrentMyDemands = this.allDemands.myDemands;
           this.allCurrentMyDemandsAsSH = this.allDemands.stakeholderDemands;
           this.allCurrentPendingDemands = this.allDemands.pendingDemands;

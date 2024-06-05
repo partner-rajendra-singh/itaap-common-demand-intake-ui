@@ -6,5 +6,5 @@ export class Introduction {
     status!: string;
     isDocReferred: boolean = false;
     architectAligned: boolean = false;
-    currentUser: string = '';
+    updatedBy: string = '';
 }

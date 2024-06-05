@@ -5,6 +5,7 @@ import { MessageService } from 'primeng/api';
 import { AuthService } from '../../services/auth.service';
 import { first } from 'rxjs';
 import { EventService } from '../../services/event.service';
+import { DemandStatus } from '../../enums/demand-status';
 
 @Component({
     selector: 'app-requirements',
@@ -21,7 +22,7 @@ export class RequirementsComponent implements OnInit {
     constructor(public demandIntakeService: DemandIntakeService, private router: Router, private messageService: MessageService,
         private authService: AuthService, public eventService: EventService) {
         if (authService.isRequester()) {
-            if (this.demandIntakeService.getDemandInformation().introduction.status != 'DRAFT' && this.demandIntakeService.getDemandInformation().introduction.status != null) {
+            if (this.demandIntakeService.getDemandInformation().introduction.status != DemandStatus.DRAFT && this.demandIntakeService.getDemandInformation().introduction.status != null) {
                 this.visibleSaveButton = false;
             } else {
                 this.visibleSaveButton = true;
@@ -63,7 +64,7 @@ export class RequirementsComponent implements OnInit {
                     if (this.eventService.isNewDemand) {
                         this.router.navigate(['demand-intake/attachment']);
                     } else {
-                        if ((this.eventService.isMyDemand || this.eventService.isStakeholderDemand) && (this.demandIntakeService.demandInformation.introduction.status != 'DRAFT' && this.demandIntakeService.demandInformation.introduction.status != 'PENDING_WITH_DM')) {
+                        if ((this.eventService.isMyDemand || this.eventService.isStakeholderDemand) && (this.demandIntakeService.demandInformation.introduction.status != DemandStatus.DRAFT && this.demandIntakeService.demandInformation.introduction.status != DemandStatus.PENDING_WITH_DM)) {
                             this.router.navigate(['demand-intake/solution-direction/' + this.demandIntakeService.demandInformation.introduction.demandIntakeId]);
                         } else {
                             this.router.navigate(['demand-intake/attachment/' + this.demandIntakeService.demandInformation.introduction.demandIntakeId]);

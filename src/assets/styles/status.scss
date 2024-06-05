@@ -44,6 +44,11 @@
     color: #694382;
   }
 
+  &.status-dm_modification {
+    background: #ECCFFF;
+    color: #694382;
+  }
+
   &.status-pending_with_ccb {
     background: #FEEDAF;
     color: #8A5340;
@@ -54,12 +59,22 @@
     color: #8A5340;
   }
 
+  &.status-ccb_modification {
+    background: #FEEDAF;
+    color: #8A5340;
+  }
+
   &.status-accepted {
     background: #C8E6C9;
     color: #256029;
   }
 
-  &.status-rejected {
+  &.status-ccb_rejected {
+    background: #FFCDD2;
+    color: #C63737;
+  }
+
+  &.status-dm_rejected {
     background: #FFCDD2;
     color: #C63737;
   }

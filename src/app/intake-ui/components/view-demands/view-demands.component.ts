@@ -8,6 +8,7 @@ import { AuthService } from '../../services/auth.service';
 import { AllDemands } from '../../models/all-demands';
 import { EventService } from '../../services/event.service';
 import { DemandCategory } from '../../enums/demand-category';
+import { DemandStatusFilter } from '../../enums/demand-status-filter';
 import { DemandStatus } from '../../enums/demand-status';
 
 @Component({
@@ -34,8 +35,8 @@ export class ViewDemandsComponent implements OnInit {
     this.fetchAllDemands();
     this.demandCategories = Object.values(DemandCategory);
     this.selectedDemandCategory = DemandCategory.ALL;
-    this.demandStatusList = Object.keys(DemandStatus);
-    this.selectedDemandStatus = DemandStatus.ALL;
+    this.demandStatusList = Object.keys(DemandStatusFilter);
+    this.selectedDemandStatus = DemandStatusFilter.ALL;
 
     console.log("ViewDemandsComponent isMyDemand", this.eventService.isMyDemand)
     this.isRequester = this.authService.isRequester();
@@ -47,11 +48,12 @@ export class ViewDemandsComponent implements OnInit {
   fetchAllDemands() {
     this.demandIntakeService.getAllDemands().pipe(
       map((response: any) => {
+        console.log('View1 getAllDemands() Response :', response);
         this.allDemands = response;
         this.onCategoryChange();
 
         this.errorData = "";
-        console.log('getAllDemands() Response :', this.allDemands);
+        console.log('View getAllDemands() Response :', this.allDemands);
         this.eventService.progressBarEvent.emit(false);
       }),
       catchError((error: any) => {
@@ -83,14 +85,14 @@ export class ViewDemandsComponent implements OnInit {
     let statusList: string[];
     let myStatusList: string[];
     if (this.authService.isRequester()) {
-      statusList = ["DRAFT"];
-      myStatusList = ["DRAFT"];
+      statusList = [DemandStatus.DRAFT];
+      myStatusList = [DemandStatus.DRAFT, DemandStatus.DM_MODIFICATION, DemandStatus.CCB_MODIFICATION];
     } else if (this.authService.isDM()) {
-      statusList = ["PENDING_WITH_DM", "DM_HOLD", "PENDING_WITH_CCB"];
-      myStatusList = ["DRAFT"];
+      statusList = [DemandStatus.PENDING_WITH_DM, DemandStatus.DM_HOLD, DemandStatus.PENDING_WITH_CCB];
+      myStatusList = [DemandStatus.DRAFT, DemandStatus.DM_MODIFICATION, DemandStatus.CCB_MODIFICATION];
     } else if (this.authService.isCCB()) {
-      statusList = ["PENDING_WITH_CCB", "CCB_HOLD"];
-      myStatusList = ["DRAFT"];
+      statusList = [DemandStatus.PENDING_WITH_CCB, DemandStatus.CCB_HOLD];
+      myStatusList = [DemandStatus.DRAFT, DemandStatus.DM_MODIFICATION, DemandStatus.CCB_MODIFICATION];
     }
 
     //filtering demands
@@ -106,11 +108,11 @@ export class ViewDemandsComponent implements OnInit {
       let actionInProgressList: Demand[] = [];
       if (this.authService.isDM()) {
 
-        this.allCurrentPendingDemands.filter(item => item.introduction.status === 'PENDING_WITH_CCB');
+        this.allCurrentPendingDemands.filter(item => item.introduction.status === DemandStatus.PENDING_WITH_CCB);
 
         this.allCurrentPendingDemands.forEach(demand => {
 
-          if (demand.introduction.status !== 'PENDING_WITH_CCB') {
+          if (demand.introduction.status !== DemandStatus.PENDING_WITH_CCB) {
             actionInProgressList.push(demand);
           } else {
             let dmList = demand.solutionDirectionInfo.filter(item => {
@@ -159,6 +161,11 @@ export class ViewDemandsComponent implements OnInit {
     this.eventService.isMyDemand = isMyDemand;
     this.eventService.isStakeholderDemand = isStakeholderDemand;
     this.eventService.isNewDemand = false;
+    this.eventService.solutionDirectionValue = new Array();
+    this.eventService.selectedDemandTabIndex = 0;
+    this.eventService.selectedEADITabIndex = 0;
+    this.eventService.selectedRequirementsTabIndex = 0;
+
     this.demandIntakeService.setDemand(this.selectedDemand, false);
     this.router.navigate(['/demand-intake/' + this.selectedDemand.introduction.demandIntakeId]);
   }

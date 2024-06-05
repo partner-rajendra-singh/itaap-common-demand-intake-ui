@@ -5,49 +5,49 @@
           <p-fieldset legend="Solution Direction">
             <div class="grid">
               <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                <p-checkbox [binary]="true" [(ngModel)]="sdInfo.integration" inputId="integration"
+                <p-checkbox [binary]="true" [(ngModel)]="sdInfo.integration" inputId="integration" [disabled]="!getSDVisibility('integration')"
                   (onChange)="emitCheckList()"></p-checkbox>
               </div>
               <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
                 <label for="integration">Integration/ITaaP</label>
               </div>
               <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                <p-checkbox [binary]="true" [(ngModel)]="sdInfo.dataModelling" inputId="dataModelling" 
+                <p-checkbox [binary]="true" [(ngModel)]="sdInfo.dataModelling" inputId="dataModelling" [disabled]="!getSDVisibility('dataModelling')"
                   (onChange)="emitCheckList()"></p-checkbox>
               </div>
               <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
                 <label for="dataModelling">Data Modelling</label>
               </div>
               <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                <p-checkbox [binary]="true" (onChange)="emitCheckList()" [(ngModel)]="sdInfo.adlL1"
+                <p-checkbox [binary]="true" (onChange)="emitCheckList()" [(ngModel)]="sdInfo.adlL1" [disabled]="!getSDVisibility('adlL1')"
                   inputId="adlL1"></p-checkbox>
               </div>
               <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
                 <label for="adlL1">ADL L1</label>
               </div>
               <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                <p-checkbox [binary]="true" (onChange)="emitCheckList()" [(ngModel)]="sdInfo.adlL2"
+                <p-checkbox [binary]="true" (onChange)="emitCheckList()" [(ngModel)]="sdInfo.adlL2" [disabled]="!getSDVisibility('adlL2')"
                   inputId="adlL2"></p-checkbox>
               </div>
               <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
                 <label for="adlL2">ADL L2</label>
               </div>
               <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                <p-checkbox [binary]="true" (onChange)="emitCheckList()" [(ngModel)]="sdInfo.gold"
+                <p-checkbox [binary]="true" (onChange)="emitCheckList()" [(ngModel)]="sdInfo.gold" [disabled]="!getSDVisibility('gold')"
                   inputId="gold"></p-checkbox>
               </div>
               <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
                 <label for="gold">Gold</label>
               </div>
               <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                <p-checkbox [binary]="true" (onChange)="emitCheckList()" [(ngModel)]="sdInfo.mdm"
+                <p-checkbox [binary]="true" (onChange)="emitCheckList()" [(ngModel)]="sdInfo.mdm" [disabled]="!getSDVisibility('mdm')"
                   inputId="mdm"></p-checkbox>
               </div>
               <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
                 <label for="mdm">MDM</label>
               </div>
               <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                <p-checkbox [binary]="true" (onChange)="emitCheckList()" [(ngModel)]="sdInfo.ia"
+                <p-checkbox [binary]="true" (onChange)="emitCheckList()" [(ngModel)]="sdInfo.ia" [disabled]="!getSDVisibility('ia')"
                   inputId="ia"></p-checkbox>
               </div>
               <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
@@ -55,7 +55,7 @@
               </div>
 
               <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                <p-checkbox [binary]="true" (onChange)="emitCheckList()" [(ngModel)]="sdInfo.dataQuality"
+                <p-checkbox [binary]="true" (onChange)="emitCheckList()" [(ngModel)]="sdInfo.dataQuality" [disabled]="!getSDVisibility('dataQuality')"
                   inputId="dataQuality"></p-checkbox>
               </div>
               <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
@@ -63,7 +63,7 @@
               </div>
 
               <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                <p-checkbox [binary]="true" (onChange)="emitCheckList()" [(ngModel)]="sdInfo.informatica"
+                <p-checkbox [binary]="true" (onChange)="emitCheckList()" [(ngModel)]="sdInfo.informatica" [disabled]="!getSDVisibility('informatica')"
                   inputId="informatica"></p-checkbox>
               </div>
               <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
@@ -72,7 +72,7 @@
 
               <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
                 <p-checkbox [binary]="true" (onChange)="emitCheckList()"
-                  [(ngModel)]="sdInfo.azureSynapse" inputId="azureSynapse"></p-checkbox>
+                  [(ngModel)]="sdInfo.azureSynapse" inputId="azureSynapse" [disabled]="!getSDVisibility('azureSynapse')"></p-checkbox>
               </div>
               <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
                 <label for="azureSynapse">Azure Synapse DWH</label>

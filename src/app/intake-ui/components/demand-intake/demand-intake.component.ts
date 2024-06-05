@@ -5,6 +5,7 @@ import {DemandIntakeService} from '../../services/demand-intake.service';
 import {AuthService} from '../../services/auth.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {EventService} from '../../services/event.service';
+import { DemandStatus } from '../../enums/demand-status';
 
 @Component({
   selector: 'app-demand-intake',
@@ -48,7 +49,7 @@ export class DemandIntakeComponent implements OnInit, OnDestroy {
           label: 'Solution Direction',
           routerLink: 'solution-direction',
           visible: this.authService.isDM() || this.authService.isCCB()
-          // || (!this.eventService.isNewDemand && this.authService.isRequester() && this.eventService.isMyDemand && this.demandIntakeService.demandInformation.introduction.status!='DRAFT'),
+          // || (!this.eventService.isNewDemand && this.authService.isRequester() && this.eventService.isMyDemand && this.demandIntakeService.demandInformation.introduction.status!=DemandStatus.DRAFT),
         },
         {
           label: 'EADI',
@@ -93,14 +94,14 @@ export class DemandIntakeComponent implements OnInit, OnDestroy {
           routerLink: ['/demand-intake/solution-direction/' + this.eventService.currentDemandIntakeId],
           visible: this.authService.isDM() || this.authService.isCCB()
             || (this.authService.isRequester() && (this.eventService.isMyDemand || this.eventService.isStakeholderDemand) &&
-              (this.demandIntakeService.demandInformation.introduction.status != 'DRAFT' && this.demandIntakeService.demandInformation.introduction.status != 'PENDING_WITH_DM')),
+              (this.demandIntakeService.demandInformation.introduction.status != DemandStatus.DRAFT && this.demandIntakeService.demandInformation.introduction.status != DemandStatus.PENDING_WITH_DM)),
         },
         {
           label: 'EADI',
           routerLink: ['/demand-intake/checklist/' + this.eventService.currentDemandIntakeId],
           visible: (this.authService.isDM() || this.authService.isCCB())
             || (this.authService.isRequester() && (this.eventService.isMyDemand || this.eventService.isStakeholderDemand) &&
-              (this.demandIntakeService.demandInformation.introduction.status != 'DRAFT' && this.demandIntakeService.demandInformation.introduction.status != 'PENDING_WITH_DM')),
+              (this.demandIntakeService.demandInformation.introduction.status != DemandStatus.DRAFT && this.demandIntakeService.demandInformation.introduction.status != DemandStatus.PENDING_WITH_DM)),
         },
         {
           label: 'Attachment',
@@ -112,15 +113,15 @@ export class DemandIntakeComponent implements OnInit, OnDestroy {
           routerLink: ['/demand-intake/demandmanager/' + this.eventService.currentDemandIntakeId],
           visible: (!this.eventService.isMyDemand && (this.authService.isDM() || this.authService.isCCB())) ||
             ((this.eventService.isMyDemand || this.eventService.isStakeholderDemand) &&
-              (this.demandIntakeService.demandInformation.introduction.status != 'DRAFT' && this.demandIntakeService.demandInformation.introduction.status != 'PENDING_WITH_DM')),
+              (this.demandIntakeService.demandInformation.introduction.status != DemandStatus.DRAFT && this.demandIntakeService.demandInformation.introduction.status != DemandStatus.PENDING_WITH_DM)),
         },
         {
           label: 'CCB',
           routerLink: ['/demand-intake/ccb/' + this.eventService.currentDemandIntakeId],
           visible: (!this.eventService.isMyDemand && this.authService.isCCB())
             || ((this.eventService.isMyDemand || this.eventService.isStakeholderDemand) &&
-              (this.demandIntakeService.demandInformation.introduction.status == 'CCB_HOLD' || this.demandIntakeService.demandInformation.introduction.status == 'ACCEPTED' || this.demandIntakeService.demandInformation.introduction.status == 'REJECTED'))
-            || (!this.eventService.isMyDemand && this.authService.isDM() && this.demandIntakeService.demandInformation.introduction.status != 'PENDING_WITH_CCB' && this.demandIntakeService.demandInformation.introduction.status != 'PENDING_WITH_DM' && this.demandIntakeService.demandInformation.introduction.status != 'DM_HOLD'),
+              (this.demandIntakeService.demandInformation.introduction.status == DemandStatus.CCB_HOLD || this.demandIntakeService.demandInformation.introduction.status == DemandStatus.ACCEPTED || this.demandIntakeService.demandInformation.introduction.status == DemandStatus.CCB_REJECTED || this.demandIntakeService.demandInformation.introduction.status == DemandStatus.CCB_MODIFICATION))
+            || (!this.eventService.isMyDemand && this.authService.isDM() && this.demandIntakeService.demandInformation.introduction.status != DemandStatus.PENDING_WITH_CCB && this.demandIntakeService.demandInformation.introduction.status != DemandStatus.PENDING_WITH_DM && this.demandIntakeService.demandInformation.introduction.status != DemandStatus.DM_HOLD),
         }
       ];
     }
