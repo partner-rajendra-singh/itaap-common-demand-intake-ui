@@ -84,5 +84,4 @@ stages:
               export AWS_SECRET_ACCESS_KEY=$(AWS_SECRET_ACCESS_KEY)
               aws s3 --region eu-west-1 cp --recursives $(Build.SourcesDirectory)/build/ s3://itaap--non-prod--common-website/test/demand-intake-ui/
             displayName: 'Upload BUILD to AWS S3'
-            condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest')
-                , eq(variables['Build.SourceBranch'], 'refs/heads/main'))
+            condition: succeeded()
