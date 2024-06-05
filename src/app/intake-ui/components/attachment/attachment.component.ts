@@ -8,7 +8,7 @@ import {EventService} from '../../services/event.service';
 import {Attachment} from '../../models/attachment';
 import {HttpHeaders} from '@angular/common/http';
 import {FileUploadEvent} from 'primeng/fileupload';
-import { DemandStatus } from '../../enums/demand-status';
+import {DemandStatus} from '../../enums/demand-status';
 
 
 @Component({
@@ -72,9 +72,19 @@ export class AttachmentComponent implements OnInit {
       }
     }
 
-    if (this.demandIntakeService.getDemandInformation().introduction.status == DemandStatus.ACCEPTED
-      || this.demandIntakeService.getDemandInformation().introduction.status == DemandStatus.DM_REJECTED || this.demandIntakeService.getDemandInformation().introduction.status == DemandStatus.CCB_REJECTED) {
-      this.visibleAttachmentUpload = false;
+    if (authService.isDM()) {
+      if (this.demandIntakeService.getDemandInformation().introduction.status == DemandStatus.PENDING_WITH_CCB
+        || this.demandIntakeService.getDemandInformation().introduction.status == DemandStatus.ACCEPTED
+        || this.demandIntakeService.getDemandInformation().introduction.status == DemandStatus.DM_REJECTED
+        || this.demandIntakeService.getDemandInformation().introduction.status == DemandStatus.CCB_REJECTED
+        || this.demandIntakeService.getDemandInformation().introduction.status == DemandStatus.CCB_HOLD) {
+        this.visibleAttachmentUpload = false;
+      }
+    } else if (authService.isCCB()) {
+      if (this.demandIntakeService.getDemandInformation().introduction.status == DemandStatus.ACCEPTED
+        || this.demandIntakeService.getDemandInformation().introduction.status == DemandStatus.CCB_REJECTED) {
+        this.visibleAttachmentUpload = false;
+      }
     }
 
     if (this.eventService.isStakeholderDemand && !this.eventService.isNewDemand && !this.eventService.isMyDemand) {
@@ -84,7 +94,7 @@ export class AttachmentComponent implements OnInit {
 
   ngOnInit() {
     this.submitDemandLabel = 'Raise Demand';
-    if(this.demandIntakeService.getDemandInformation().introduction.status === DemandStatus.DM_MODIFICATION || this.demandIntakeService.getDemandInformation().introduction.status === DemandStatus.CCB_MODIFICATION){
+    if (this.demandIntakeService.getDemandInformation().introduction.status === DemandStatus.DM_MODIFICATION || this.demandIntakeService.getDemandInformation().introduction.status === DemandStatus.CCB_MODIFICATION) {
       this.submitDemandLabel = 'Update Demand';
     }
 
@@ -110,11 +120,17 @@ export class AttachmentComponent implements OnInit {
         return true;
       }
     } else if (this.authService.isDM()) {
-      if (this.demandIntakeService.getDemandInformation().introduction.status != 'PENDING_WITH_DM') {
+      if (this.demandIntakeService.getDemandInformation().introduction.status == DemandStatus.PENDING_WITH_CCB
+        || this.demandIntakeService.getDemandInformation().introduction.status == DemandStatus.ACCEPTED
+        || this.demandIntakeService.getDemandInformation().introduction.status == DemandStatus.DM_REJECTED
+        || this.demandIntakeService.getDemandInformation().introduction.status == DemandStatus.CCB_REJECTED
+        || this.demandIntakeService.getDemandInformation().introduction.status == DemandStatus.CCB_HOLD) {
         return true;
       }
     } else if (this.authService.isCCB()) {
-      if (this.demandIntakeService.getDemandInformation().introduction.status != 'PENDING_WITH_CCB') {
+      if (this.demandIntakeService.getDemandInformation().introduction.status == DemandStatus.ACCEPTED
+        || this.demandIntakeService.getDemandInformation().introduction.status == DemandStatus.CCB_REJECTED
+        || this.demandIntakeService.getDemandInformation().introduction.status == DemandStatus.DM_REJECTED) {
         return true;
       }
     }

@@ -114,22 +114,22 @@
               <div class="w-full align-text-end">
                 <button pButton pRipple icon="pi pi-pencil" pInitEditableRow
                         *ngIf="!editing && !isDeleteDisabled(attachment)"
-                        class="p-button-rounded p-button-sm p-button-text mr-2"
+                        class="p-button-rounded p-button-text mr-2"
                         (click)="onRowEditInit(attachment)"></button>
                 <button pButton pRipple icon="pi pi-check" pSaveEditableRow
                         *ngIf="editing"
-                        class="p-button-rounded p-button-sm p-button-success p-button-text mr-2"
+                        class="p-button-rounded p-button-success p-button-text mr-2"
                         (click)="onRowEditSave(attachment)"></button>
                 <button pButton pRipple icon="pi pi-times" pCancelEditableRow *ngIf="editing"
-                        class="p-button-rounded p-button-sm p-button-danger p-button-text mr-2"
+                        class="p-button-rounded p-button-danger p-button-text mr-2"
                         (click)="onRowEditCancel(attachment, ri)"></button>
 
                 <button pButton pRipple icon="pi pi-download" *ngIf="!editing"
-                        class="p-button-rounded p-button-sm p-button-success p-button-text mr-2"
+                        class="p-button-rounded p-button-success p-button-text mr-2"
                         (click)="downloadAttachment(attachment.attachmentId, attachment.fileName)"></button>
-                <button pButton pRipple icon="pi pi-trash" *ngIf="!editing" [disabled]="isDeleteDisabled(attachment)"
+                <button pButton pRipple icon="pi pi-trash" *ngIf="!editing && !isDeleteDisabled(attachment)"
                         (click)="deleteAttachment(attachment.attachmentId, attachment.fileName)"
-                        class="p-button-rounded p-button-sm p-button-warning p-button-text"></button>
+                        class="p-button-rounded p-button-warning p-button-text"></button>
               </div>
             </td>
           </tr>
