@@ -1,1 +1,186 @@
+name: 'Demand-Intake-UI CI-CD'
 
+on:
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - 'README.md'
+      - '.gitignore'
+      - azure-pipeline.yaml
+      - azure-pipeline-CD.yaml
+      - azure-pipeline-CI-CD.yaml
+  pull_request:
+    branches:
+      - main
+    paths-ignore:
+      - 'README.md'
+      - '.gitignore'
+      - azure-pipeline.yaml
+      - azure-pipeline-CD.yaml
+      - azure-pipeline-CI-CD.yaml
+  workflow_dispatch:
+
+jobs:
+  dev:
+    if: github.ref == 'refs/heads/main' || github.event.pull_request.base.ref == 'main'
+    name: DEV DEPLOYMENT
+    runs-on: [self-hosted, linux, x64, philips-code-hub, ubuntu-latest]
+    environment: dev
+
+    env:
+      S3_BUCKET_NAME: 'itaap--non-prod--common-website'
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      
+      - name: Installing Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18.x'
+
+      - name: Installing dependencies
+        run: npm install --force
+
+      - name: Building project
+        id: build
+        run: npm run build:dev
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID_NON_PROD }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY_NON_PROD }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: Remove existing app build from S3 bucket
+        if: github.ref == 'refs/heads/main' && steps.build.outcome == 'success' && github.event_name == 'push'
+        run: aws s3 rm --recursive s3://$S3_BUCKET_NAME/dev/demand-intake-ui/
+
+      - name: Deploy app build to S3 bucket
+        if: github.ref == 'refs/heads/main' && steps.build.outcome == 'success' && github.event_name == 'push'
+        run: aws s3 cp --recursive ./build/ s3://$S3_BUCKET_NAME/dev/demand-intake-ui/
+
+  test:
+    if: github.ref == 'refs/heads/main'
+    needs: [dev]
+    name: TEST DEPLOYMENT
+    runs-on: [self-hosted, linux, x64, philips-code-hub, ubuntu-latest]
+    environment: test
+
+    env:
+      S3_BUCKET_NAME: 'itaap--non-prod--common-website'
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      
+      - name: Installing Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18.x'
+
+      - name: Installing dependencies
+        run: npm install --force
+
+      - name: Building project
+        id: build
+        run: npm run build:test
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID_NON_PROD }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY_NON_PROD }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: Remove existing app build from S3 bucket
+        if: github.ref == 'refs/heads/main' && steps.build.outcome == 'success' && github.event_name == 'push'
+        run: aws s3 rm --recursive s3://$S3_BUCKET_NAME/test/demand-intake-ui/
+
+      - name: Deploy app build to S3 bucket
+        if: github.ref == 'refs/heads/main' && steps.build.outcome == 'success' && github.event_name == 'push'
+        run: aws s3 cp --recursive ./build/ s3://$S3_BUCKET_NAME/test/demand-intake-ui/
+        
+  acc:
+    if: github.ref == 'refs/heads/main'
+    needs: [test]
+    name: ACC DEPLOYMENT
+    runs-on: [self-hosted, linux, x64, philips-code-hub, ubuntu-latest]
+    environment: acc
+
+    env:
+      S3_BUCKET_NAME: 'itaap--acc--common-website'
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      
+      - name: Installing Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18.x'
+
+      - name: Installing dependencies
+        run: npm install --force
+
+      - name: Building project
+        id: build
+        run: npm run build:acc
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID_ACC }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY_ACC }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: Remove existing app build from S3 bucket
+        if: github.ref == 'refs/heads/main' && steps.build.outcome == 'success' && github.event_name == 'push'
+        run: aws s3 rm --recursive s3://$S3_BUCKET_NAME/demand-intake-ui/
+
+      - name: Deploy app build to S3 bucket
+        if: github.ref == 'refs/heads/main' && steps.build.outcome == 'success' && github.event_name == 'push'
+        run: aws s3 cp --recursive ./build/ s3://$S3_BUCKET_NAME/demand-intake-ui/
+  
+  prod:
+    if: github.ref == 'refs/heads/main'
+    needs: [acc]
+    name: PROD DEPLOYMENT
+    runs-on: [self-hosted, linux, x64, philips-code-hub, ubuntu-latest]
+    environment: prod
+
+    env:
+      S3_BUCKET_NAME: 'itaap--prod--common-website'
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      
+      - name: Installing Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18.x'
+
+      - name: Installing dependencies
+        run: npm install --force
+
+      - name: Building project
+        id: build
+        run: npm run build:prod
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID_PROD }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY_PROD }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: Remove existing app build from S3 bucket
+        if: github.ref == 'refs/heads/main' && steps.build.outcome == 'success' && github.event_name == 'push'
+        run: aws s3 rm --recursive s3://$S3_BUCKET_NAME/demand-intake-ui/
+
+      - name: Deploy app build to S3 bucket
+        if: github.ref == 'refs/heads/main' && steps.build.outcome == 'success' && github.event_name == 'push'
+        run: aws s3 cp --recursive ./build/ s3://$S3_BUCKET_NAME/demand-intake-ui/
