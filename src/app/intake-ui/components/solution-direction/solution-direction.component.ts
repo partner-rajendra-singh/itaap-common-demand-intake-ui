@@ -115,15 +115,7 @@ export class SolutionDirectionComponent {
   }
 
   isAnySD(): boolean {
-
-    return this.solutionDirectionInfo.filter(item => item.value == true).length > 0;
-
-    // return (this.solutionDirectionInfo.integration || this.solutionDirectionInfo.dataModelling || this.solutionDirectionInfo.adlL1 ||
-    //   this.solutionDirectionInfo.adlL2 || this.solutionDirectionInfo.gold || this.solutionDirectionInfo.mdm ||
-    //   this.solutionDirectionInfo.ia || this.solutionDirectionInfo.dataQuality || this.solutionDirectionInfo.informatica
-    //   || this.solutionDirectionInfo.azureSynapse
-    // );
-
+    return this.dmDomainList.length == 0 || this.solutionDirectionInfo.filter(item => item.value == true).length > 0;
   }
 
 }

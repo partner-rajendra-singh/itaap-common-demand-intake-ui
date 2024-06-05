@@ -49,8 +49,7 @@
                     <ng-template pTemplate="header">
                         <div class="flex flex-wrap gap-2">
                             <span>My Demands </span>
-                            <p-badge *ngIf="allCurrentMyDemands.length > 0" value="{{allCurrentMyDemands.length}}"
-                                severity="success" />
+                            <p-badge value="{{allCurrentMyDemands.length}}" severity="success" />
                         </div>
                     </ng-template>
 
@@ -103,8 +102,7 @@
                     <ng-template pTemplate="header">
                         <div class="flex flex-wrap gap-2">
                             <span>Pending Demands</span>
-                            <p-badge *ngIf="allCurrentPendingDemands.length > 0"
-                                value="{{allCurrentPendingDemands.length}}" severity="success" />
+                            <p-badge value="{{allCurrentPendingDemands.length}}" severity="success" />
                         </div>
                     </ng-template>
                     <div *ngIf="allCurrentPendingDemands">
@@ -155,8 +153,7 @@
                     <ng-template pTemplate="header">
                         <div class="flex flex-wrap gap-2">
                             <span>My Demands as a Stakeholder</span>
-                            <p-badge *ngIf="allCurrentMyDemandsAsSH.length > 0"
-                                value="{{allCurrentMyDemandsAsSH.length}}" severity="success" />
+                            <p-badge value="{{allCurrentMyDemandsAsSH.length}}" severity="success" />
                         </div>
                     </ng-template>
                     <div *ngIf="allCurrentMyDemandsAsSH">

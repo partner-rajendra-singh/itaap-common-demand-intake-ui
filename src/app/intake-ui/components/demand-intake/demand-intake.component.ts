@@ -120,7 +120,7 @@ export class DemandIntakeComponent implements OnInit, OnDestroy {
           routerLink: ['/demand-intake/ccb/' + this.eventService.currentDemandIntakeId],
           visible: (!this.eventService.isMyDemand && this.authService.isCCB())
             || ((this.eventService.isMyDemand || this.eventService.isStakeholderDemand) &&
-              (this.demandIntakeService.demandInformation.introduction.status == DemandStatus.CCB_HOLD || this.demandIntakeService.demandInformation.introduction.status == DemandStatus.ACCEPTED || this.demandIntakeService.demandInformation.introduction.status == DemandStatus.CCB_REJECTED))
+              (this.demandIntakeService.demandInformation.introduction.status == DemandStatus.CCB_HOLD || this.demandIntakeService.demandInformation.introduction.status == DemandStatus.ACCEPTED || this.demandIntakeService.demandInformation.introduction.status == DemandStatus.CCB_REJECTED || this.demandIntakeService.demandInformation.introduction.status == DemandStatus.CCB_MODIFICATION))
             || (!this.eventService.isMyDemand && this.authService.isDM() && this.demandIntakeService.demandInformation.introduction.status != DemandStatus.PENDING_WITH_CCB && this.demandIntakeService.demandInformation.introduction.status != DemandStatus.PENDING_WITH_DM && this.demandIntakeService.demandInformation.introduction.status != DemandStatus.DM_HOLD),
         }
       ];
