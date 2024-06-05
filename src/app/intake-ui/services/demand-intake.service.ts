@@ -16,6 +16,7 @@ import {Attachment} from '../models/attachment';
 import {Introduction} from '../models/introduction';
 import {DemandStatusFilter} from '../enums/demand-status-filter';
 import {ArchitectAlignment} from '../models/architect-alignment';
+import { DemandIntakeDecision } from '../enums/demand-intake-decision';
 
 
 @Injectable({
@@ -39,9 +40,8 @@ export class DemandIntakeService {
   setDemandInformation(demandInformation: any) {
     this.demandInformation = demandInformation;
   }
-
+  
   setDemand(demand: Demand, isNew: boolean) {
-    // console.log("setDemand1: ", demand)
     this.isNew = isNew;
     if (isNew) {
       this.attachments = [];
