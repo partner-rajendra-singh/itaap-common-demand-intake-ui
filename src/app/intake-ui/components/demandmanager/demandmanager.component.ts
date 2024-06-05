@@ -32,9 +32,7 @@ export class DemandManagerComponent implements OnInit {
 
   ngOnInit() {
     if (this.authService.isDM()) {
-      console.log("******SD", this.demandIntakeService.demandInformation.solutionDirectionInfo)
       let dmList = this.demandIntakeService.demandInformation.solutionDirectionInfo.filter(item => item.dmEmail === this.authService.currentUserValue.email && (item.decision === 'APPROVED' || item.decision === 'REJECTED' ));
-      console.log("******dmList", dmList)
       if(dmList.length > 0){
         this.dmActionDone = true;
       }
@@ -67,7 +65,11 @@ export class DemandManagerComponent implements OnInit {
       if ((this.authService.isRequester() && (this.eventService.isMyDemand || this.eventService.isStakeholderDemand))
         && (this.demandIntakeService.demandInformation.introduction.status == DemandStatus.CCB_HOLD || this.demandIntakeService.demandInformation.introduction.status == DemandStatus.ACCEPTED || this.demandIntakeService.demandInformation.introduction.status == DemandStatus.CCB_REJECTED)) {
         this.visibleNextButton = true;
-      } else if ((!this.eventService.isNewDemand && !this.eventService.isMyDemand && this.authService.isCCB())
+      } else  if ((this.authService.isRequester() && (this.eventService.isMyDemand || this.eventService.isStakeholderDemand))
+        && this.demandIntakeService.demandInformation.introduction.status == DemandStatus.DM_MODIFICATION ) {
+        this.visibleNextButton = false;
+        this.visibleSubmitButton = true;
+      }else if ((!this.eventService.isNewDemand && !this.eventService.isMyDemand && this.authService.isCCB())
         && (this.demandIntakeService.demandInformation.introduction.status == DemandStatus.PENDING_WITH_CCB || this.demandIntakeService.demandInformation.introduction.status == DemandStatus.CCB_HOLD || this.demandIntakeService.demandInformation.introduction.status == DemandStatus.ACCEPTED || this.demandIntakeService.demandInformation.introduction.status == DemandStatus.CCB_REJECTED)) {
         this.visibleNextButton = true;
       } else if ((!this.eventService.isNewDemand && this.eventService.isMyDemand && this.authService.isCCB())
