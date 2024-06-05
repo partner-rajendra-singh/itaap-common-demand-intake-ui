@@ -46,7 +46,7 @@ stages:
               versionSpec: 18.x
             displayName: Install Node.js
 
-          - script: npm install
+          - script: npm install --force
             displayName: npm install
 
           - script: npm run build:dev
@@ -55,7 +55,8 @@ stages:
           - script: |
               export AWS_ACCESS_KEY_ID=$(AWS_ACCESS_KEY_ID)
               export AWS_SECRET_ACCESS_KEY=$(AWS_SECRET_ACCESS_KEY)
-              aws s3 --region eu-west-1 cp --recursives $(Build.SourcesDirectory)/build/ s3://itaap--non-prod--common-website/dev/demand-intake-ui/
+              aws s3 --region eu-west-1 rm --recursive s3://itaap--non-prod--common-website/dev/demand-intake-ui/
+              aws s3 --region eu-west-1 cp --recursive $(Build.SourcesDirectory)/build/ s3://itaap--non-prod--common-website/dev/demand-intake-ui/
             displayName: 'Upload BUILD to AWS S3'
             condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest')
                 , eq(variables['Build.SourceBranch'], 'refs/heads/main'))
@@ -73,7 +74,7 @@ stages:
               versionSpec: 18.x
             displayName: Install Node.js
 
-          - script: npm install
+          - script: npm install --force
             displayName: npm install
 
           - script: npm run build:test
@@ -82,6 +83,7 @@ stages:
           - script: |
               export AWS_ACCESS_KEY_ID=$(AWS_ACCESS_KEY_ID)
               export AWS_SECRET_ACCESS_KEY=$(AWS_SECRET_ACCESS_KEY)
-              aws s3 --region eu-west-1 cp --recursives $(Build.SourcesDirectory)/build/ s3://itaap--non-prod--common-website/test/demand-intake-ui/
+              aws s3 --region eu-west-1 rm --recursive s3://itaap--non-prod--common-website/dev/demand-intake-ui/
+              aws s3 --region eu-west-1 cp --recursive $(Build.SourcesDirectory)/build/ s3://itaap--non-prod--common-website/test/demand-intake-ui/
             displayName: 'Upload BUILD to AWS S3'
             condition: succeeded()
