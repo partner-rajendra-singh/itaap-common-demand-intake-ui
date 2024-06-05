@@ -115,8 +115,11 @@ export class DemandManagerComponent implements OnInit {
   }
 
   submitPage() {
-    if (this.demandManagerInfo.decisionDate && this.selectedDecision != '' && this.demandManagerInfo.remarks != '') {
-      this.demandManagerInfo.decision = this.getDecisionKey(this.selectedDecision);
+    if (this.demandIntakeService.demandInformation.introduction.status === DemandStatus.DM_MODIFICATION || (this.demandManagerInfo.decisionDate && this.selectedDecision != '' && this.demandManagerInfo.remarks != '')) {
+      if (this.demandIntakeService.demandInformation.introduction.status !== DemandStatus.DM_MODIFICATION){
+        this.demandManagerInfo.decision = this.getDecisionKey(this.selectedDecision);
+      }
+      
       this.demandIntakeService.getDemandInformation().demandManagerInfo = this.demandManagerInfo;
 
       this.router.navigate(['demand-intake/confirm']);
