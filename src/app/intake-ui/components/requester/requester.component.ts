@@ -61,7 +61,6 @@ export class RequesterComponent implements OnInit {
     this.demandIntakeService.getRequesterDomain().pipe(
       map((response: any) => {
         this.domainList = response;
-        console.log('getAllDemands() Response :', this.domainList);
         this.selectedDomain = this.getSelectedDomain();
         this.eventService.progressBarEvent.emit(false);
       }),

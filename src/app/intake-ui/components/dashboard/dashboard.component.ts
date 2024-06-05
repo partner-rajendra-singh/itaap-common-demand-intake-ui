@@ -143,7 +143,7 @@ export class DashboardComponent implements OnInit {
           this.eventService.progressBarEvent.emit(false);
           this.allDemands = response;
           this.errorData = "";
-          console.log('getAllDemands() Response :', this.allDemands);
+          console.log('Dashboard getAllDemands() Response :', this.allDemands);
           this.allCurrentMyDemands = this.allDemands.myDemands;
           this.allCurrentMyDemandsAsSH = this.allDemands.stakeholderDemands;
           this.allCurrentPendingDemands = this.allDemands.pendingDemands;
