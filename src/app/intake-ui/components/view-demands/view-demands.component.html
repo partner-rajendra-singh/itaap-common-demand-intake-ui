@@ -2,205 +2,220 @@
 <p-toast key="success"></p-toast>
 <p-toast key="error"></p-toast>
 <div class="col-12 grid">
-    <div class="col-12 md:col-12 lg:col-12">
-        <div class="flex align-items-center justify-content-between">
-            <div class="card col-12 flex align-items-center"
-                style="border-bottom-left-radius: inherit;border-bottom-right-radius: inherit;">
-                <div class="col-12 grid">
-                    <div class="col-12 md:col-12 lg:col-6">
-                        <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-9">
-                            <label>Filter Demand by your action</label>
-                        </div>
-                        <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                            <p-dropdown appendTo="body" (onChange)="onCategoryChange()" [options]="demandCategories"
-                                [(ngModel)]="selectedDemandCategory" placeholder="Filter Demand"></p-dropdown>
-                        </div>
-                    </div>
-                    <div class="col-12 md:col-12 lg:col-6">
-                        <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-9">
-                            <label>Filter Demand by status</label>
-                        </div>
-                        <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                            <p-dropdown [(ngModel)]="selectedDemandStatus" [options]="demandStatusList"
-                                (onChange)="onStatusChange()" placeholder="Filter Demand">
-                                <ng-template pTemplate="selectedItem">
-                                    <div *ngIf="selectedDemandStatus">
-                                        <span
-                                            [class]="'align-self-center demand-badge status-' + demandIntakeService.getDemandStatusValueInLower(selectedDemandStatus)">
-                                            {{demandIntakeService.getDemandStatusValue(selectedDemandStatus)}}
-                                        </span>
-                                    </div>
-                                </ng-template>
-                                <ng-template let-option pTemplate="item">
-                                    <span
-                                        [class]="'align-self-center demand-badge status-' + demandIntakeService.getDemandStatusValueInLower(option)">
-                                        {{demandIntakeService.getDemandStatusValue(option)}}
-                                    </span>
-                                </ng-template>
-                            </p-dropdown>
-                        </div>
-                    </div>
-                </div>
+  <div class="col-12 md:col-12 lg:col-12">
+    <div class="flex align-items-center justify-content-between">
+      <div class="card col-12 flex align-items-center"
+           style="border-bottom-left-radius: inherit;border-bottom-right-radius: inherit;">
+        <div class="col-12 grid">
+          <div class="w-full flex gap-3">
+            <div class="col-12 md:col-12 lg:col-6">
+              <span class="mr-3">Filter Demand by your action</span>
+              <p-dropdown appendTo="body" (onChange)="onCategoryChange()" [options]="demandCategories"
+                          [(ngModel)]="selectedDemandCategory" placeholder="Filter Demand"/>
             </div>
+            <div class="col-12 md:col-12 lg:col-6">
+              <span class="mr-3">Filter Demand by status</span>
+              <p-dropdown [(ngModel)]="selectedDemandStatus" [options]="demandStatusList" (onChange)="onStatusChange()"
+                          placeholder="Filter Demand">
+                <ng-template pTemplate="selectedItem">
+                  <div *ngIf="selectedDemandStatus">
+										<span
+                      [class]="'align-self-center demand-badge status-' + demandIntakeService.getDemandStatusValueInLower(selectedDemandStatus)">
+                    {{ demandIntakeService.getDemandStatusValue(selectedDemandStatus) }}
+                  </span>
+                  </div>
+                </ng-template>
+                <ng-template let-option pTemplate="item">
+									<span
+                    [class]="'align-self-center demand-badge status-' + demandIntakeService.getDemandStatusValueInLower(option)">
+                  {{ demandIntakeService.getDemandStatusValue(option) }}
+                </span>
+                </ng-template>
+              </p-dropdown>
+            </div>
+          </div>
         </div>
-        <div class="card" style="border-top-left-radius: inherit;border-top-right-radius: inherit;">
-            <p-tabView [activeIndex]="eventService.selectedDemandTabIndex" (onChange)="onTabChange($event)">
-                <p-tabPanel>
-                    <ng-template pTemplate="header">
-                        <div class="flex flex-wrap gap-2">
-                            <span>My Demands </span>
-                            <p-badge value="{{allCurrentMyDemands.length}}" severity="success" />
-                        </div>
-                    </ng-template>
-
-                    <div *ngIf="allCurrentMyDemands">
-                        <p-table [value]="allCurrentMyDemands" styleClass="p-datatable-sm" selectionMode="single"
-                            [(selection)]="selectedDemand" (onRowSelect)="onDemandSelect($event, true, false)"
-                            [tableStyle]="{ 'min-width': '40rem' }" [paginator]="true" [rows]="10">
-                            <ng-template pTemplate="header">
-                                <tr>
-                                    <th pSortableColumn="actionTime">Demand Intake Id <p-sortIcon
-                                            field="demandIntakeId"></p-sortIcon></th>
-                                    <th pSortableColumn="topicId">Title <p-sortIcon field="title"></p-sortIcon>
-                                    </th>
-                                    <th pSortableColumn="actionTime">Request Date <p-sortIcon
-                                            field="requestedDate"></p-sortIcon></th>
-                                    <th pSortableColumn="actionTime">Requested By <p-sortIcon
-                                            field="requestedBy"></p-sortIcon>
-                                    </th>
-                                    <th pSortableColumn="actionTime">Status <p-sortIcon field="status"></p-sortIcon>
-                                    </th>
-                                </tr>
-                            </ng-template>
-                            <ng-template pTemplate="body" let-demand let-ri="rowIndex" let-columns="columns">
-                                <tr [pSelectableRow]="demand">
-                                    <td>{{ demand.introduction['demandIntakeId'] }}</td>
-                                    <td>{{ demand.introduction['title'] }}</td>
-                                    <td>{{ demand.requesterInfo['requestedDate'] | date: 'MMM dd, yyyy'}}</td>
-                                    <td>{{ demand.introduction['requestedBy'] }}</td>
-                                    <td>
-                                        <span
-                                            [class]="'align-self-center demand-badge status-' 
-                                        + demandIntakeService.getDemandStatusValueInLower(demand.introduction['status'])">
-                                            {{demandIntakeService.getDemandStatusValue(demand.introduction['status'])}}
-                                        </span>
-                                    </td>
-                                </tr>
-                            </ng-template>
-                            <ng-template pTemplate="emptymessage">
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td>You dont have any demand!</td>
-                                </tr>
-                            </ng-template>
-                        </p-table>
-                    </div>
-
-                </p-tabPanel>
-                <p-tabPanel *ngIf="!isRequester">
-                    <ng-template pTemplate="header">
-                        <div class="flex flex-wrap gap-2">
-                            <span>Pending Demands</span>
-                            <p-badge value="{{allCurrentPendingDemands.length}}" severity="success" />
-                        </div>
-                    </ng-template>
-                    <div *ngIf="allCurrentPendingDemands">
-                        <p-table [value]="allCurrentPendingDemands" selectionMode="single"
-                            [(selection)]="selectedDemand" (onRowSelect)="onDemandSelect($event, false, false)"
-                            styleClass="p-datatable-sm" [tableStyle]="{ 'min-width': '40rem' }" [paginator]="true"
-                            [rows]="10">
-                            <ng-template pTemplate="header">
-                                <tr>
-                                    <th pSortableColumn="actionTime">Demand Intake Id <p-sortIcon
-                                            field="demandIntakeId"></p-sortIcon></th>
-                                    <th pSortableColumn="topicId">Title <p-sortIcon field="title"></p-sortIcon>
-                                    </th>
-                                    <th pSortableColumn="actionTime">Request Date <p-sortIcon
-                                            field="requestedDate"></p-sortIcon></th>
-                                    <th pSortableColumn="actionTime">Requested By <p-sortIcon
-                                            field="requestedBy"></p-sortIcon>
-                                    </th>
-                                    <th pSortableColumn="actionTime">Status <p-sortIcon field="status"></p-sortIcon>
-                                    </th>
-
-                                </tr>
-                            </ng-template>
-                            <ng-template pTemplate="body" let-demand let-ri="rowIndex" let-columns="columns">
-                                <tr [pSelectableRow]="demand">
-                                    <td>{{ demand.introduction['demandIntakeId'] }}</td>
-                                    <td>{{ demand.introduction['title'] }}</td>
-                                    <td>{{ demand.requesterInfo['requestedDate'] | date: 'MMM dd, yyyy'}}</td>
-                                    <td>{{ demand.introduction['requestedBy'] }}</td>
-                                    <td><span [class]="'align-self-center demand-badge status-' 
-                                    + demandIntakeService.getDemandStatusValueInLower(demand.introduction['status'])">
-                                            {{demandIntakeService.getDemandStatusValue(demand.introduction['status'])}}
-                                        </span>
-                                    </td>
-                                </tr>
-                            </ng-template>
-                            <ng-template pTemplate="emptymessage">
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td>Hurray, you dont have any pending demand!</td>
-                                </tr>
-                            </ng-template>
-                        </p-table>
-                    </div>
-                </p-tabPanel>
-                <p-tabPanel>
-                    <ng-template pTemplate="header">
-                        <div class="flex flex-wrap gap-2">
-                            <span>My Demands as a Stakeholder</span>
-                            <p-badge value="{{allCurrentMyDemandsAsSH.length}}" severity="success" />
-                        </div>
-                    </ng-template>
-                    <div *ngIf="allCurrentMyDemandsAsSH">
-                        <p-table [value]="allCurrentMyDemandsAsSH" styleClass="p-datatable-sm" selectionMode="single"
-                            [(selection)]="selectedDemand" (onRowSelect)="onDemandSelect($event, false, true)"
-                            [tableStyle]="{ 'min-width': '40rem' }" [paginator]="true" [rows]="10">
-                            <ng-template pTemplate="header">
-                                <tr>
-                                    <th pSortableColumn="actionTime">Demand Intake Id <p-sortIcon
-                                            field="demandIntakeId"></p-sortIcon></th>
-                                    <th pSortableColumn="topicId">Title <p-sortIcon field="title"></p-sortIcon>
-                                    </th>
-                                    <th pSortableColumn="actionTime">Request Date <p-sortIcon
-                                            field="requestedDate"></p-sortIcon></th>
-                                    <th pSortableColumn="actionTime">Requested By <p-sortIcon
-                                            field="requestedBy"></p-sortIcon>
-                                    </th>
-                                    <th pSortableColumn="actionTime">Status <p-sortIcon field="status"></p-sortIcon>
-                                    </th>
-                                </tr>
-                            </ng-template>
-                            <ng-template pTemplate="body" let-demand let-ri="rowIndex" let-columns="columns">
-                                <tr [pSelectableRow]="demand">
-                                    <td>{{ demand.introduction['demandIntakeId'] }}</td>
-                                    <td>{{ demand.introduction['title'] }}</td>
-                                    <td>{{ demand.requesterInfo['requestedDate'] | date: 'MMM dd, yyyy'}}</td>
-                                    <td>{{ demand.introduction['requestedBy'] }}</td>
-                                    <td><span [class]="'align-self-center demand-badge status-' 
-                                    + demandIntakeService.getDemandStatusValueInLower(demand.introduction['status'])">
-                                            {{demandIntakeService.getDemandStatusValue(demand.introduction['status'])}}
-                                        </span></td>
-                                </tr>
-                            </ng-template>
-
-                            <ng-template pTemplate="emptymessage">
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td>You dont have any demand as a stakeholder!</td>
-                                </tr>
-                            </ng-template>
-                        </p-table>
-                    </div>
-
-                </p-tabPanel>
-
-            </p-tabView>
-        </div>
+      </div>
     </div>
+    <div class="card" style="border-top-left-radius: inherit;border-top-right-radius: inherit;">
+      <p-tabView [activeIndex]="eventService.selectedDemandTabIndex" (onChange)="onTabChange($event)">
+        <p-tabPanel>
+          <ng-template pTemplate="header">
+            <div class="flex flex-wrap gap-2">
+              <span>My Demands </span>
+              <p-badge value="{{allCurrentMyDemands.length}}" severity="success"/>
+            </div>
+          </ng-template>
+
+          <div *ngIf="allCurrentMyDemands">
+            <p-table [value]="allCurrentMyDemands" styleClass="p-datatable-sm" selectionMode="single"
+                     [(selection)]="selectedDemand" (onRowSelect)="onDemandSelect($event, true, false)"
+                     [tableStyle]="{ 'min-width': '40rem' }" [paginator]="true" [rows]="10">
+              <ng-template pTemplate="header">
+                <tr>
+                  <th pSortableColumn="actionTime">Demand Intake Id
+                    <p-sortIcon
+                      field="demandIntakeId"></p-sortIcon>
+                  </th>
+                  <th pSortableColumn="topicId">Title
+                    <p-sortIcon field="title"></p-sortIcon>
+                  </th>
+                  <th pSortableColumn="actionTime">Request Date
+                    <p-sortIcon
+                      field="requestedDate"></p-sortIcon>
+                  </th>
+                  <th pSortableColumn="actionTime">Requested By
+                    <p-sortIcon
+                      field="requestedBy"></p-sortIcon>
+                  </th>
+                  <th pSortableColumn="actionTime">Status
+                    <p-sortIcon field="status"></p-sortIcon>
+                  </th>
+                </tr>
+              </ng-template>
+              <ng-template pTemplate="body" let-demand let-ri="rowIndex" let-columns="columns">
+                <tr [pSelectableRow]="demand">
+                  <td>{{ demand.introduction['demandIntakeId'] }}</td>
+                  <td>{{ demand.introduction['title'] }}</td>
+                  <td>{{ demand.requesterInfo['requestedDate'] | date: 'MMM dd, yyyy' }}</td>
+                  <td>{{ demand.introduction['requestedBy'] }}</td>
+                  <td>
+                                        <span
+                                          [class]="'align-self-center demand-badge status-'
+                                        + demandIntakeService.getDemandStatusValueInLower(demand.introduction['status'])">
+                                            {{ demandIntakeService.getDemandStatusValue(demand.introduction['status']) }}
+                                        </span>
+                  </td>
+                </tr>
+              </ng-template>
+              <ng-template pTemplate="emptymessage">
+                <tr>
+                  <td></td>
+                  <td></td>
+                  <td>You dont have any demand!</td>
+                </tr>
+              </ng-template>
+            </p-table>
+          </div>
+
+        </p-tabPanel>
+        <p-tabPanel *ngIf="!isRequester">
+          <ng-template pTemplate="header">
+            <div class="flex flex-wrap gap-2">
+              <span>Pending Demands</span>
+              <p-badge value="{{allCurrentPendingDemands.length}}" severity="success"/>
+            </div>
+          </ng-template>
+          <div *ngIf="allCurrentPendingDemands">
+            <p-table [value]="allCurrentPendingDemands" selectionMode="single"
+                     [(selection)]="selectedDemand" (onRowSelect)="onDemandSelect($event, false, false)"
+                     styleClass="p-datatable-sm" [tableStyle]="{ 'min-width': '40rem' }" [paginator]="true"
+                     [rows]="10">
+              <ng-template pTemplate="header">
+                <tr>
+                  <th pSortableColumn="actionTime">Demand Intake Id
+                    <p-sortIcon
+                      field="demandIntakeId"></p-sortIcon>
+                  </th>
+                  <th pSortableColumn="topicId">Title
+                    <p-sortIcon field="title"></p-sortIcon>
+                  </th>
+                  <th pSortableColumn="actionTime">Request Date
+                    <p-sortIcon
+                      field="requestedDate"></p-sortIcon>
+                  </th>
+                  <th pSortableColumn="actionTime">Requested By
+                    <p-sortIcon
+                      field="requestedBy"></p-sortIcon>
+                  </th>
+                  <th pSortableColumn="actionTime">Status
+                    <p-sortIcon field="status"></p-sortIcon>
+                  </th>
+
+                </tr>
+              </ng-template>
+              <ng-template pTemplate="body" let-demand let-ri="rowIndex" let-columns="columns">
+                <tr [pSelectableRow]="demand">
+                  <td>{{ demand.introduction['demandIntakeId'] }}</td>
+                  <td>{{ demand.introduction['title'] }}</td>
+                  <td>{{ demand.requesterInfo['requestedDate'] | date: 'MMM dd, yyyy' }}</td>
+                  <td>{{ demand.introduction['requestedBy'] }}</td>
+                  <td><span [class]="'align-self-center demand-badge status-'
+                                    + demandIntakeService.getDemandStatusValueInLower(demand.introduction['status'])">
+                                            {{ demandIntakeService.getDemandStatusValue(demand.introduction['status']) }}
+                                        </span>
+                  </td>
+                </tr>
+              </ng-template>
+              <ng-template pTemplate="emptymessage">
+                <tr>
+                  <td></td>
+                  <td></td>
+                  <td>Hurray, you dont have any pending demand!</td>
+                </tr>
+              </ng-template>
+            </p-table>
+          </div>
+        </p-tabPanel>
+        <p-tabPanel>
+          <ng-template pTemplate="header">
+            <div class="flex flex-wrap gap-2">
+              <span>My Demands as a Stakeholder</span>
+              <p-badge value="{{allCurrentMyDemandsAsSH.length}}" severity="success"/>
+            </div>
+          </ng-template>
+          <div *ngIf="allCurrentMyDemandsAsSH">
+            <p-table [value]="allCurrentMyDemandsAsSH" styleClass="p-datatable-sm" selectionMode="single"
+                     [(selection)]="selectedDemand" (onRowSelect)="onDemandSelect($event, false, true)"
+                     [tableStyle]="{ 'min-width': '40rem' }" [paginator]="true" [rows]="10">
+              <ng-template pTemplate="header">
+                <tr>
+                  <th pSortableColumn="actionTime">Demand Intake Id
+                    <p-sortIcon
+                      field="demandIntakeId"></p-sortIcon>
+                  </th>
+                  <th pSortableColumn="topicId">Title
+                    <p-sortIcon field="title"></p-sortIcon>
+                  </th>
+                  <th pSortableColumn="actionTime">Request Date
+                    <p-sortIcon
+                      field="requestedDate"></p-sortIcon>
+                  </th>
+                  <th pSortableColumn="actionTime">Requested By
+                    <p-sortIcon
+                      field="requestedBy"></p-sortIcon>
+                  </th>
+                  <th pSortableColumn="actionTime">Status
+                    <p-sortIcon field="status"></p-sortIcon>
+                  </th>
+                </tr>
+              </ng-template>
+              <ng-template pTemplate="body" let-demand let-ri="rowIndex" let-columns="columns">
+                <tr [pSelectableRow]="demand">
+                  <td>{{ demand.introduction['demandIntakeId'] }}</td>
+                  <td>{{ demand.introduction['title'] }}</td>
+                  <td>{{ demand.requesterInfo['requestedDate'] | date: 'MMM dd, yyyy' }}</td>
+                  <td>{{ demand.introduction['requestedBy'] }}</td>
+                  <td><span [class]="'align-self-center demand-badge status-'
+                                    + demandIntakeService.getDemandStatusValueInLower(demand.introduction['status'])">
+                                            {{ demandIntakeService.getDemandStatusValue(demand.introduction['status']) }}
+                                        </span></td>
+                </tr>
+              </ng-template>
+
+              <ng-template pTemplate="emptymessage">
+                <tr>
+                  <td></td>
+                  <td></td>
+                  <td>You dont have any demand as a stakeholder!</td>
+                </tr>
+              </ng-template>
+            </p-table>
+          </div>
+
+        </p-tabPanel>
+
+      </p-tabView>
+    </div>
+  </div>
 </div>

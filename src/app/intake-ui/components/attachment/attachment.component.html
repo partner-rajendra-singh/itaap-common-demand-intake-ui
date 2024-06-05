@@ -4,14 +4,11 @@
 
 <div class="grid">
   <div class="col-12 xs:col-12 sm:col-12 lg:col-12 xl:col-12">
-    <!-- <p-fieldset legend="Attachments"
-        *ngIf="visibleSubmitButton || visibleNextButton || eventService.isStakeholderDemand">
-    </p-fieldset> -->
     <div class="mb-5">
       <h5 class="mb-2">Attachments <label (click)="getAllAttachmentsByDemandId()"><i
         class="p-link pi pi-refresh"></i></label>
       </h5>
-      <p-table styleClass="p-datatable-sm" dataKey="id" [value]="attachmentInfo" editMode="row"
+      <p-table styleClass="p-datatable-sm" dataKey="attachmentId" [value]="attachmentInfo" editMode="row"
                [tableStyle]="{ 'min-width': '50rem' }">
         <ng-template pTemplate="caption" *ngIf="visibleAttachmentUpload">
           <p-fileUpload name="files" [url]="fileUploadUrl" [multiple]="true" [headers]="httpHeaders"
@@ -113,23 +110,27 @@
             <td>{{ attachment.uploaderRole }}</td>
             <td>{{ attachment.uploadedDate | date: 'MMM dd, yyyy hh:mm a' }}</td>
             <td>{{ formatSize(attachment.size) }}</td>
-            <td class="justify-content-between">
-              <button pButton pRipple icon="pi pi-check" pSaveEditableRow
-                      *ngIf="editing && authService.isRequester() && demandIntakeService.demandInformation.introduction.status == 'DRAFT'"
-                      class="p-button-rounded p-button-sm p-button-success mr-2"
-                      (click)="onRowEditSave(attachment)"></button>
-              <button pButton pRipple icon="pi pi-times" pCancelEditableRow *ngIf="editing"
-                      class="p-button-rounded p-button-sm p-button-danger mr-2"
-                      (click)="onRowEditCancel(attachment, ri)"></button>
-              <button pButton pRipple icon="pi pi-pencil" pInitEditableRow *ngIf="!editing"
-                      class="p-button-rounded p-button-sm p-button-text mr-2"
-                      (click)="onRowEditInit(attachment)"></button>
-              <button pButton pRipple icon="pi pi-download" *ngIf="!editing"
-                      class="p-button-rounded p-button-sm p-button-success mr-2"
-                      (click)="downloadAttachment(attachment.attachmentId, attachment.fileName)"></button>
-              <button pButton pRipple icon="pi pi-trash" *ngIf="!editing" [disabled]="isDeleteDisabled(attachment)"
-                      (click)="deleteAttachment(attachment.attachmentId, attachment.fileName)"
-                      class="p-button-rounded p-button-sm p-button-warning"></button>
+            <td class="flex flex-end">
+              <div class="w-full align-text-end">
+                <button pButton pRipple icon="pi pi-pencil" pInitEditableRow
+                        *ngIf="!editing && !isDeleteDisabled(attachment)"
+                        class="p-button-rounded p-button-sm p-button-text mr-2"
+                        (click)="onRowEditInit(attachment)"></button>
+                <button pButton pRipple icon="pi pi-check" pSaveEditableRow
+                        *ngIf="editing"
+                        class="p-button-rounded p-button-sm p-button-success p-button-text mr-2"
+                        (click)="onRowEditSave(attachment)"></button>
+                <button pButton pRipple icon="pi pi-times" pCancelEditableRow *ngIf="editing"
+                        class="p-button-rounded p-button-sm p-button-danger p-button-text mr-2"
+                        (click)="onRowEditCancel(attachment, ri)"></button>
+
+                <button pButton pRipple icon="pi pi-download" *ngIf="!editing"
+                        class="p-button-rounded p-button-sm p-button-success p-button-text mr-2"
+                        (click)="downloadAttachment(attachment.attachmentId, attachment.fileName)"></button>
+                <button pButton pRipple icon="pi pi-trash" *ngIf="!editing" [disabled]="isDeleteDisabled(attachment)"
+                        (click)="deleteAttachment(attachment.attachmentId, attachment.fileName)"
+                        class="p-button-rounded p-button-sm p-button-warning p-button-text"></button>
+              </div>
             </td>
           </tr>
         </ng-template>

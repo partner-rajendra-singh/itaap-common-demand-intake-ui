@@ -57,7 +57,6 @@ label.asterisk-if-mandatory::after {
   color: red;
 }
 
-
 .textOverflow {
   overflow: hidden;
   text-overflow: ellipsis;
@@ -66,6 +65,10 @@ label.asterisk-if-mandatory::after {
 
 .align-text-center {
   text-align: center;
+}
+
+.align-text-end {
+  text-align: end;
 }
 
 img {
@@ -83,7 +86,7 @@ img {
   padding: 2rem;
   margin-bottom: 2rem;
   box-shadow: var(--card-shadow);
-  border-radius: 12px
+  border-radius: 6px
 }
 
 .task-card {
@@ -103,7 +106,7 @@ img {
   padding: 0;
 }
 
-.p-sidebar .p-sidebar-content{
+.p-sidebar .p-sidebar-content {
   padding: 0;
 }
 
