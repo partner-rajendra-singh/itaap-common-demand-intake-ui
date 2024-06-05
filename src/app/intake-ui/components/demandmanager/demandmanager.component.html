@@ -53,14 +53,15 @@
                 <label required class="asterisk-if-mandatory" for="decision">Decision</label>
               </div>
               <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
-                <p-dropdown [options]="decisions" [(ngModel)]="selectedDecision" [disabled]="false"
-                  placeholder="Your decision"></p-dropdown>
+                <!-- <p-dropdown [options]="decisions" [(ngModel)]="item.decision" [disabled]="true"
+                  placeholder="Your decision"></p-dropdown> -->
+                <span>{{item.decision}}</span>
               </div>
               <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
                 <label required class="asterisk-if-mandatory" for="remarks">Remarks</label>
               </div>
               <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
-                <textarea rows="2" cols="75" [(ngModel)]="item.remarks"  [disabled]="true" pInputTextarea></textarea>
+                <textarea rows="2" cols="75" [(ngModel)]="item.remarks" [disabled]="true" pInputTextarea></textarea>
               </div>
             </div>
           </p-tabPanel>
