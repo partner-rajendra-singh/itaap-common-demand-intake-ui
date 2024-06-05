@@ -7,6 +7,7 @@ import { EventService } from '../../services/event.service';
 import { AuthService } from '../../services/auth.service';
 import { SolutionDirection1 } from '../../models/solution-direction1';
 import { SolutionDirection } from '../../models/solution-direction';
+import { DemandStatus } from '../../enums/demand-status';
 
 @Component({
   selector: 'app-solution-direction',
@@ -32,7 +33,12 @@ export class SolutionDirectionComponent {
   }
 
   getSDVisibility(solution: string): boolean {
-    if (this.dmDomainList.includes('solution')) {
+
+    if(this.demandIntakeService.demandInformation.introduction.status === DemandStatus.ACCEPTED || this.demandIntakeService.demandInformation.introduction.status === DemandStatus.DM_REJECTED || this.demandIntakeService.demandInformation.introduction.status === DemandStatus.CCB_REJECTED){
+      return false;
+    }
+    
+    if (this.dmDomainList.includes(solution)) {
       return true;
     }
     

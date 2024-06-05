@@ -8,6 +8,7 @@ import {EventService} from '../../services/event.service';
 import {Attachment} from '../../models/attachment';
 import {HttpHeaders} from '@angular/common/http';
 import {FileUploadEvent} from 'primeng/fileupload';
+import { DemandStatus } from '../../enums/demand-status';
 
 
 @Component({
@@ -25,6 +26,7 @@ export class AttachmentComponent implements OnInit {
   visibleAttachmentUpload!: boolean;
   index: any;
   httpHeaders: HttpHeaders = new HttpHeaders;
+  submitDemandLabel!: string;
 
   constructor(private config: PrimeNGConfig,
               public demandIntakeService: DemandIntakeService, private router: Router,
@@ -33,13 +35,13 @@ export class AttachmentComponent implements OnInit {
 
     if (authService.isRequester()) {
       if (!this.eventService.isNewDemand && (this.eventService.isMyDemand || this.eventService.isStakeholderDemand)
-        && this.demandIntakeService.demandInformation.introduction.status != 'DRAFT'
-        && this.demandIntakeService.demandInformation.introduction.status != 'PENDING_WITH_DM') {
+        && this.demandIntakeService.demandInformation.introduction.status != DemandStatus.DRAFT
+        && this.demandIntakeService.demandInformation.introduction.status != DemandStatus.PENDING_WITH_DM) {
         this.visibleNextButton = true;
         this.visibleAttachmentUpload = false;
       } else {
         this.visibleNextButton = false;
-        if (this.demandIntakeService.getDemandInformation().introduction.status != 'DRAFT' && this.demandIntakeService.getDemandInformation().introduction.status != null) {
+        if (this.demandIntakeService.getDemandInformation().introduction.status != DemandStatus.DRAFT && this.demandIntakeService.getDemandInformation().introduction.status != null) {
           this.visibleAttachmentUpload = false;
           this.visibleSaveButton = false;
           this.visibleSubmitButton = false;
@@ -54,13 +56,13 @@ export class AttachmentComponent implements OnInit {
         if (this.eventService.isNewDemand && (this.eventService.isMyDemand || this.eventService.isStakeholderDemand)) {
           this.visibleNextButton = false;
           this.visibleSubmitButton = true;
-        } else if ((this.eventService.isMyDemand || this.eventService.isStakeholderDemand) && this.demandIntakeService.getDemandInformation().introduction.status != 'DRAFT' && this.demandIntakeService.getDemandInformation().introduction.status != 'PENDING_WITH_DM') {
+        } else if ((this.eventService.isMyDemand || this.eventService.isStakeholderDemand) && this.demandIntakeService.getDemandInformation().introduction.status != DemandStatus.DRAFT && this.demandIntakeService.getDemandInformation().introduction.status != DemandStatus.PENDING_WITH_DM) {
           this.visibleNextButton = true;
           this.visibleSubmitButton = false;
-        } else if ((this.eventService.isMyDemand || this.eventService.isStakeholderDemand) && this.demandIntakeService.getDemandInformation().introduction.status != 'DRAFT') {
+        } else if ((this.eventService.isMyDemand || this.eventService.isStakeholderDemand) && this.demandIntakeService.getDemandInformation().introduction.status != DemandStatus.DRAFT) {
           this.visibleNextButton = false;
           this.visibleSubmitButton = false;
-        } else if (!this.eventService.isMyDemand && !this.eventService.isStakeholderDemand && this.demandIntakeService.getDemandInformation().introduction.status != 'DRAFT') {
+        } else if (!this.eventService.isMyDemand && !this.eventService.isStakeholderDemand && this.demandIntakeService.getDemandInformation().introduction.status != DemandStatus.DRAFT) {
           this.visibleNextButton = true;
           this.visibleSubmitButton = false;
         } else {
@@ -70,8 +72,8 @@ export class AttachmentComponent implements OnInit {
       }
     }
 
-    if (this.demandIntakeService.getDemandInformation().introduction.status == 'ACCEPTED'
-      || this.demandIntakeService.getDemandInformation().introduction.status == 'REJECTED') {
+    if (this.demandIntakeService.getDemandInformation().introduction.status == DemandStatus.ACCEPTED
+      || this.demandIntakeService.getDemandInformation().introduction.status == DemandStatus.DM_REJECTED || this.demandIntakeService.getDemandInformation().introduction.status == DemandStatus.CCB_REJECTED) {
       this.visibleAttachmentUpload = false;
     }
 
@@ -81,6 +83,11 @@ export class AttachmentComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.submitDemandLabel = 'Raise Demand';
+    if(this.demandIntakeService.getDemandInformation().introduction.status === DemandStatus.DM_MODIFICATION || this.demandIntakeService.getDemandInformation().introduction.status === DemandStatus.CCB_MODIFICATION){
+      this.submitDemandLabel = 'Update Demand';
+    }
+
     this.getAllAttachmentsByDemandId();
     console.log("this.demandIntakeService.isNew -> " + this.demandIntakeService.isNew)
     console.log("attachment demand", this.demandIntakeService.getDemandInformation())
@@ -93,7 +100,7 @@ export class AttachmentComponent implements OnInit {
 
   isDeleteDisabled(attachment: Attachment): boolean {
     return attachment.uploadedBy != this.authService.currentUserValue.email
-      && this.demandIntakeService.demandInformation.introduction.status != 'DRAFT';
+      && this.demandIntakeService.demandInformation.introduction.status != DemandStatus.DRAFT;
   }
 
   savePage() {
@@ -134,7 +141,7 @@ export class AttachmentComponent implements OnInit {
       if (this.eventService.isNewDemand) {
         this.router.navigate(['demand-intake/requirement']);
       } else {
-        if (this.eventService.isMyDemand && (this.demandIntakeService.demandInformation.introduction.status != 'DRAFT' && this.demandIntakeService.demandInformation.introduction.status != 'PENDING_WITH_DM')) {
+        if (this.eventService.isMyDemand && (this.demandIntakeService.demandInformation.introduction.status != DemandStatus.DRAFT && this.demandIntakeService.demandInformation.introduction.status != DemandStatus.PENDING_WITH_DM)) {
           this.router.navigate(['demand-intake/checklist/' + this.demandIntakeService.demandInformation.introduction.demandIntakeId]);
         } else {
           this.router.navigate(['demand-intake/requirement/' + this.demandIntakeService.demandInformation.introduction.demandIntakeId]);

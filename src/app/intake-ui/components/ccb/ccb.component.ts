@@ -7,6 +7,7 @@ import { DemandIntakeDecision } from '../../enums/demand-intake-decision';
 import { AuthService } from '../../services/auth.service';
 import { EventService } from '../../services/event.service';
 import { CCB } from '../../models/ccb';
+import { DemandStatus } from '../../enums/demand-status';
 
 @Component({
   selector: 'app-ccb',
@@ -29,7 +30,7 @@ export class CCBComponent implements OnInit {
       this.selectedDecision = this.getStatusValue(this.demandIntakeService.getDemandInformation().ccbInfo.decision);
     }
    
-    if (this.demandIntakeService.getDemandInformation().introduction.status == 'ACCEPTED' || this.demandIntakeService.getDemandInformation().introduction.status == 'REJECTED') {
+    if (this.demandIntakeService.getDemandInformation().introduction.status == DemandStatus.ACCEPTED || this.demandIntakeService.getDemandInformation().introduction.status == DemandStatus.CCB_REJECTED) {
       this.visibleSubmitButton = false;
     }
   }

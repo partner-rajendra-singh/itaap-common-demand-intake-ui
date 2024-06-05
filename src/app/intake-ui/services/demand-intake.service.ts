@@ -14,7 +14,7 @@ import {AllDemands} from '../models/all-demands';
 import {EventService} from './event.service';
 import {Attachment} from '../models/attachment';
 import {Introduction} from '../models/introduction';
-import {DemandStatus} from '../enums/demand-status';
+import {DemandStatusFilter} from '../enums/demand-status-filter';
 import {ArchitectAlignment} from '../models/architect-alignment';
 
 
@@ -423,14 +423,14 @@ export class DemandIntakeService {
   }
 
   getDemandStatusValue(key: string): string {
-    const status = Object.keys(DemandStatus).indexOf(key as unknown as DemandStatus);
-    let s = Object.values(DemandStatus)[status];
+    const status = Object.keys(DemandStatusFilter).indexOf(key as unknown as DemandStatusFilter);
+    let s = Object.values(DemandStatusFilter)[status];
     return s;
   }
 
   getDemandStatusKey(value: string): string {
-    const index = Object.values(DemandStatus).indexOf(value as unknown as DemandStatus);
-    return Object.keys(DemandStatus)[index];
+    const index = Object.values(DemandStatusFilter).indexOf(value as unknown as DemandStatusFilter);
+    return Object.keys(DemandStatusFilter)[index];
   }
 }
 
