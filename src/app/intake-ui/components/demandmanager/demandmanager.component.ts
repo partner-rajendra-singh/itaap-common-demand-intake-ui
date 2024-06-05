@@ -9,6 +9,7 @@ import { EventService } from '../../services/event.service';
 import { DM } from '../../models/dm';
 import { ApproverDomain } from '../../enums/approver-domain';
 import { SolutionDirection1 } from '../../models/solution-direction1';
+import { DemandDecision } from '../../models/demand-decision';
 
 @Component({
   selector: 'app-demandmanager',
@@ -23,21 +24,30 @@ export class DemandManagerComponent implements OnInit {
   demandManagerInfo!: DM;
   domain: string[] = [];
   solutionDirectionList!: SolutionDirection1[];
+  dmActionDone: boolean = false;
 
   constructor(private eventService: EventService, public demandIntakeService: DemandIntakeService, private router: Router, private messageService: MessageService,
     public authService: AuthService) { }
 
   ngOnInit() {
     if (this.authService.isDM()) {
+
+      let dmList = this.demandIntakeService.demandInformation.solutionDirectionInfo.filter(item => item.dmEmail === this.authService.currentUserValue.email && (item.decision === 'APPROVED' || item.decision === 'REJECTED' ));
+      if(dmList.length > 0){
+        this.dmActionDone = true;
+      }
+
       this.visibleNextButton = false;
       this.domain = this.authService.currentUserValue.domain;
       this.demandIntakeService.demandInformation.demandManagerInfo.domain = this.domain;
       if (this.demandIntakeService.getDemandInformation().introduction.status == 'ACCEPTED' || this.demandIntakeService.getDemandInformation().introduction.status == 'REJECTED') {
         this.visibleNextButton = true;
         this.visibleSubmitButton = false;
-      } else if ((!this.eventService.isMyDemand && !this.eventService.isStakeholderDemand) && this.demandIntakeService.demandInformation.introduction.status == 'PENDING_WITH_CCB') {
+      } else if ((!this.eventService.isMyDemand && !this.eventService.isStakeholderDemand) && this.demandIntakeService.demandInformation.introduction.status == 'PENDING_WITH_CCB' && !this.dmActionDone) {
         this.visibleSubmitButton = true;
-      } else if ((!this.eventService.isMyDemand && !this.eventService.isStakeholderDemand) && (this.demandIntakeService.demandInformation.introduction.status == 'REJECTED' || this.demandIntakeService.demandInformation.introduction.status == 'ACCEPTED' || this.demandIntakeService.demandInformation.introduction.status == 'CCB_HOLD')) {
+      } else if ((!this.eventService.isMyDemand && !this.eventService.isStakeholderDemand) && this.demandIntakeService.demandInformation.introduction.status == 'PENDING_WITH_CCB' && this.dmActionDone) {
+        this.visibleSubmitButton = false;
+      }else if ((!this.eventService.isMyDemand && !this.eventService.isStakeholderDemand) && (this.demandIntakeService.demandInformation.introduction.status == 'REJECTED' || this.demandIntakeService.demandInformation.introduction.status == 'ACCEPTED' || this.demandIntakeService.demandInformation.introduction.status == 'CCB_HOLD')) {
         this.visibleNextButton = true;
         this.visibleSubmitButton = false;
       } else if ((this.eventService.isMyDemand || this.eventService.isStakeholderDemand) && this.demandIntakeService.demandInformation.introduction.status == 'PENDING_WITH_CCB') {
@@ -102,16 +112,8 @@ export class DemandManagerComponent implements OnInit {
       this.demandManagerInfo.decision = this.getDecisionKey(this.selectedDecision);
       this.demandIntakeService.getDemandInformation().demandManagerInfo = this.demandManagerInfo;
 
-      this.demandIntakeService.submitDemandWithAttachment()
-        .pipe(first())
-        .subscribe(
-          data => {
-            this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Demand Submitted Successfully!' });
-            this.router.navigate(['view']);
-          },
-          error => {
-            this.messageService.add({ severity: 'error', summary: 'error', detail: 'Demand Failed to Submit!' });
-          });
+      this.router.navigate(['demand-intake/confirm']);
+    
     } else {
       this.messageService.add({ severity: 'warn', summary: 'Error', detail: 'Please fill required fields!' });
     }

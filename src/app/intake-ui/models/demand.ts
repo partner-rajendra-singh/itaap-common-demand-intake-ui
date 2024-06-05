@@ -1,4 +1,5 @@
 
+import { ArchitectAlignment } from "./architect-alignment";
 import { Attachment } from "./attachment";
 import { CCB } from "./ccb";
 import { DM } from "./dm";
@@ -13,6 +14,7 @@ import { RequirementNonFunctional } from "./requirement-non-functional";
 export class Demand {
 
 	introduction: Introduction = new Introduction;
+	architectAlignmentInfo : ArchitectAlignment[] = Array(new ArchitectAlignment);
 	requesterInfo: RequesterInfo = new RequesterInfo;
 	requirementFunctionalInfo: RequirementFunctional = new RequirementFunctional;
 	requirementNonFunctionalInfo: RequirementNonFunctional = new RequirementNonFunctional;

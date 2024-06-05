@@ -6,14 +6,14 @@
       <div class="col-4 xs:col-4 sm:col-4 lg:col-4 xl:col-4">
         <label required for="isDocReferred" class="asterisk-if-mandatory" style="width: 100px">Have you checked
           available solution(s) in <a target="_blank"
-            href="https://share.philips.com/sites/STS020210604094742/Pages/ADLDemandFunnelGrid.aspx">this</a>
+                                      href="https://share.philips.com/sites/STS020210604094742/Pages/ADLDemandFunnelGrid.aspx">this</a>
           catalog?</label>
       </div>
       <div class="col-8 xs:col-8 sm:col-8 lg:col-8 xl:col-8">
         <input type="radio" name="isDocReferred" [(ngModel)]="demandInfo.isDocReferred" [value]="true">
         <label>Yes</label>
         <input type="radio" name="isDocReferred" checked="checked" [(ngModel)]="demandInfo.isDocReferred"
-          [value]="false">
+               [value]="false">
         <label>No</label> &nbsp;
         <label>(If you are able to find an existing solution then no need to raise a new demand.)</label>
       </div>
@@ -26,9 +26,41 @@
         <input type="radio" name="architectAligned" [(ngModel)]="demandInfo.architectAligned" [value]="true">
         <label>Yes</label>
         <input type="radio" name="architectAligned" checked="checked" [(ngModel)]="demandInfo.architectAligned"
-          [value]="false">
+               [value]="false">
         <label>No</label>
       </div>
+
+      <p-fieldset legend="Provide Information about People(s) Aligned with" *ngIf="demandInfo.architectAligned">
+        <div class="grid">
+          <div class="col-10 xs:col-10 sm:col-10 lg:col-10 xl:col-10"></div>
+          <div class="col-2 xs:col-2 sm:col-2 lg:col-2 xl:col-2" style="margin-top: -2rem;">
+            <p-button (click)="addAlignment()">Add</p-button> &nbsp;
+            <p-button (click)="removeAlignment()">Remove</p-button>
+          </div>
+          <div class="col-12 xs:col-12 sm:col-12 lg:col-12 xl:col-12" *ngIf="architectAlignmentInfo.length > 0"
+               style="display: inline-flex;">
+            <div class="col-4 xs:col-4 sm:col-4 lg:col-4 xl:col-4">
+              <label for="email">Email</label>
+            </div>
+            <div class="col-8 xs:col-8 sm:col-8 lg:col-8 xl:col-8">
+              <label for="role">Comment</label>
+            </div>
+          </div>
+
+          <div class="col-12 xs:col-12 sm:col-12 lg:col-12 xl:col-12"
+               style="display: inline-flex;" *ngFor="let item of architectAlignmentInfo">
+            <div class="col-4 xs:col-4 sm:col-4 lg:col-4 xl:col-4">
+              <input pInputText id="email" [(ngModel)]="item.email" type="email"
+                     (blur)="eventService.checkEmailValue(item.email)" size="40"
+                     aria-describedby="program-help"/>
+            </div>
+            <div class="col-8 xs:col-8 sm:col-8 lg:col-8 xl:col-8">
+              <input pInputText id="comment" [(ngModel)]="item.comment" size="100"
+                     aria-describedby="program-help"/>
+            </div>
+          </div>
+        </div>
+      </p-fieldset>
 
     </div>
     <p-fieldset legend="Introduction">
@@ -38,7 +70,7 @@
         </div>
         <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
           <input required id="title" type="text" [(ngModel)]="demandInfo.title" size="70"
-            class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary" />
+                 class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary"/>
         </div>
         <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
           <label required for="description" class="asterisk-if-mandatory" style="width: 100px">Description</label>
@@ -51,12 +83,14 @@
   </div>
 </div>
 
-
 <div class="grid grid-nogutter justify-content-between" *ngIf="visibleSaveButton">
-  <p-button label="Save For Later" (onClick)="savePage()" iconPos="left"></p-button>
-  <p-button label="Next" (onClick)="savePage()" icon="pi pi-angle-right" iconPos="right"></p-button>
+  <p-button label="Save For Later" (onClick)="savePage(true)" iconPos="left"></p-button>
+  <p-button label="Next" (onClick)="validateIntroductionInfoAndSave(false)" icon="pi pi-angle-right"
+            iconPos="right"></p-button>
 </div>
 <div class="grid grid-nogutter justify-content-end" *ngIf="!visibleSaveButton">
-  <p-button label="Next" *ngIf="demandIntakeService.isNew" (onClick)="savePage()" icon="pi pi-angle-right" iconPos="right"></p-button>
-  <p-button label="Next" *ngIf="!demandIntakeService.isNew" (onClick)="nextPage()" icon="pi pi-angle-right" iconPos="right"></p-button>
+  <p-button label="Next" *ngIf="demandIntakeService.isNew" (onClick)="validateIntroductionInfoAndSave(false)"
+            icon="pi pi-angle-right" iconPos="right"></p-button>
+  <p-button label="Next" *ngIf="!demandIntakeService.isNew" (onClick)="nextPage()" icon="pi pi-angle-right"
+            iconPos="right"></p-button>
 </div>

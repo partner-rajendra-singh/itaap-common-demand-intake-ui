@@ -15,7 +15,6 @@ import { PublicClientApplication, InteractionType } from '@azure/msal-browser';
 import { msalConfig } from './intake-ui/services/auth-config';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 
-
 @NgModule({
   declarations: [
     AppComponent,
