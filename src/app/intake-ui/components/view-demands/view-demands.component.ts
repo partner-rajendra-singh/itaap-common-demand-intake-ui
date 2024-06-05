@@ -48,6 +48,7 @@ export class ViewDemandsComponent implements OnInit {
   fetchAllDemands() {
     this.demandIntakeService.getAllDemands().pipe(
       map((response: any) => {
+        console.log('View1 getAllDemands() Response :', response);
         this.allDemands = response;
         this.onCategoryChange();
 

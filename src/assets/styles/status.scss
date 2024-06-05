@@ -44,12 +44,22 @@
     color: #694382;
   }
 
+  &.status-dm_modification {
+    background: #ECCFFF;
+    color: #694382;
+  }
+
   &.status-pending_with_ccb {
     background: #FEEDAF;
     color: #8A5340;
   }
 
   &.status-ccb_hold {
+    background: #FEEDAF;
+    color: #8A5340;
+  }
+
+  &.status-ccb_modification {
     background: #FEEDAF;
     color: #8A5340;
   }
