@@ -1,0 +1,88 @@
+variables:
+  - name: Version.MajorMinor
+    value: 1
+  - name: Version.Revision
+    value: $[counter(variables['Version.MajorMinor'], 0)]
+  - group: AWS_Credentials
+  - group: environment-itaap-dev
+name: $(Version.MajorMinor).$(Version.Revision)
+resources:
+  repositories:
+    - repository: self
+      type: GitHub
+      name: philips-internal/itaap-solutionsit-ppu-ui
+      connection: philips-internal
+      pr:
+        branches:
+          include:
+            - main
+        paths:
+          exclude:
+            - README.md
+            - .gitignore
+            - azure-pipeline.yaml
+            - azure-pipeline-CD.yaml
+      trigger:
+        branches:
+          include:
+            - main
+        paths:
+          exclude:
+            - README.md
+            - .gitignore
+            - azure-pipeline.yaml
+            - azure-pipeline-CD.yaml
+pool:
+  vmImage: ubuntu-latest
+stages:
+  - stage: DEV
+    displayName: DEV
+    jobs:
+      - job: DEV_Deploy
+        displayName: Pushing Build to DEV
+        steps:
+          - task: NodeTool@0
+            inputs:
+              versionSpec: 18.x
+            displayName: Install Node.js
+
+          - script: npm install
+            displayName: npm install
+
+          - script: npm run build:dev
+            displayName: npm build DEV
+
+          - script: |
+              export AWS_ACCESS_KEY_ID=$(AWS_ACCESS_KEY_ID)
+              export AWS_SECRET_ACCESS_KEY=$(AWS_SECRET_ACCESS_KEY)
+              aws s3 --region eu-west-1 cp --recursives $(Build.SourcesDirectory)/build/ s3://itaap--non-prod--common-website/dev/demand-intake-ui/
+            displayName: 'Upload BUILD to AWS S3'
+            condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest')
+                , eq(variables['Build.SourceBranch'], 'refs/heads/main'))
+
+  - stage: TEST
+    displayName: TEST
+    dependsOn: DEV
+    condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'))
+    jobs:
+      - job: TEST_Deploy
+        displayName: Pushing Build to TEST
+        steps:
+          - task: NodeTool@0
+            inputs:
+              versionSpec: 18.x
+            displayName: Install Node.js
+
+          - script: npm install
+            displayName: npm install
+
+          - script: npm run build:test
+            displayName: npm build TEST
+
+          - script: |
+              export AWS_ACCESS_KEY_ID=$(AWS_ACCESS_KEY_ID)
+              export AWS_SECRET_ACCESS_KEY=$(AWS_SECRET_ACCESS_KEY)
+              aws s3 --region eu-west-1 cp --recursives $(Build.SourcesDirectory)/build/ s3://itaap--non-prod--common-website/test/demand-intake-ui/
+            displayName: 'Upload BUILD to AWS S3'
+            condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest')
+                , eq(variables['Build.SourceBranch'], 'refs/heads/main'))
