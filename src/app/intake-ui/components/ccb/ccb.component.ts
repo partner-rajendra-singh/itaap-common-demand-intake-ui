@@ -19,10 +19,16 @@ export class CCBComponent implements OnInit {
   selectedDecision!: string;
   ccbInfo!: CCB;
   visibleSubmitButton: boolean = true;
-
+  submitDemandLabel!: string;
+  
   constructor(public eventService: EventService, public demandIntakeService: DemandIntakeService, private router: Router, private messageService: MessageService, public authService: AuthService) { }
 
   ngOnInit() {
+    this.submitDemandLabel = 'Submit Demand';
+    if(this.demandIntakeService.getDemandInformation().introduction.status === DemandStatus.DM_MODIFICATION || this.demandIntakeService.getDemandInformation().introduction.status === DemandStatus.CCB_MODIFICATION){
+      this.submitDemandLabel = 'Update Demand';
+    }
+
     if(this.demandIntakeService.getDemandInformation().ccbInfo != null){
       this.demandIntakeService.getDemandInformation().ccbInfo.decisionDate = new Date(this.demandIntakeService.getDemandInformation().ccbInfo.decisionDate);
       this.ccbInfo = this.demandIntakeService.getDemandInformation().ccbInfo;

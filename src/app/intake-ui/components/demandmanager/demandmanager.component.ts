@@ -26,12 +26,18 @@ export class DemandManagerComponent implements OnInit {
   domain: string[] = [];
   solutionDirectionList!: SolutionDirection1[];
   dmActionDone: boolean = false;
+  submitDemandLabel!: string;
 
   constructor(private eventService: EventService, public demandIntakeService: DemandIntakeService, private router: Router, private messageService: MessageService,
     public authService: AuthService) { }
 
   ngOnInit() {
     console.log("DemandManagerComponent ", this.demandIntakeService.demandInformation)
+
+    this.submitDemandLabel = 'Submit Demand';
+    if(this.demandIntakeService.getDemandInformation().introduction.status === DemandStatus.DM_MODIFICATION || this.demandIntakeService.getDemandInformation().introduction.status === DemandStatus.CCB_MODIFICATION){
+      this.submitDemandLabel = 'Update Demand';
+    }
 
     if (this.authService.isDM()) {
       let dmList = this.demandIntakeService.demandInformation.solutionDirectionInfo.filter(item => item.dmEmail === this.authService.currentUserValue.email && (item.decision === 'APPROVED' || item.decision === 'REJECTED' ));
