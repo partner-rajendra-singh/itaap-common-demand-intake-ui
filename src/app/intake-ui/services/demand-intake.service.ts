@@ -372,6 +372,17 @@ export class DemandIntakeService {
     return this.http.get<any>(url, headerOptions);
   }
 
+  updateAttachmentsById(fileId: number, desc: string) {
+    let url = this.baseUrl + '/common/demand-intake/attachment/update/' + fileId + '?'
+      + 'description=' + desc;
+    let headerOptions = {
+      headers: new HttpHeaders({
+        'X-Correlation-ID': 'abc',
+      })
+    };
+    return this.http.get<any>(url, headerOptions);
+  }
+
   getRequesterDomain() {
     this.eventService.progressBarEvent.emit(true);
     let url = this.baseUrl + '/common/demand-intake/domain';
