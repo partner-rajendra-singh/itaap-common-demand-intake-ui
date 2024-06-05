@@ -31,6 +31,8 @@ export class DemandManagerComponent implements OnInit {
     public authService: AuthService) { }
 
   ngOnInit() {
+    console.log("DemandManagerComponent ", this.demandIntakeService.demandInformation)
+
     if (this.authService.isDM()) {
       let dmList = this.demandIntakeService.demandInformation.solutionDirectionInfo.filter(item => item.dmEmail === this.authService.currentUserValue.email && (item.decision === 'APPROVED' || item.decision === 'REJECTED' ));
       if(dmList.length > 0){
@@ -119,9 +121,8 @@ export class DemandManagerComponent implements OnInit {
       if (this.demandIntakeService.demandInformation.introduction.status !== DemandStatus.DM_MODIFICATION){
         this.demandManagerInfo.decision = this.getDecisionKey(this.selectedDecision);
       }
-      
-      this.demandIntakeService.getDemandInformation().demandManagerInfo = this.demandManagerInfo;
 
+      this.demandIntakeService.getDemandInformation().demandManagerInfo = this.demandManagerInfo;
       this.router.navigate(['demand-intake/confirm']);
     
     } else {

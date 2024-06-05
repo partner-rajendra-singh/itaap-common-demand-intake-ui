@@ -41,6 +41,7 @@ export class DemandIntakeService {
   }
 
   setDemand(demand: Demand, isNew: boolean) {
+    // console.log("setDemand1: ", demand)
     this.isNew = isNew;
     if (isNew) {
       this.attachments = [];
