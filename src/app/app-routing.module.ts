@@ -21,6 +21,7 @@ import { MainAppLayoutComponent } from './layout/main.app.layout.component';
 import { MsalGuard } from '@azure/msal-angular';
 import { ConfirmComponent } from './intake-ui/components/confirm/confirm.component';
 import { DashboardComponent } from './intake-ui/components/dashboard/dashboard.component';
+import { FieldManagementComponent } from './intake-ui/components/field-management/field-management.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -34,6 +35,7 @@ const routes: Routes = [
       { path: 'chart', component: ChartComponent, canActivate: [AuthGuard] },
       { path: 'dmcrud', component: DMCRUDComponent, canActivate: [AuthGuard] },
       { path: 'ccbcrud', component: CCBCRUDComponent, canActivate: [AuthGuard] },
+      { path: 'fieldmgmt', component: FieldManagementComponent, canActivate: [AuthGuard] },
       { path: 'logout', component: LogoutComponent },
       {
         path: 'demand-intake', component: DemandIntakeComponent, canActivate: [AuthGuard], children: [

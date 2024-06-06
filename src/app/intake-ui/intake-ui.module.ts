@@ -76,6 +76,7 @@ import {ConfirmComponent} from './components/confirm/confirm.component';
 import {DashboardComponent} from './components/dashboard/dashboard.component';
 import {ButtonGroupModule} from "primeng/buttongroup";
 import {TooltipModule} from "primeng/tooltip";
+import { FieldManagementComponent } from './components/field-management/field-management.component';
 
 @NgModule({
   declarations: [
@@ -97,7 +98,8 @@ import {TooltipModule} from "primeng/tooltip";
     CCBCRUDComponent,
     ViewDemandsComponent,
     DashboardComponent,
-    ConfirmComponent
+    ConfirmComponent,
+    FieldManagementComponent
   ],
   imports: [
     CommonModule,

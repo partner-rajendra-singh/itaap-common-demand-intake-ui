@@ -1,0 +1,157 @@
+<p-toast></p-toast>
+<div class="card grid">
+  <div class="col-12 xs:col-12 sm:col-12 lg:col-12 xl:col-12">
+    <div class="grid">
+      <div class="col-12 xs:col-12 sm:col-12 lg:col-12 xl:col-12">
+        <p-fieldset legend="Field Label/Tooltip Management">
+          <div class="grid">
+            <div class="col-12 xs:col-12 sm:col-12 lg:col-12 xl:col-12">
+              <p-table [value]="fields" dataKey="id" [tableStyle]="{ 'min-width': '50rem' }">
+                  <ng-template pTemplate="header">
+                      <tr>
+                          <th style="width:15%">
+                              Key
+                          </th>
+                          <th style="width:35%">
+                              Label
+                          </th>
+                          <th style="width:40%">
+                              Tooltip
+                          </th>
+                          <th style="width:10%">
+                              Is Mandatory
+                          </th>
+                      </tr>
+                  </ng-template>
+                  <ng-template pTemplate="body" let-product let-editing="editing">
+                      <tr>
+                          <td [pEditableColumn]="product.code" pEditableColumnField="code">
+                              <p-cellEditor>
+                                  <ng-template pTemplate="input">
+                                      <input 
+                                          pInputText 
+                                          type="text" 
+                                          [(ngModel)]="product.code" />
+                                  </ng-template>
+                                  <ng-template pTemplate="output">
+                                      {{ product.code }}
+                                  </ng-template>
+                              </p-cellEditor>
+                          </td>
+                          <td [pEditableColumn]="product.name" pEditableColumnField="name">
+                              <p-cellEditor>
+                                  <ng-template pTemplate="input">
+                                      <input 
+                                          pInputText 
+                                          type="text" 
+                                          [(ngModel)]="product.name" 
+                                          required />
+                                  </ng-template>
+                                  <ng-template pTemplate="output">
+                                      {{ product.name }}
+                                  </ng-template>
+                              </p-cellEditor>
+                          </td>
+                          <td [pEditableColumn]="product.inventoryStatus" pEditableColumnField="inventoryStatus">
+                              <p-cellEditor>
+                                  <ng-template pTemplate="input">
+                                      <input 
+                                          pInputText 
+                                          [(ngModel)]="product.inventoryStatus" />
+                                  </ng-template>
+                                  <ng-template pTemplate="output">
+                                      {{ product.inventoryStatus }}
+                                  </ng-template>
+                              </p-cellEditor>
+                          </td>
+                          <td [pEditableColumn]="product.price" pEditableColumnField="price">
+                              <p-cellEditor>
+                                  <ng-template pTemplate="input">
+                                      <input 
+                                          pInputText type="text" 
+                                          [(ngModel)]="product.price" />
+                                  </ng-template>
+                                  <ng-template pTemplate="output">
+                                      {{ product.price | currency: 'USD' }}
+                                  </ng-template>
+                              </p-cellEditor>
+                          </td>
+                      </tr>
+                  </ng-template>
+          </p-table>
+            </div>
+          </div>
+          <div class="col-12 xs:col-12 sm:col-12 lg:col-12 xl:col-12">
+            <p-button label="Add" icon="pi pi-plus" (onClick)="showAddCCBDialog()"></p-button>
+          </div>
+        </p-fieldset>
+      </div>
+    </div>
+  </div>
+</div>
+
+<p-dialog [(visible)]="visibleAddCCBDialog" header="Add Field/Tooltip" modal="true">
+  <div class="flex flex-column px-8 py-5 gap-4" style="border-radius: 12px; background-color: #5c5c77;">
+    <div class="inline-flex flex-column gap-2">
+      <label for="email" class="text-primary-50 font-semibold">Email</label>
+      <input pInputText id="email" [(ngModel)]="adminService.approver.email" type="email" size="40"
+        (blur)="eventService.checkEmailValue(adminService.approver.email)"
+        class="bg-black-alpha-20 border-none p-2 text-primary-50" />
+    </div>
+    <div class="inline-flex flex-column gap-2">
+      <label for="status" class="text-primary-50 font-semibold">Status</label>
+      <div class="flex flex-wrap gap-3">
+        <div class="flex align-items-center">
+          <p-radioButton name="status" value="ACTIVE" [(ngModel)]="adminService.approver.status"></p-radioButton>
+          <label class="text-primary-50 font-semibold">Active</label>
+        </div>
+        <div class="flex align-items-center">
+          <p-radioButton name="status" value="INACTIVE" [(ngModel)]="adminService.approver.status"></p-radioButton>
+          <label class="text-primary-50 font-semibold">Inactive</label>
+        </div>
+      </div>
+    </div>
+
+    <div class="flex align-items-center gap-2">
+      <p-button label="Save" (click)="onSubmit()" type="submit"
+        styleClass="w-full text-primary-50 border-1 border-black-alpha-30 hover:bg-black-alpha-10 !important"
+        class="w-full"></p-button>
+      <p-button label="Cancel" (click)="closeAddCCBDialog()"
+        styleClass="w-full text-primary-50 border-1 border-black-alpha-30 hover:bg-black-alpha-10"
+        class="w-full"></p-button>
+    </div>
+  </div>
+</p-dialog>
+
+<p-dialog [(visible)]="visibleUpdateCCBDialog" header="Update CCB Member" modal="true">
+  <div class="flex flex-column px-8 py-5 gap-4" style="border-radius: 12px; background-color: #5c5c77;">
+    <div class="inline-flex flex-column gap-2">
+      <label for="email" class="text-primary-50 font-semibold">Email</label>
+      <input pInputText id="email" [(ngModel)]="adminService.approver.email" type="email" size="40"
+        (blur)="eventService.checkEmailValue(adminService.approver.email)" [disabled]="true"
+        class="bg-black-alpha-20 border-none p-2 text-primary-50" />
+    </div>
+    <div class="inline-flex flex-column gap-2">
+      <label for="status" class="text-primary-50 font-semibold">Status</label>
+      <div class="flex flex-wrap gap-3">
+        <div class="flex align-items-center">
+          <p-radioButton name="status" value="ACTIVE" [(ngModel)]="adminService.approver.status"></p-radioButton>
+          <label class="text-primary-50 font-semibold">Active</label>
+        </div>
+        <div class="flex align-items-center">
+          <p-radioButton name="status" value="INACTIVE" [(ngModel)]="adminService.approver.status"></p-radioButton>
+          <label class="text-primary-50 font-semibold">Inactive</label>
+        </div>
+      </div>
+    </div>
+
+    <div class="flex align-items-center gap-2">
+      <p-button label="Save" (click)="onUpdate()" type="submit"
+        styleClass="w-full text-primary-50 border-1 border-black-alpha-30 hover:bg-black-alpha-10 !important"
+        class="w-full"></p-button>
+      <p-button label="Cancel" (click)="closeUpdateCCBDialog()"
+        styleClass="w-full text-primary-50 border-1 border-black-alpha-30 hover:bg-black-alpha-10"
+        class="w-full"></p-button>
+    </div>
+  </div>
+</p-dialog>
