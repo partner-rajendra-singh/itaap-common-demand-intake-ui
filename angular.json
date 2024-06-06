@@ -34,6 +34,16 @@
             "scripts": []
           },
           "configurations": {
+            "local": {
+              "buildOptimizer": false,
+              "optimization": false,
+              "vendorChunk": true,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true,
+              "outputPath": "build/local",
+              "baseHref": "./index.html"
+            },
             "dev": {
               "buildOptimizer": false,
               "optimization": false,
@@ -47,6 +57,22 @@
                 {
                   "replace": "src/environments/environment.ts",
                   "with": "src/environments/environment.dev.ts"
+                }
+              ]
+            },
+            "test": {
+              "buildOptimizer": false,
+              "optimization": false,
+              "vendorChunk": true,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true,
+              "outputPath": "build/test",
+              "baseHref": "./index.html",
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.test.ts"
                 }
               ]
             },
@@ -66,15 +92,21 @@
                 }
               ]
             },
-            "local": {
+            "prod": {
               "buildOptimizer": false,
               "optimization": false,
               "vendorChunk": true,
               "extractLicenses": false,
               "sourceMap": true,
               "namedChunks": true,
-              "outputPath": "build/local",
-              "baseHref": "./"
+              "outputPath": "build/prod",
+              "baseHref": "./index.html",
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.prod.ts"
+                }
+              ]
             }
           },
           "defaultConfiguration": "dev"
@@ -82,14 +114,17 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
-            "acc": {
-              "browserTarget": "itaap-demand-intake-ui:build:acc"
+            "local": {
+              "browserTarget": "itaap-demand-intake-ui:build:local"
             },
             "development": {
               "browserTarget": "itaap-demand-intake-ui:build:dev"
             },
-            "local": {
-              "browserTarget": "itaap-demand-intake-ui:build:local"
+            "acc": {
+              "browserTarget": "itaap-demand-intake-ui:build:acc"
+            },
+            "prod": {
+              "browserTarget": "itaap-demand-intake-ui:build:prod"
             }
           },
           "defaultConfiguration": "local"
