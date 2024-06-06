@@ -22,10 +22,23 @@ export class EventService {
   constructor(private messageService: MessageService) {
   }
 
-  checkEmailValue(email: string): boolean {
-    if (email == '') {
+  checkEmailList(email: string): boolean{
+    let list: string[] = email.split('\\s');
+    let result : boolean = true;
+    list.forEach(item => { 
+      if(!this.checkEmailValue(item)){
+        result = false;
+      }
+    });
+    
+    return result;
+  }
+
+  checkEmailValue(email: string) : boolean{
+    if(email == ''){
       return true;
     }
+
     var regex = new RegExp("[A-Za-z0-9._%-]+@philips.com");
     var res = regex.test(email);
     if (!res) {
