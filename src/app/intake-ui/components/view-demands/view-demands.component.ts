@@ -34,7 +34,7 @@ export class ViewDemandsComponent implements OnInit {
   ngOnInit() {
     this.fetchAllDemands();
     this.demandCategories = Object.values(DemandCategory);
-    this.selectedDemandCategory = DemandCategory.ALL;
+    this.selectedDemandCategory = DemandCategory.ACTION_IN_PROGRESS;
     this.demandStatusList = Object.keys(DemandStatusFilter);
     this.selectedDemandStatus = DemandStatusFilter.ALL;
 
@@ -127,7 +127,6 @@ export class ViewDemandsComponent implements OnInit {
         this.allCurrentPendingDemands = actionInProgressList;
         console.log("this.allCurrentPendingDemands 1", this.allCurrentPendingDemands)
       }
-
 
     } else if (this.selectedDemandCategory == DemandCategory.ACTION_COMPLETED) {
       this.allCurrentMyDemands = this.allCurrentMyDemands.filter(item => !myStatusList.find(s => s == item.introduction.status));

@@ -16,7 +16,10 @@ import {Attachment} from '../models/attachment';
 import {Introduction} from '../models/introduction';
 import {DemandStatusFilter} from '../enums/demand-status-filter';
 import {ArchitectAlignment} from '../models/architect-alignment';
+import { DemandIntakeDecision } from '../enums/demand-intake-decision';
+import { ReportResult } from '../models/report-result';
 import {Fields} from "../models/fields";
+import { DemandStatus } from '../enums/demand-status';
 
 
 @Injectable({
@@ -193,7 +196,6 @@ export class DemandIntakeService {
 
     return result;
   }
-
 
   public validateRequest(isSave: boolean): boolean {
     console.log("validateRequest ", isSave)
@@ -423,6 +425,23 @@ export class DemandIntakeService {
         });
   }
 
+  generateReport(request : any){
+    let url = this.baseUrl + '/common/demand-intake/report';
+      let headerOptions = {
+        headers: new HttpHeaders({
+          'X-Correlation-ID': 'abc'
+        })
+      };
+
+      return this.http
+      .post<ReportResult>(url, this.demandInformation, headerOptions)
+      .pipe(map(response => {
+        console.log("generateReport() Response :", response)
+        this.eventService.progressBarEvent.emit(false);
+        return response;
+      }));
+  }
+
   getDemandStatusValueInLower(demandStatus: string) {
     return demandStatus.toLowerCase();
   }
@@ -441,5 +460,19 @@ export class DemandIntakeService {
     const index = Object.values(DemandStatusFilter).indexOf(value as unknown as DemandStatusFilter);
     return Object.keys(DemandStatusFilter)[index];
   }
+
+  getSDVisibility(solution: string): boolean {
+
+    if(this.demandInformation.introduction.status === DemandStatus.ACCEPTED || this.demandInformation.introduction.status === DemandStatus.DM_REJECTED || this.demandInformation.introduction.status === DemandStatus.CCB_REJECTED){
+      return false;
+    }
+    
+    if (this.authService.currentUserValue.domain.includes(solution)) {
+      return true;
+    }
+    
+    return false;
+  }
+
 }
 

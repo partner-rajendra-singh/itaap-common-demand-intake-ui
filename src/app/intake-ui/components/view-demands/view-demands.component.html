@@ -38,6 +38,11 @@
       </div>
     </div>
     <div class="card" style="border-top-left-radius: inherit;border-top-right-radius: inherit;">
+      <div class="grid grid-nogutter justify-content-end">
+        <h5 class="mb-2">Refresh <label (click)="fetchAllDemands()">
+          <i class="p-link pi pi-refresh"></i></label> </h5>
+      </div>
+       
       <p-tabView [activeIndex]="eventService.selectedDemandTabIndex" (onChange)="onTabChange($event)">
         <p-tabPanel>
           <ng-template pTemplate="header">

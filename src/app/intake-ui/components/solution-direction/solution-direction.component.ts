@@ -32,19 +32,6 @@ export class SolutionDirectionComponent {
     this.dmDomainList = this.authService.currentUserValue.domain;
   }
 
-  getSDVisibility(solution: string): boolean {
-
-    if(this.demandIntakeService.demandInformation.introduction.status === DemandStatus.ACCEPTED || this.demandIntakeService.demandInformation.introduction.status === DemandStatus.DM_REJECTED || this.demandIntakeService.demandInformation.introduction.status === DemandStatus.CCB_REJECTED){
-      return false;
-    }
-    
-    if (this.dmDomainList.includes(solution)) {
-      return true;
-    }
-    
-    return false;
-  }
-
   setLocalSD(sd: SolutionDirection1) {
     switch (sd.solution) {
       case 'integration': this.sdInfo.integration = sd.value; break;
