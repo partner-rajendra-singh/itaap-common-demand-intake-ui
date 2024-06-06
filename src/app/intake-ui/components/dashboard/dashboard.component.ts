@@ -1,13 +1,14 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { DemandIntakeService } from '../../services/demand-intake.service';
-import { MessageService } from 'primeng/api';
-import { AuthService } from '../../services/auth.service';
-import { EventService } from '../../services/event.service';
-import { map, catchError, throwError } from 'rxjs';
-import { AllDemands } from '../../models/all-demands';
-import { Demand } from '../../models/demand';
-import { DemandStatus } from '../../enums/demand-status';
+import {Component, OnInit} from '@angular/core';
+import {Router} from '@angular/router';
+import {DemandIntakeService} from '../../services/demand-intake.service';
+import {MessageService} from 'primeng/api';
+import {AuthService} from '../../services/auth.service';
+import {EventService} from '../../services/event.service';
+import {map, catchError, throwError} from 'rxjs';
+import {AllDemands} from '../../models/all-demands';
+import {Demand} from '../../models/demand';
+import {DemandStatus} from '../../enums/demand-status';
+import {FieldsService} from "../../services/fields.service";
 
 @Component({
   selector: 'app-dashboard',
@@ -34,13 +35,16 @@ export class DashboardComponent implements OnInit {
   options: any;
 
   constructor(public eventService: EventService,
-    public demandIntakeService: DemandIntakeService,
-    public router: Router,
-    private messageService: MessageService,
-    public authService: AuthService) { }
+              public demandIntakeService: DemandIntakeService,
+              public fieldsService: FieldsService,
+              public router: Router,
+              private messageService: MessageService,
+              public authService: AuthService) {
+  }
 
   ngOnInit() {
     this.fetchAllDemands();
+    this.fetchAllFields();
     const documentStyle = getComputedStyle(document.documentElement);
     const textColor = documentStyle.getPropertyValue('--text-color');
     const textColorSecondary = documentStyle.getPropertyValue('--text-color-secondary');
@@ -99,6 +103,7 @@ export class DashboardComponent implements OnInit {
       }
     };
   }
+
   populateDemands() {
     this.allDraftDemands = this.allCurrentMyDemands.filter(item => DemandStatus.DRAFT === item.introduction.status)
       .concat(
@@ -121,7 +126,6 @@ export class DashboardComponent implements OnInit {
         this.allCurrentMyDemands.filter(item => DemandStatus.CCB_HOLD === item.introduction.status),
         this.allCurrentPendingDemands.filter(item => DemandStatus.CCB_HOLD === item.introduction.status),
         this.allCurrentMyDemandsAsSH.filter(item => DemandStatus.CCB_HOLD === item.introduction.status),
-
       );
     this.allAcceptedDemands = this.allCurrentMyDemands.filter(item => DemandStatus.ACCEPTED === item.introduction.status)
       .concat(
@@ -133,6 +137,10 @@ export class DashboardComponent implements OnInit {
         this.allCurrentPendingDemands.filter(item => DemandStatus.DM_REJECTED === item.introduction.status || DemandStatus.CCB_REJECTED === item.introduction.status),
         this.allCurrentMyDemandsAsSH.filter(item => DemandStatus.DM_REJECTED === item.introduction.status || DemandStatus.CCB_REJECTED === item.introduction.status)
       );
+  }
+
+  fetchAllFields() {
+    this.fieldsService.getAllFields();
   }
 
   fetchAllDemands() {
@@ -158,6 +166,7 @@ export class DashboardComponent implements OnInit {
       )
       .subscribe();
   }
+
   onDemandSelect(event: any, isMyDemand: boolean, isStakeholderDemand: boolean) {
     console.log("selectedDemand, isMyDemand, isStakeholderDemand", this.selectedDemand, isMyDemand, isStakeholderDemand)
     this.eventService.isMyDemand = isMyDemand;

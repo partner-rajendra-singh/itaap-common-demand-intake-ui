@@ -16,7 +16,7 @@ import {Attachment} from '../models/attachment';
 import {Introduction} from '../models/introduction';
 import {DemandStatusFilter} from '../enums/demand-status-filter';
 import {ArchitectAlignment} from '../models/architect-alignment';
-import { DemandIntakeDecision } from '../enums/demand-intake-decision';
+import {Fields} from "../models/fields";
 
 
 @Injectable({
@@ -28,6 +28,7 @@ export class DemandIntakeService {
   demandInformation = new Demand();
   attachments = Array(5);
   isNew!: boolean
+  dmActionDone: boolean = false;
 
   constructor(public http: HttpClient, private router: Router, private authService: AuthService, private messageService: MessageService,
               private eventService: EventService) {
@@ -40,7 +41,7 @@ export class DemandIntakeService {
   setDemandInformation(demandInformation: any) {
     this.demandInformation = demandInformation;
   }
-  
+
   setDemand(demand: Demand, isNew: boolean) {
     this.isNew = isNew;
     if (isNew) {
