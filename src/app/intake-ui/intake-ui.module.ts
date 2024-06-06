@@ -75,6 +75,7 @@ import { InputOtpModule } from 'primeng/inputotp';
 import { ConfirmComponent } from './components/confirm/confirm.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import {ButtonGroupModule} from "primeng/buttongroup";
+import { ReportComponent } from './components/report/report.component';
 
 @NgModule({
   declarations: [
@@ -96,7 +97,8 @@ import {ButtonGroupModule} from "primeng/buttongroup";
     CCBCRUDComponent,
     ViewDemandsComponent,
     DashboardComponent,
-    ConfirmComponent
+    ConfirmComponent,
+    ReportComponent
     ],
     imports: [
         CommonModule,

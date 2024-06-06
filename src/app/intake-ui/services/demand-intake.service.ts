@@ -17,6 +17,7 @@ import {Introduction} from '../models/introduction';
 import {DemandStatusFilter} from '../enums/demand-status-filter';
 import {ArchitectAlignment} from '../models/architect-alignment';
 import { DemandIntakeDecision } from '../enums/demand-intake-decision';
+import { ReportResult } from '../models/report-result';
 
 
 @Injectable({
@@ -192,7 +193,6 @@ export class DemandIntakeService {
 
     return result;
   }
-
 
   public validateRequest(isSave: boolean): boolean {
     console.log("validateRequest ", isSave)
@@ -420,6 +420,23 @@ export class DemandIntakeService {
             'X-Correlation-ID': 'abc',
           })
         });
+  }
+
+  generateReport(request : any){
+    let url = this.baseUrl + '/common/demand-intake/report';
+      let headerOptions = {
+        headers: new HttpHeaders({
+          'X-Correlation-ID': 'abc'
+        })
+      };
+
+      return this.http
+      .post<ReportResult>(url, this.demandInformation, headerOptions)
+      .pipe(map(response => {
+        console.log("generateReport() Response :", response)
+        this.eventService.progressBarEvent.emit(false);
+        return response;
+      }));
   }
 
   getDemandStatusValueInLower(demandStatus: string) {

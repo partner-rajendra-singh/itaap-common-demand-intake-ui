@@ -128,7 +128,6 @@ export class ViewDemandsComponent implements OnInit {
         console.log("this.allCurrentPendingDemands 1", this.allCurrentPendingDemands)
       }
 
-
     } else if (this.selectedDemandCategory == DemandCategory.ACTION_COMPLETED) {
       this.allCurrentMyDemands = this.allCurrentMyDemands.filter(item => !myStatusList.find(s => s == item.introduction.status));
       this.allCurrentMyDemandsAsSH = this.allCurrentMyDemandsAsSH.filter(item => !myStatusList.find(s => s == item.introduction.status));
