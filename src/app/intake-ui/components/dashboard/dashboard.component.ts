@@ -10,12 +10,14 @@ import {Demand} from '../../models/demand';
 import {DemandStatus} from '../../enums/demand-status';
 import {FieldsService} from "../../services/fields.service";
 
+
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html'
 })
 export class DashboardComponent implements OnInit {
 
+ 
   decisions!: string[];
   selectedDecision!: string;
   ccbInfo!: any;
@@ -31,8 +33,21 @@ export class DashboardComponent implements OnInit {
   allPendingDemands: Demand[] = [];
   allAcceptedDemands: Demand[] = [];
   allRejectedDemands: Demand[] = [];
+
   data: any;
   options: any;
+
+  dataStageITaaP: any;
+  optionsStageITaaP: any;
+  
+  dataStatusITaaP: any;
+  optionsStatusITaaP: any;
+
+  dataQuarterITaaP: any;
+  optionsQuarterITaaP: any;
+
+  dataMonthITaaP: any;
+  optionsMonthITaaP: any;
 
   constructor(public eventService: EventService,
               public demandIntakeService: DemandIntakeService,
@@ -67,6 +82,49 @@ export class DashboardComponent implements OnInit {
       ]
     };
 
+    this.dataStageITaaP = {
+      labels: ['Draft', 'DM', 'CCB'],
+      datasets: [
+          {
+              data: [300, 50, 100],
+              backgroundColor: [documentStyle.getPropertyValue('--blue-500'), documentStyle.getPropertyValue('--yellow-500'), documentStyle.getPropertyValue('--green-500')],
+              hoverBackgroundColor: [documentStyle.getPropertyValue('--blue-400'), documentStyle.getPropertyValue('--yellow-400'), documentStyle.getPropertyValue('--green-400')]
+          }
+      ]
+    };
+    this.optionsStageITaaP = {
+      cutout: '50%',
+      plugins: {
+          legend: {
+              labels: {
+                  color: textColor
+              }
+          }
+      }
+    };
+  
+    this.dataStatusITaaP = {
+      labels: ['Approved', 'Pending', 'Rejected'],
+      datasets: [
+          {
+              data: [100, 200, 50],
+              backgroundColor: [documentStyle.getPropertyValue('--blue-500'), documentStyle.getPropertyValue('--yellow-500'), documentStyle.getPropertyValue('--green-500')],
+              hoverBackgroundColor: [documentStyle.getPropertyValue('--blue-400'), documentStyle.getPropertyValue('--yellow-400'), documentStyle.getPropertyValue('--green-400')]
+          }
+      ]
+    };
+
+    this.optionsStatusITaaP = {
+      cutout: '50%',
+      plugins: {
+          legend: {
+              labels: {
+                  color: textColor
+              }
+          }
+      }
+    };
+
     this.options = {
       maintainAspectRatio: false,
       aspectRatio: 0.8,
@@ -99,9 +157,97 @@ export class DashboardComponent implements OnInit {
             drawBorder: false
           }
         }
-
       }
     };
+
+
+    this.dataMonthITaaP = {
+      labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul','Aug','Sep','Oct','Nov','Dec'],
+      datasets: [
+          {
+              type: 'bar',
+              label: 'Draft',
+              backgroundColor: documentStyle.getPropertyValue('--blue-500'),
+              data: [50, 25, 12, 48, 90, 76, 42, 90, 76, 42, 90, 76]
+          },
+          {
+              type: 'bar',
+              label: 'Pending',
+              backgroundColor: documentStyle.getPropertyValue('--green-500'),
+              data: [21, 84, 24, 75, 37, 65, 34, 24, 75, 37, 65, 34]
+          },
+          {
+              type: 'bar',
+              label: 'Completed',
+              backgroundColor: documentStyle.getPropertyValue('--yellow-500'),
+              data: [41, 52, 24, 74, 23, 21, 32, 24, 75, 37, 65, 34]
+          }
+      ]
+  };
+
+    
+    this.dataQuarterITaaP = {
+        labels: ['Q1', 'Q2', 'Q3', 'Q4'],
+        datasets: [
+            {
+                type: 'bar',
+                label: 'Draft',
+                backgroundColor: documentStyle.getPropertyValue('--blue-500'),
+                data: [ 76, 42, 90, 76]
+            },
+            {
+                type: 'bar',
+                label: 'Pending',
+                backgroundColor: documentStyle.getPropertyValue('--green-500'),
+                data: [ 65, 34, 24, 75]
+            },
+            {
+                type: 'bar',
+                label: 'Completed',
+                backgroundColor: documentStyle.getPropertyValue('--yellow-500'),
+                data: [41, 52, 24, 74]
+            }
+        ]
+    };
+
+    this.optionsQuarterITaaP = {
+        maintainAspectRatio: false,
+        aspectRatio: 0.8,
+        plugins: {
+            tooltip: {
+                mode: 'index',
+                intersect: false
+            },
+            legend: {
+                labels: {
+                    color: textColor
+                }
+            }
+        },
+        scales: {
+            x: {
+                stacked: true,
+                ticks: {
+                    color: textColorSecondary
+                },
+                grid: {
+                    color: surfaceBorder,
+                    drawBorder: false
+                }
+            },
+            y: {
+                stacked: true,
+                ticks: {
+                    color: textColorSecondary
+                },
+                grid: {
+                    color: surfaceBorder,
+                    drawBorder: false
+                }
+            }
+        }
+    };
+
   }
 
   populateDemands() {
