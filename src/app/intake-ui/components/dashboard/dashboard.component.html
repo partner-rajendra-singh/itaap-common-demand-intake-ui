@@ -155,6 +155,7 @@
   </div>
  
   <!-- Integration/ITaaP -->
+  <div class="col-12" style="display: inline-flex;" *ngIf="demandIntakeService.getSDVisibility('integration')">
   <div class="col-12 md:col-6 lg:col-3">
     <div class="card border-none surface-border m-0" style="background: linear-gradient(226.42deg, #c5741f 8.93%, #673a13 110.98%);border-bottom-left-radius: inherit;border-bottom-right-radius: inherit;">
       <div class="flex align-items-center justify-content-between">
@@ -219,8 +220,10 @@
       </p-scrollPanel>
     </div>
   </div>
+</div>
 
   <!-- Data Modelling -->
+  <div class="col-12" style="display: inline-flex;" *ngIf="demandIntakeService.getSDVisibility('dataModelling')">
   <div class="col-12 md:col-6 lg:col-3">
     <div class="card border-none surface-border m-0" style="background: linear-gradient(226.42deg, #c5741f 8.93%, #673a13 110.98%);border-bottom-left-radius: inherit;border-bottom-right-radius: inherit;">
       <div class="flex align-items-center justify-content-between">
@@ -285,8 +288,10 @@
       </p-scrollPanel>
     </div>
   </div>
+</div>
 
   <!-- ADL L1 -->
+  <div class="col-12" style="display: inline-flex;" *ngIf="demandIntakeService.getSDVisibility('adlL1')">
   <div class="col-12 md:col-6 lg:col-3">
     <div class="card border-none surface-border m-0" style="background: linear-gradient(226.42deg, #c5741f 8.93%, #673a13 110.98%);border-bottom-left-radius: inherit;border-bottom-right-radius: inherit;">
       <div class="flex align-items-center justify-content-between">
@@ -351,8 +356,10 @@
       </p-scrollPanel>
     </div>
   </div>
+  </div>
 
   <!-- ADL L2 -->
+  <div class="col-12" style="display: inline-flex;" *ngIf="demandIntakeService.getSDVisibility('adlL2')">
   <div class="col-12 md:col-6 lg:col-3">
     <div class="card border-none surface-border m-0" style="background: linear-gradient(226.42deg, #c5741f 8.93%, #673a13 110.98%);border-bottom-left-radius: inherit;border-bottom-right-radius: inherit;">
       <div class="flex align-items-center justify-content-between">
@@ -417,8 +424,10 @@
       </p-scrollPanel>
     </div>
   </div>
+  </div>
 
   <!-- Gold -->
+  <div class="col-12" style="display: inline-flex;" *ngIf="demandIntakeService.getSDVisibility('gold')">
   <div class="col-12 md:col-6 lg:col-3">
     <div class="card border-none surface-border m-0" style="background: linear-gradient(226.42deg, #c5741f 8.93%, #673a13 110.98%);border-bottom-left-radius: inherit;border-bottom-right-radius: inherit;">
       <div class="flex align-items-center justify-content-between">
@@ -483,8 +492,10 @@
       </p-scrollPanel>
     </div>
   </div>
+  </div>
 
   <!-- MDM -->
+  <div class="col-12" style="display: inline-flex;" *ngIf="demandIntakeService.getSDVisibility('mdm')">
   <div class="col-12 md:col-6 lg:col-3">
     <div class="card border-none surface-border m-0" style="background: linear-gradient(226.42deg, #c5741f 8.93%, #673a13 110.98%);border-bottom-left-radius: inherit;border-bottom-right-radius: inherit;">
       <div class="flex align-items-center justify-content-between">
@@ -549,8 +560,10 @@
       </p-scrollPanel>
     </div>
   </div>
+  </div>
 
   <!-- I&A -->
+  <div class="col-12" style="display: inline-flex;" *ngIf="demandIntakeService.getSDVisibility('ia')">
   <div class="col-12 md:col-6 lg:col-3">
     <div class="card border-none surface-border m-0" style="background: linear-gradient(226.42deg, #c5741f 8.93%, #673a13 110.98%);border-bottom-left-radius: inherit;border-bottom-right-radius: inherit;">
       <div class="flex align-items-center justify-content-between">
@@ -615,8 +628,10 @@
       </p-scrollPanel>
     </div>
   </div>
+  </div>
 
   <!-- Data Quality -->
+  <div class="col-12" style="display: inline-flex;" *ngIf="demandIntakeService.getSDVisibility('dataQuality')">
   <div class="col-12 md:col-6 lg:col-3">
     <div class="card border-none surface-border m-0" style="background: linear-gradient(226.42deg, #c5741f 8.93%, #673a13 110.98%);border-bottom-left-radius: inherit;border-bottom-right-radius: inherit;">
       <div class="flex align-items-center justify-content-between">
@@ -681,8 +696,10 @@
       </p-scrollPanel>
     </div>
   </div>
+  </div>
 
   <!-- Informatica PWC -->
+  <div class="col-12" style="display: inline-flex;" *ngIf="demandIntakeService.getSDVisibility('informatica')">
   <div class="col-12 md:col-6 lg:col-3">
     <div class="card border-none surface-border m-0" style="background: linear-gradient(226.42deg, #c5741f 8.93%, #673a13 110.98%);border-bottom-left-radius: inherit;border-bottom-right-radius: inherit;">
       <div class="flex align-items-center justify-content-between">
@@ -747,8 +764,10 @@
       </p-scrollPanel>
     </div>
   </div>
+  </div>
 
   <!-- Azure Synapse DWH -->
+  <div class="col-12" style="display: inline-flex;" *ngIf="demandIntakeService.getSDVisibility('azureSynapse')">
 <div class="col-12 md:col-6 lg:col-3">
     <div class="card border-none surface-border m-0" style="background: linear-gradient(226.42deg, #c5741f 8.93%, #673a13 110.98%);border-bottom-left-radius: inherit;border-bottom-right-radius: inherit;">
       <div class="flex align-items-center justify-content-between">
@@ -812,6 +831,7 @@
         </div>
       </p-scrollPanel>
     </div>
+  </div>
   </div>
 
 </div>

@@ -8,6 +8,7 @@ import { MessageService } from 'primeng/api';
 import { EventService } from './event.service';
 import { Approver } from '../models/approver';
 import { throwError } from 'rxjs';
+import { FieldMgmt } from '../models/field-label-tooltip';
 
 @Injectable({
   providedIn: 'root'
@@ -36,6 +37,38 @@ export class AdminService {
   getAllCCB() {
     this.eventService.progressBarEvent.emit(true);
     let url = this.baseUrl + '/common/demand-intake/ccb';
+    let headerOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'X-Correlation-ID': 'abc'
+      })
+    };
+
+    return this.http.get<any>(url, headerOptions);
+  }
+
+  updateField(field: FieldMgmt) {
+    this.eventService.progressBarEvent.emit(true);
+    let url = this.baseUrl + '/common/demand-intake/field';
+    let headerOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'X-Correlation-ID': 'abc'
+      })
+    };
+
+    return this.http.post<any>(url, field, headerOptions)
+      .pipe(map(response => {
+        console.log("updateField() Response :", response)
+        this.eventService.progressBarEvent.emit(false);
+        return response;
+      }));
+
+  }
+
+  getAllFields() {
+    this.eventService.progressBarEvent.emit(true);
+    let url = this.baseUrl + '/common/demand-intake/field';
     let headerOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
