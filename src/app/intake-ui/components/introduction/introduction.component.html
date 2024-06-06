@@ -66,21 +66,21 @@
     <p-fieldset legend="Introduction">
       <div class="grid">
         <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-          <label required for="title" class="asterisk-if-mandatory"
-                 style="width: 100px">{{ fieldsService.getFieldLabel('INTRODUCTION_DEMAND_TITLE') }}</label>
+          <label for="title" class="asterisk-if-mandatory"
+                 style="width: 100px">{{ fieldsService.getLabel('INTRODUCTION_DEMAND_TITLE') }}</label>
         </div>
         <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
           <input required id="title" type="text" [(ngModel)]="demandInfo.title" size="70"
-                 [pTooltip]="fieldsService.getFieldToolTip('INTRODUCTION_DEMAND_TITLE')" [escape]="false"
+                 [pTooltip]="fieldsService.getToolTip('INTRODUCTION_DEMAND_TITLE')" [escape]="false"
                  class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary"/>
         </div>
         <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-          <label required for="description" class="asterisk-if-mandatory"
-                 style="width: 100px">{{ fieldsService.getFieldLabel('INTRODUCTION_DEMAND_DESC') }}</label>
+          <label for="description" class="asterisk-if-mandatory"
+                 style="width: 100px">{{ fieldsService.getLabel('INTRODUCTION_DEMAND_DESC') }}</label>
         </div>
         <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
           <textarea id="description" rows="3" cols="78" [(ngModel)]="demandInfo.description" pInputTextarea
-                    [pTooltip]="fieldsService.getFormattedMessage(fieldsService.getFieldToolTip('INTRODUCTION_DEMAND_DESC'), demandInfo.title)"
+                    [pTooltip]="fieldsService.getFormattedMessage(fieldsService.getToolTip('INTRODUCTION_DEMAND_DESC'), demandInfo.title)"
                     [escape]="false"></textarea>
         </div>
       </div>

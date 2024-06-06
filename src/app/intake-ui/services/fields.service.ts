@@ -42,11 +42,11 @@ export class FieldsService {
       .subscribe();
   }
 
-  getFieldLabel(key: string): string {
+  getLabel(key: string): string {
     return <string>this.allFields.get(key)?.label;
   }
 
-  getFieldToolTip(key: string): string {
+  getToolTip(key: string): string {
     return <string>this.allFields.get(key)?.tooltip;
   }
 

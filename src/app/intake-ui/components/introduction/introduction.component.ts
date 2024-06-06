@@ -7,7 +7,7 @@ import {first} from 'rxjs';
 import {AuthService} from '../../services/auth.service';
 import {EventService} from '../../services/event.service';
 import {ArchitectAlignment} from '../../models/architect-alignment';
-import { DemandStatus } from '../../enums/demand-status';
+import {DemandStatus} from '../../enums/demand-status';
 import {FieldsService} from "../../services/fields.service";
 
 @Component({
