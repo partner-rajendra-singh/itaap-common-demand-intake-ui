@@ -18,17 +18,13 @@
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
             "outputPath": "build",
+            "baseHref": "./index.html",
             "index": "src/index.html",
             "main": "src/main.ts",
-            "polyfills": [
-              "zone.js"
-            ],
+            "polyfills": ["zone.js"],
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
-            "assets": [
-              "src/favicon.ico",
-              "src/assets"
-            ],
+            "assets": ["src/favicon.ico", "src/assets"],
             "styles": [
               "src/styles.scss",
               "node_modules/primeflex/primeflex.scss",
@@ -38,14 +34,6 @@
             "scripts": []
           },
           "configurations": {
-            "development": {
-              "buildOptimizer": false,
-              "optimization": false,
-              "vendorChunk": true,
-              "extractLicenses": false,
-              "sourceMap": true,
-              "namedChunks": true
-            },
             "dev": {
               "buildOptimizer": false,
               "optimization": false,
@@ -54,7 +42,7 @@
               "sourceMap": true,
               "namedChunks": true,
               "outputPath": "build/dev",
-              "baseHref": "/dev/demand-intake-ui/",
+              "baseHref": "./index.html",
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
@@ -70,7 +58,7 @@
               "sourceMap": true,
               "namedChunks": true,
               "outputPath": "build/acc",
-              "baseHref": "/acc/demand-intake-ui/",
+              "baseHref": "./index.html",
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
@@ -85,7 +73,8 @@
               "extractLicenses": false,
               "sourceMap": true,
               "namedChunks": true,
-              "outputPath": "build/local"
+              "outputPath": "build/local",
+              "baseHref": "./"
             }
           },
           "defaultConfiguration": "dev"
@@ -114,19 +103,11 @@
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "polyfills": [
-              "zone.js",
-              "zone.js/testing"
-            ],
+            "polyfills": ["zone.js", "zone.js/testing"],
             "tsConfig": "tsconfig.spec.json",
             "inlineStyleLanguage": "scss",
-            "assets": [
-              "src/favicon.ico",
-              "src/assets"
-            ],
-            "styles": [
-              "src/styles.scss"
-            ],
+            "assets": ["src/favicon.ico", "src/assets"],
+            "styles": ["src/styles.scss"],
             "scripts": []
           }
         }

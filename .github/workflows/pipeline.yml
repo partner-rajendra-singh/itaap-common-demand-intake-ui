@@ -60,7 +60,7 @@ jobs:
 
       - name: Deploy app build to S3 bucket
         if: github.ref == 'refs/heads/main' && steps.build.outcome == 'success' && github.event_name == 'push'
-        run: aws s3 cp --recursive ./build/ s3://$S3_BUCKET_NAME/dev/demand-intake-ui/
+        run: aws s3 cp --recursive ./build/dev/ s3://$S3_BUCKET_NAME/dev/demand-intake-ui/
 
   test:
     if: github.ref == 'refs/heads/main'
@@ -101,7 +101,7 @@ jobs:
 
       - name: Deploy app build to S3 bucket
         if: github.ref == 'refs/heads/main' && steps.build.outcome == 'success' && github.event_name == 'push'
-        run: aws s3 cp --recursive ./build/ s3://$S3_BUCKET_NAME/test/demand-intake-ui/
+        run: aws s3 cp --recursive ./build/test/ s3://$S3_BUCKET_NAME/test/demand-intake-ui/
         
   acc:
     if: github.ref == 'refs/heads/main'
@@ -142,7 +142,7 @@ jobs:
 
       - name: Deploy app build to S3 bucket
         if: github.ref == 'refs/heads/main' && steps.build.outcome == 'success' && github.event_name == 'push'
-        run: aws s3 cp --recursive ./build/ s3://$S3_BUCKET_NAME/demand-intake-ui/
+        run: aws s3 cp --recursive ./build/acc/ s3://$S3_BUCKET_NAME/demand-intake-ui/
   
   prod:
     if: github.ref == 'refs/heads/main'
@@ -183,4 +183,4 @@ jobs:
 
       - name: Deploy app build to S3 bucket
         if: github.ref == 'refs/heads/main' && steps.build.outcome == 'success' && github.event_name == 'push'
-        run: aws s3 cp --recursive ./build/ s3://$S3_BUCKET_NAME/demand-intake-ui/
+        run: aws s3 cp --recursive ./build/prod/ s3://$S3_BUCKET_NAME/demand-intake-ui/
