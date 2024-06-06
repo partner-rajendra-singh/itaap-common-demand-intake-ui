@@ -52,7 +52,7 @@ export class AppMenuComponent implements OnInit {
         items: [
           { label: 'DM List', icon: 'pi pi-fw pi-align-left', routerLink: ["/dmcrud"] },
           { label: 'CCB List', icon: 'pi pi-fw pi-align-right', routerLink: ["/ccbcrud"] },
-          { label: 'Field Mgmt', icon: 'pi pi-fw pi-align-right', routerLink: ["/fieldmgmt"] }
+          { label: 'Field Management', icon: 'pi pi-fw pi-align-right', routerLink: ["/fieldmgmt"] }
         ],
         expanded: true,
         visible: this.authService.isAdmin()

@@ -17,15 +17,23 @@ export class FieldManagementComponent implements OnInit {
   visibleAddCCBDialog!: boolean;
   visibleUpdateCCBDialog!: boolean;
 
+  clonedField: { [key: string]: FieldMgmt } = {};
+
+
   constructor(public demandIntakeService: DemandIntakeService, private messageService: MessageService, public eventService: EventService, public adminService: AdminService) { }
 
   ngOnInit() {
     this.adminService.approver = new Approver;
-    this.adminService.getAllCCB().pipe(
+    this.loadTableData();
+
+  }
+
+  loadTableData(){
+    this.adminService.getAllFields().pipe(
       map((response: any) => {
         this.fields = response;
 
-        console.log('getAllCCB() Response :', this.fields);
+        console.log('getAllFields() Response :', this.fields);
         this.eventService.progressBarEvent.emit(false);
       }),
       catchError((error: any) => {
@@ -34,7 +42,30 @@ export class FieldManagementComponent implements OnInit {
         return throwError(error);
       })
     ).subscribe();
+  }
 
+  onRowEditInit(field: FieldMgmt) {
+    this.clonedField[field.key as string] = { ...field };
+  }
+
+  onRowEditCancel(field: FieldMgmt, index: number) {
+    this.fields[index] = this.clonedField[field.key as string];
+    delete this.clonedField[field.key as string];
+  }
+  
+  onRowEditSave(field: FieldMgmt) {
+    this.adminService.updateField(field).pipe(
+      map((response: any) => {
+        console.log('updateField() Response :', response);
+        this.loadTableData();
+        this.eventService.progressBarEvent.emit(false);
+      }),
+      catchError((error: any) => {
+        console.log('Error', error);
+        this.eventService.progressBarEvent.emit(false);
+        return throwError(error);
+      })
+    ).subscribe();
   }
 
   showAddCCBDialog() {
