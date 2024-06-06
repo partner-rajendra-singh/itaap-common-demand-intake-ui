@@ -7,7 +7,8 @@ import {first} from 'rxjs';
 import {AuthService} from '../../services/auth.service';
 import {EventService} from '../../services/event.service';
 import {ArchitectAlignment} from '../../models/architect-alignment';
-import { DemandStatus } from '../../enums/demand-status';
+import {DemandStatus} from '../../enums/demand-status';
+import {FieldsService} from "../../services/fields.service";
 
 @Component({
   selector: 'app-introduction',
@@ -19,7 +20,10 @@ export class IntroductionComponent implements OnInit {
   visibleSaveButton!: boolean;
   architectAlignmentInfo!: ArchitectAlignment[];
 
-  constructor(public eventService: EventService, private authService: AuthService, public demandIntakeService: DemandIntakeService, private router: Router, private messageService: MessageService) {
+  constructor(public eventService: EventService,
+              private authService: AuthService,
+              public fieldsService: FieldsService,
+              public demandIntakeService: DemandIntakeService, private router: Router, private messageService: MessageService) {
     if (authService.isRequester()) {
       if (this.demandIntakeService.getDemandInformation().introduction.status != DemandStatus.DRAFT && this.demandIntakeService.getDemandInformation().introduction.status != null) {
         this.visibleSaveButton = false;

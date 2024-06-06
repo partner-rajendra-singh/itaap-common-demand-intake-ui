@@ -1,13 +1,15 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { DemandIntakeService } from '../../services/demand-intake.service';
-import { MessageService } from 'primeng/api';
-import { AuthService } from '../../services/auth.service';
-import { EventService } from '../../services/event.service';
-import { map, catchError, throwError } from 'rxjs';
-import { AllDemands } from '../../models/all-demands';
-import { Demand } from '../../models/demand';
-import { DemandStatus } from '../../enums/demand-status';
+import {Component, OnInit} from '@angular/core';
+import {Router} from '@angular/router';
+import {DemandIntakeService} from '../../services/demand-intake.service';
+import {MessageService} from 'primeng/api';
+import {AuthService} from '../../services/auth.service';
+import {EventService} from '../../services/event.service';
+import {map, catchError, throwError} from 'rxjs';
+import {AllDemands} from '../../models/all-demands';
+import {Demand} from '../../models/demand';
+import {DemandStatus} from '../../enums/demand-status';
+import {FieldsService} from "../../services/fields.service";
+
 
 @Component({
   selector: 'app-dashboard',
@@ -15,6 +17,7 @@ import { DemandStatus } from '../../enums/demand-status';
 })
 export class DashboardComponent implements OnInit {
 
+ 
   decisions!: string[];
   selectedDecision!: string;
   ccbInfo!: any;
@@ -30,17 +33,33 @@ export class DashboardComponent implements OnInit {
   allPendingDemands: Demand[] = [];
   allAcceptedDemands: Demand[] = [];
   allRejectedDemands: Demand[] = [];
+
   data: any;
   options: any;
 
+  dataStageITaaP: any;
+  optionsStageITaaP: any;
+  
+  dataStatusITaaP: any;
+  optionsStatusITaaP: any;
+
+  dataQuarterITaaP: any;
+  optionsQuarterITaaP: any;
+
+  dataMonthITaaP: any;
+  optionsMonthITaaP: any;
+
   constructor(public eventService: EventService,
-    public demandIntakeService: DemandIntakeService,
-    public router: Router,
-    private messageService: MessageService,
-    public authService: AuthService) { }
+              public demandIntakeService: DemandIntakeService,
+              public fieldsService: FieldsService,
+              public router: Router,
+              private messageService: MessageService,
+              public authService: AuthService) {
+  }
 
   ngOnInit() {
     this.fetchAllDemands();
+    this.fetchAllFields();
     const documentStyle = getComputedStyle(document.documentElement);
     const textColor = documentStyle.getPropertyValue('--text-color');
     const textColorSecondary = documentStyle.getPropertyValue('--text-color-secondary');
@@ -61,6 +80,49 @@ export class DashboardComponent implements OnInit {
           data: [28, 48, 40, 19, 86, 27, 90]
         }
       ]
+    };
+
+    this.dataStageITaaP = {
+      labels: ['Draft', 'DM', 'CCB'],
+      datasets: [
+          {
+              data: [300, 50, 100],
+              backgroundColor: [documentStyle.getPropertyValue('--blue-500'), documentStyle.getPropertyValue('--yellow-500'), documentStyle.getPropertyValue('--green-500')],
+              hoverBackgroundColor: [documentStyle.getPropertyValue('--blue-400'), documentStyle.getPropertyValue('--yellow-400'), documentStyle.getPropertyValue('--green-400')]
+          }
+      ]
+    };
+    this.optionsStageITaaP = {
+      cutout: '50%',
+      plugins: {
+          legend: {
+              labels: {
+                  color: textColor
+              }
+          }
+      }
+    };
+  
+    this.dataStatusITaaP = {
+      labels: ['Approved', 'Pending', 'Rejected'],
+      datasets: [
+          {
+              data: [100, 200, 50],
+              backgroundColor: [documentStyle.getPropertyValue('--blue-500'), documentStyle.getPropertyValue('--yellow-500'), documentStyle.getPropertyValue('--green-500')],
+              hoverBackgroundColor: [documentStyle.getPropertyValue('--blue-400'), documentStyle.getPropertyValue('--yellow-400'), documentStyle.getPropertyValue('--green-400')]
+          }
+      ]
+    };
+
+    this.optionsStatusITaaP = {
+      cutout: '50%',
+      plugins: {
+          legend: {
+              labels: {
+                  color: textColor
+              }
+          }
+      }
     };
 
     this.options = {
@@ -95,10 +157,99 @@ export class DashboardComponent implements OnInit {
             drawBorder: false
           }
         }
-
       }
     };
+
+
+    this.dataMonthITaaP = {
+      labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul','Aug','Sep','Oct','Nov','Dec'],
+      datasets: [
+          {
+              type: 'bar',
+              label: 'Draft',
+              backgroundColor: documentStyle.getPropertyValue('--blue-500'),
+              data: [50, 25, 12, 48, 90, 76, 42, 90, 76, 42, 90, 76]
+          },
+          {
+              type: 'bar',
+              label: 'Pending',
+              backgroundColor: documentStyle.getPropertyValue('--green-500'),
+              data: [21, 84, 24, 75, 37, 65, 34, 24, 75, 37, 65, 34]
+          },
+          {
+              type: 'bar',
+              label: 'Completed',
+              backgroundColor: documentStyle.getPropertyValue('--yellow-500'),
+              data: [41, 52, 24, 74, 23, 21, 32, 24, 75, 37, 65, 34]
+          }
+      ]
+  };
+
+    
+    this.dataQuarterITaaP = {
+        labels: ['Q1', 'Q2', 'Q3', 'Q4'],
+        datasets: [
+            {
+                type: 'bar',
+                label: 'Draft',
+                backgroundColor: documentStyle.getPropertyValue('--blue-500'),
+                data: [ 76, 42, 90, 76]
+            },
+            {
+                type: 'bar',
+                label: 'Pending',
+                backgroundColor: documentStyle.getPropertyValue('--green-500'),
+                data: [ 65, 34, 24, 75]
+            },
+            {
+                type: 'bar',
+                label: 'Completed',
+                backgroundColor: documentStyle.getPropertyValue('--yellow-500'),
+                data: [41, 52, 24, 74]
+            }
+        ]
+    };
+
+    this.optionsQuarterITaaP = {
+        maintainAspectRatio: false,
+        aspectRatio: 0.8,
+        plugins: {
+            tooltip: {
+                mode: 'index',
+                intersect: false
+            },
+            legend: {
+                labels: {
+                    color: textColor
+                }
+            }
+        },
+        scales: {
+            x: {
+                stacked: true,
+                ticks: {
+                    color: textColorSecondary
+                },
+                grid: {
+                    color: surfaceBorder,
+                    drawBorder: false
+                }
+            },
+            y: {
+                stacked: true,
+                ticks: {
+                    color: textColorSecondary
+                },
+                grid: {
+                    color: surfaceBorder,
+                    drawBorder: false
+                }
+            }
+        }
+    };
+
   }
+
   populateDemands() {
     this.allDraftDemands = this.allCurrentMyDemands.filter(item => DemandStatus.DRAFT === item.introduction.status)
       .concat(
@@ -121,7 +272,6 @@ export class DashboardComponent implements OnInit {
         this.allCurrentMyDemands.filter(item => DemandStatus.CCB_HOLD === item.introduction.status),
         this.allCurrentPendingDemands.filter(item => DemandStatus.CCB_HOLD === item.introduction.status),
         this.allCurrentMyDemandsAsSH.filter(item => DemandStatus.CCB_HOLD === item.introduction.status),
-
       );
     this.allAcceptedDemands = this.allCurrentMyDemands.filter(item => DemandStatus.ACCEPTED === item.introduction.status)
       .concat(
@@ -133,6 +283,10 @@ export class DashboardComponent implements OnInit {
         this.allCurrentPendingDemands.filter(item => DemandStatus.DM_REJECTED === item.introduction.status || DemandStatus.CCB_REJECTED === item.introduction.status),
         this.allCurrentMyDemandsAsSH.filter(item => DemandStatus.DM_REJECTED === item.introduction.status || DemandStatus.CCB_REJECTED === item.introduction.status)
       );
+  }
+
+  fetchAllFields() {
+    this.fieldsService.getAllFields();
   }
 
   fetchAllDemands() {
@@ -158,6 +312,7 @@ export class DashboardComponent implements OnInit {
       )
       .subscribe();
   }
+
   onDemandSelect(event: any, isMyDemand: boolean, isStakeholderDemand: boolean) {
     console.log("selectedDemand, isMyDemand, isStakeholderDemand", this.selectedDemand, isMyDemand, isStakeholderDemand)
     this.eventService.isMyDemand = isMyDemand;

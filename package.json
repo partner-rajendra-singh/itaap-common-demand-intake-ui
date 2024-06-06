@@ -2,9 +2,11 @@
   "name": "itaap-demand-intake-ui",
   "version": "0.0.0",
   "scripts": {
+    "build:local": "echo 'Building local environment' && ng build --configuration=local",
     "build:dev": "echo 'Building dev environment' && ng build --configuration=dev",
-    "build:acc": "echo 'Building acc environment' && ng build --configuration=acc",
-    "build": "npm run build:dev && npm run build:acc",
+    "build:test": "echo 'Building Test environment' && ng build --configuration=test",
+    "build:acc": "echo 'Building Acceptance environment' && ng build --configuration=acc",
+    "build:prod": "echo 'Building Production environment' && ng build --configuration=prod",
     "ng": "ng",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"

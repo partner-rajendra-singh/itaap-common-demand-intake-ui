@@ -1,16 +1,16 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { DemandIntakeService } from '../../services/demand-intake.service';
-import { MessageService } from 'primeng/api';
-import { AuthService } from '../../services/auth.service';
-import { first } from 'rxjs/operators';
-import { DemandIntakeDecision } from '../../enums/demand-intake-decision';
-import { EventService } from '../../services/event.service';
-import { DM } from '../../models/dm';
-import { ApproverDomain } from '../../enums/approver-domain';
-import { SolutionDirection1 } from '../../models/solution-direction1';
-import { DemandDecision } from '../../models/demand-decision';
-import { DemandStatus } from '../../enums/demand-status';
+import {Component, OnInit} from '@angular/core';
+import {Router} from '@angular/router';
+import {DemandIntakeService} from '../../services/demand-intake.service';
+import {MessageService} from 'primeng/api';
+import {AuthService} from '../../services/auth.service';
+import {first} from 'rxjs/operators';
+import {DemandIntakeDecision} from '../../enums/demand-intake-decision';
+import {EventService} from '../../services/event.service';
+import {DM} from '../../models/dm';
+import {ApproverDomain} from '../../enums/approver-domain';
+import {SolutionDirection1} from '../../models/solution-direction1';
+import {DemandDecision} from '../../models/demand-decision';
+import {DemandStatus} from '../../enums/demand-status';
 
 @Component({
   selector: 'app-demandmanager',
@@ -29,20 +29,22 @@ export class DemandManagerComponent implements OnInit {
   submitDemandLabel!: string;
 
   constructor(private eventService: EventService, public demandIntakeService: DemandIntakeService, private router: Router, private messageService: MessageService,
-    public authService: AuthService) { }
+              public authService: AuthService) {
+  }
 
   ngOnInit() {
     console.log("DemandManagerComponent ", this.demandIntakeService.demandInformation)
 
     this.submitDemandLabel = 'Submit Demand';
-    if(this.demandIntakeService.getDemandInformation().introduction.status === DemandStatus.DM_MODIFICATION || this.demandIntakeService.getDemandInformation().introduction.status === DemandStatus.CCB_MODIFICATION){
+    if (this.demandIntakeService.getDemandInformation().introduction.status === DemandStatus.DM_MODIFICATION || this.demandIntakeService.getDemandInformation().introduction.status === DemandStatus.CCB_MODIFICATION) {
       this.submitDemandLabel = 'Update Demand';
     }
 
     if (this.authService.isDM()) {
-      let dmList = this.demandIntakeService.demandInformation.solutionDirectionInfo.filter(item => item.dmEmail === this.authService.currentUserValue.email && (item.decision === 'APPROVED' || item.decision === 'REJECTED' ));
-      if(dmList.length > 0){
+      let dmList = this.demandIntakeService.demandInformation.solutionDirectionInfo.filter(item => item.dmEmail === this.authService.currentUserValue.email && (item.decision === 'APPROVED' || item.decision === 'REJECTED'));
+      if (dmList.length > 0) {
         this.dmActionDone = true;
+        this.demandIntakeService.dmActionDone = true;
       }
 
       this.visibleNextButton = false;
@@ -54,11 +56,11 @@ export class DemandManagerComponent implements OnInit {
       } else if (this.demandIntakeService.getDemandInformation().introduction.status == DemandStatus.DM_REJECTED) {
         this.visibleNextButton = false;
         this.visibleSubmitButton = false;
-      }else if ((!this.eventService.isMyDemand && !this.eventService.isStakeholderDemand) && this.demandIntakeService.demandInformation.introduction.status == DemandStatus.PENDING_WITH_CCB && !this.dmActionDone) {
+      } else if ((!this.eventService.isMyDemand && !this.eventService.isStakeholderDemand) && this.demandIntakeService.demandInformation.introduction.status == DemandStatus.PENDING_WITH_CCB && !this.dmActionDone) {
         this.visibleSubmitButton = true;
       } else if ((!this.eventService.isMyDemand && !this.eventService.isStakeholderDemand) && this.demandIntakeService.demandInformation.introduction.status == DemandStatus.PENDING_WITH_CCB && this.dmActionDone) {
         this.visibleSubmitButton = false;
-      }else if ((!this.eventService.isMyDemand && !this.eventService.isStakeholderDemand) && (this.demandIntakeService.demandInformation.introduction.status == DemandStatus.CCB_REJECTED || this.demandIntakeService.demandInformation.introduction.status == DemandStatus.ACCEPTED || this.demandIntakeService.demandInformation.introduction.status == DemandStatus.CCB_HOLD)) {
+      } else if ((!this.eventService.isMyDemand && !this.eventService.isStakeholderDemand) && (this.demandIntakeService.demandInformation.introduction.status == DemandStatus.CCB_REJECTED || this.demandIntakeService.demandInformation.introduction.status == DemandStatus.ACCEPTED || this.demandIntakeService.demandInformation.introduction.status == DemandStatus.CCB_HOLD)) {
         this.visibleNextButton = true;
         this.visibleSubmitButton = false;
       } else if ((this.eventService.isMyDemand || this.eventService.isStakeholderDemand) && this.demandIntakeService.demandInformation.introduction.status == DemandStatus.PENDING_WITH_CCB) {
@@ -74,11 +76,11 @@ export class DemandManagerComponent implements OnInit {
       if ((this.authService.isRequester() && (this.eventService.isMyDemand || this.eventService.isStakeholderDemand))
         && (this.demandIntakeService.demandInformation.introduction.status == DemandStatus.CCB_HOLD || this.demandIntakeService.demandInformation.introduction.status == DemandStatus.ACCEPTED || this.demandIntakeService.demandInformation.introduction.status == DemandStatus.CCB_REJECTED)) {
         this.visibleNextButton = true;
-      } else  if ((this.authService.isRequester() && (this.eventService.isMyDemand || this.eventService.isStakeholderDemand))
-        && this.demandIntakeService.demandInformation.introduction.status == DemandStatus.DM_MODIFICATION ) {
+      } else if ((this.authService.isRequester() && (this.eventService.isMyDemand || this.eventService.isStakeholderDemand))
+        && this.demandIntakeService.demandInformation.introduction.status == DemandStatus.DM_MODIFICATION) {
         this.visibleNextButton = false;
         this.visibleSubmitButton = true;
-      }else if ((!this.eventService.isNewDemand && !this.eventService.isMyDemand && this.authService.isCCB())
+      } else if ((!this.eventService.isNewDemand && !this.eventService.isMyDemand && this.authService.isCCB())
         && (this.demandIntakeService.demandInformation.introduction.status == DemandStatus.PENDING_WITH_CCB || this.demandIntakeService.demandInformation.introduction.status == DemandStatus.CCB_HOLD || this.demandIntakeService.demandInformation.introduction.status == DemandStatus.ACCEPTED || this.demandIntakeService.demandInformation.introduction.status == DemandStatus.CCB_REJECTED)) {
         this.visibleNextButton = true;
       } else if ((!this.eventService.isNewDemand && this.eventService.isMyDemand && this.authService.isCCB())
@@ -95,7 +97,7 @@ export class DemandManagerComponent implements OnInit {
       this.decisions = Object.values(DemandIntakeDecision);
       this.selectedDecision = this.getDecisionValue(this.demandIntakeService.getDemandInformation().demandManagerInfo.decision);
     }
-    
+
     this.solutionDirectionList = this.demandIntakeService.getDemandInformation().solutionDirectionInfo.filter(item => item.value == true);
     this.solutionDirectionList.forEach(item => {
       item.decisionDate = new Date(item.decisionDate);
@@ -124,15 +126,15 @@ export class DemandManagerComponent implements OnInit {
 
   submitPage() {
     if (this.demandIntakeService.demandInformation.introduction.status === DemandStatus.DM_MODIFICATION || (this.demandManagerInfo.decisionDate && this.selectedDecision != '' && this.demandManagerInfo.remarks != '')) {
-      if (this.demandIntakeService.demandInformation.introduction.status !== DemandStatus.DM_MODIFICATION){
+      if (this.demandIntakeService.demandInformation.introduction.status !== DemandStatus.DM_MODIFICATION) {
         this.demandManagerInfo.decision = this.getDecisionKey(this.selectedDecision);
       }
 
       this.demandIntakeService.getDemandInformation().demandManagerInfo = this.demandManagerInfo;
       this.router.navigate(['demand-intake/confirm']);
-    
+
     } else {
-      this.messageService.add({ severity: 'warn', summary: 'Error', detail: 'Please fill required fields!' });
+      this.messageService.add({severity: 'warn', summary: 'Error', detail: 'Please fill required fields!'});
     }
   }
 
