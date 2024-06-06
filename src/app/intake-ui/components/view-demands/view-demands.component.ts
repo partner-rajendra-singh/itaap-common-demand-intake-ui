@@ -34,7 +34,7 @@ export class ViewDemandsComponent implements OnInit {
   ngOnInit() {
     this.fetchAllDemands();
     this.demandCategories = Object.values(DemandCategory);
-    this.selectedDemandCategory = DemandCategory.ALL;
+    this.selectedDemandCategory = DemandCategory.ACTION_IN_PROGRESS;
     this.demandStatusList = Object.keys(DemandStatusFilter);
     this.selectedDemandStatus = DemandStatusFilter.ALL;
 

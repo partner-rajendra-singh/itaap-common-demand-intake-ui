@@ -36,6 +36,7 @@ export class ReportComponent implements OnInit {
   }
 
   onStatusChange() {
+    this.reportInfo.status = this.getStatusValue(this.selectedDemandStatus)
   }
 
   generateReport() {
@@ -43,7 +44,6 @@ export class ReportComponent implements OnInit {
     console.log("generateReport ", this.reportInfo)
 
     if (this.selectedSolutionDirectionList != '') {
-      console.log("this.selectedSolutionDirectionList", this.selectedSolutionDirectionList)
       this.reportInfo.solutionDirectionList = this.selectedSolutionDirectionList;
     }
 
@@ -52,9 +52,7 @@ export class ReportComponent implements OnInit {
       this.reportInfo.stakeholderList = this.stakeholderList.split(',');
     }
 
-    this.reportInfo.status = this.getStatusValue(this.selectedDemandStatus)
-
-    let today = new Date;
+    // let today = new Date;
     // this.reportResult = [
     //   {
     //     demandIntakeId: 10001,

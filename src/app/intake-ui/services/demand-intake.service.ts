@@ -19,6 +19,7 @@ import {ArchitectAlignment} from '../models/architect-alignment';
 import { DemandIntakeDecision } from '../enums/demand-intake-decision';
 import { ReportResult } from '../models/report-result';
 import {Fields} from "../models/fields";
+import { DemandStatus } from '../enums/demand-status';
 
 
 @Injectable({
@@ -459,5 +460,19 @@ export class DemandIntakeService {
     const index = Object.values(DemandStatusFilter).indexOf(value as unknown as DemandStatusFilter);
     return Object.keys(DemandStatusFilter)[index];
   }
+
+  getSDVisibility(solution: string): boolean {
+
+    if(this.demandInformation.introduction.status === DemandStatus.ACCEPTED || this.demandInformation.introduction.status === DemandStatus.DM_REJECTED || this.demandInformation.introduction.status === DemandStatus.CCB_REJECTED){
+      return false;
+    }
+    
+    if (this.authService.currentUserValue.domain.includes(solution)) {
+      return true;
+    }
+    
+    return false;
+  }
+
 }
 
