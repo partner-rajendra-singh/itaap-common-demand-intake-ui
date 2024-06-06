@@ -77,6 +77,7 @@ import {DashboardComponent} from './components/dashboard/dashboard.component';
 import {ButtonGroupModule} from "primeng/buttongroup";
 import { ReportComponent } from './components/report/report.component';
 import {TooltipModule} from "primeng/tooltip";
+import { FieldManagementComponent } from './components/field-management/field-management.component';
 
 
 @NgModule({
@@ -101,6 +102,7 @@ import {TooltipModule} from "primeng/tooltip";
     DashboardComponent,
     ConfirmComponent,
     ReportComponent,
+    FieldManagementComponent
     ],
     imports: [
         CommonModule,
@@ -168,4 +170,3 @@ import {TooltipModule} from "primeng/tooltip";
 })
 export class IntakeUIComponentsModule {
 }
-

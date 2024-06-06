@@ -19,7 +19,7 @@ export class FieldsService {
 
   getAllFields() {
     this.eventService.progressBarEvent.emit(true);
-    let url = this.baseUrl + '/common/demand-intake/fields';
+    let url = this.baseUrl + '/common/demand-intake/field/all';
     let headerOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
