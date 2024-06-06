@@ -1,9 +1,10 @@
 <div class="col-12 grid">
     <div class="col-12 md:col-12 lg:col-12">
-        <div class="card">
+        <div class="card border-none surface-border m-2">
             <div class="col-12 grid">
-                <div class="col-12 xs:col-12 sm:col-12 lg:col-12 xl:col-12">
-                    <h4>Search Demand By</h4>
+                <div class="col-12 xs:col-12 sm:col-12 lg:col-12 xl:col-12"
+                    style="background: linear-gradient(226.42deg, #077abb 8.93%, #153375 110.98%);border-bottom-left-radius: inherit;border-bottom-right-radius: inherit; ">
+                    <h4 style="color: white;">Search Demand By</h4>
                 </div>
                 <div class="col-6 xs:col-6 sm:col-6 lg:col-6 xl:col-3">
                     <label for="email">Raised By</label>
@@ -37,7 +38,7 @@
                 </div>
 
                 <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                    <span class="mr-3">Filter Demand by status</span>
+                    <span class="mr-3">Demand Status</span>
                 </div>
                 <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
                     <p-dropdown [(ngModel)]="selectedDemandStatus" [options]="demandStatusList"
@@ -84,14 +85,18 @@
                 <p-button label="Search" (onClick)="generateReport()" icon="pi pi-search" iconPos="right"></p-button>
             </div>
         </div>
-        <div class="card" *ngIf="reportResult">
-            <div class="grid">
-                <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-10">
-                    <h4>Demand Search Result</h4>
-                </div>
-                <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-2">
-                    <button pButton label="Download Excel Report" pRipple icon="pi pi-download" class="p-button-rounded p-button-success p-button-text mr-2" (click)="exportExcel()">
+        <div class="card border-none surface-border m-2" *ngIf="reportResult">
+            <div class="col-12 grid">
+                <div class="col-12 xs:col-12 sm:col-12 lg:col-12 xl:col-12"
+                    style="display: inline-flex; background: linear-gradient(226.42deg, #077abb 8.93%, #153375 110.98%);border-bottom-left-radius: inherit;border-bottom-right-radius: inherit; ">
+                    <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-10">
+                        <h4 style="color: white;">Demand Search Result</h4>
+                    </div>
+                    <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-2">
+                        <button pButton label="Download Report" pRipple icon="pi pi-download" style="color: white; font-size: large;"
+                            class="p-button-rounded p-button-success p-button-text mr-1" (click)="exportExcel()">
                         </button>
+                    </div>
                 </div>
             </div>
             <p-table [value]="reportResult" styleClass="p-datatable-sm" selectionMode="single"
@@ -102,9 +107,6 @@
                             <p-sortIcon field="demandIntakeId"></p-sortIcon>
                         </th>
                         <th pSortableColumn="topicId">Title
-                            <p-sortIcon field="title"></p-sortIcon>
-                        </th>
-                        <th pSortableColumn="topicId">Description
                             <p-sortIcon field="title"></p-sortIcon>
                         </th>
                         <th pSortableColumn="actionTime">Status
@@ -131,7 +133,6 @@
                     <tr [pSelectableRow]="demand">
                         <td>{{ demand.demandIntakeId }}</td>
                         <td>{{ demand.title }}</td>
-                        <td>{{ demand.description }}</td>
                         <td>
                             <span [class]="'align-self-center demand-badge status-'
                            + demandIntakeService.getDemandStatusValueInLower(demand.status)">
@@ -140,7 +141,7 @@
                         </td>
                         <td>{{ demand.requestedBy }}</td>
                         <td>{{ demand.requestedDate | date: 'MMM dd, yyyy' }}</td>
-                        <td>{{ demand.isCrossFunctional }}</td>
+                        <td>{{ demand.isCrossFunctional == true ? 'Yes' : 'No'}}</td>
                         <td>{{ demand.dmDecisionDate | date: 'MMM dd, yyyy' }}</td>
                         <td>{{ demand.ccbDecisionDate | date: 'MMM dd, yyyy' }}</td>
                     </tr>

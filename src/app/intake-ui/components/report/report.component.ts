@@ -55,48 +55,45 @@ export class ReportComponent implements OnInit {
     this.reportInfo.status = this.getStatusValue(this.selectedDemandStatus)
 
     let today = new Date;
-    this.reportResult = [
-      {
-        demandIntakeId: 10001,
-        title: 'Demand1',
-        description: 'Demand1 Descritpion',
-        status: 'ACCEPTED',
-        requestedBy: 'partner.pradnya.valsangkar@philips.com',
-        isCrossFunctional: false,
-        requestedDate: new Date(today.setDate(today.getDate() - 5)),
-        dmDecisionDate: new Date(today.setDate(today.getDate() + 2)),
-        ccbDecisionDate: new Date,
-      },
-      {
-        demandIntakeId: 10002,
-        title: 'Demand2',
-        description: 'Demand2 Descritpion',
-        status: 'CCB_REJECTED',
-        requestedBy: 'partner.sachin.kapkoti@philips.com',
-        isCrossFunctional: false,
-        requestedDate: new Date(today.setDate(today.getDate() - 10)),
-        dmDecisionDate: new Date(today.setDate(today.getDate() + 3)),
-        ccbDecisionDate: new Date(today.setDate(today.getDate() + 2)),
-      }
-    ];
+    // this.reportResult = [
+    //   {
+    //     demandIntakeId: 10001,
+    //     title: 'Demand1',
+    //     description: 'Demand1 Descritpion',
+    //     status: 'ACCEPTED',
+    //     requestedBy: 'partner.pradnya.valsangkar@philips.com',
+    //     isCrossFunctional: false,
+    //     requestedDate: new Date(today.setDate(today.getDate() - 5)),
+    //     dmDecisionDate: new Date(today.setDate(today.getDate() + 2)),
+    //     ccbDecisionDate: new Date,
+    //   },
+    //   {
+    //     demandIntakeId: 10002,
+    //     title: 'Demand2',
+    //     description: 'Demand2 Descritpion',
+    //     status: 'CCB_REJECTED',
+    //     requestedBy: 'partner.sachin.kapkoti@philips.com',
+    //     isCrossFunctional: false,
+    //     requestedDate: new Date(today.setDate(today.getDate() - 10)),
+    //     dmDecisionDate: new Date(today.setDate(today.getDate() + 3)),
+    //     ccbDecisionDate: new Date(today.setDate(today.getDate() + 2)),
+    //   }
+    // ];
 
-    // this.demandIntakeService.generateReport(this.reportInfo).pipe(
-    //   map((response: any) => {
-    //     console.log('generateReport() Response :', response);
-    //     this.reportResult = response;
+    this.demandIntakeService.generateReport(this.reportInfo).pipe(
+      map((response: any) => {
+        this.reportResult = response;
+        this.errorData = "";
+        this.eventService.progressBarEvent.emit(false);
+      }),
+      catchError((error: any) => {
+        console.log('Error', error);
+        this.errorData = JSON.stringify(error.error);
+        this.eventService.progressBarEvent.emit(false);
+        return throwError(error);
+      })
+    ).subscribe();
 
-    //     this.errorData = "";
-    //     this.eventService.progressBarEvent.emit(false);
-    //   }),
-    //   catchError((error: any) => {
-    //     console.log('Error', error);
-    //     this.errorData = JSON.stringify(error.error);
-    //     this.eventService.progressBarEvent.emit(false);
-    //     return throwError(error);
-    //   })
-    // ).subscribe();
-
-    this.eventService.progressBarEvent.emit(false);
   }
 
   getStatusValue(key: string): string {
