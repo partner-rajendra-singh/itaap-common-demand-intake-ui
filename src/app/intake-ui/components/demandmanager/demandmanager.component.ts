@@ -98,7 +98,7 @@ export class DemandManagerComponent implements OnInit {
       this.selectedDecision = this.getDecisionValue(this.demandIntakeService.getDemandInformation().demandManagerInfo.decision);
     }
 
-    this.solutionDirectionList = this.demandIntakeService.getDemandInformation().solutionDirectionInfo.filter(item => item.value == true);
+    this.solutionDirectionList = this.demandIntakeService.getDemandInformation().solutionDirectionInfo.filter(item => item.value);
     this.solutionDirectionList.forEach(item => {
       item.decisionDate = new Date(item.decisionDate);
       item.decision = this.getDecisionValue(item.decision);

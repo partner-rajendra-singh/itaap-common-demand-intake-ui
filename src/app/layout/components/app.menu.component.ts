@@ -41,7 +41,7 @@ export class AppMenuComponent implements OnInit {
         items: [
           { label: 'New', icon: 'pi pi-fw pi-plus', command: () => this.newDemand() },
           { label: 'View', icon: 'pi pi-fw pi-search', routerLink: ["/view"] },
-          { label: 'Report', icon: 'pi pi-fw pi-file-excel', routerLink: ["/report"], visible: true },
+          { label: 'Report', icon: 'pi pi-fw pi-file-excel', routerLink: ["/report"], visible: false },
           { label: 'Chart', icon: 'pi pi-chart-pie', routerLink: ["/chart"], visible: true }
         ],
         expanded: true
@@ -51,8 +51,7 @@ export class AppMenuComponent implements OnInit {
         icon: 'pi pi-fw pi-user',
         items: [
           { label: 'DM List', icon: 'pi pi-fw pi-align-left', routerLink: ["/dmcrud"] },
-          { label: 'CCB List', icon: 'pi pi-fw pi-align-right', routerLink: ["/ccbcrud"] },
-          { label: 'Field Management', icon: 'pi pi-fw pi-align-right', routerLink: ["/fieldmgmt"] }
+          { label: 'CCB List', icon: 'pi pi-fw pi-align-right', routerLink: ["/ccbcrud"] }
         ],
         expanded: true,
         visible: this.authService.isAdmin()

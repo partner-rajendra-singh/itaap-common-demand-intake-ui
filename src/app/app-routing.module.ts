@@ -9,8 +9,8 @@ import { AttachmentComponent } from './intake-ui/components/attachment/attachmen
 import { ChecklistComponent } from './intake-ui/components/checklist/checklist.component';
 import { IntroductionComponent } from './intake-ui/components/introduction/introduction.component';
 import { WipComponent } from './intake-ui/components/wip/wip.component';
-import { LoginComponent } from './intake-ui/components/login/login.component';
-import { LogoutComponent } from './intake-ui/components/logout/logout.component';
+import { LoginComponent } from './intake-ui/auth/login/login.component';
+import { LogoutComponent } from './intake-ui/auth/logout/logout.component';
 import { DemandManagerComponent } from './intake-ui/components/demandmanager/demandmanager.component';
 import { CCBComponent } from './intake-ui/components/ccb/ccb.component';
 import { ChartComponent } from './intake-ui/components/chart/chart.component';

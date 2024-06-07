@@ -1,9 +1,10 @@
-import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
-import { User } from '../models/user';
-import { environment } from 'src/environments/environment';
+import {Injectable} from '@angular/core';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {BehaviorSubject, Observable} from 'rxjs';
+import {map} from 'rxjs/operators';
+import {User} from '../models/user';
+import {environment} from 'src/environments/environment';
+import {AuthenticationResult} from '@azure/msal-browser';
 
 @Injectable({
   providedIn: 'root'
@@ -48,7 +49,7 @@ export class AuthService {
       return "DEMAND MANAGER";
     } else if (this.isCCB()) {
       return "CCB MEMBER";
-    }else if (this.isAdmin()) {
+    } else if (this.isAdmin()) {
       return "ADMIN";
     }
 
@@ -64,7 +65,7 @@ export class AuthService {
       })
     };
 
-    return this.http.post<any>(url, { email, token }, headerOptions)
+    return this.http.post<any>(url, {email, token}, headerOptions)
       .pipe(map(user => {
         console.log("login() Response :", user)
         if (user && user.token && user.isAuthenticated) {
@@ -73,6 +74,23 @@ export class AuthService {
           this.currentUserSubject.next(user);
           window.location.reload();
         }
+        return user;
+      }));
+  }
+
+  ssoLogin(response: AuthenticationResult) {
+    let url = this.baseUrl + '/common/demand-intake/login/';
+    let headerOptions = {
+      headers: new HttpHeaders().set('Authorization', `Bearer ${response.accessToken}`)
+    };
+    return this.http
+      .post<any>(url, response, headerOptions)
+      .pipe(map(user => {
+        console.log("ssoLogin() Response :", user)
+        // if (user && user.isAuthenticated) {
+          localStorage.setItem('currentUser', JSON.stringify(user));
+          this.currentUserSubject.next(user);
+        // }
         return user;
       }));
   }
@@ -88,7 +106,7 @@ export class AuthService {
       })
     };
 
-    return this.http.post<any>(url, { email }, headerOptions)
+    return this.http.post<any>(url, {email}, headerOptions)
       .pipe(map(user => {
         console.log("getOTP() Response :", user)
         // store user details and jwt token in local storage to keep user logged in between page refreshes
@@ -104,7 +122,8 @@ export class AuthService {
     if (this.currentUserValue) {
       this.currentUserValue.expireTime = new Date(this.currentUserValue.expireTime);
     }
-    return (this.currentUserValue != null && this.currentUserValue.isAuthenticated && new Date().getTime() < this.currentUserValue.expireTime.getTime());
+    // return (this.currentUserValue != null && this.currentUserValue.isAuthenticated && new Date().getTime() < this.currentUserValue.expireTime.getTime());
+    return true;
   }
 
   logout(): void {

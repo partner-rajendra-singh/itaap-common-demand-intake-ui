@@ -19,7 +19,7 @@ export class FieldsService {
 
   getAllFields() {
     this.eventService.progressBarEvent.emit(true);
-    let url = this.baseUrl + '/common/demand-intake/field/all';
+    let url = this.baseUrl + '/common/demand-intake/fields';
     let headerOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
@@ -34,7 +34,7 @@ export class FieldsService {
           console.log('FieldsService getAllFields() -> : ', this.allFields);
         }),
         catchError((error: any) => {
-          console.log('Error', error);
+          console.log('FieldsService getAllFields() : Error -> ', error);
           this.eventService.progressBarEvent.emit(false);
           return throwError(error);
         })

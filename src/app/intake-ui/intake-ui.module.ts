@@ -60,8 +60,8 @@ import {IntroductionComponent} from './components/introduction/introduction.comp
 import {WipComponent} from './components/wip/wip.component';
 import {DemandManagerComponent} from './components/demandmanager/demandmanager.component';
 import {CCBComponent} from './components/ccb/ccb.component';
-import {LoginComponent} from './components/login/login.component';
-import {LogoutComponent} from './components/logout/logout.component';
+import {LoginComponent} from './auth/login/login.component';
+import {LogoutComponent} from './auth/logout/logout.component';
 import {ChartComponent} from './components/chart/chart.component';
 import {DMCRUDComponent} from './components/dmcrud/dmcrud.component';
 import {CCBCRUDComponent} from './components/ccbcrud/ccbcrud.component';
