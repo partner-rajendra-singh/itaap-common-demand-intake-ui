@@ -36,8 +36,8 @@
         <div class="grid">
           <div class="col-10 xs:col-10 sm:col-10 lg:col-10 xl:col-10"></div>
           <div class="col-2 xs:col-2 sm:col-2 lg:col-2 xl:col-2" style="margin-top: -2rem;">
-            <p-button (click)="addAlignment()">{{ fieldsService.getLabel('INTRODUCTION_ARCHITECT_ALIGNMENT_ADD_BUTTON') }}</p-button> &nbsp;
-            <p-button (click)="removeAlignment()">{{ fieldsService.getLabel('INTRODUCTION_ARCHITECT_ALIGNMENT_REMOVE_BUTTON') }}</p-button>
+            <p-button (click)="addAlignment()">{{ fieldsService.getLabel('ADD_BUTTON') }}</p-button> &nbsp;
+            <p-button (click)="removeAlignment()">{{ fieldsService.getLabel('REMOVE_BUTTON') }}</p-button>
           </div>
           <div class="col-12 xs:col-12 sm:col-12 lg:col-12 xl:col-12" *ngIf="architectAlignmentInfo.length > 0"
                style="display: inline-flex;">
