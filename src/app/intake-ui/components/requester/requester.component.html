@@ -170,18 +170,18 @@
             <div class="col-12 xs:col-12 sm:col-12 lg:col-12 xl:col-12" *ngIf="requesterInfo.approvedBudget"
                  style="display: inline-flex;">
               <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                <label for="clarityProjectId" required class="asterisk-if-mandatory">Clarity Project
-                  Id</label>
+                <label for="clarityProjectId" required class="asterisk-if-mandatory">{{ fieldsService.getLabel('REQUESTER_CLARITY_PROJECT_ID') }}</label>
               </div>
               <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
                 <input id="clarityProjectId" type="text" [(ngModel)]="requesterInfo.clarityProjectId"
+                [pTooltip]="fieldsService.getToolTip('REQUESTER_CLARITY_PROJECT_ID')"
                        size="60"
                        class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary">
               </div>
             </div>
 
             <div class="col-12 xs:col-12 sm:col-12 lg:col-12 xl:col-12">
-              <p-fieldset legend="Consumption Pattern(How do you want the data to be consumed)?">
+              <p-fieldset legend="{{ fieldsService.getLabel('REQUESTER_CONSUMPTION_PATTERN') }}">
                 <div class="grid">
                   <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
                     <label for="cpAPI">{{ fieldsService.getLabel('REQUESTER_VIA_API') }}</label>
