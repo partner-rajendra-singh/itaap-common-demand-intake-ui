@@ -32,13 +32,13 @@ export class DemandIntakeComponent implements OnInit, OnDestroy {
     this.eventService.currentDemandIntakeId = this.demandIntakeService.demandInformation.introduction.demandIntakeId;
 
     this.events = [
-      { status: 'Drafted', date: '15/10/2020 10:30', actionBy: 'Pankaj', description: '#9C27B0' },
-      { status: 'Stakeholder - X', date: '15/10/2020 10:30', actionBy: 'Pradnya',  description: '#9C27B0' },
-      { status: 'Stakeholder - Y', date: '15/10/2020 10:30', actionBy: 'Sachin',  description: '#9C27B0' },
-      { status: 'Demand Raised', date: '15/10/2020 10:30', actionBy: 'Pankaj',  description: '#9C27B0'},
-      { status: 'DM - ITaaP', date: '15/10/2020 10:30', actionBy: 'Lucy', description: '#9C27B0'},
-      { status: 'DM - ADL L1', date: '15/10/2020 10:30', actionBy: 'Rajendra',  description: '#9C27B0' },
-      { status: 'CCM Member', date: '15/10/2020 16:15', actionBy: 'Rakesh',  description: '#9C27B0' }
+      { status: 'Drafted', date: '15/10/2020 10:30', actionBy: 'Pankaj', description: 'Draft description' },
+      { status: 'Stakeholder - X', date: '15/10/2020 10:30', actionBy: 'Pradnya',  description: 'Stakeholder-X remarks' },
+      { status: 'Stakeholder - Y', date: '15/10/2020 10:30', actionBy: 'Sachin',  description: 'Stakeholder-Y remarks' },
+      { status: 'Demand Raised', date: '15/10/2020 10:30', actionBy: 'Pankaj',  description: 'Demand raising desc'},
+      { status: 'DM - ITaaP', date: '15/10/2020 10:30', actionBy: 'Lucy', description: 'DM-ItaaP remarks'},
+      { status: 'DM - ADL L1', date: '15/10/2020 10:30', actionBy: 'Rajendra',  description: 'DM-ADL L1 remarks' },
+      { status: 'CCM Member', date: '15/10/2020 16:15', actionBy: 'Rakesh',  description: 'CCB Member remarks' }
   ];
   }
 
