@@ -1,51 +1,62 @@
 <p-toast></p-toast>
-<div class="card" *ngIf="!eventService.isNewDemand">
+<p-sidebar [(visible)]="sidebarVisible2" styleClass="w-30rem" position="right" *ngIf="!eventService.isNewDemand">
+  <ng-template pTemplate="header">
+      <div class="flex align-items-center gap-2">
+          <span class="font-bold">Demand Summary ({{demandIntakeService.demandInformation.introduction.demandIntakeId}})</span>
+      </div>
+  </ng-template>
 
-  <div class="grid">
-    <div class="col-12 xs:col-1 sm:col-1 lg:col-1 xl:col-1">
-      <span class="block text-500 font-medium mb-2">Demand ID</span>
-      <div class="justify-content-between">
-        <span
-          [class]="'text-750 font-medium text-xl align-self-center demand-badge status-' + demandIntakeService.getDemandStatusValueInLower(demandIntakeService.demandInformation.introduction.status)">
-          {{demandIntakeService.demandInformation.introduction.demandIntakeId}}
-        </span>
+    <div class="grid">
+     <div class="col-12 xs:col-1 sm:col-1 lg:col-1 xl:col-3">
+        <span class="block text-500 font-medium mb-2">Demand Title</span>
+        <div class="justify-content-between textOverflow">
+          <span class="text-750 font-medium text-xl">
+            {{demandIntakeService.demandInformation.introduction.title}}</span>
+        </div>
+      </div>
+      <div class="col-12 xs:col-1 sm:col-1 lg:col-1 xl:col-3">
+        <span class="block text-500 font-medium mb-2">Requested By</span>
+        <div class="justify-content-between textOverflow">
+          <span class="text-750 font-medium text-xl">
+            {{demandIntakeService.demandInformation.introduction.requestedBy}}</span>
+        </div>
+      </div>
+      <div class="col-12 xs:col-1 sm:col-1 lg:col-1 xl:col-2">
+        <span class="block text-500 font-medium mb-2">Requested Date</span>
+        <div class="justify-content-between">
+          <span class="text-750 font-medium text-xl">
+            {{demandIntakeService.demandInformation.requesterInfo.requestedDate | date: 'MMM dd, yyyy hh:mm a'}}</span>
+        </div>
+      </div>
+      <div class="col-12 xs:col-1 sm:col-1 lg:col-1 xl:col-3">
+        <span class="block text-500 font-medium mb-2">Status</span>
+        <div class="justify-content-between">
+          <span class="text-750 font-medium text-xl">
+            {{demandIntakeService.getDemandStatusValue(demandIntakeService.demandInformation.introduction.status)}}</span>
+        </div>
       </div>
     </div>
-    <div class="col-12 xs:col-1 sm:col-1 lg:col-1 xl:col-3">
-      <span class="block text-500 font-medium mb-2">Demand Title</span>
-      <div class="justify-content-between textOverflow">
-        <span class="text-750 font-medium text-xl">
-          {{demandIntakeService.demandInformation.introduction.title}}</span>
-      </div>
-    </div>
-    <div class="col-12 xs:col-1 sm:col-1 lg:col-1 xl:col-3">
-      <span class="block text-500 font-medium mb-2">Requested By</span>
-      <div class="justify-content-between textOverflow">
-        <span class="text-750 font-medium text-xl">
-          {{demandIntakeService.demandInformation.introduction.requestedBy}}</span>
-      </div>
-    </div>
-    <div class="col-12 xs:col-1 sm:col-1 lg:col-1 xl:col-2">
-      <span class="block text-500 font-medium mb-2">Requested Date</span>
-      <div class="justify-content-between">
-        <span class="text-750 font-medium text-xl">
-          {{demandIntakeService.demandInformation.requesterInfo.requestedDate | date: 'MMM dd, yyyy hh:mm a'}}</span>
-      </div>
-    </div>
-    <div class="col-12 xs:col-1 sm:col-1 lg:col-1 xl:col-3">
-      <span class="block text-500 font-medium mb-2">Status</span>
-      <div class="justify-content-between">
-        <span class="text-750 font-medium text-xl">
-          {{demandIntakeService.getDemandStatusValue(demandIntakeService.demandInformation.introduction.status)}}</span>
-      </div>
-    </div>
-  </div>
-</div>
+
+    <p-timeline [value]="events" class="w-full md:w-20rem" align="right">
+      <ng-template pTemplate="content" let-event>
+          <small class="p-text-secondary">{{ event.date }}</small>
+      </ng-template>
+      <ng-template pTemplate="opposite" let-event>
+        <p-card [header]="event.status">
+          <p>Description Goes here!</p>
+      </p-card>
+      </ng-template>
+    </p-timeline>
+ 
+</p-sidebar>
 
 <div class="card grid">
-  <div class="col-12 xs:col-12 sm:col-12 lg:col-12 xl:col-12">
+  <div class="col-11 xs:col-11 sm:col-11 lg:col-11 xl:col-11">
     <p-steps [model]="items"
       [readonly]="authService.isRequester() && demandIntakeService.demandInformation.introduction.status=='DRAFT'"></p-steps>
+  </div>
+  <div class="col-1 xs:col-1 sm:col-1 lg:col-1 xl:col-1" *ngIf="!eventService.isNewDemand">
+    <p-button type="button" class="mr-2" (click)="sidebarVisible2 = true" icon="pi pi-arrow-left" />
   </div>
 </div>
 <div class="card grid">

@@ -7,21 +7,39 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {EventService} from '../../services/event.service';
 import { DemandStatus } from '../../enums/demand-status';
 
+interface EventItem {
+  status?: string;
+  date?: string;
+  actionBy?: string;
+  description?: string;
+}
+
 @Component({
   selector: 'app-demand-intake',
   templateUrl: './demand-intake.component.html',
-
 })
 export class DemandIntakeComponent implements OnInit, OnDestroy {
 
+  events: EventItem[];
   items!: MenuItem[];
   subscription!: Subscription;
+  sidebarVisible2: boolean = false;
 
   constructor(private activatedRoute: ActivatedRoute,
               private router: Router, public messageService: MessageService,
               public demandIntakeService: DemandIntakeService, public eventService: EventService, public authService: AuthService) {
     const demandIntakeId = this.activatedRoute.snapshot.paramMap.get('demandIntakeId');
     this.eventService.currentDemandIntakeId = this.demandIntakeService.demandInformation.introduction.demandIntakeId;
+
+    this.events = [
+      { status: 'Drafted', date: '15/10/2020 10:30', actionBy: 'Pankaj', description: '#9C27B0' },
+      { status: 'Stakeholder - X', date: '15/10/2020 10:30', actionBy: 'Pradnya',  description: '#9C27B0' },
+      { status: 'Stakeholder - Y', date: '15/10/2020 10:30', actionBy: 'Sachin',  description: '#9C27B0' },
+      { status: 'Demand Raised', date: '15/10/2020 10:30', actionBy: 'Pankaj',  description: '#9C27B0'},
+      { status: 'DM - ITaaP', date: '15/10/2020 10:30', actionBy: 'Lucy', description: '#9C27B0'},
+      { status: 'DM - ADL L1', date: '15/10/2020 10:30', actionBy: 'Rajendra',  description: '#9C27B0' },
+      { status: 'CCM Member', date: '15/10/2020 16:15', actionBy: 'Rakesh',  description: '#9C27B0' }
+  ];
   }
 
   ngOnInit() {
