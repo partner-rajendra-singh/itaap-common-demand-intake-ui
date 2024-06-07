@@ -6,6 +6,8 @@ import { AuthService } from '../../services/auth.service';
 import { first } from 'rxjs';
 import { EventService } from '../../services/event.service';
 import { DemandStatus } from '../../enums/demand-status';
+import {FieldsService} from "../../services/fields.service";
+
 
 @Component({
     selector: 'app-requirements',
@@ -19,7 +21,7 @@ export class RequirementsComponent implements OnInit {
     visibleSaveButton!: boolean;
     goLiveApproach!: string;
 
-    constructor(public demandIntakeService: DemandIntakeService, private router: Router, private messageService: MessageService,
+    constructor(public demandIntakeService: DemandIntakeService,public fieldsService: FieldsService, private router: Router, private messageService: MessageService,
         private authService: AuthService, public eventService: EventService) {
         if (authService.isRequester()) {
             if (this.demandIntakeService.getDemandInformation().introduction.status != DemandStatus.DRAFT && this.demandIntakeService.getDemandInformation().introduction.status != null) {
