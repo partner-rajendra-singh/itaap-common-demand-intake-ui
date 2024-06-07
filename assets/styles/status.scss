@@ -1,0 +1,87 @@
+.demand-badge {
+  border-radius: var(--border-radius);
+  padding: .25em .5rem;
+  text-transform: uppercase;
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: .3px;
+}
+
+.approver-badge {
+  border-radius: var(--border-radius);
+  padding: .25em .5rem;
+  text-transform: uppercase;
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: .3px;
+}
+
+.approver-badge {
+  &.status-active {
+    background: #C8E6C9;
+    color: #256029;
+  }
+
+  &.status-inactive {
+    background: #FFCDD2;
+    color: #C63737;
+  }
+}
+
+.demand-badge {
+  &.status-draft {
+    background: #B3E5FC;
+    color: #23547B;
+  }
+
+  &.status-pending_with_dm {
+    background: #ECCFFF;
+    color: #694382;
+  }
+
+  &.status-dm_hold {
+    background: #ECCFFF;
+    color: #694382;
+  }
+
+  &.status-dm_modification {
+    background: #ECCFFF;
+    color: #694382;
+  }
+
+  &.status-pending_with_ccb {
+    background: #FEEDAF;
+    color: #8A5340;
+  }
+
+  &.status-ccb_hold {
+    background: #FEEDAF;
+    color: #8A5340;
+  }
+
+  &.status-ccb_modification {
+    background: #FEEDAF;
+    color: #8A5340;
+  }
+
+  &.status-accepted {
+    background: #C8E6C9;
+    color: #256029;
+  }
+
+  &.status-ccb_rejected {
+    background: #FFCDD2;
+    color: #C63737;
+  }
+
+  &.status-dm_rejected {
+    background: #FFCDD2;
+    color: #C63737;
+  }
+}
+
+.textOverflow {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap
+}
