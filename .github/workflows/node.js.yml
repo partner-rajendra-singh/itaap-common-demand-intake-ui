@@ -47,5 +47,5 @@ jobs:
         token: ${{ secrets.GITHUB_TOKEN }}
         build_configuration: production
         base_href: https://partner-rajendra-singh.github.io/itaap-common-demand-intake-ui/
-        branch: gh-pages  # Target branch for deployment
-        folder: build
+        branch: build  # Target branch for deployment
+        folder: dev
