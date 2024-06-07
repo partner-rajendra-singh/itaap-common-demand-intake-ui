@@ -45,7 +45,7 @@ jobs:
       uses: JamesIves/github-pages-deploy-action@4.1.5
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
-        build_configuration: production
+        build_configuration: dev
         base_href: https://partner-rajendra-singh.github.io/itaap-common-demand-intake-ui/
         branch: build  # Target branch for deployment
-        folder: dev
+        folder: build/dev
