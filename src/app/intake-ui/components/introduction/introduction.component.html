@@ -67,7 +67,8 @@
       </p-fieldset>
 
     </div>
-    <p-fieldset legend="{{ fieldsService.getLabel('INTRODUCTION_FIELDSET') }}">
+    <p-fieldset legend="{{ fieldsService.getLabel('INTRODUCTION_FIELDSET') }}"
+    [pTooltip]="fieldsService.getToolTip('INTRODUCTION_FIELDSET')">
       <div class="grid">
         <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
           <label for="title" class="asterisk-if-mandatory"

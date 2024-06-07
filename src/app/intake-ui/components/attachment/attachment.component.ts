@@ -9,6 +9,7 @@ import {Attachment} from '../../models/attachment';
 import {HttpHeaders} from '@angular/common/http';
 import {FileUploadEvent} from 'primeng/fileupload';
 import {DemandStatus} from '../../enums/demand-status';
+import {FieldsService} from "../../services/fields.service";
 
 
 @Component({
@@ -29,6 +30,7 @@ export class AttachmentComponent implements OnInit {
   submitDemandLabel!: string;
 
   constructor(private config: PrimeNGConfig,
+              public fieldsService: FieldsService,
               public demandIntakeService: DemandIntakeService, private router: Router,
               private messageService: MessageService, public authService: AuthService, public eventService: EventService, private confirmationService: ConfirmationService) {
     this.visibleAttachmentUpload = true;
