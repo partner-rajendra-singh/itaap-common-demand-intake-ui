@@ -9,11 +9,14 @@ on:
   pull_request:
     branches: [ "main" ]
 
+env:
+  ENVIRONMENT: ${{ vars.ENVIRONMENT }}
+
 jobs:
   build:
 
     runs-on: ubuntu-latest
-    environment: ${{ vars.ENVIRONMENT }}
+    environment: ${{ env.ENVIRONMENT }}
 
     strategy:
       matrix:
