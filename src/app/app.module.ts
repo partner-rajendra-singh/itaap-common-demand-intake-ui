@@ -22,7 +22,7 @@ import {
   MsalInterceptorConfiguration, MsalModule
 } from '@azure/msal-angular';
 import {PublicClientApplication, InteractionType} from '@azure/msal-browser';
-import {msalConfig} from './intake-ui/services/auth-config';
+import {msalConfig} from './intake-ui/auth/auth-config';
 import {HashLocationStrategy, LocationStrategy} from '@angular/common';
 import {environment} from "../environments/environment";
 

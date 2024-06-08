@@ -79,17 +79,24 @@ export class AuthService {
   }
 
   ssoLogin(response: AuthenticationResult) {
-    let url = this.baseUrl + '/common/demand-intake/login/';
+    let url = this.baseUrl + '/common/demand-intake/login';
+
     let headerOptions = {
-      headers: new HttpHeaders().set('Authorization', `Bearer ${response.accessToken}`)
+      headers: new HttpHeaders({
+        'X-Correlation-ID': 'abc',
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*', // This allows requests from all domains, adjust as needed
+        'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+        'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept'
+      }).set('Authorization', `Bearer ${response.accessToken}`)
     };
     return this.http
       .post<any>(url, response, headerOptions)
       .pipe(map(user => {
         console.log("ssoLogin() Response :", user)
         // if (user && user.isAuthenticated) {
-          localStorage.setItem('currentUser', JSON.stringify(user));
-          this.currentUserSubject.next(user);
+        localStorage.setItem('currentUser', JSON.stringify(user));
+        this.currentUserSubject.next(user);
         // }
         return user;
       }));
