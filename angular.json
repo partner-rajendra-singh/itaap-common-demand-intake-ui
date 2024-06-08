@@ -42,7 +42,13 @@
               "sourceMap": true,
               "namedChunks": true,
               "outputPath": "build/local",
-              "baseHref": "./index.html"
+              "baseHref": "./index.html",
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.local.ts"
+                }
+              ]
             },
             "dev": {
               "buildOptimizer": false,
