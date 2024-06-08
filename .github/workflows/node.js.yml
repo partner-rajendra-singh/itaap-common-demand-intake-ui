@@ -32,7 +32,7 @@ jobs:
       run: npm install --force
       
     - name: Set Environment Variables
-      run: echo "BUILD_CONFIGURATION=${{ vars.BUILD_CONFIGURATION }}" >> $GITHUB_ENV
+      run: echo "BUILD_CONFIGURATION=${{ env.BUILD_CONFIGURATION }}" >> $GITHUB_ENV
       
     - name: Build Angular App
       run: npm run build:${{ env.BUILD_CONFIGURATION }}
