@@ -7,7 +7,7 @@ export const msalConfig: Configuration = {
         clientId: '32020122-420b-4df8-8e1b-137cecd6b9ea', // Replace with your client ID
         authority: 'https://login.microsoftonline.com/7ec1016c-6ee6-451a-a9dd-82f22f546874', // Replace with your tenant ID
         // redirectUri: 'http://localhost:4200', // Replace with your redirect URI
-        redirectUri: environment.redirectUri, // Replace with your redirect URI
+        redirectUri: 'https://partner-rajendra-singh.github.io/itaap-common-demand-intake-ui', // Replace with your redirect URI
     },
     cache: {
         cacheLocation: BrowserCacheLocation.LocalStorage, // This configures where your cache will be stored
