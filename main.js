@@ -13259,7 +13259,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 const environment = {
   production: false,
-  baseUrl: "https://dev.apps.api.it.philips.com"
+  baseUrl: 'http://localhost:9002'
 };
 
 /***/ }),
