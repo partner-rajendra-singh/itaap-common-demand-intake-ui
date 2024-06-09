@@ -66,13 +66,7 @@ export class AuthService {
     let url = this.baseUrl + '/common/demand-intake/login';
 
     let headerOptions = {
-      headers: new HttpHeaders({
-        'X-Correlation-ID': 'abc',
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*', // This allows requests from all domains, adjust as needed
-        'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
-        'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept'
-      }).set('Authorization', `Bearer ${response.accessToken}`)
+      headers: new HttpHeaders().set('Authorization', `Bearer ${response.accessToken}`)
     };
     return this.http
       .post<any>(url, response, headerOptions)

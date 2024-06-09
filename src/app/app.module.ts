@@ -22,7 +22,7 @@ import {
   MsalInterceptorConfiguration, MsalModule
 } from '@azure/msal-angular';
 import {PublicClientApplication, InteractionType} from '@azure/msal-browser';
-import {msalConfig} from './intake-ui/auth/auth-config';
+import {msalConfig, msalGuardConfig, msalInterceptorConfig} from './intake-ui/auth/auth-config';
 import {HashLocationStrategy, LocationStrategy} from '@angular/common';
 import {environment} from "../environments/environment";
 
@@ -70,37 +70,9 @@ function MSALInstanceFactory() {
 }
 
 function MSALGuardConfigFactory(): MsalGuardConfiguration {
-  return {
-    interactionType: InteractionType.Popup,
-    authRequest: {
-      scopes: [
-        // 'user.read',
-        // 'https://graph.microsoft.com/User.Read',
-        // 'demand.read',
-        // 'demand.sso',
-        // 'api://demand-intake/.default'
-        'api://demand-intake/demand.login',
-      ]
-    }
-  };
+  return msalGuardConfig;
 }
 
 function MSALInterceptorConfigFactory(): MsalInterceptorConfiguration {
-  return {
-    interactionType: InteractionType.Popup,
-    protectedResourceMap: new Map([
-      ['https://graph.microsoft.com/v1.0/me', [
-        'user.read',
-        // 'api://demand-intake/demand.login',
-      ]],
-      [environment.baseUrl + '/common/demand-intake/*', [
-        // 'User.Read'
-        // 'demand.read',
-        // 'demand.sso',
-        'api://demand-intake/demand.login',
-        // 'https://graph.microsoft.com/.default',
-        // 'https://graph.microsoft.com/User.Read'
-      ]],
-    ])
-  };
+  return msalInterceptorConfig;
 }
