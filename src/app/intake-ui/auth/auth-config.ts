@@ -1,6 +1,7 @@
 // src/app/auth-config.ts
-import {BrowserCacheLocation, Configuration, LogLevel} from '@azure/msal-browser';
+import {BrowserCacheLocation, Configuration, InteractionType, LogLevel} from '@azure/msal-browser';
 import {environment} from "../../../environments/environment";
+import {MsalGuardConfiguration, MsalInterceptorConfiguration} from "@azure/msal-angular";
 
 export const msalConfig: Configuration = {
   auth: {
@@ -26,3 +27,38 @@ export const msalConfig: Configuration = {
     }
   },
 };
+
+export const msalInterceptorConfig: MsalInterceptorConfiguration = {
+  interactionType: InteractionType.Popup,
+  protectedResourceMap:
+    new Map([
+      ['https://graph.microsoft.com/v1.0/me', [
+        'user.read',
+        // 'api://demand-intake/demand.login',
+      ]],
+      [environment.baseUrl + '/common/demand-intake/*', [
+        // 'User.Read'
+        // 'demand.read',
+        // 'demand.sso',
+        // 'api://demand-intake/demand.login',
+        'api://demand-intake/.default',
+        // 'https://graph.microsoft.com/.default',
+        // 'https://graph.microsoft.com/User.Read'
+      ]],
+    ])
+};
+
+export const msalGuardConfig: MsalGuardConfiguration = {
+  interactionType: InteractionType.Popup,
+  authRequest: {
+    scopes: [
+      // 'user.read',
+      // 'https://graph.microsoft.com/User.Read',
+      // 'demand.read',
+      // 'demand.sso',
+      'api://demand-intake/.default'
+      // 'api://demand-intake/demand.login',
+    ]
+  }
+};
+
