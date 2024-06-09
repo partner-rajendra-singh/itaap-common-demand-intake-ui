@@ -255,24 +255,21 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   AppModule: () => (/* binding */ AppModule)
 /* harmony export */ });
-/* harmony import */ var _angular_platform_browser__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! @angular/platform-browser */ 80436);
+/* harmony import */ var _angular_platform_browser__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @angular/platform-browser */ 80436);
 /* harmony import */ var _app_routing_module__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./app-routing.module */ 94114);
 /* harmony import */ var _app_component__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./app.component */ 20092);
 /* harmony import */ var _intake_ui_services_demand_intake_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./intake-ui/services/demand-intake.service */ 96790);
-/* harmony import */ var primeng_api__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! primeng/api */ 17780);
+/* harmony import */ var primeng_api__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! primeng/api */ 17780);
 /* harmony import */ var _intake_ui_auth_auth_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./intake-ui/auth/auth.service */ 37440);
 /* harmony import */ var _intake_ui_services_auth_guard_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./intake-ui/services/auth-guard.service */ 30690);
 /* harmony import */ var _layout_main_app_layout_module__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./layout/main.app.layout.module */ 95291);
 /* harmony import */ var _intake_ui_intake_ui_module__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./intake-ui/intake-ui.module */ 73799);
-/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @angular/common/http */ 46443);
-/* harmony import */ var _azure_msal_angular__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @azure/msal-angular */ 8653);
-/* harmony import */ var _azure_msal_browser__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! @azure/msal-browser */ 57526);
-/* harmony import */ var _azure_msal_browser__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! @azure/msal-browser */ 37395);
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @angular/common/http */ 46443);
+/* harmony import */ var _azure_msal_angular__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @azure/msal-angular */ 8653);
+/* harmony import */ var _azure_msal_browser__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! @azure/msal-browser */ 57526);
 /* harmony import */ var _intake_ui_auth_auth_config__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./intake-ui/auth/auth-config */ 99812);
-/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @angular/common */ 60316);
-/* harmony import */ var _environments_environment__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../environments/environment */ 45312);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @angular/core */ 37580);
-
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @angular/common */ 60316);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @angular/core */ 37580);
 
 
 
@@ -293,68 +290,45 @@ class AppModule {
   static #_ = this.ɵfac = function AppModule_Factory(t) {
     return new (t || AppModule)();
   };
-  static #_2 = this.ɵmod = /*@__PURE__*/_angular_core__WEBPACK_IMPORTED_MODULE_9__["ɵɵdefineNgModule"]({
+  static #_2 = this.ɵmod = /*@__PURE__*/_angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵdefineNgModule"]({
     type: AppModule,
     bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_1__.AppComponent]
   });
-  static #_3 = this.ɵinj = /*@__PURE__*/_angular_core__WEBPACK_IMPORTED_MODULE_9__["ɵɵdefineInjector"]({
-    providers: [_intake_ui_services_demand_intake_service__WEBPACK_IMPORTED_MODULE_2__.DemandIntakeService, primeng_api__WEBPACK_IMPORTED_MODULE_10__.MessageService, _intake_ui_services_auth_guard_service__WEBPACK_IMPORTED_MODULE_4__.AuthGuard, _intake_ui_auth_auth_service__WEBPACK_IMPORTED_MODULE_3__.AuthService, primeng_api__WEBPACK_IMPORTED_MODULE_10__.ConfirmationService, {
-      provide: _angular_common__WEBPACK_IMPORTED_MODULE_11__.LocationStrategy,
-      useClass: _angular_common__WEBPACK_IMPORTED_MODULE_11__.HashLocationStrategy
+  static #_3 = this.ɵinj = /*@__PURE__*/_angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵdefineInjector"]({
+    providers: [_intake_ui_services_demand_intake_service__WEBPACK_IMPORTED_MODULE_2__.DemandIntakeService, primeng_api__WEBPACK_IMPORTED_MODULE_9__.MessageService, _intake_ui_services_auth_guard_service__WEBPACK_IMPORTED_MODULE_4__.AuthGuard, _intake_ui_auth_auth_service__WEBPACK_IMPORTED_MODULE_3__.AuthService, primeng_api__WEBPACK_IMPORTED_MODULE_9__.ConfirmationService, {
+      provide: _angular_common__WEBPACK_IMPORTED_MODULE_10__.LocationStrategy,
+      useClass: _angular_common__WEBPACK_IMPORTED_MODULE_10__.HashLocationStrategy
     }, {
-      provide: _angular_common_http__WEBPACK_IMPORTED_MODULE_12__.HTTP_INTERCEPTORS,
-      useClass: _azure_msal_angular__WEBPACK_IMPORTED_MODULE_13__.MsalInterceptor,
+      provide: _angular_common_http__WEBPACK_IMPORTED_MODULE_11__.HTTP_INTERCEPTORS,
+      useClass: _azure_msal_angular__WEBPACK_IMPORTED_MODULE_12__.MsalInterceptor,
       multi: true
     }, {
-      provide: _azure_msal_angular__WEBPACK_IMPORTED_MODULE_13__.MSAL_INSTANCE,
+      provide: _azure_msal_angular__WEBPACK_IMPORTED_MODULE_12__.MSAL_INSTANCE,
       useFactory: MSALInstanceFactory
     }, {
-      provide: _azure_msal_angular__WEBPACK_IMPORTED_MODULE_13__.MSAL_GUARD_CONFIG,
+      provide: _azure_msal_angular__WEBPACK_IMPORTED_MODULE_12__.MSAL_GUARD_CONFIG,
       useFactory: MSALGuardConfigFactory
     }, {
-      provide: _azure_msal_angular__WEBPACK_IMPORTED_MODULE_13__.MSAL_INTERCEPTOR_CONFIG,
+      provide: _azure_msal_angular__WEBPACK_IMPORTED_MODULE_12__.MSAL_INTERCEPTOR_CONFIG,
       useFactory: MSALInterceptorConfigFactory
-    }, _azure_msal_angular__WEBPACK_IMPORTED_MODULE_13__.MsalService, _azure_msal_angular__WEBPACK_IMPORTED_MODULE_13__.MsalGuard, _azure_msal_angular__WEBPACK_IMPORTED_MODULE_13__.MsalBroadcastService],
-    imports: [_layout_main_app_layout_module__WEBPACK_IMPORTED_MODULE_5__.MainAppLayoutModule, _angular_platform_browser__WEBPACK_IMPORTED_MODULE_14__.BrowserModule, _app_routing_module__WEBPACK_IMPORTED_MODULE_0__.AppRoutingModule, _intake_ui_intake_ui_module__WEBPACK_IMPORTED_MODULE_6__.IntakeUIComponentsModule, _azure_msal_angular__WEBPACK_IMPORTED_MODULE_13__.MsalModule.forRoot(MSALInstanceFactory(), MSALGuardConfigFactory(), MSALInterceptorConfigFactory())]
+    }, _azure_msal_angular__WEBPACK_IMPORTED_MODULE_12__.MsalService, _azure_msal_angular__WEBPACK_IMPORTED_MODULE_12__.MsalGuard, _azure_msal_angular__WEBPACK_IMPORTED_MODULE_12__.MsalBroadcastService],
+    imports: [_layout_main_app_layout_module__WEBPACK_IMPORTED_MODULE_5__.MainAppLayoutModule, _angular_platform_browser__WEBPACK_IMPORTED_MODULE_13__.BrowserModule, _app_routing_module__WEBPACK_IMPORTED_MODULE_0__.AppRoutingModule, _intake_ui_intake_ui_module__WEBPACK_IMPORTED_MODULE_6__.IntakeUIComponentsModule, _azure_msal_angular__WEBPACK_IMPORTED_MODULE_12__.MsalModule.forRoot(MSALInstanceFactory(), MSALGuardConfigFactory(), MSALInterceptorConfigFactory())]
   });
 }
 (function () {
-  (typeof ngJitMode === "undefined" || ngJitMode) && _angular_core__WEBPACK_IMPORTED_MODULE_9__["ɵɵsetNgModuleScope"](AppModule, {
+  (typeof ngJitMode === "undefined" || ngJitMode) && _angular_core__WEBPACK_IMPORTED_MODULE_8__["ɵɵsetNgModuleScope"](AppModule, {
     declarations: [_app_component__WEBPACK_IMPORTED_MODULE_1__.AppComponent],
-    imports: [_layout_main_app_layout_module__WEBPACK_IMPORTED_MODULE_5__.MainAppLayoutModule, _angular_platform_browser__WEBPACK_IMPORTED_MODULE_14__.BrowserModule, _app_routing_module__WEBPACK_IMPORTED_MODULE_0__.AppRoutingModule, _intake_ui_intake_ui_module__WEBPACK_IMPORTED_MODULE_6__.IntakeUIComponentsModule, _azure_msal_angular__WEBPACK_IMPORTED_MODULE_13__.MsalModule]
+    imports: [_layout_main_app_layout_module__WEBPACK_IMPORTED_MODULE_5__.MainAppLayoutModule, _angular_platform_browser__WEBPACK_IMPORTED_MODULE_13__.BrowserModule, _app_routing_module__WEBPACK_IMPORTED_MODULE_0__.AppRoutingModule, _intake_ui_intake_ui_module__WEBPACK_IMPORTED_MODULE_6__.IntakeUIComponentsModule, _azure_msal_angular__WEBPACK_IMPORTED_MODULE_12__.MsalModule]
   });
 })();
 function MSALInstanceFactory() {
-  return new _azure_msal_browser__WEBPACK_IMPORTED_MODULE_15__.PublicClientApplication(_intake_ui_auth_auth_config__WEBPACK_IMPORTED_MODULE_7__.msalConfig);
+  return new _azure_msal_browser__WEBPACK_IMPORTED_MODULE_14__.PublicClientApplication(_intake_ui_auth_auth_config__WEBPACK_IMPORTED_MODULE_7__.msalConfig);
 }
 function MSALGuardConfigFactory() {
-  return {
-    interactionType: _azure_msal_browser__WEBPACK_IMPORTED_MODULE_16__.InteractionType.Popup,
-    authRequest: {
-      scopes: [
-      // 'user.read',
-      // 'https://graph.microsoft.com/User.Read',
-      // 'demand.read',
-      // 'demand.sso',
-      // 'api://demand-intake/.default'
-      'api://demand-intake/demand.login']
-    }
-  };
+  return _intake_ui_auth_auth_config__WEBPACK_IMPORTED_MODULE_7__.msalGuardConfig;
 }
 function MSALInterceptorConfigFactory() {
-  return {
-    interactionType: _azure_msal_browser__WEBPACK_IMPORTED_MODULE_16__.InteractionType.Popup,
-    protectedResourceMap: new Map([['https://graph.microsoft.com/v1.0/me', ['user.read'
-    // 'api://demand-intake/demand.login',
-    ]], [_environments_environment__WEBPACK_IMPORTED_MODULE_8__.environment.baseUrl + '/common/demand-intake/*', [
-    // 'User.Read'
-    // 'demand.read',
-    // 'demand.sso',
-    'api://demand-intake/demand.login'
-    // 'https://graph.microsoft.com/.default',
-    // 'https://graph.microsoft.com/User.Read'
-    ]]])
-  };
+  return _intake_ui_auth_auth_config__WEBPACK_IMPORTED_MODULE_7__.msalInterceptorConfig;
 }
 
 /***/ }),
@@ -367,7 +341,9 @@ function MSALInterceptorConfigFactory() {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   msalConfig: () => (/* binding */ msalConfig)
+/* harmony export */   msalConfig: () => (/* binding */ msalConfig),
+/* harmony export */   msalGuardConfig: () => (/* binding */ msalGuardConfig),
+/* harmony export */   msalInterceptorConfig: () => (/* binding */ msalInterceptorConfig)
 /* harmony export */ });
 /* harmony import */ var _azure_msal_browser__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @azure/msal-browser */ 37395);
 /* harmony import */ var _azure_msal_browser__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @azure/msal-browser */ 31436);
@@ -401,6 +377,33 @@ const msalConfig = {
       logLevel: _azure_msal_browser__WEBPACK_IMPORTED_MODULE_2__.LogLevel.Info,
       piiLoggingEnabled: false
     }
+  }
+};
+const msalInterceptorConfig = {
+  interactionType: _azure_msal_browser__WEBPACK_IMPORTED_MODULE_1__.InteractionType.Popup,
+  protectedResourceMap: new Map([['https://graph.microsoft.com/v1.0/me', ['user.read'
+  // 'api://demand-intake/demand.login',
+  ]], [_environments_environment__WEBPACK_IMPORTED_MODULE_0__.environment.baseUrl + '/common/demand-intake/*', [
+  // 'User.Read'
+  // 'demand.read',
+  // 'demand.sso',
+  // 'api://demand-intake/demand.login',
+  'api://demand-intake/.default'
+  // 'https://graph.microsoft.com/.default',
+  // 'https://graph.microsoft.com/User.Read'
+  ]]])
+};
+const msalGuardConfig = {
+  interactionType: _azure_msal_browser__WEBPACK_IMPORTED_MODULE_1__.InteractionType.Popup,
+  authRequest: {
+    scopes: [
+    // 'user.read',
+    // 'https://graph.microsoft.com/User.Read',
+    // 'demand.read',
+    // 'demand.sso',
+    'api://demand-intake/.default'
+    // 'api://demand-intake/demand.login',
+    ]
   }
 };
 
@@ -476,14 +479,7 @@ class AuthService {
   ssoLogin(response) {
     let url = this.baseUrl + '/common/demand-intake/login';
     let headerOptions = {
-      headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__.HttpHeaders({
-        'X-Correlation-ID': 'abc',
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*',
-        // This allows requests from all domains, adjust as needed
-        'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
-        'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept'
-      }).set('Authorization', `Bearer ${response.accessToken}`)
+      headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__.HttpHeaders().set('Authorization', `Bearer ${response.accessToken}`)
     };
     return this.http.post(url, response, headerOptions).pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_3__.map)(user => {
       console.log("ssoLogin() Response :", user);
