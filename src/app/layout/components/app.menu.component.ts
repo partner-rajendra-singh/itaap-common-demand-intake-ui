@@ -1,7 +1,7 @@
 import { Injector, OnInit } from '@angular/core';
 import { Component } from '@angular/core';
 import { LayoutService } from '../service/app.layout.service';
-import { AuthService } from 'src/app/intake-ui/services/auth.service';
+import { AuthService } from 'src/app/intake-ui/auth/auth.service';
 import { DemandIntakeService } from 'src/app/intake-ui/services/demand-intake.service';
 import { EventService } from 'src/app/intake-ui/services/event.service';
 import { Demand } from 'src/app/intake-ui/models/demand';

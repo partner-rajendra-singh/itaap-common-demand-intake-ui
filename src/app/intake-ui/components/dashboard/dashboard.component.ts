@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {DemandIntakeService} from '../../services/demand-intake.service';
 import {MessageService} from 'primeng/api';
-import {AuthService} from '../../services/auth.service';
+import {AuthService} from '../../auth/auth.service';
 import {EventService} from '../../services/event.service';
 import {map, catchError, throwError} from 'rxjs';
 import {AllDemands} from '../../models/all-demands';
@@ -17,7 +17,7 @@ import {FieldsService} from "../../services/fields.service";
 })
 export class DashboardComponent implements OnInit {
 
- 
+
   decisions!: string[];
   selectedDecision!: string;
   ccbInfo!: any;
@@ -39,7 +39,7 @@ export class DashboardComponent implements OnInit {
 
   dataStageITaaP: any;
   optionsStageITaaP: any;
-  
+
   dataStatusITaaP: any;
   optionsStatusITaaP: any;
 
@@ -102,7 +102,7 @@ export class DashboardComponent implements OnInit {
           }
       }
     };
-  
+
     this.dataStatusITaaP = {
       labels: ['Approved', 'Pending', 'Rejected'],
       datasets: [
@@ -185,7 +185,7 @@ export class DashboardComponent implements OnInit {
       ]
   };
 
-    
+
     this.dataQuarterITaaP = {
         labels: ['Q1', 'Q2', 'Q3', 'Q4'],
         datasets: [

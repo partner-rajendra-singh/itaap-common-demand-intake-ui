@@ -4,7 +4,7 @@ import { DemandIntakeService } from '../../services/demand-intake.service';
 import { MessageService } from 'primeng/api';
 import { first } from 'rxjs/operators';
 import { DemandIntakeDecision } from '../../enums/demand-intake-decision';
-import { AuthService } from '../../services/auth.service';
+import { AuthService } from '../../auth/auth.service';
 import { EventService } from '../../services/event.service';
 import { CCB } from '../../models/ccb';
 import { DemandStatus } from '../../enums/demand-status';
@@ -20,7 +20,7 @@ export class CCBComponent implements OnInit {
   ccbInfo!: CCB;
   visibleSubmitButton: boolean = true;
   submitDemandLabel!: string;
-  
+
   constructor(public eventService: EventService, public demandIntakeService: DemandIntakeService, private router: Router, private messageService: MessageService, public authService: AuthService) { }
 
   ngOnInit() {
@@ -35,7 +35,7 @@ export class CCBComponent implements OnInit {
       this.decisions = Object.values(DemandIntakeDecision);
       this.selectedDecision = this.getStatusValue(this.demandIntakeService.getDemandInformation().ccbInfo.decision);
     }
-   
+
     if (this.demandIntakeService.getDemandInformation().introduction.status == DemandStatus.ACCEPTED || this.demandIntakeService.getDemandInformation().introduction.status == DemandStatus.CCB_REJECTED) {
       this.visibleSubmitButton = false;
     }
@@ -54,7 +54,7 @@ export class CCBComponent implements OnInit {
       this.ccbInfo.decision = this.getStatusKey(this.selectedDecision);
       this.demandIntakeService.getDemandInformation().ccbInfo = this.ccbInfo;
       this.router.navigate(['demand-intake/confirm']);
-     
+
     } else {
       this.messageService.add({ severity: 'warn', summary: 'Error', detail: 'Please fill required fields!' });
     }

@@ -2,7 +2,7 @@ import {Component, HostListener, OnDestroy, OnInit} from '@angular/core';
 import {MenuItem, MessageService} from 'primeng/api';
 import {Subscription} from 'rxjs';
 import {DemandIntakeService} from '../../services/demand-intake.service';
-import {AuthService} from '../../services/auth.service';
+import {AuthService} from '../../auth/auth.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {EventService} from '../../services/event.service';
 import { DemandStatus } from '../../enums/demand-status';

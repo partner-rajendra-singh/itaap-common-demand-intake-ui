@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { ConfirmationService, MessageService } from 'primeng/api';
-import { AuthService } from '../../services/auth.service';
+import { AuthService } from '../../auth/auth.service';
 import { DemandIntakeService } from '../../services/demand-intake.service';
 import { first } from 'rxjs';
 import { EventService } from '../../services/event.service';

@@ -1,0 +1,54 @@
+# This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-nodejs
+
+name: Node.js CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [20.x]
+        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v3
+    
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+
+    - name: Install Dependencies
+      run: npm install --force
+      
+    - name: Set Environment Variables
+      run: echo "BUILD_CONFIGURATION=${{ env.BUILD_CONFIGURATION }}" >> $GITHUB_ENV
+      
+    - name: Build Angular App
+      run: npm run build:local
+    #   run: npm run build --if-present
+
+    # - name: Deploy to gh pages
+      # run: npx angular-cli-ghpages --dir=dist/itaap-ms-manager
+      # env:
+        # CI: true
+        # GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    # - run: npm test
+    - name: Deploy to Cloud
+      uses: JamesIves/github-pages-deploy-action@4.1.5
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        build_configuration: local
+        base_href: https://partner-rajendra-singh.github.io/itaap-common-demand-intake-ui/
+        branch: build  # Target branch for deployment
+        folder: build/local

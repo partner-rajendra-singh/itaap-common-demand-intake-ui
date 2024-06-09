@@ -1,15 +1,15 @@
-import { Component } from '@angular/core';
-import { Subscription } from 'rxjs';
-import { Router } from "@angular/router";
-import { PrimeNGConfig } from 'primeng/api';
-import { User } from './intake-ui/models/user';
-import { AuthService } from './intake-ui/services/auth.service';
+import {Component, OnInit} from '@angular/core';
+import {Subscription} from 'rxjs';
+import {Router} from "@angular/router";
+import {PrimeNGConfig} from 'primeng/api';
+import {User} from './intake-ui/models/user';
+import {AuthService} from './intake-ui/auth/auth.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html'
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'itaap-demand-intake-ui';
   currentUser!: User;
   currentUserSubscription!: Subscription;
@@ -17,7 +17,7 @@ export class AppComponent {
 
   constructor(
     private primengConfig: PrimeNGConfig,
-    private authService: AuthService, 
+    private authService: AuthService,
     private router: Router) {
     this.currentUserSubscription = this.authService.currentUser.subscribe(user => {
       this.currentUser = user;
@@ -26,15 +26,10 @@ export class AppComponent {
 
   ngOnInit() {
     this.primengConfig.ripple = true;
-    if (this.isAuthenticated()) {
-      this.router.navigate(['/dashboard']);
-    } else {
-      this.router.navigate(['/login']);
-    }
+    this.router.navigate(['/login']);
   }
 
   isAuthenticated() {
     return this.authService.isAuthenticatedUser();
   }
-
 }

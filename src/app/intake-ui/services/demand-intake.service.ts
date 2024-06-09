@@ -4,7 +4,7 @@ import {map} from 'rxjs/operators';
 import {environment} from 'src/environments/environment';
 import {Demand} from '../models/demand';
 import {Router} from '@angular/router';
-import {AuthService} from './auth.service';
+import {AuthService} from '../auth/auth.service';
 import {DM} from '../models/dm';
 import {CCB} from '../models/ccb';
 import {EADI} from '../models/eadi';
@@ -466,11 +466,11 @@ export class DemandIntakeService {
     if(this.demandInformation.introduction.status === DemandStatus.ACCEPTED || this.demandInformation.introduction.status === DemandStatus.DM_REJECTED || this.demandInformation.introduction.status === DemandStatus.CCB_REJECTED){
       return false;
     }
-    
+
     if (this.authService.currentUserValue.domain.includes(solution)) {
       return true;
     }
-    
+
     return false;
   }
 
