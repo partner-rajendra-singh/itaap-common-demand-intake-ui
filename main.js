@@ -348,7 +348,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _azure_msal_browser__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @azure/msal-browser */ 37395);
 /* harmony import */ var _azure_msal_browser__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @azure/msal-browser */ 31436);
 /* harmony import */ var _environments_environment__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../environments/environment */ 45312);
-// src/app/auth-config.ts
 
 
 const msalConfig = {
