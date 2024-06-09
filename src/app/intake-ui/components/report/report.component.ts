@@ -3,7 +3,7 @@ import { ReportRequest } from '../../models/report-request';
 import { EventService } from '../../services/event.service';
 import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
-import { AuthService } from '../../services/auth.service';
+import { AuthService } from '../../auth/auth.service';
 import { DemandIntakeService } from '../../services/demand-intake.service';
 import { DemandStatusFilter } from '../../enums/demand-status-filter';
 import { ApproverDomain } from '../../enums/approver-domain';

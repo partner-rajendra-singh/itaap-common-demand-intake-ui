@@ -1,7 +1,7 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { LayoutService } from "../service/app.layout.service";
-import { AuthService } from 'src/app/intake-ui/services/auth.service';
+import { AuthService } from 'src/app/intake-ui/auth/auth.service';
 import { EventService } from 'src/app/intake-ui/services/event.service';
 import { ApproverDomain } from 'src/app/intake-ui/enums/approver-domain';
 import { Router } from '@angular/router';
@@ -38,7 +38,7 @@ export class AppTopBarComponent implements OnInit {
         this.authService.currentUserValue.domain.forEach(item => {
           this.dmDomainList.push(this.getDomainValue(item));
         })
-        
+
       }
     }
 

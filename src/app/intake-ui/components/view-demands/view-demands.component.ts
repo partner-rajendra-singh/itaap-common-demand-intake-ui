@@ -4,7 +4,7 @@ import { catchError, map, throwError } from 'rxjs';
 import { Demand } from '../../models/demand';
 import { MessageService } from 'primeng/api';
 import { Router } from '@angular/router';
-import { AuthService } from '../../services/auth.service';
+import { AuthService } from '../../auth/auth.service';
 import { AllDemands } from '../../models/all-demands';
 import { EventService } from '../../services/event.service';
 import { DemandCategory } from '../../enums/demand-category';

@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {DemandIntakeService} from '../../services/demand-intake.service';
 import {MessageService} from 'primeng/api';
-import {AuthService} from '../../services/auth.service';
+import {AuthService} from '../../auth/auth.service';
 import {first} from 'rxjs/operators';
 import {DemandIntakeDecision} from '../../enums/demand-intake-decision';
 import {EventService} from '../../services/event.service';

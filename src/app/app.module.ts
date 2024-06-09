@@ -5,7 +5,7 @@ import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {DemandIntakeService} from './intake-ui/services/demand-intake.service';
 import {ConfirmationService, MessageService} from 'primeng/api';
-import {AuthService} from './intake-ui/services/auth.service';
+import {AuthService} from './intake-ui/auth/auth.service';
 import {AuthGuard} from './intake-ui/services/auth-guard.service';
 import {MainAppLayoutModule} from './layout/main.app.layout.module';
 import {IntakeUIComponentsModule} from './intake-ui/intake-ui.module';
@@ -22,7 +22,7 @@ import {
   MsalInterceptorConfiguration, MsalModule
 } from '@azure/msal-angular';
 import {PublicClientApplication, InteractionType} from '@azure/msal-browser';
-import {msalConfig} from './intake-ui/services/auth-config';
+import {msalConfig} from './intake-ui/auth/auth-config';
 import {HashLocationStrategy, LocationStrategy} from '@angular/common';
 import {environment} from "../environments/environment";
 
@@ -73,7 +73,14 @@ function MSALGuardConfigFactory(): MsalGuardConfiguration {
   return {
     interactionType: InteractionType.Popup,
     authRequest: {
-      scopes: ['user.read', 'https://graph.microsoft.com/.default'] // Add scopes here
+      scopes: [
+        // 'user.read',
+        // 'https://graph.microsoft.com/User.Read',
+        // 'demand.read',
+        // 'demand.sso',
+        // 'api://demand-intake/.default'
+        'api://demand-intake/demand.login',
+      ]
     }
   };
 }
@@ -82,8 +89,18 @@ function MSALInterceptorConfigFactory(): MsalInterceptorConfiguration {
   return {
     interactionType: InteractionType.Popup,
     protectedResourceMap: new Map([
-      ['https://graph.microsoft.com/v1.0/me', ['user.read']],
-      [environment.baseUrl + '/common/demand-intake/*', ['https://graph.microsoft.com/.default']] // Adjust the scope accordingly
+      ['https://graph.microsoft.com/v1.0/me', [
+        'user.read',
+        // 'api://demand-intake/demand.login',
+      ]],
+      [environment.baseUrl + '/common/demand-intake/*', [
+        // 'User.Read'
+        // 'demand.read',
+        // 'demand.sso',
+        'api://demand-intake/demand.login',
+        // 'https://graph.microsoft.com/.default',
+        // 'https://graph.microsoft.com/User.Read'
+      ]],
     ])
   };
 }

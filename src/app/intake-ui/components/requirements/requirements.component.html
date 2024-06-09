@@ -6,311 +6,336 @@
                 <div class="grid" style="height: 0.5pt;">
                     <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-8"></div>
                     <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-4">
-                        <label for="statement">Fill the information with best of your knowledge.</label>
+                        <label for="statement">{{ fieldsService.getLabel('FUNCTIONAL_NOTE') }}
+                        </label>
                     </div>
                 </div>
                 <p-tabView [activeIndex]="eventService.selectedRequirementsTabIndex" (onChange)="onTabChange($event)">
-                    <p-tabPanel header="Functional">
+                    <p-tabPanel header="{{ fieldsService.getLabel('FUNCTIONAL_TAB_PANEL') }}">
                         <div class="grid">
                             <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
                                 <label for="statement" required class="asterisk-if-mandatory"
-                                    style="width:100px">Problem Statement</label>
+                                    style="width:100px">{{ fieldsService.getLabel('FUNCTIONAL_PROBLEM_STATEMENT') }}</label>
                             </div>
                             <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
                                 <textarea rows="2" [(ngModel)]="requirementFunctionalInfo.statement" cols="75"
+                                [pTooltip]="fieldsService.getToolTip('FUNCTIONAL_PROBLEM_STATEMENT')"
                                     pInputTextarea></textarea>
                             </div>
                             <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                                <label for="scope" required class="asterisk-if-mandatory" style="width:100px">Demand
-                                    Scope</label>
+                                <label for="scope" required class="asterisk-if-mandatory" style="width:100px">{{ fieldsService.getLabel('FUNCTIONAL_DEMAND_SCOPE') }}</label>
                             </div>
                             <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
                                 <textarea rows="2" [(ngModel)]="requirementFunctionalInfo.scope" cols="75"
+                                [pTooltip]="fieldsService.getToolTip('FUNCTIONAL_DEMAND_SCOPE')"
                                     pInputTextarea></textarea>
                             </div>
                             <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
                                 <label for="businessValue" required class="asterisk-if-mandatory"
-                                    style="width:100px">Business Value</label>
+                                    style="width:100px">{{ fieldsService.getLabel('FUNCTIONAL_BUSINESS_VALUE') }}</label>
                             </div>
                             <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
                                 <textarea rows="2" [(ngModel)]="requirementFunctionalInfo.businessValue" cols="75"
+                                [pTooltip]="fieldsService.getToolTip('FUNCTIONAL_BUSINESS_VALUE')"
                                     pInputTextarea></textarea>
                             </div>
                             <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
                                 <label for="goLiveApproach" required class="asterisk-if-mandatory"
-                                    style="width:100px">Go-Live Approach</label>
+                                    style="width:100px">{{ fieldsService.getLabel('FUNCTIONAL_GO_LIVE_APPROACH') }}</label>
                             </div>
                             <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
                                 <input type="radio" id="glA1" name="goLiveApproach" checked="checked"
+                                [pTooltip]="fieldsService.getToolTip('FUNCTIONAL_GO_LIVE_APPROACH_ONE_TIME')"
                                     [(ngModel)]="requirementFunctionalInfo.goLiveApproach" value="oneTime">
-                                <label for="glA1">One Time</label>
+                                <label for="glA1">{{ fieldsService.getLabel('FUNCTIONAL_GO_LIVE_APPROACH_ONE_TIME') }}</label>
                                 <input type="radio" id="glA2" name="goLiveApproach"
+                                [pTooltip]="fieldsService.getToolTip('FUNCTIONAL_GO_LIVE_APPROACH_PHASED')"
                                     [(ngModel)]="requirementFunctionalInfo.goLiveApproach" value="phased">
-                                <label for="glA2">Phased</label>
+                                <label for="glA2">{{ fieldsService.getLabel('FUNCTIONAL_GO_LIVE_APPROACH_PHASED') }}</label>
                             </div>
                             <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3"
                                 *ngIf="requirementFunctionalInfo.goLiveApproach == 'oneTime'">
-                                <label for="requestDate" class="col-fixed" style="width:100px">Desired/Requested Go Live Date</label>
+                                <label for="requestDate" class="col-fixed" style="width:100px">{{ fieldsService.getLabel('FUNCTIONAL_DESIRED_REQUESTED_GO_LIVE') }}</label>
                             </div>
                             <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3"
                                 *ngIf="requirementFunctionalInfo.goLiveApproach == 'phased'">
-                                <label for="requestDate" class="col-fixed" style="width:100px">Desired/Requested First Go Live
-                                    Date</label>
+                                <label for="requestDate" class="col-fixed" style="width:100px">{{ fieldsService.getLabel('FUNCTIONAL_DESIRED_FIRST_GO_LIVE') }}
+                                    </label>
                             </div>
                             <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9"
                                 *ngIf="requirementFunctionalInfo.goLiveApproach == 'oneTime' || requirementFunctionalInfo.goLiveApproach == 'phased'">
                                 <p-calendar dateFormat="dd/mm/yy" [(ngModel)]="requirementFunctionalInfo.bglDate"
+                                [pTooltip]="fieldsService.getToolTip('FUNCTIONAL_GO_LIVE_DATE')"
                                     [minDate]="eventService.goLiveMinDate" [showIcon]="true"></p-calendar>
                             </div>
 
                             <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                                <label for="sourceDetails" style="width:100px">Source Details</label>
+                                <label for="sourceDetails" style="width:100px">{{ fieldsService.getLabel('FUNCTIONAL_SOURCE_DETAILS') }}</label>
                             </div>
                             <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
                                 <textarea rows="2" [(ngModel)]="requirementFunctionalInfo.sourceDetails" cols="75"
+                                [pTooltip]="fieldsService.getToolTip('FUNCTIONAL_SOURCE_DETAILS')"
                                     pInputTextarea></textarea>
                             </div>
 
                             <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                                <label for="targetDetails" style="width:100px">Target Details</label>
+                                <label for="targetDetails" style="width:100px">{{ fieldsService.getLabel('FUNCTIONAL_TARGET_DETAILS') }}</label>
                             </div>
                             <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
                                 <textarea rows="2" [(ngModel)]="requirementFunctionalInfo.targetDetails" cols="75"
+                                [pTooltip]="fieldsService.getToolTip('FUNCTIONAL_TARGET_DETAILS')"
                                     pInputTextarea></textarea>
                             </div>
 
                             <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                                <label for="mappingRequirement" style="width:100px">Mapping Requirement</label>
+                                <label for="mappingRequirement" style="width:100px">{{ fieldsService.getLabel('FUNCTIONAL_MAPPING_REQ') }}</label>
                             </div>
                             <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
                                 <textarea rows="2" [(ngModel)]="requirementFunctionalInfo.mappingRequirement" cols="75"
-                                    pInputTextarea pTooltip="Please attach the mapping document and/or provide the link in the description along with mapping information"></textarea>
+                                [pTooltip]="fieldsService.getToolTip('FUNCTIONAL_MAPPING_REQ')"
+                                    pInputTextarea></textarea>
                             </div>
                         </div>
                     </p-tabPanel>
-                    <p-tabPanel header="Non Functional">
-                        <p-fieldset legend="Common">
+                    <p-tabPanel header="{{ fieldsService.getLabel('NON_FUNCTIONAL_TAB_PANEL') }}">
+                        <p-fieldset legend="{{ fieldsService.getLabel('NON_FUNCTIONAL_COMMON') }}">
                             <div class="grid">
                                 <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                                    <label for="messageClassification">Message Classification</label>
+                                    <label for="messageClassification">{{ fieldsService.getLabel('NON_FUNCTIONAL_MESSAGE_CLASSIFICATION') }}</label>
                                 </div>
                                 <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
                                     <input pInputText id="messageClassification" size="70"
                                         placeholder="Is the message structured for example XML or unstructured?"
                                         [(ngModel)]="requirementNonFunctionalInfo.msgClassification"
-                                        pTooltip="Is the message structured for example XML or unstructured?"
+                                        [pTooltip]="fieldsService.getToolTip('NON_FUNCTIONAL_MESSAGE_CLASSIFICATION')"
                                         aria-describedby="messageClassification-help" />
                                 </div>
                                 <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                                    <label for="messageSize">Message Size</label>
+                                    <label for="messageSize">{{ fieldsService.getLabel('NON_FUNCTIONAL_MESSAGE_SIZE') }}</label>
                                 </div>
                                 <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
                                     <input pInputText id="messageSize"
                                         [(ngModel)]="requirementNonFunctionalInfo.msgSize" size="70"
                                         placeholder="Size of the individual messages /dataset  exchanged. Provide the peak and average size of messages"
-                                        pTooltip="Size of the individual messages /dataset  exchanged. Provide the peak and average size of messages"
+                                        [pTooltip]="fieldsService.getToolTip('NON_FUNCTIONAL_MESSAGE_SIZE')"
                                         aria-describedby="messageSize-help" />
                                 </div>
                                 <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                                    <label for="volume">Volume</label>
+                                    <label for="volume">{{ fieldsService.getLabel('NON_FUNCTIONAL_VOLUME') }}</label>
                                 </div>
                                 <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
                                     <input pInputText id="volume" [(ngModel)]="requirementNonFunctionalInfo.volume" size="70"
                                     placeholder="Volume of messages per time interval. Provide peak and average values along with the volume spread over the year (seasonal peaks etc)"
-                                        pTooltip="Volume of messages per time interval. Provide peak and average values along with the volume spread over the year (seasonal peaks etc)"
+                                    [pTooltip]="fieldsService.getToolTip('NON_FUNCTIONAL_VOLUME')"
                                         ia-describedby="volume-help" />
                                 </div>
                                 <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                                    <label for="timing">Timing</label>
+                                    <label for="timing">{{ fieldsService.getLabel('NON_FUNCTIONAL_TIMING') }}</label>
                                 </div>
                                 <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
                                     <input pInputText id="timing" [(ngModel)]="requirementNonFunctionalInfo.timing" size="70"
                                     placeholder="When are the messages exchanged?"
-                                        pTooltip="When are the messages exchanged?" aria-describedby="timing-help" />
+                                    [pTooltip]="fieldsService.getToolTip('NON_FUNCTIONAL_TIMING')" aria-describedby="timing-help" />
                                 </div>
                                 <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                                    <label for="maximumLatency">Maximum Latency</label>
+                                    <label for="maximumLatency">{{ fieldsService.getLabel('NON_FUNCTIONAL_MAXIMUM_LATENCY') }}</label>
                                 </div>
                                 <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
                                     <input pInputText id="maximumLatency"
                                         [(ngModel)]="requirementNonFunctionalInfo.maxLatency" size="70"
                                         placeholder="What is the expected throughput time for each transaction? (in mSec/Sec/Min/hour) What is the maximum acceptable delay in processing?"
-                                        pTooltip="What is the expected throughput time for each transaction? (in mSec/Sec/Min/hour) What is the maximum acceptable delay in processing?"
+                                        [pTooltip]="fieldsService.getToolTip('NON_FUNCTIONAL_MAXIMUM_LATENCY')"
                                         aria-describedby="maximumLatency-help" />
                                 </div>
                                 <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                                    <label for="businessCriticality">Business Criticality</label>
+                                    <label for="businessCriticality">{{ fieldsService.getLabel('NON_FUNCTIONAL_BUSINESS_CRITICALITY') }}</label>
                                 </div>
                                 <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
                                     <input pInputText id="businessCriticality"
                                         [(ngModel)]="requirementNonFunctionalInfo.businessCriticality" size="70"
                                         placeholder="What is the affordable downtime/unavailability for the solution? (in mSecs/Sec/Min/Hour)"
-                                        pTooltip="What is the affordable downtime/unavailability for the solution? (in mSecs/Sec/Min/Hour)"
+                                        [pTooltip]="fieldsService.getToolTip('NON_FUNCTIONAL_BUSINESS_CRITICALITY')"
                                         aria-describedby="businessCriticality-help" />
                                 </div>
                                 <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                                    <label for="dataPrivacy">Data Privacy</label>
+                                    <label for="dataPrivacy">{{ fieldsService.getLabel('NON_FUNCTIONAL_DATA_PRIVACY') }}</label>
                                 </div>
                                 <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
                                     <input pInputText id="dataPrivacy"
                                         [(ngModel)]="requirementNonFunctionalInfo.dataPrivacy" size="70"
                                         placeholder="State if the data need to be signed/encrypted either for regulatory or due to organizational policies"
-                                        pTooltip="State if the data need to be signed/encrypted either for regulatory or due to organizational policies"
+                                        [pTooltip]="fieldsService.getToolTip('NON_FUNCTIONAL_DATA_PRIVACY')"
                                         aria-describedby="dataPrivacy-help" />
                                 </div>
                                 <div class="col-12 xs:col-12 sm:col-12 lg:col-12 xl:col-12">
-                                    <label for="qualityServiceReq"><b>Quality of Service requirements</b></label>
+                                    <label for="qualityServiceReq"><b>{{ fieldsService.getLabel('NON_FUNCTIONAL_QUALITY_LABEL') }}</b></label>
                                 </div>
 
                                 <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                                    <label for="transformation">Transformation</label>
+                                    <label for="transformation">{{ fieldsService.getLabel('NON_FUNCTIONAL_TRANSFORMATION') }}</label>
                                 </div>
                                 <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
                                     <p-checkbox [(ngModel)]="requirementNonFunctionalInfo.transformation"
+                                    [pTooltip]="fieldsService.getToolTip('NON_FUNCTIONAL_TRANSFORMATION')"
                                         [binary]="true" inputId="transformation"></p-checkbox>
                                 </div>
                                 <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                                    <label for="routing">Routing</label>
+                                    <label for="routing">{{ fieldsService.getLabel('NON_FUNCTIONAL_ROUTING') }}</label>
                                 </div>
                                 <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
                                     <p-checkbox [binary]="true" [(ngModel)]="requirementNonFunctionalInfo.routing"
+                                    [pTooltip]="fieldsService.getToolTip('NON_FUNCTIONAL_ROUTING')"
                                         inputId="routing"></p-checkbox>
                                 </div>
                                 <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                                    <label for="protocolConversion">Protocol Conversion</label>
+                                    <label for="protocolConversion">{{ fieldsService.getLabel('NON_FUNCTIONAL_PROTOCOL') }}</label>
                                 </div>
                                 <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
                                     <p-checkbox [binary]="true"
                                         [(ngModel)]="requirementNonFunctionalInfo.protocolConversion"
+                                        [pTooltip]="fieldsService.getToolTip('NON_FUNCTIONAL_PROTOCOL')"
                                         inputId="protocolConversion"></p-checkbox>
                                 </div>
                                 <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                                    <label for="messageSequencng">Message Sequencing</label>
+                                    <label for="messageSequencng">{{ fieldsService.getLabel('NON_FUNCTIONAL_MESSAGE_SEQUENCING') }}</label>
                                 </div>
                                 <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
                                     <p-checkbox [binary]="true" [(ngModel)]="requirementNonFunctionalInfo.msgSequencing"
+                                    [pTooltip]="fieldsService.getToolTip('NON_FUNCTIONAL_MESSAGE_SEQUENCING')"
                                         inputId="messageSequencng"></p-checkbox>
                                 </div>
                                 <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                                    <label for="integrationItaap">Track and Trace</label>
+                                    <label for="integrationItaap">{{ fieldsService.getLabel('NON_FUNCTIONAL_TRACK_TRACE') }}</label>
                                 </div>
                                 <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
                                     <p-checkbox [binary]="true" [(ngModel)]="requirementNonFunctionalInfo.trackNTrace"
+                                    [pTooltip]="fieldsService.getToolTip('NON_FUNCTIONAL_TRACK_TRACE')"
                                         inputId="integrationItaap"></p-checkbox>
                                 </div>
                                 <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                                    <label for="pesristenceAndArchiving">Persistence and Archiving</label>
+                                    <label for="pesristenceAndArchiving">{{ fieldsService.getLabel('NON_FUNCTIONAL_PERSISTENCE') }}</label>
                                 </div>
                                 <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
                                     <p-checkbox [binary]="true" [(ngModel)]="requirementNonFunctionalInfo.persistence"
+                                    [pTooltip]="fieldsService.getToolTip('NON_FUNCTIONAL_PERSISTENCE')"
                                         inputId="pesristenceAndArchiving"></p-checkbox>
                                 </div>
                                 <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                                    <label for="senderTechnicalDetails">Sender Technical Details</label>
+                                    <label for="senderTechnicalDetails">{{ fieldsService.getLabel('NON_FUNCTIONAL_STD') }}</label>
                                 </div>
                                 <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
                                     <textarea rows="2" [(ngModel)]="requirementNonFunctionalInfo.senderTechnicalDetails"
                                         cols="75" pInputTextarea
                                         placeholder="State the technical aspects of the Sending system. Note: Please list what can be done, not what has been done in the past."
-                                        pTooltip="State the technical aspects of the Sending system. Note: Please list what can be done, not what has been done in the past."
+                                        [pTooltip]="fieldsService.getToolTip('NON_FUNCTIONAL_STD')"
                                         aria-describedby="senderTechnicalDetails-help"></textarea>
                                 </div>
                                 <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                                    <label for="receiverTechnicalDetails">Receiver Technical Details</label>
+                                    <label for="receiverTechnicalDetails">{{ fieldsService.getLabel('NON_FUNCTIONAL_RTD') }}</label>
                                 </div>
                                 <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
                                     <textarea rows="2"
                                         [(ngModel)]="requirementNonFunctionalInfo.receiverTechnicalDetails" cols="75"
                                         pInputTextarea
                                         placeholder="State the technical aspects of the Receiving system. Note: Please list what can be done, not what has been done in the past."
-                                        pTooltip="State the technical aspects of the Receiving system. Note: Please list what can be done, not what has been done in the past."
+                                        [pTooltip]="fieldsService.getToolTip('NON_FUNCTIONAL_RTD')"
                                         aria-describedby="receiverTechnicalDetails-help"></textarea>
                                 </div>
                             </div>
                         </p-fieldset>
-                        <p-fieldset legend="Data Specific Information">
+                        <p-fieldset legend="{{ fieldsService.getLabel('NON_FUNCTIONAL_DATA_INFO') }}">
                             <div class="grid">
                                 <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                                    <label for="refreshFrequency">Data Refresh Frequency</label>
+                                    <label for="refreshFrequency">{{ fieldsService.getLabel('NON_FUNCTIONAL_REFRESH_FREQ') }}</label>
                                 </div>
                                 <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
                                     <input pInputText id="refreshFrequency" size="70"
+                                    [pTooltip]="fieldsService.getToolTip('NON_FUNCTIONAL_REFRESH_FREQ')"
                                         [(ngModel)]="requirementNonFunctionalInfo.refreshFrequency" />
                                 </div>
                                 <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                                    <label for="dimentionType">Slow Changing Dimention Type</label>
+                                    <label for="dimentionType">{{ fieldsService.getLabel('NON_FUNCTIONAL_DIMENTION_TYPE') }}</label>
                                 </div>
                                 <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
                                     <input pInputText id="dimentionType" size="70"
+                                    [pTooltip]="fieldsService.getToolTip('NON_FUNCTIONAL_DIMENTION_TYPE')"
                                         [(ngModel)]="requirementNonFunctionalInfo.dimentionType" />
                                 </div>
                                 <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                                    <label for="snapshot">Snapshots/Delta</label>
+                                    <label for="snapshot">{{ fieldsService.getLabel('NON_FUNCTIONAL_SNAPSHOT') }}</label>
                                 </div>
                                 <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
                                     <input pInputText id="snapshot" size="70"
+                                    [pTooltip]="fieldsService.getToolTip('NON_FUNCTIONAL_SNAPSHOT')"
                                         [(ngModel)]="requirementNonFunctionalInfo.snapshot" />
                                 </div>
                             </div>
                         </p-fieldset>
 
                     </p-tabPanel>
-                    <p-tabPanel header="Compliance">
+                    <p-tabPanel header="{{ fieldsService.getLabel('COMPLIANCE_TAB_PANEL') }}">
                         <div class="grid">
                             <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                                <label for="sox">SOX</label>
+                                <label for="sox">{{ fieldsService.getLabel('COMPLIANCE_SOX') }}</label>
                             </div>
                             <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
                                 <p-checkbox [binary]="true" [(ngModel)]="requirementComplianceInfo.sox"
+                                [pTooltip]="fieldsService.getToolTip('COMPLIANCE_SOX')"
                                     inputId="sox"></p-checkbox>
                             </div>
                             <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                                <label for="fda">FDA</label>
+                                <label for="fda">{{ fieldsService.getLabel('COMPLIANCE_FDA') }}</label>
                             </div>
                             <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
                                 <p-checkbox [binary]="true" [(ngModel)]="requirementComplianceInfo.fda"
+                                [pTooltip]="fieldsService.getToolTip('COMPLIANCE_FDA')"
                                     inputId="fda"></p-checkbox>
                             </div>
                             <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                                <label for="security">Security</label>
+                                <label for="security">{{ fieldsService.getLabel('COMPLIANCE_SECURITY') }}</label>
                             </div>
                             <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
                                 <p-checkbox [binary]="true" [(ngModel)]="requirementComplianceInfo.security"
+                                [pTooltip]="fieldsService.getToolTip('COMPLIANCE_SECURITY')"
                                     inputId="security"></p-checkbox>
                             </div>
                             <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                                <label for="privacy">Privacy</label>
+                                <label for="privacy">{{ fieldsService.getLabel('COMPLIANCE_PRIVACY') }}</label>
                             </div>
                             <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
                                 <p-checkbox [binary]="true" [(ngModel)]="requirementComplianceInfo.privacy"
+                                [pTooltip]="fieldsService.getToolTip('COMPLIANCE_PRIVACY')"
                                     inputId="privacy"></p-checkbox>
                             </div>
 
                             <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                                <label for="qms">QMS</label>
+                                <label for="qms">{{ fieldsService.getLabel('COMPLIANCE_QMS') }}</label>
                             </div>
                             <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
                                 <p-checkbox [binary]="true" [(ngModel)]="requirementComplianceInfo.qms"
+                                [pTooltip]="fieldsService.getToolTip('COMPLIANCE_QMS')"
                                     inputId="qms"></p-checkbox>
                             </div>
 
                             <div class="col-12 xs:col-12 sm:col-12 lg:col-12 xl:col-12"
                                 *ngIf="requirementComplianceInfo.qms" style="display: inline-flex;">
                                 <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                                    <label for="valgEntityId">Valgenesis Entity ID</label>
+                                    <label for="valgEntityId">{{ fieldsService.getLabel('COMPLIANCE_VALGENESIS_ID') }}</label>
                                 </div>
                                 <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
                                     <input pInputText id="valgEntityId"
+                                    [pTooltip]="fieldsService.getToolTip('COMPLIANCE_VALGENESIS_ID')"
                                         [(ngModel)]="requirementComplianceInfo.valgEntityId"
                                         aria-describedby="messageSize-help" />
                                 </div>
                             </div>
 
                             <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                                <label for="qsia">QSIA</label>
+                                <label for="qsia">{{ fieldsService.getLabel('COMPLIANCE_QSIA') }}</label>
                             </div>
                             <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
                                 <p-checkbox [binary]="true" [(ngModel)]="requirementComplianceInfo.qsia"
+                                [pTooltip]="fieldsService.getToolTip('COMPLIANCE_QSIA')"
                                     inputId="qsia"></p-checkbox>
                             </div>
 
@@ -336,10 +361,10 @@
     </ng-template>
     <ng-template pTemplate="footer">
         <div class="grid grid-nogutter justify-content-between">
-            <p-button label="Back" (onClick)="prevPage()" icon="pi pi-angle-left"></p-button>
-            <p-button label="Save For Later" *ngIf="visibleSaveButton" (onClick)="savePage()"
+            <p-button label="{{ fieldsService.getLabel('BACK_BUTTON') }}" (onClick)="prevPage()" icon="pi pi-angle-left"></p-button>
+            <p-button label="{{ fieldsService.getLabel('SAVE_FOR_LATER') }}" *ngIf="visibleSaveButton" (onClick)="savePage()"
                 iconPos="right"></p-button>
-            <p-button label="Next" (onClick)="nextPage()" icon="pi pi-angle-right"></p-button>
+            <p-button label="{{ fieldsService.getLabel('NEXT_BUTTON') }}" (onClick)="nextPage()" icon="pi pi-angle-right"></p-button>
         </div>
     </ng-template>
 </p-card>

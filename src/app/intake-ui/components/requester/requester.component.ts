@@ -3,13 +3,14 @@ import {Router} from '@angular/router';
 import {DemandIntakeService} from '../../services/demand-intake.service';
 import {MessageService} from 'primeng/api';
 import {catchError, first, map, throwError} from 'rxjs';
-import {AuthService} from '../../services/auth.service';
+import {AuthService} from '../../auth/auth.service';
 import {EventService} from '../../services/event.service';
 import {Market} from '../../enums/market';
 import {BusinessUnit} from '../../enums/businessUnit';
 import {RequesterInfo} from '../../models/requester-info';
 import {Spoc} from '../../models/spoc';
 import { DemandStatus } from '../../enums/demand-status';
+import {FieldsService} from "../../services/fields.service";
 
 interface Domain {
   key: string;
@@ -34,7 +35,7 @@ export class RequesterComponent implements OnInit {
   otherBusinessUnit!: string;
   isAnotherRequester!: boolean;
 
-  constructor(public authService: AuthService, public demandIntakeService: DemandIntakeService, private router: Router, private messageService: MessageService, public eventService: EventService) {
+  constructor(public authService: AuthService, public demandIntakeService: DemandIntakeService,public fieldsService: FieldsService, private router: Router, private messageService: MessageService, public eventService: EventService) {
     if (authService.isRequester()) {
       if (this.demandIntakeService.getDemandInformation().introduction.status != DemandStatus.DRAFT && this.demandIntakeService.getDemandInformation().introduction.status != null) {
         this.visibleSaveButton = false;

@@ -4,7 +4,7 @@ import { DemandIntakeService } from '../../services/demand-intake.service';
 import { first } from 'rxjs';
 import { MessageService } from 'primeng/api';
 import { EventService } from '../../services/event.service';
-import { AuthService } from '../../services/auth.service';
+import { AuthService } from '../../auth/auth.service';
 import { SolutionDirection1 } from '../../models/solution-direction1';
 import { SolutionDirection } from '../../models/solution-direction';
 import { DemandStatus } from '../../enums/demand-status';
@@ -23,7 +23,7 @@ export class SolutionDirectionComponent {
 
   ngOnInit() {
     console.log("SolutionDirectionComponent Init: ", this.demandIntakeService.demandInformation)
-    
+
     this.solutionDirectionInfo = this.demandIntakeService.getDemandInformation().solutionDirectionInfo;
     this.eventService.solutionDirectionValue = this.solutionDirectionInfo;
     this.solutionDirectionInfo.forEach(item => {

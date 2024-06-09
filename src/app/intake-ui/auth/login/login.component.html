@@ -30,22 +30,6 @@
                 </div>
 
                  <button pButton pRipple label="SSO Sign In" class="w-full p-3 text-xl" (click)="ssoLogin()"></button>
-
-                <div class="md:w-30rem">
-                    <label for="email1" class="block text-900 text-xl font-medium mb-2">Email</label>
-                    <div class="p-inputgroup mb-5 w-full">
-                        <input id="email1" type="email" [(ngModel)]='email' (blur)="eventService.checkEmailValue(email)"
-                            placeholder="Email address" pInputText style="padding:1rem" [disabled]="otpSent" />
-                        <button pButton pRipple type="button" label="Get OTP" (click)="getOTP()" [disabled]="otpSent"></button>
-                    </div>
-                    <div *ngIf="otpSent">
-                        <label for="password1" class="block text-900 font-medium text-xl mb-2">OTP</label>
-                        <input styleClass="mb-5" style="padding:1rem" pInputText class="mb-5 w-full" id="otp"
-                            [(ngModel)]='token' type="password"
-                            placeholder="Enter OTP received on your email address" />
-                        <button pButton pRipple label="Sign In" class="w-full p-3 text-xl" (click)="login($event, $event)"></button>
-                    </div>
-                </div>
             </div>
         </div>
     </div>
