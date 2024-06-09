@@ -35,7 +35,7 @@ jobs:
       run: echo "BUILD_CONFIGURATION=${{ env.BUILD_CONFIGURATION }}" >> $GITHUB_ENV
       
     - name: Build Angular App
-      run: npm run build:${{ env.BUILD_CONFIGURATION }}
+      run: npm run build:local
     #   run: npm run build --if-present
 
     # - name: Deploy to gh pages
@@ -48,7 +48,7 @@ jobs:
       uses: JamesIves/github-pages-deploy-action@4.1.5
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
-        build_configuration: ${{ env.BUILD_CONFIGURATION }}
+        build_configuration: local
         base_href: https://partner-rajendra-singh.github.io/itaap-common-demand-intake-ui/
         branch: build  # Target branch for deployment
-        folder: build/${{ env.BUILD_CONFIGURATION }}
+        folder: build/local
