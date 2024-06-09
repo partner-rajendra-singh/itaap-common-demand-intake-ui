@@ -21,11 +21,14 @@
     "@angular/platform-browser": "^18.0.0",
     "@angular/platform-browser-dynamic": "^18.0.0",
     "@angular/router": "^18.0.0",
+    "@azure/msal-angular": "3.0.17",
+    "@azure/msal-browser": "3.14.0",
     "@fortawesome/fontawesome-svg-core": "^6.5.2",
     "@fortawesome/free-regular-svg-icons": "^6.5.2",
     "@fortawesome/free-solid-svg-icons": "^6.5.2",
     "@types/file-saver": "^2.0.7",
     "chart.js": "^4.4.3",
+    "cors": "^2.8.5",
     "file-saver": "^2.0.5",
     "primeflex": "^3.3.1",
     "primeicons": "7.0.0",
@@ -33,10 +36,8 @@
     "quill": "^2.0.2",
     "rxjs": "~7.8.1",
     "tslib": "^2.6.2",
-    "zone.js": "~0.14.6",
-    "@azure/msal-angular": "3.0.17",
-    "@azure/msal-browser": "3.14.0",
-    "xlsx": "^0.18.5"
+    "xlsx": "^0.18.5",
+    "zone.js": "~0.14.6"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^18.0.1",
