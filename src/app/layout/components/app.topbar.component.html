@@ -1,3 +1,4 @@
+<script src="../../../environments/environment.local.ts"></script>
 <div class="layout-topbar">
   <a class="layout-topbar-logo" routerLink="/view">
     <div class="flex" style="align-self: center; align-items: center;">
@@ -28,8 +29,15 @@
         <div *ngIf="dmDomainList.length==0">{{ userRole }}</div>
         <div *ngIf="dmDomainList.length>0">{{ userRole }} | {{ dmDomainList }}</div>
       </div>
-      <div style="align-self: center;">
+      <div style="align-self: center;" *ngIf="!this.authService.profilePhoto">
         <i class="pi pi-user" style="font-size: 1.5rem; margin: 0.4rem; margin-left: 1rem;"> </i>
+      </div>
+      <div style="align-self: center;" *ngIf="this.authService.profilePhoto">
+        <p-avatar class="p-element"
+          styleClass="ml-2"
+          size="xlarge">
+          <img [src]="this.authService.profilePhoto" alt="Profile Photo">
+        </p-avatar>
       </div>
       <div style="align-self: center;">
         <button class="p-link layout-topbar-button" (click)="logout($event)">

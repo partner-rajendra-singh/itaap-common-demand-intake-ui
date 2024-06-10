@@ -5,8 +5,8 @@ import {MsalGuardConfiguration, MsalInterceptorConfiguration} from "@azure/msal-
 
 export const msalConfig: Configuration = {
   auth: {
-    clientId: '7e0686bb-c210-4396-b7f0-2b7d008af0ac',
-    authority: 'https://login.microsoftonline.com/1a407a2d-7675-4d17-8692-b3ac285306e4',
+    clientId: environment.clientId,
+    authority: environment.authority,
     redirectUri: environment.redirectUri,
   },
   cache: {
@@ -29,15 +29,15 @@ export const msalInterceptorConfig: MsalInterceptorConfiguration = {
   interactionType: InteractionType.Popup,
   protectedResourceMap:
     new Map([
-      ['https://graph.microsoft.com/v1.0/me', ['https://graph.microsoft.com/.default']],
-      [environment.baseUrl + '/common/demand-intake/*', ['api://itaap-demand-intake/demand_login']],
+      ['https://graph.microsoft.com/v1.0/me', [environment.scope_default]],
+      [environment.baseUrl + '/common/demand-intake/*', [environment.scope_demand_login]],
     ])
 };
 
 export const msalGuardConfig: MsalGuardConfiguration = {
   interactionType: InteractionType.Popup,
   authRequest: {
-    scopes: ['api://itaap-demand-intake/demand_login']
+    scopes: [environment.scope_demand_login]
   }
 };
 

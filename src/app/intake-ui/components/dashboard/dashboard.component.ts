@@ -10,13 +10,11 @@ import {Demand} from '../../models/demand';
 import {DemandStatus} from '../../enums/demand-status';
 import {FieldsService} from "../../services/fields.service";
 
-
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html'
 })
 export class DashboardComponent implements OnInit {
-
 
   decisions!: string[];
   selectedDecision!: string;

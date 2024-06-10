@@ -20,6 +20,7 @@ import { ButtonModule } from 'primeng/button';
 import { DropdownModule } from 'primeng/dropdown';
 import { ProgressBarModule } from 'primeng/progressbar';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import {AvatarModule} from "primeng/avatar";
 
 const isIE = window.navigator.userAgent.indexOf('MSIE ') > -1 || window.navigator.userAgent.indexOf('Trident/') > -1;
 
@@ -47,7 +48,8 @@ const isIE = window.navigator.userAgent.indexOf('MSIE ') > -1 || window.navigato
     ButtonModule,
     DropdownModule,
     ProgressBarModule,
-    ProgressSpinnerModule
+    ProgressSpinnerModule,
+    AvatarModule
   ],
   exports: [MainAppLayoutComponent]
 })

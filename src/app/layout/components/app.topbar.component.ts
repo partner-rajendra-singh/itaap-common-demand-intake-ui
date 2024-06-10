@@ -27,7 +27,7 @@ export class AppTopBarComponent implements OnInit {
 
   constructor(private router: Router,
               public layoutService: LayoutService,
-              private authService: AuthService,
+              public authService: AuthService,
               private eventService: EventService) {
   }
 

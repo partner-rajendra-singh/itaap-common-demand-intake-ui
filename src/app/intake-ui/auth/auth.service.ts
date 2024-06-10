@@ -8,6 +8,7 @@ import {AuthenticationResult, InteractionRequiredAuthError, PopupRequest} from '
 import {MsalService} from "@azure/msal-angular";
 import {MessageService} from "primeng/api";
 import {Router} from "@angular/router";
+import {DomSanitizer, SafeUrl} from "@angular/platform-browser";
 
 @Injectable({
   providedIn: 'root'
@@ -18,9 +19,13 @@ export class AuthService {
   public currentUser: Observable<User>;
   baseUrl: string = environment.baseUrl;
 
+  currentLoggedInUser!: AuthenticationResult;
+  profilePhoto: SafeUrl | undefined;
+
   constructor(private http: HttpClient,
               private router: Router,
               private msalAuthService: MsalService,
+              private sanitizer: DomSanitizer,
               private messageService: MessageService) {
 
     const userJson = localStorage.getItem('currentUser');
@@ -120,6 +125,7 @@ export class AuthService {
       .subscribe({
         next: (result) => {
           console.log('Redirect Result:', result);
+          this.currentLoggedInUser = result;
           this.getUserDataAndSilentToken();
         },
         error: (error) => console.error('Redirect Error:', error)
@@ -132,9 +138,7 @@ export class AuthService {
 
   getUserDataAndSilentToken() {
     let popupRequest: PopupRequest = {
-      scopes: [
-        'api://itaap-demand-intake/demand_login'
-      ],
+      scopes: [environment.scope_demand_login],
       account: this.msalAuthService.instance.getAllAccounts()[0]
     };
     this
@@ -159,11 +163,13 @@ export class AuthService {
   }
 
   populateResponse(response: AuthenticationResult) {
+    this.currentLoggedInUser = response;
     this
       .ssoLogin(response)
       .pipe(first())
       .subscribe(
         data => {
+          this.getProfilePhoto();
           this.messageService.add({severity: 'success', summary: 'Success', detail: 'Login Successful!'});
           this.router.navigate(['dashboard']);
         },
@@ -177,5 +183,22 @@ export class AuthService {
             detail: error.message
           });
         });
+  }
+
+  getProfilePhoto() {
+    const headers = {
+      'Content-Type': 'image/jpeg',
+      'Authorization': `Bearer ${this.currentLoggedInUser.accessToken}`
+    };
+    return this.http.get('https://graph.microsoft.com/v1.0/me/photo/$value', {headers, responseType: 'blob'})
+      .subscribe(response => {
+          console.log('getProfilePhoto() : SUCCESS : ', response);
+          const url = URL.createObjectURL(response);
+          this.profilePhoto = this.sanitizer.bypassSecurityTrustUrl(url);
+        },
+        error => {
+          console.log('getProfilePhoto() : ERROR : ', error);
+        }
+      );
   }
 }

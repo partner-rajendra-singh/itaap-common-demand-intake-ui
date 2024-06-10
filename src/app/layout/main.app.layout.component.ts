@@ -4,8 +4,8 @@ import {filter, Subscription} from 'rxjs';
 import {AppSidebarComponent} from './components/app.sidebar.component';
 import {AppTopBarComponent} from './components/app.topbar.component';
 import {LayoutService} from './service/app.layout.service';
-import {MsalService} from "@azure/msal-angular";
 import {AuthService} from "../intake-ui/auth/auth.service";
+import {DomSanitizer} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-layout',
@@ -14,16 +14,14 @@ import {AuthService} from "../intake-ui/auth/auth.service";
 export class MainAppLayoutComponent implements OnInit, OnDestroy {
 
   overlayMenuOpenSubscription: Subscription;
-
   menuOutsideClickListener: any;
-
   profileMenuOutsideClickListener: any;
 
   @ViewChild(AppSidebarComponent) appSidebar!: AppSidebarComponent;
-
   @ViewChild(AppTopBarComponent) appTopbar!: AppTopBarComponent;
 
   constructor(
+    private sanitizer: DomSanitizer,
     private authService: AuthService,
     public layoutService: LayoutService, public renderer: Renderer2, public router: Router) {
     this.overlayMenuOpenSubscription = this.layoutService.overlayOpen$.subscribe(() => {
