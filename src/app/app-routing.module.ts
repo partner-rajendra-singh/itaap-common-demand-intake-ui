@@ -113,7 +113,7 @@ const routes: Routes = [
       },
       {
         path: 'demand-intake/:demandIntakeId', component: DemandIntakeComponent,
-        canActivate: [AuthGuard],
+        canActivate: [MsalGuard],
         children: [
           {
             path: '',

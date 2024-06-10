@@ -1,36 +1,38 @@
 <p-toast></p-toast>
 <p-toast key="retry">
-    <ng-template let-message pTemplate="message">
-      <div class="flex flex-column" style="flex: 1">
-        <div class="text-center">
-          <i class="pi pi-exclamation-triangle" style="font-size: 3rem"></i>
-          <h4>{{message.summary}}</h4>
-          <p>{{message.detail}}</p>
-        </div>
-        <div class="grid p-fluid">
-          <div class="col-12">
-            <button type="button" icon="pi pi-refresh" (click)="onRetry()" pButton label="Retry"
-                    class="p-button-danger"></button>
-          </div>
+  <ng-template let-message pTemplate="message">
+    <div class="flex flex-column" style="flex: 1">
+      <div class="text-center">
+        <i class="pi pi-exclamation-triangle" style="font-size: 3rem"></i>
+        <h4>{{ message.summary }}</h4>
+        <p>{{ message.detail }}</p>
+      </div>
+      <div class="grid p-fluid">
+        <div class="col-12">
+          <button type="button" icon="pi pi-refresh" (click)="onRetry()" pButton label="Retry"
+                  class="p-button-danger"></button>
         </div>
       </div>
-    </ng-template>
-  </p-toast>
-<div class="surface-ground flex align-items-center justify-content-center min-h-screen min-w-screen overflow-hidden">
-    <div class="flex flex-column align-items-center justify-content-center">
-        <div
-            style="border-radius:56px; padding:0.3rem; background: linear-gradient(180deg, var(--primary-color) 10%, rgba(33, 150, 243, 0) 30%);">
-            <div class="w-full surface-card py-8 px-5 sm:px-8" style="border-radius:53px">
-                <div class="text-center mb-5">
-                    <img src="assets/images/philips-logo.png" alt="Image" height="100" class="mb-3">
-                    <div class="text-600 text-xl font-medium mb-3">Welcome!</div>
-                    <div class="text-900 text-4xl font-medium mb-3">EADI</div>
-                    <div class="text-900 text-2xl font-medium mb-3">Demand Intake Tool</div>
-                    <span class="text-600 font-medium">Sign in to continue</span>
-                </div>
-
-                 <button pButton pRipple label="SSO Sign In" class="w-full p-3 text-xl" (click)="ssoLogin()"></button>
-            </div>
-        </div>
     </div>
+  </ng-template>
+</p-toast>
+<div class="surface-ground flex align-items-center justify-content-center min-h-screen min-w-screen overflow-hidden">
+  <div class="flex flex-column align-items-center justify-content-center">
+    <div
+      style="border-radius:56px; padding:0.3rem; background: linear-gradient(180deg, var(--primary-color) 10%, rgba(33, 150, 243, 0) 30%);">
+      <div class="w-full surface-card py-8 px-5 sm:px-8" style="border-radius:53px">
+        <div class="text-center mb-5">
+          <img src="assets/images/philips-logo.png" alt="Image" height="100" class="mb-3">
+          <div class="text-600 text-xl font-medium mb-3">Welcome!</div>
+          <div class="text-900 text-4xl font-medium mb-3">EADI</div>
+          <div class="text-900 text-2xl font-medium mb-3">Demand Intake Tool</div>
+          <span class="text-600 font-medium">Sign in to continue</span>
+        </div>
+
+        <div class="md:w-30rem">
+          <button pButton pRipple label="Sign In" [rounded]="true" class="w-full p-3 text-xl" (click)="ssoLogin()"></button>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

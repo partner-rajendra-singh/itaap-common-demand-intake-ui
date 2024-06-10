@@ -19,23 +19,19 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // this.msalAuthService
-    //   .handleRedirectObservable()
-    //   .subscribe({
-    //     next: (result) => {
-    //       console.log('Redirect Result:', result);
-    //       this.checkAccount();
-    //     },
-    //     error: (error) => console.error('Redirect Error:', error)
-    //   });
+    if (this.authService.checkAccounts()) {
+      this.authService.loginSilently();
+    } else {
+      console.log('checkAccount : Token not received. Please proceed with login.')
+    }
   }
 
   ssoLogin() {
-    this.authService.getLoggedInAccounts()
+    this.authService.getHandleRedirect()
       .subscribe({
         next: (result) => {
           console.log('Redirect Result:', result);
-          this.authService.checkAccount();
+          this.authService.loginPopUp();
         },
         error: (error) => console.error('Redirect Error:', error)
       })

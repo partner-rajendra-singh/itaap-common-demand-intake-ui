@@ -11,6 +11,7 @@ import {ApproverDomain} from '../../enums/approver-domain';
 import {SolutionDirection1} from '../../models/solution-direction1';
 import {DemandDecision} from '../../models/demand-decision';
 import {DemandStatus} from '../../enums/demand-status';
+import {FieldsService} from "../../services/fields.service";
 
 @Component({
   selector: 'app-demandmanager',
@@ -28,7 +29,7 @@ export class DemandManagerComponent implements OnInit {
   dmActionDone: boolean = false;
   submitDemandLabel!: string;
 
-  constructor(private eventService: EventService, public demandIntakeService: DemandIntakeService, private router: Router, private messageService: MessageService,
+  constructor(private eventService: EventService,public fieldsService: FieldsService, public demandIntakeService: DemandIntakeService, private router: Router, private messageService: MessageService,
               public authService: AuthService) {
   }
 

@@ -3,40 +3,49 @@
   <ng-template pTemplate="content">
     <div class="grid">
       <div class="col-12 xs:col-12 sm:col-12 lg:col-12 xl:col-12">
-        <p-fieldset legend="CCB Member">
+        <p-fieldset>
+          <ng-template pTemplate="header">
+            <div class="flex align-items-center gap-2 px-2">
+              <span class="font-bold" [pTooltip]="fieldsService.getToolTip('CCB_MEMBER_HEADER')">{{
+                fieldsService.getLabel('CCB_MEMBER_HEADER') }}</span>
+            </div>
+          </ng-template>
           <div class="grid">
             <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-              <label required class="asterisk-if-mandatory" for="decisionDate">Decision Date</label>
+              <label required class="asterisk-if-mandatory" for="decisionDate">{{ fieldsService.getLabel('CCB_MEMBER_DECISION_DATE') }}</label>
             </div>
             <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
               <p-calendar dateFormat="dd/mm/yy" [(ngModel)]="ccbInfo.decisionDate" [showIcon]="true"
+              [pTooltip]="fieldsService.getToolTip('CCB_MEMBER_DECISION_DATE')"
                 [disabled]="true"></p-calendar>
             </div>
             <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-              <label required class="asterisk-if-mandatory" for="decision">Decision</label>
+              <label required class="asterisk-if-mandatory" for="decision">{{ fieldsService.getLabel('CCB_MEMBER_DECISION') }}</label>
             </div>
             <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
               <p-dropdown appendTo="body" [options]="decisions" [(ngModel)]="selectedDecision"
+              [pTooltip]="fieldsService.getToolTip('CCB_MEMBER_DECISION')"
                 [disabled]="!authService.isCCB() || (authService.isCCB() && eventService.isMyDemand)"
                 placeholder="Your decision"></p-dropdown>
             </div>
             <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-              <label required class="asterisk-if-mandatory" for="remarks">Remarks</label>
+              <label required class="asterisk-if-mandatory" for="remarks">{{ fieldsService.getLabel('CCB_MEMBER_REMARKS') }}</label>
             </div>
             <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
               <textarea rows="2" cols="75" [(ngModel)]="ccbInfo.remarks" pInputTextarea
+              [pTooltip]="fieldsService.getToolTip('CCB_MEMBER_REMARKS')"
                 [disabled]="!authService.isCCB() || (authService.isCCB() && eventService.isMyDemand)"></textarea>
             </div>
             <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-              <label class="asterisk-if-mandatory">Demand Type</label>
+              <label class="asterisk-if-mandatory">{{ fieldsService.getLabel('CCB_MEMBER_DEMAND_TYPE') }}</label>
             </div>
             <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
               <input type="radio" name="isCrossFunctional" checked="checked" [(ngModel)]="ccbInfo.isCrossFunctional"
+              [pTooltip]="fieldsService.getToolTip('CCB_MEMBER_FUNCTIONAL')"
                 [value]="false">
-              <label>Fuctional</label> &nbsp;
-              <input type="radio" name="isCrossFunctional" [(ngModel)]="ccbInfo.isCrossFunctional"
-                [value]="true">
-              <label>Cross Fuctional</label> &nbsp;
+              <label>{{ fieldsService.getLabel('CCB_MEMBER_FUNCTIONAL') }}</label> &nbsp;
+              <input type="radio" name="isCrossFunctional" [pTooltip]="fieldsService.getToolTip('CCB_MEMBER_CROSS_FUNCTIONAL')" [(ngModel)]="ccbInfo.isCrossFunctional" [value]="true">
+              <label>{{ fieldsService.getLabel('CCB_MEMBER_CROSS_FUNCTIONAL') }}</label> &nbsp;
             </div>
           </div>
         </p-fieldset>
@@ -47,9 +56,9 @@
 
   <ng-template pTemplate="footer">
     <div class="grid grid-nogutter justify-content-between">
-      <p-button label="Back" (onClick)="prevPage()" icon="pi pi-angle-left"></p-button>
-      <p-button label="{{submitDemandLabel}}" *ngIf="visibleSubmitButton" (onClick)="submitPage()" icon="pi pi-angle-right"
-        iconPos="right"></p-button>
+      <p-button label="{{ fieldsService.getLabel('BACK_BUTTON') }}" (onClick)="prevPage()" icon="pi pi-angle-left"></p-button>
+      <p-button label="{{submitDemandLabel}}" *ngIf="visibleSubmitButton" (onClick)="submitPage()"
+        icon="pi pi-angle-right" iconPos="right"></p-button>
     </div>
   </ng-template>
 </p-card>

@@ -122,6 +122,6 @@ export class MainAppLayoutComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-
+    console.log("MainAppLayoutInvoked");
   }
 }

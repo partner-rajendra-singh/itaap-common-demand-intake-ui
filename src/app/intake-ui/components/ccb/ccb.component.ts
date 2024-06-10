@@ -4,10 +4,11 @@ import { DemandIntakeService } from '../../services/demand-intake.service';
 import { MessageService } from 'primeng/api';
 import { first } from 'rxjs/operators';
 import { DemandIntakeDecision } from '../../enums/demand-intake-decision';
-import { AuthService } from '../../auth/auth.service';
 import { EventService } from '../../services/event.service';
 import { CCB } from '../../models/ccb';
 import { DemandStatus } from '../../enums/demand-status';
+import {FieldsService} from "../../services/fields.service";
+import {AuthService} from "../../auth/auth.service";
 
 @Component({
   selector: 'app-ccb',
@@ -21,7 +22,7 @@ export class CCBComponent implements OnInit {
   visibleSubmitButton: boolean = true;
   submitDemandLabel!: string;
 
-  constructor(public eventService: EventService, public demandIntakeService: DemandIntakeService, private router: Router, private messageService: MessageService, public authService: AuthService) { }
+  constructor(public eventService: EventService,public fieldsService: FieldsService, public demandIntakeService: DemandIntakeService, private router: Router, private messageService: MessageService, public authService: AuthService) { }
 
   ngOnInit() {
     this.submitDemandLabel = 'Submit Demand';

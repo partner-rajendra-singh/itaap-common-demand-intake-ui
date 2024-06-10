@@ -14,7 +14,6 @@ export class AppComponent implements OnInit {
   currentUser!: User;
   currentUserSubscription!: Subscription;
 
-
   constructor(
     private primengConfig: PrimeNGConfig,
     private authService: AuthService,

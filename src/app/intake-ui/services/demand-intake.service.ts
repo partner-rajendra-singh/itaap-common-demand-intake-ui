@@ -467,7 +467,7 @@ export class DemandIntakeService {
       return false;
     }
 
-    if (this.authService.currentUserValue.domain.includes(solution)) {
+    if (this.authService.currentUserValue.domain && this.authService.currentUserValue.domain.includes(solution)) {
       return true;
     }
 

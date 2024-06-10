@@ -67,8 +67,12 @@
       </p-fieldset>
 
     </div>
-    <p-fieldset legend="{{ fieldsService.getLabel('INTRODUCTION_FIELDSET') }}"
-    [pTooltip]="fieldsService.getToolTip('INTRODUCTION_FIELDSET')">
+    <p-fieldset>
+    <ng-template pTemplate="header" >
+      <div class="flex align-items-center gap-2 px-2">
+          <span class="font-bold"  [pTooltip]="fieldsService.getToolTip('INTRODUCTION_FIELDSET')">{{ fieldsService.getLabel('INTRODUCTION_FIELDSET') }}</span>
+      </div>
+  </ng-template>
       <div class="grid">
         <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
           <label for="title" class="asterisk-if-mandatory"

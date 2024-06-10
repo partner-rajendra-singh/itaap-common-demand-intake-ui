@@ -64,9 +64,15 @@ export class AuthService {
 
   ssoLogin(response: AuthenticationResult) {
     let url = this.baseUrl + '/common/demand-intake/login';
-
     let headerOptions = {
-      headers: new HttpHeaders().set('Authorization', `Bearer ${response.accessToken}`)
+      headers: new HttpHeaders({
+        'Access-Control-Allow-Origin': '*', // This allows requests from all domains, adjust as needed
+        'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+        'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept',
+        'Content-Type': 'application/json',
+        'X-Correlation-ID': 'abc',
+        'Authorization': `Bearer ${response.accessToken}`
+      })
     };
     return this.http
       .post<any>(url, response, headerOptions)
@@ -103,25 +109,32 @@ export class AuthService {
       });
   }
 
-  checkAccount() {
-    if (this.msalAuthService.instance.getAllAccounts().length > 0) {
-      console.log('IF')
-      this.getUserDataAndSilentToken();
-    } else {
-      console.log('ELSE')
-      this.loginPopUp();
-    }
+  checkAccounts() {
+    return this.msalAuthService.instance.getAllAccounts().length > 0
   }
 
-  getLoggedInAccounts(): Observable<AuthenticationResult> {
-    return this.msalAuthService
-      .handleRedirectObservable();
+  loginSilently() {
+    console.log('checkAccount : Token Received Login in Silently')
+    this
+      .getHandleRedirect()
+      .subscribe({
+        next: (result) => {
+          console.log('Redirect Result:', result);
+          this.getUserDataAndSilentToken();
+        },
+        error: (error) => console.error('Redirect Error:', error)
+      })
   }
 
+  getHandleRedirect(): Observable<AuthenticationResult> {
+    return this.msalAuthService.handleRedirectObservable();
+  }
 
   getUserDataAndSilentToken() {
     let popupRequest: PopupRequest = {
-      scopes: ['https://graph.microsoft.com/.default'],
+      scopes: [
+        'api://itaap-demand-intake/demand_login'
+      ],
       account: this.msalAuthService.instance.getAllAccounts()[0]
     };
     this
@@ -129,11 +142,11 @@ export class AuthService {
       .instance
       .acquireTokenSilent(popupRequest)
       .then(response => {
-        console.log(response);
+        console.log('getUserDataAndSilentToken() : SUCCESS : ', response);
         this.populateResponse(response);
       })
       .catch(error => {
-        console.log('getUserDataAndSilentToken():', error);
+        console.log('getUserDataAndSilentToken() : ERROR : ', error);
         if (error instanceof InteractionRequiredAuthError) {
           this.msalAuthService.instance
             .acquireTokenPopup(popupRequest)
@@ -152,11 +165,6 @@ export class AuthService {
       .subscribe(
         data => {
           this.messageService.add({severity: 'success', summary: 'Success', detail: 'Login Successful!'});
-          // if (this.authService.isDM() || this.authService.isCCB()) {
-          // this.router.navigate(['dashboard']);
-          // } else {
-          // this.router.navigate(['demand-intake']);
-          // }
           this.router.navigate(['dashboard']);
         },
         error => {

@@ -7,24 +7,26 @@
           <p-tabPanel header="Demand Manager ({{getDomainValueList(domain)}})">
             <div class="grid">
               <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                <label required class="asterisk-if-mandatory" for="decisionDate">Decision Date</label>
+                <label required class="asterisk-if-mandatory" for="decisionDate">{{ fieldsService.getLabel('DEMAND_MANAGER_DECISION_DATE') }}</label>
               </div>
               <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
                 <p-calendar dateFormat="dd/mm/yy" [(ngModel)]="demandManagerInfo.decisionDate" [disabled]="true"
+                [pTooltip]="fieldsService.getToolTip('DEMAND_MANAGER_DECISION_DATE')"
                   [showIcon]="true"></p-calendar>
               </div>
               <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                <label required class="asterisk-if-mandatory" for="decision">Decision</label>
+                <label required class="asterisk-if-mandatory" for="decision">{{ fieldsService.getLabel('DEMAND_MANAGER_DECISION') }}</label>
               </div>
               <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
                 <p-dropdown [options]="decisions" [(ngModel)]="selectedDecision" [disabled]="dmActionDone"
+                [pTooltip]="fieldsService.getToolTip('DEMAND_MANAGER_DECISION')"
                   placeholder="Your decision"></p-dropdown>
               </div>
               <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                <label required class="asterisk-if-mandatory" for="remarks">Remarks</label>
+                <label required class="asterisk-if-mandatory" for="remarks">{{ fieldsService.getLabel('DEMAND_MANAGER_REMARKS') }}</label>
               </div>
               <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
-                <textarea rows="2" cols="75" [(ngModel)]="demandManagerInfo.remarks" pInputTextarea [disabled]="dmActionDone"></textarea>
+                <textarea rows="2" cols="75" [pTooltip]="fieldsService.getToolTip('DEMAND_MANAGER_REMARKS')" [(ngModel)]="demandManagerInfo.remarks" pInputTextarea [disabled]="dmActionDone"></textarea>
               </div>
             </div>
           </p-tabPanel>
@@ -71,8 +73,8 @@
   </ng-template>
   <ng-template pTemplate="footer">
     <div class="grid grid-nogutter justify-content-between">
-      <p-button label="Back" (onClick)="prevPage()" icon="pi pi-angle-left"></p-button>
-      <p-button label="Next" *ngIf="visibleNextButton" (onClick)="nextPage()" icon="pi pi-angle-right"></p-button>
+      <p-button label="{{ fieldsService.getLabel('BACK_BUTTON') }}" (onClick)="prevPage()" icon="pi pi-angle-left"></p-button>
+      <p-button label="{{ fieldsService.getLabel('NEXT_BUTTON') }}" *ngIf="visibleNextButton" (onClick)="nextPage()" icon="pi pi-angle-right"></p-button>
       <p-button label="{{submitDemandLabel}}" *ngIf="visibleSubmitButton" (onClick)="submitPage()" iconPos="right"></p-button>
     </div>
   </ng-template>

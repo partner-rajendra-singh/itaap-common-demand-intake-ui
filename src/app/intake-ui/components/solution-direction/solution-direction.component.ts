@@ -8,6 +8,7 @@ import { AuthService } from '../../auth/auth.service';
 import { SolutionDirection1 } from '../../models/solution-direction1';
 import { SolutionDirection } from '../../models/solution-direction';
 import { DemandStatus } from '../../enums/demand-status';
+import {FieldsService} from "../../services/fields.service";
 
 @Component({
   selector: 'app-solution-direction',
@@ -19,7 +20,7 @@ export class SolutionDirectionComponent {
   sdInfo: SolutionDirection = new SolutionDirection;
   dmDomainList: string[] = [];
 
-  constructor(private authService: AuthService, public demandIntakeService: DemandIntakeService, private router: Router, private messageService: MessageService, private eventService: EventService) { }
+  constructor(private authService: AuthService,public fieldsService: FieldsService, public demandIntakeService: DemandIntakeService, private router: Router, private messageService: MessageService, private eventService: EventService) { }
 
   ngOnInit() {
     console.log("SolutionDirectionComponent Init: ", this.demandIntakeService.demandInformation)

@@ -5,6 +5,7 @@ import { MessageService } from 'primeng/api';
 import { EventService } from '../../services/event.service';
 import { RefreshFrequency } from '../../enums/refreshFrequency';
 import { LoadStrategy } from '../../enums/loadStrategy';
+import {FieldsService} from "../../services/fields.service";
 
 
 @Component({
@@ -20,7 +21,7 @@ export class ChecklistComponent implements OnInit {
   selectedLoadStrategy!: string;
   visibleTabs: any = [];
 
-  constructor(public demandIntakeService: DemandIntakeService, private router: Router, private messageService: MessageService, public eventService: EventService) { }
+  constructor(public demandIntakeService: DemandIntakeService,public fieldsService: FieldsService, private router: Router, private messageService: MessageService, public eventService: EventService) { }
 
   ngOnInit() {
     console.log("ChecklistComponent ", this.eventService.solutionDirectionValue);

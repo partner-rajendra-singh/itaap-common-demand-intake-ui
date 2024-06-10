@@ -13,28 +13,24 @@
   </button>
 
   <button #topbarmenubutton class="p-link layout-topbar-menu-button layout-topbar-button"
-    (click)="layoutService.showProfileSidebar()">
+          (click)="layoutService.showProfileSidebar()">
     <i class="pi pi-ellipsis-v"></i>
   </button>
 
   <div #topbarmenu class="layout-topbar-menu"
-    [ngClass]="{'layout-topbar-menu-mobile-active': layoutService.state.profileSidebarVisible}">
+       [ngClass]="{'layout-topbar-menu-mobile-active': layoutService.state.profileSidebarVisible}">
     <div class="flex" style="align-self: center;">
       <p-progressSpinner styleClass="w-4rem h-4rem" strokeWidth="8" fill="var(--surface-ground)" *ngIf="isProgressing"
-        animationDuration=".5s" />
+                         animationDuration=".5s"/>
       <div class="mr-2" style="align-self: center; text-align: end">
-        <div class="font-medium text-xl">{{user}}</div>
-        <span class="text-md">{{user}}</span>
-        <div *ngIf="dmDomainList.length==0">{{userRole}}</div>
-        <div *ngIf="dmDomainList.length>0">{{userRole}} | {{dmDomainList}}</div>
+        <div class="font-medium text-xl">{{ username }}</div>
+        <span class="text-md">{{ user }}</span>
+        <div *ngIf="dmDomainList.length==0">{{ userRole }}</div>
+        <div *ngIf="dmDomainList.length>0">{{ userRole }} | {{ dmDomainList }}</div>
       </div>
       <div style="align-self: center;">
         <i class="pi pi-user" style="font-size: 1.5rem; margin: 0.4rem; margin-left: 1rem;"> </i>
       </div>
-      <!-- <div>
-        <p-dropdown id="filterDeveloperDropdown" placeholder="User" [options]="allDevelopers" optionLabel="name"
-          [(ngModel)]="user" (onChange)="setUserId()"></p-dropdown>
-      </div> -->
       <div style="align-self: center;">
         <button class="p-link layout-topbar-button" (click)="logout($event)">
           <div (mouseover)="enableLogOutTooltip()" title="Sign Out">
