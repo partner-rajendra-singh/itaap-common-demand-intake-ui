@@ -24,11 +24,11 @@ export class CCBCRUDComponent implements OnInit {
       map((response: any) => {
         this.ccbList = response;
 
-        console.log('getAllCCB() Response :', this.ccbList);
+        console.log('getAllCCB() : Response -> ', this.ccbList);
         this.eventService.progressBarEvent.emit(false);
       }),
       catchError((error: any) => {
-        console.log('Error', error);
+        console.log('getAllCCB() : ERROR -> ', error);
         this.eventService.progressBarEvent.emit(false);
         return throwError(error);
       })

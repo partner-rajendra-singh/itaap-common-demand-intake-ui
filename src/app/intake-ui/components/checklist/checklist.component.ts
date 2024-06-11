@@ -24,7 +24,7 @@ export class ChecklistComponent implements OnInit {
   constructor(public demandIntakeService: DemandIntakeService,public fieldsService: FieldsService, private router: Router, private messageService: MessageService, public eventService: EventService) { }
 
   ngOnInit() {
-    console.log("ChecklistComponent ", this.eventService.solutionDirectionValue);
+    // console.log("ChecklistComponent ", this.eventService.solutionDirectionValue);
     if (this.eventService.solutionDirectionValue.length == 0) {
       if (this.eventService.isNewDemand) {
         this.router.navigate(['demand-intake/solution-direction/']);

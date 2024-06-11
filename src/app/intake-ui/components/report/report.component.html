@@ -1,160 +1,177 @@
-<div class="col-12 grid">
-    <div class="col-12 md:col-12 lg:col-12">
-        <div class="card border-none surface-border m-2">
-            <div class="col-12 grid">
-                <div class="col-12 xs:col-12 sm:col-12 lg:col-12 xl:col-12"
-                    style="background: linear-gradient(226.42deg, #077abb 8.93%, #153375 110.98%);border-bottom-left-radius: inherit;border-bottom-right-radius: inherit; ">
-                    <h4 style="color: white;">Search Demand By</h4>
-                </div>
-                <div class="col-6 xs:col-6 sm:col-6 lg:col-6 xl:col-3">
-                    <label for="email">Raised By</label>
-                </div>
-                <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
-                    <input id="email" type="email" [(ngModel)]="reportInfo.raisedBy" size="110"
-                        (blur)="eventService.checkEmailValue(reportInfo.raisedBy)"
-                        class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary">
-                </div>
+<div class="col-12">
+  <div class="card border-none surface-border m-0"
+       style="background: linear-gradient(226.42deg, #077abb 8.93%, #153375 110.98%);border-bottom-left-radius: inherit;border-bottom-right-radius: inherit;">
+    <div class="flex align-items-center justify-content-between">
+      <div class="flex align-items-center">
+        <p-avatar size="large" shape="circle" styleclass="demand-badge status-draft"
+                  class="p-element">
+          <div class="demand-badge status-draft p-avatar p-component p-avatar-circle p-avatar-lg">
+                                    <span class="material-symbols-outlined p-avatar-icon">
+                                        search
+                                    </span>
+          </div>
+        </p-avatar>
+        <span class="text-white font-medium text-xl ml-2">Search Demand By</span>
+      </div>
+    </div>
+  </div>
+  <div class="card border-none surface-border mb-5"
+       style="border-top-left-radius: inherit;border-top-right-radius: inherit;">
+    <div class="col-12 grid">
+      <div class="col-6 xs:col-6 sm:col-6 lg:col-6 xl:col-3">
+        <label for="email">Raised By</label>
+      </div>
+      <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
+        <input id="email" type="email" [(ngModel)]="reportInfo.raisedBy"
+               (blur)="eventService.checkEmailValue(reportInfo.raisedBy)"
+               class="text-base text-color surface-overlay p-2 border-1 w-full border-solid surface-border border-round appearance-none outline-none focus:border-primary">
+      </div>
 
-                <div class="col-6 xs:col-6 sm:col-6 lg:col-6 xl:col-3">
-                    <label for="email">Stakeholder(s) Email <br>(can have comma separated values)</label>
-                </div>
-                <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
-                    <input id="email" type="email" [(ngModel)]="stakeholderList" size="110"
-                        (blur)="eventService.checkEmailList(stakeholderList)"
-                        class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary">
-                </div>
+      <!-- <div class="col-6 xs:col-6 sm:col-6 lg:col-6 xl:col-3">
+          <label for="email">Stakeholder(s) Email <br>(can have comma separated values)</label>
+      </div>
+      <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
+          <input id="email" type="email" [(ngModel)]="stakeholderList" size="110"
+              (blur)="eventService.checkEmailList(stakeholderList)"
+              class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary">
+      </div> -->
 
-                <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                    <label required class="asterisk-if-mandatory">From Date</label>
-                </div>
-                <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                    <p-calendar dateFormat="dd/mm/yy" [(ngModel)]="reportInfo.fromDate" [showIcon]="true"></p-calendar>
-                </div>
-                <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                    <label required class="asterisk-if-mandatory">To Date</label>
-                </div>
-                <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                    <p-calendar dateFormat="dd/mm/yy" [(ngModel)]="reportInfo.toDate" [showIcon]="true"></p-calendar>
-                </div>
+      <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
+        <label required class="asterisk-if-mandatory">From Date</label>
+      </div>
+      <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
+        <p-calendar dateFormat="dd/mm/yy" [(ngModel)]="reportInfo.fromDate" [showIcon]="true"></p-calendar>
+      </div>
+      <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
+        <label required class="asterisk-if-mandatory">To Date</label>
+      </div>
+      <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
+        <p-calendar dateFormat="dd/mm/yy" [(ngModel)]="reportInfo.toDate" [showIcon]="true"></p-calendar>
+      </div>
 
-                <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                    <span class="mr-3">Demand Status</span>
-                </div>
-                <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
-                    <p-dropdown [(ngModel)]="selectedDemandStatus" [options]="demandStatusList"
-                        (onChange)="onStatusChange()" placeholder="Filter Demand">
-                        <ng-template pTemplate="selectedItem">
-                            <div *ngIf="selectedDemandStatus">
+      <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
+        <span class="mr-3">Demand Status</span>
+      </div>
+      <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
+        <p-dropdown [(ngModel)]="selectedDemandStatus" [options]="demandStatusList"
+                    (onChange)="onStatusChange()" placeholder="Filter Demand">
+          <ng-template pTemplate="selectedItem">
+            <div *ngIf="selectedDemandStatus">
                                 <span
-                                    [class]="'align-self-center demand-badge status-' + demandIntakeService.getDemandStatusValueInLower(selectedDemandStatus)">
+                                  [class]="'align-self-center demand-badge status-' + demandIntakeService.getDemandStatusValueInLower(selectedDemandStatus)">
                                     {{ demandIntakeService.getDemandStatusValue(selectedDemandStatus) }}
                                 </span>
-                            </div>
-                        </ng-template>
-                        <ng-template let-option pTemplate="item">
+            </div>
+          </ng-template>
+          <ng-template let-option pTemplate="item">
                             <span
-                                [class]="'align-self-center demand-badge status-' + demandIntakeService.getDemandStatusValueInLower(option)">
+                              [class]="'align-self-center demand-badge status-' + demandIntakeService.getDemandStatusValueInLower(option)">
                                 {{ demandIntakeService.getDemandStatusValue(option) }}
                             </span>
-                        </ng-template>
-                    </p-dropdown>
-                </div>
+          </ng-template>
+        </p-dropdown>
+      </div>
 
-                <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3" *ngIf="authService.isDM()">
-                    <label>Solution Direction</label>
-                </div>
-                <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9" *ngIf="authService.isDM()">
-                    <p-multiSelect [options]="solutionDirectionList" placeholder="Please Select Solution Direction"
-                        [(ngModel)]="selectedSolutionDirectionList" />
-                </div>
+      <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3" *ngIf="authService.isDM()">
+        <label>Solution Direction</label>
+      </div>
+      <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9" *ngIf="authService.isDM()">
+        <p-multiSelect [options]="solutionDirectionList" placeholder="Please Select Solution Direction"
+                       [(ngModel)]="selectedSolutionDirectionList"/>
+      </div>
 
-                <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3" *ngIf="authService.isCCB()">
-                    <label class="asterisk-if-mandatory">Is Cross Functional?</label>
-                </div>
-                <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9" *ngIf="authService.isCCB()">
-                    <input type="radio" name="isCrossFunctional" [(ngModel)]="reportInfo.isCrossFunctional"
-                        [value]="true">
-                    <label>Yes</label> &nbsp;
-                    <input type="radio" name="isCrossFunctional" checked="checked"
-                        [(ngModel)]="reportInfo.isCrossFunctional" [value]="false">
-                    <label>No</label> &nbsp;
-
-                </div>
-            </div>
-            <div class="grid grid-nogutter justify-content-start">
-                <p-button label="Search" (onClick)="generateReport()" icon="pi pi-search" iconPos="right"></p-button>
-            </div>
-        </div>
-        <div class="card border-none surface-border m-2" *ngIf="reportResult">
-            <div class="col-12 grid">
-                <div class="col-12 xs:col-12 sm:col-12 lg:col-12 xl:col-12"
-                    style="display: inline-flex; background: linear-gradient(226.42deg, #077abb 8.93%, #153375 110.98%);border-bottom-left-radius: inherit;border-bottom-right-radius: inherit; ">
-                    <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-10">
-                        <h4 style="color: white;">Demand Search Result</h4>
-                    </div>
-                    <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-2">
-                        <button pButton label="Download Report" pRipple icon="pi pi-download" style="color: white; font-size: large;"
-                            class="p-button-rounded p-button-success p-button-text mr-1" (click)="exportExcel()">
-                        </button>
-                    </div>
-                </div>
-            </div>
-            <p-table [value]="reportResult" styleClass="p-datatable-sm" selectionMode="single"
-                [(selection)]="selectedDemand" [tableStyle]="{ 'min-width': '40rem' }" [paginator]="true" [rows]="10">
-                <ng-template pTemplate="header">
-                    <tr>
-                        <th pSortableColumn="actionTime">Demand Intake Id
-                            <p-sortIcon field="demandIntakeId"></p-sortIcon>
-                        </th>
-                        <th pSortableColumn="topicId">Title
-                            <p-sortIcon field="title"></p-sortIcon>
-                        </th>
-                        <th pSortableColumn="actionTime">Status
-                            <p-sortIcon field="status"></p-sortIcon>
-                        </th>
-                        <th pSortableColumn="actionTime">Requested By
-                            <p-sortIcon field="requestedBy"></p-sortIcon>
-                        </th>
-                        <th pSortableColumn="actionTime">Requested Date
-                            <p-sortIcon field="requestedDate"></p-sortIcon>
-                        </th>
-                        <th pSortableColumn="actionTime">Is Cross Functional?
-                            <p-sortIcon field="requestedDate"></p-sortIcon>
-                        </th>
-                        <th pSortableColumn="actionTime">DM Decision Date
-                            <p-sortIcon field="requestedDate"></p-sortIcon>
-                        </th>
-                        <th pSortableColumn="actionTime">CCB Decision Date
-                            <p-sortIcon field="requestedDate"></p-sortIcon>
-                        </th>
-                    </tr>
-                </ng-template>
-                <ng-template pTemplate="body" let-demand let-ri="rowIndex" let-columns="columns">
-                    <tr [pSelectableRow]="demand">
-                        <td>{{ demand.demandIntakeId }}</td>
-                        <td>{{ demand.title }}</td>
-                        <td>
+      <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3" *ngIf="authService.isCCB()">
+        <label class="asterisk-if-mandatory">Is Cross Functional?</label>
+      </div>
+      <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9" *ngIf="authService.isCCB()">
+        <input type="radio" name="isCrossFunctional" [(ngModel)]="reportInfo.isCrossFunctional"
+               [value]="true">
+        <label>Yes</label> &nbsp;
+        <input type="radio" name="isCrossFunctional" checked="checked"
+               [(ngModel)]="reportInfo.isCrossFunctional" [value]="false">
+        <label>No</label> &nbsp;
+      </div>
+      <div class="grid grid-nogutter gap-3 justify-content-start">
+        <p-button label="Search" (onClick)="generateReport()" icon="pi pi-search" iconPos="right"></p-button>
+        <p-button label="Reset" icon="pi pi-refresh" (click)="refreshReport()" severity="contrast" iconPos="right"
+                  [raised]="true"></p-button>
+      </div>
+    </div>
+  </div>
+  <div class="card border-none surface-border m-0" *ngIf="reportResult"
+       style="background: linear-gradient(226.42deg, #077abb 8.93%, #153375 110.98%);border-bottom-left-radius: inherit;border-bottom-right-radius: inherit;">
+    <div class="flex align-items-center justify-content-between">
+      <div class="flex align-items-center">
+        <p-avatar size="large" shape="circle" styleclass="demand-badge status-draft"
+                  class="p-element">
+          <div class="demand-badge status-draft p-avatar p-component p-avatar-circle p-avatar-lg">
+                                    <span class="material-symbols-outlined p-avatar-icon">
+                                        search
+                                    </span>
+          </div>
+        </p-avatar>
+        <span class="text-white font-medium text-xl ml-2">Demand Search Result</span>
+      </div>
+    </div>
+  </div>
+  <div class="card border-none surface-border m-0" *ngIf="reportResult"
+       style="border-top-left-radius: inherit;border-top-right-radius: inherit;">
+    <p-table [value]="reportResult" styleClass="p-datatable-sm" selectionMode="single"
+             [(selection)]="selectedDemand" [tableStyle]="{ 'min-width': '40rem' }" [paginator]="true" [rows]="10">
+      <ng-template pTemplate="header">
+        <tr>
+          <th pSortableColumn="actionTime">Demand Intake Id
+            <p-sortIcon field="demandIntakeId"></p-sortIcon>
+          </th>
+          <th pSortableColumn="topicId">Title
+            <p-sortIcon field="title"></p-sortIcon>
+          </th>
+          <th pSortableColumn="actionTime">Status
+            <p-sortIcon field="status"></p-sortIcon>
+          </th>
+          <th pSortableColumn="actionTime">Requested By
+            <p-sortIcon field="requestedBy"></p-sortIcon>
+          </th>
+          <th pSortableColumn="actionTime">Requested Date
+            <p-sortIcon field="requestedDate"></p-sortIcon>
+          </th>
+          <th pSortableColumn="actionTime">Is Cross Functional?
+            <p-sortIcon field="requestedDate"></p-sortIcon>
+          </th>
+          <th pSortableColumn="actionTime">DM Decision Date
+            <p-sortIcon field="requestedDate"></p-sortIcon>
+          </th>
+          <th pSortableColumn="actionTime">CCB Decision Date
+            <p-sortIcon field="requestedDate"></p-sortIcon>
+          </th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-demand let-ri="rowIndex" let-columns="columns">
+        <tr [pSelectableRow]="demand">
+          <td>{{ demand.demandIntakeId }}</td>
+          <td>{{ demand.title }}</td>
+          <td>
                             <span [class]="'align-self-center demand-badge status-'
                            + demandIntakeService.getDemandStatusValueInLower(demand.status)">
                                 {{ demandIntakeService.getDemandStatusValue(demand.status) }}
                             </span>
-                        </td>
-                        <td>{{ demand.requestedBy }}</td>
-                        <td>{{ demand.requestedDate | date: 'MMM dd, yyyy' }}</td>
-                        <td>{{ demand.isCrossFunctional == true ? 'Yes' : 'No'}}</td>
-                        <td>{{ demand.dmDecisionDate | date: 'MMM dd, yyyy' }}</td>
-                        <td>{{ demand.ccbDecisionDate | date: 'MMM dd, yyyy' }}</td>
-                    </tr>
-                </ng-template>
-                <ng-template pTemplate="emptymessage">
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td>You dont have any demand for provided search criteria!</td>
-                    </tr>
-                </ng-template>
-            </p-table>
-        </div>
-    </div>
-
+          </td>
+          <td>{{ demand.requestedBy }}</td>
+          <td>{{ demand.requestedDate | date: 'MMM dd, yyyy' }}</td>
+          <td>{{ demand.isCrossFunctional == true ? 'Yes' : 'No' }}</td>
+          <td>{{ demand.dmDecisionDate | date: 'MMM dd, yyyy' }}</td>
+          <td>{{ demand.ccbDecisionDate | date: 'MMM dd, yyyy' }}</td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td>You dont have any demand for provided search criteria!</td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
 </div>

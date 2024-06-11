@@ -30,7 +30,19 @@
         </div>
 
         <div class="md:w-30rem">
-          <button pButton pRipple label="Sign In" [rounded]="true" class="w-full p-3 text-xl" (click)="ssoLogin()"></button>
+          <p-button [disabled]="isProgressing" pRipple [rounded]="true" styleClass="w-full h-5rem" (click)="ssoLogin()">
+            <div class="w-full grid gap-3 align-items-center justify-content-center">
+              <span class="text-xl font-medium" *ngIf="!isProgressing">Sign In</span>
+              <span class="text-xl font-medium" *ngIf="isProgressing">Signing In</span>
+              <p-progressSpinner
+                *ngIf="isProgressing"
+                styleClass="w-3rem h-3rem"
+                strokeWidth="8"
+                fill="var(--surface-ground)"
+                aria-label="Loading"
+                animationDuration=".5s"/>
+            </div>
+          </p-button>
         </div>
       </div>
     </div>

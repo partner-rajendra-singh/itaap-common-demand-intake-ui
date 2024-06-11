@@ -8,11 +8,8 @@ import {SolutionDirectionComponent} from './intake-ui/components/solution-direct
 import {AttachmentComponent} from './intake-ui/components/attachment/attachment.component';
 import {ChecklistComponent} from './intake-ui/components/checklist/checklist.component';
 import {IntroductionComponent} from './intake-ui/components/introduction/introduction.component';
-import {LoginComponent} from './intake-ui/auth/login/login.component';
-import {LogoutComponent} from './intake-ui/auth/logout/logout.component';
 import {DemandManagerComponent} from './intake-ui/components/demandmanager/demandmanager.component';
 import {CCBComponent} from './intake-ui/components/ccb/ccb.component';
-import {ChartComponent} from './intake-ui/components/chart/chart.component';
 import {DMCRUDComponent} from './intake-ui/components/dmcrud/dmcrud.component';
 import {CCBCRUDComponent} from './intake-ui/components/ccbcrud/ccbcrud.component';
 import {AuthGuard} from './intake-ui/services/auth-guard.service';
@@ -22,6 +19,8 @@ import {ConfirmComponent} from './intake-ui/components/confirm/confirm.component
 import {DashboardComponent} from './intake-ui/components/dashboard/dashboard.component';
 import {ReportComponent} from './intake-ui/components/report/report.component';
 import {FieldManagementComponent} from './intake-ui/components/field-management/field-management.component';
+import {LoginComponent} from './intake-ui/auth/login/login.component';
+import {LogoutComponent} from './intake-ui/auth/logout/logout.component';
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
@@ -31,7 +30,6 @@ const routes: Routes = [
       {path: 'dashboard', component: DashboardComponent},
       {path: 'view', component: ViewDemandsComponent, canActivate: [AuthGuard]},
       {path: 'report', component: ReportComponent, canActivate: [AuthGuard]},
-      {path: 'chart', component: ChartComponent, canActivate: [AuthGuard]},
       {path: 'dmcrud', component: DMCRUDComponent, canActivate: [AuthGuard]},
       {path: 'ccbcrud', component: CCBCRUDComponent, canActivate: [AuthGuard]},
       {path: 'fieldmgmt', component: FieldManagementComponent, canActivate: [AuthGuard]},

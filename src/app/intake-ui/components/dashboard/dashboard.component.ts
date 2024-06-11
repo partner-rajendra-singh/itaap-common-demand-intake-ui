@@ -4,7 +4,7 @@ import {DemandIntakeService} from '../../services/demand-intake.service';
 import {MessageService} from 'primeng/api';
 import {AuthService} from '../../auth/auth.service';
 import {EventService} from '../../services/event.service';
-import {map, catchError, throwError} from 'rxjs';
+import {catchError, map, throwError} from 'rxjs';
 import {AllDemands} from '../../models/all-demands';
 import {Demand} from '../../models/demand';
 import {DemandStatus} from '../../enums/demand-status';
@@ -83,43 +83,43 @@ export class DashboardComponent implements OnInit {
     this.dataStageITaaP = {
       labels: ['Draft', 'DM', 'CCB'],
       datasets: [
-          {
-              data: [300, 50, 100],
-              backgroundColor: [documentStyle.getPropertyValue('--blue-500'), documentStyle.getPropertyValue('--yellow-500'), documentStyle.getPropertyValue('--green-500')],
-              hoverBackgroundColor: [documentStyle.getPropertyValue('--blue-400'), documentStyle.getPropertyValue('--yellow-400'), documentStyle.getPropertyValue('--green-400')]
-          }
+        {
+          data: [300, 50, 100],
+          backgroundColor: [documentStyle.getPropertyValue('--blue-500'), documentStyle.getPropertyValue('--yellow-500'), documentStyle.getPropertyValue('--green-500')],
+          hoverBackgroundColor: [documentStyle.getPropertyValue('--blue-400'), documentStyle.getPropertyValue('--yellow-400'), documentStyle.getPropertyValue('--green-400')]
+        }
       ]
     };
     this.optionsStageITaaP = {
       cutout: '50%',
       plugins: {
-          legend: {
-              labels: {
-                  color: textColor
-              }
+        legend: {
+          labels: {
+            color: textColor
           }
+        }
       }
     };
 
     this.dataStatusITaaP = {
       labels: ['Approved', 'Pending', 'Rejected'],
       datasets: [
-          {
-              data: [100, 200, 50],
-              backgroundColor: [documentStyle.getPropertyValue('--blue-500'), documentStyle.getPropertyValue('--yellow-500'), documentStyle.getPropertyValue('--green-500')],
-              hoverBackgroundColor: [documentStyle.getPropertyValue('--blue-400'), documentStyle.getPropertyValue('--yellow-400'), documentStyle.getPropertyValue('--green-400')]
-          }
+        {
+          data: [100, 200, 50],
+          backgroundColor: [documentStyle.getPropertyValue('--blue-500'), documentStyle.getPropertyValue('--yellow-500'), documentStyle.getPropertyValue('--green-500')],
+          hoverBackgroundColor: [documentStyle.getPropertyValue('--blue-400'), documentStyle.getPropertyValue('--yellow-400'), documentStyle.getPropertyValue('--green-400')]
+        }
       ]
     };
 
     this.optionsStatusITaaP = {
       cutout: '50%',
       plugins: {
-          legend: {
-              labels: {
-                  color: textColor
-              }
+        legend: {
+          labels: {
+            color: textColor
           }
+        }
       }
     };
 
@@ -160,90 +160,90 @@ export class DashboardComponent implements OnInit {
 
 
     this.dataMonthITaaP = {
-      labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul','Aug','Sep','Oct','Nov','Dec'],
+      labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
       datasets: [
-          {
-              type: 'bar',
-              label: 'Draft',
-              backgroundColor: documentStyle.getPropertyValue('--blue-500'),
-              data: [50, 25, 12, 48, 90, 76, 42, 90, 76, 42, 90, 76]
-          },
-          {
-              type: 'bar',
-              label: 'Pending',
-              backgroundColor: documentStyle.getPropertyValue('--green-500'),
-              data: [21, 84, 24, 75, 37, 65, 34, 24, 75, 37, 65, 34]
-          },
-          {
-              type: 'bar',
-              label: 'Completed',
-              backgroundColor: documentStyle.getPropertyValue('--yellow-500'),
-              data: [41, 52, 24, 74, 23, 21, 32, 24, 75, 37, 65, 34]
-          }
+        {
+          type: 'bar',
+          label: 'Draft',
+          backgroundColor: documentStyle.getPropertyValue('--blue-500'),
+          data: [50, 25, 12, 48, 90, 76, 42, 90, 76, 42, 90, 76]
+        },
+        {
+          type: 'bar',
+          label: 'Pending',
+          backgroundColor: documentStyle.getPropertyValue('--green-500'),
+          data: [21, 84, 24, 75, 37, 65, 34, 24, 75, 37, 65, 34]
+        },
+        {
+          type: 'bar',
+          label: 'Completed',
+          backgroundColor: documentStyle.getPropertyValue('--yellow-500'),
+          data: [41, 52, 24, 74, 23, 21, 32, 24, 75, 37, 65, 34]
+        }
       ]
-  };
+    };
 
 
     this.dataQuarterITaaP = {
-        labels: ['Q1', 'Q2', 'Q3', 'Q4'],
-        datasets: [
-            {
-                type: 'bar',
-                label: 'Draft',
-                backgroundColor: documentStyle.getPropertyValue('--blue-500'),
-                data: [ 76, 42, 90, 76]
-            },
-            {
-                type: 'bar',
-                label: 'Pending',
-                backgroundColor: documentStyle.getPropertyValue('--green-500'),
-                data: [ 65, 34, 24, 75]
-            },
-            {
-                type: 'bar',
-                label: 'Completed',
-                backgroundColor: documentStyle.getPropertyValue('--yellow-500'),
-                data: [41, 52, 24, 74]
-            }
-        ]
+      labels: ['Q1', 'Q2', 'Q3', 'Q4'],
+      datasets: [
+        {
+          type: 'bar',
+          label: 'Draft',
+          backgroundColor: documentStyle.getPropertyValue('--blue-500'),
+          data: [76, 42, 90, 76]
+        },
+        {
+          type: 'bar',
+          label: 'Pending',
+          backgroundColor: documentStyle.getPropertyValue('--green-500'),
+          data: [65, 34, 24, 75]
+        },
+        {
+          type: 'bar',
+          label: 'Completed',
+          backgroundColor: documentStyle.getPropertyValue('--yellow-500'),
+          data: [41, 52, 24, 74]
+        }
+      ]
     };
 
     this.optionsQuarterITaaP = {
-        maintainAspectRatio: false,
-        aspectRatio: 0.8,
-        plugins: {
-            tooltip: {
-                mode: 'index',
-                intersect: false
-            },
-            legend: {
-                labels: {
-                    color: textColor
-                }
-            }
+      maintainAspectRatio: false,
+      aspectRatio: 0.8,
+      plugins: {
+        tooltip: {
+          mode: 'index',
+          intersect: false
         },
-        scales: {
-            x: {
-                stacked: true,
-                ticks: {
-                    color: textColorSecondary
-                },
-                grid: {
-                    color: surfaceBorder,
-                    drawBorder: false
-                }
-            },
-            y: {
-                stacked: true,
-                ticks: {
-                    color: textColorSecondary
-                },
-                grid: {
-                    color: surfaceBorder,
-                    drawBorder: false
-                }
-            }
+        legend: {
+          labels: {
+            color: textColor
+          }
         }
+      },
+      scales: {
+        x: {
+          stacked: true,
+          ticks: {
+            color: textColorSecondary
+          },
+          grid: {
+            color: surfaceBorder,
+            drawBorder: false
+          }
+        },
+        y: {
+          stacked: true,
+          ticks: {
+            color: textColorSecondary
+          },
+          grid: {
+            color: surfaceBorder,
+            drawBorder: false
+          }
+        }
+      }
     };
 
   }
@@ -295,29 +295,19 @@ export class DashboardComponent implements OnInit {
           this.eventService.progressBarEvent.emit(false);
           this.allDemands = response;
           this.errorData = "";
-          console.log('Dashboard getAllDemands() Response :', this.allDemands);
+          console.log('Dashboard getAllDemands(): Response -> ', this.allDemands);
           this.allCurrentMyDemands = this.allDemands.myDemands;
           this.allCurrentMyDemandsAsSH = this.allDemands.stakeholderDemands;
           this.allCurrentPendingDemands = this.allDemands.pendingDemands;
           this.populateDemands();
         }),
         catchError((error: any) => {
-          console.log('Error', error);
+          console.log('Dashboard getAllDemands() : ERROR -> ', error);
           this.errorData = JSON.stringify(error.error);
           this.eventService.progressBarEvent.emit(false);
           return throwError(error);
         })
       )
       .subscribe();
-  }
-
-  onDemandSelect(event: any, isMyDemand: boolean, isStakeholderDemand: boolean) {
-    console.log("selectedDemand, isMyDemand, isStakeholderDemand", this.selectedDemand, isMyDemand, isStakeholderDemand)
-    this.eventService.isMyDemand = isMyDemand;
-    this.eventService.isStakeholderDemand = isStakeholderDemand;
-    this.eventService.isNewDemand = false;
-    this.demandIntakeService.setDemand(this.selectedDemand, false);
-
-    this.router.navigate(['/demand-intake/' + this.selectedDemand.introduction.demandIntakeId]);
   }
 }

@@ -16,10 +16,9 @@ import {Attachment} from '../models/attachment';
 import {Introduction} from '../models/introduction';
 import {DemandStatusFilter} from '../enums/demand-status-filter';
 import {ArchitectAlignment} from '../models/architect-alignment';
-import { DemandIntakeDecision } from '../enums/demand-intake-decision';
-import { ReportResult } from '../models/report-result';
-import {Fields} from "../models/fields";
-import { DemandStatus } from '../enums/demand-status';
+import {ReportResult} from '../models/report-result';
+import {DemandStatus} from '../enums/demand-status';
+import {Constants} from "../constants";
 
 
 @Injectable({
@@ -33,7 +32,10 @@ export class DemandIntakeService {
   isNew!: boolean
   dmActionDone: boolean = false;
 
-  constructor(public http: HttpClient, private router: Router, private authService: AuthService, private messageService: MessageService,
+  constructor(public http: HttpClient,
+              private router: Router,
+              private constants: Constants,
+              private authService: AuthService, private messageService: MessageService,
               private eventService: EventService) {
   }
 
@@ -168,7 +170,7 @@ export class DemandIntakeService {
       this.demandInformation = demand;
     }
 
-    console.log("setDemand: ", this.demandInformation)
+    // console.log("setDemand: ", this.demandInformation)
   }
 
   validateSpoc(): boolean {
@@ -198,7 +200,7 @@ export class DemandIntakeService {
   }
 
   public validateRequest(isSave: boolean): boolean {
-    console.log("validateRequest ", isSave)
+    // console.log("validateRequest ", isSave)
 
     if (isSave) {
       if (this.demandInformation.introduction.title == '' || this.demandInformation.introduction.description == '') {
@@ -259,23 +261,16 @@ export class DemandIntakeService {
 
   }
 
-  saveDemandWithAttachment() {
+  saveDemand() {
     this.eventService.progressBarEvent.emit(true);
-    console.log("saveDemandWithAttachment: REQUEST -> ", this.demandInformation)
+    console.log("saveDemand() : Request -> ", this.demandInformation);
 
     if (this.validateRequest(true)) {
-
-      let url = this.baseUrl + '/common/demand-intake/';
-      let headerOptions = {
-        headers: new HttpHeaders({
-          'X-Correlation-ID': 'abc'
-        })
-      };
+      let url = this.baseUrl + '/common/demand-intake/save';
       return this
         .http
-        .post<Introduction>(url, this.demandInformation, headerOptions)
+        .post<Introduction>(url, this.demandInformation, this.constants.headerOptions)
         .pipe(map(response => {
-          console.log("saveDemandWithAttachment() Response :", response)
           this.eventService.progressBarEvent.emit(false);
           return response;
         }));
@@ -286,31 +281,25 @@ export class DemandIntakeService {
 
   }
 
-  submitDemandWithAttachment() {
+  submitDemand() {
     this.eventService.progressBarEvent.emit(true);
-    console.log("submitDemandWithAttachment: ", this.demandInformation)
+    console.log("submitDemand() : Request -> ", this.demandInformation)
 
     if (this.validateRequest(false)) {
 
-      let url = this.baseUrl + '/common/demand-intake/submit';
-      let headerOptions = {
-        headers: new HttpHeaders({
-          'X-Correlation-ID': 'abc'
-        })
-      };
-
       if (this.authService.isDM() && this.demandInformation.demandManagerInfo.decisionBy == '') {
+
         this.demandInformation.demandManagerInfo.decisionBy = this.authService.currentUserValue.email;
       }
-
       if (this.authService.isCCB() && this.demandInformation.ccbInfo.decisionBy == '') {
+
         this.demandInformation.ccbInfo.decisionBy = this.authService.currentUserValue.email;
       }
 
+      let url = this.baseUrl + '/common/demand-intake/submit';
       return this.http
-        .post<any>(url, this.demandInformation, headerOptions)
+        .post<any>(url, this.demandInformation, this.constants.headerOptions)
         .pipe(map(response => {
-          console.log("submitDemandWithAttachment() Response :", response)
           this.eventService.progressBarEvent.emit(false);
           return response;
         }));
@@ -323,77 +312,44 @@ export class DemandIntakeService {
 
   getAllDemands() {
     this.eventService.progressBarEvent.emit(true);
-    let url = this.baseUrl + '/common/demand-intake/';
-    let headerOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        'X-Correlation-ID': 'abc',
-        'Requester': this.authService.currentUserValue.email
-      })
-    };
-
-    return this.http.get<AllDemands>(url, headerOptions);
+    let url = this.baseUrl + '/common/demand-intake/all';
+    return this.http.get<AllDemands>(url, this.constants.headerOptions);
   }
 
   getAllAttachmentsByDemandId(demandId: number) {
     this.eventService.progressBarEvent.emit(true);
     let url = this.baseUrl + '/common/demand-intake/attachment/fetch/all/' + demandId;
-    let headerOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        'X-Correlation-ID': 'abc',
-        'Requester': this.authService.currentUserValue.email
-      })
-    };
-    return this.http.get<Attachment[]>(url, headerOptions);
+    return this.http.get<Attachment[]>(url, this.constants.headerOptions);
   }
 
   getAttachmentsById(fileId: number) {
     this.eventService.progressBarEvent.emit(true);
     let url = this.baseUrl + '/common/demand-intake/attachment/download/' + fileId;
-    return this.http.get(url, {
-      responseType: 'blob',
-      observe: 'response',
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        'X-Correlation-ID': 'abc',
-        'Requester': this.authService.currentUserValue.email
-      })
-    });
+    return this.http
+      .get(url, {
+        responseType: 'blob',
+        observe: 'response',
+        headers: new HttpHeaders({
+          'X-Correlation-ID': this.constants.x_correlation_id,
+        })
+      });
   }
 
   deleteAttachmentsById(fileId: number) {
     let url = this.baseUrl + '/common/demand-intake/attachment/delete/' + fileId;
-    let headerOptions = {
-      headers: new HttpHeaders({
-        'X-Correlation-ID': 'abc',
-      })
-    };
-    return this.http.get<any>(url, headerOptions);
+    return this.http.get<any>(url, this.constants.headerOptions);
   }
 
-  updateAttachmentsById(fileId: number, desc: string) {
+  updateDescAttachmentsById(fileId: number, desc: string) {
     let url = this.baseUrl + '/common/demand-intake/attachment/update/' + fileId + '?'
       + 'description=' + desc;
-    let headerOptions = {
-      headers: new HttpHeaders({
-        'X-Correlation-ID': 'abc',
-      })
-    };
-    return this.http.get<any>(url, headerOptions);
+    return this.http.get<any>(url, this.constants.headerOptions);
   }
 
   getRequesterDomain() {
     this.eventService.progressBarEvent.emit(true);
     let url = this.baseUrl + '/common/demand-intake/domain';
-    let headerOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        'X-Correlation-ID': 'abc',
-      })
-    };
-
-    return this.http.get(url, headerOptions);
+    return this.http.get(url, this.constants.headerOptions);
   }
 
   getAttachmentUploadURL() {
@@ -403,47 +359,21 @@ export class DemandIntakeService {
       + `uploaderRole=${this.authService.currentUserValue.role}`
   }
 
-  uploadAttachments(files: any) {
-    let formData = new FormData();
-
-    for (let i = 0; i < files.length; i++) {
-      formData.append('files', files[i], files[i].name);
-    }
-
-    this.eventService.progressBarEvent.emit(true);
-    return this
-      .http
-      .request(
-        'post',
-        this.getAttachmentUploadURL(),
-        {
-          body: formData,
-          headers: new HttpHeaders({
-            'Content-Type': 'application/json',
-            'X-Correlation-ID': 'abc',
-          })
-        });
-  }
-
-  generateReport(request : any){
+  generateReport(request: any) {
     let url = this.baseUrl + '/common/demand-intake/report';
-      let headerOptions = {
-        headers: new HttpHeaders({
-          'X-Correlation-ID': 'abc'
-        })
-      };
-
-      return this.http
-      .post<ReportResult>(url, this.demandInformation, headerOptions)
+    return this.http
+      .post<ReportResult>(url, request, this.constants.headerOptions)
       .pipe(map(response => {
-        console.log("generateReport() Response :", response)
         this.eventService.progressBarEvent.emit(false);
         return response;
       }));
   }
 
   getDemandStatusValueInLower(demandStatus: string) {
-    return demandStatus.toLowerCase();
+    if (demandStatus != null) {
+      return demandStatus.toLowerCase();
+    }
+    return "";
   }
 
   getApproverStatusValue(userStatus: string) {
@@ -462,17 +392,13 @@ export class DemandIntakeService {
   }
 
   getSDVisibility(solution: string): boolean {
-
-    if(this.demandInformation.introduction.status === DemandStatus.ACCEPTED || this.demandInformation.introduction.status === DemandStatus.DM_REJECTED || this.demandInformation.introduction.status === DemandStatus.CCB_REJECTED){
+    if (this.demandInformation.introduction.status === DemandStatus.ACCEPTED || this.demandInformation.introduction.status === DemandStatus.DM_REJECTED || this.demandInformation.introduction.status === DemandStatus.CCB_REJECTED) {
       return false;
     }
-
     if (this.authService.currentUserValue.domain && this.authService.currentUserValue.domain.includes(solution)) {
       return true;
     }
-
     return false;
   }
-
 }
 

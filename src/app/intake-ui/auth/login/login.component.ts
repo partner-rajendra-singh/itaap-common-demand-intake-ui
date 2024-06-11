@@ -13,13 +13,19 @@ export class LoginComponent implements OnInit {
   token !: string;
   otpSent: boolean = false;
 
+  isProgressing = false;
+
   constructor(public eventService: EventService,
               private messageService: MessageService,
               private authService: AuthService) {
   }
 
   ngOnInit(): void {
+    this.eventService.progressBarEvent.subscribe(response => {
+      this.isProgressing = response;
+    })
     if (this.authService.checkAccounts()) {
+      this.eventService.progressBarEvent.emit(true);
       this.authService.loginSilently();
     } else {
       console.log('checkAccount : Token not received. Please proceed with login.')
@@ -27,6 +33,8 @@ export class LoginComponent implements OnInit {
   }
 
   ssoLogin() {
+    this.messageService.clear('retry');
+    this.eventService.progressBarEvent.emit(true);
     this.authService.getHandleRedirect()
       .subscribe({
         next: (result) => {
@@ -39,5 +47,7 @@ export class LoginComponent implements OnInit {
 
   onRetry() {
     this.messageService.clear('retry');
+    this.eventService.progressBarEvent.emit(true);
+    this.authService.populateResponse(this.authService.currentLoggedInUser);
   }
 }

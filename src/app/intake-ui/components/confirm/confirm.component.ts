@@ -38,14 +38,16 @@ export class ConfirmComponent {
   }
 
   submitDemand() {
-    this.demandIntakeService.submitDemandWithAttachment()
+    this.demandIntakeService.submitDemand()
       .pipe(first())
       .subscribe(
-        data => {
+        response => {
+          console.log("submitDemand() : Response -> ", response)
           this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Demand Submitted Successfully!' });
           this.router.navigate(['view']);
         },
         error => {
+          console.log("submitDemand() : ERROR -> ", error)
           this.messageService.add({ severity: 'error', summary: 'error', detail: 'Demand Failed to Submit!' });
         });
   }

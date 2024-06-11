@@ -21,7 +21,7 @@ export class ReportComponent implements OnInit {
   selectedDemandStatus!: string;
   solutionDirectionList!: string[];
   selectedSolutionDirectionList: any = '';
-  stakeholderList: string = '';
+  // stakeholderList: string = '';
   selectedDemand!: any;
   reportResult!: any;
   errorData!: string;
@@ -36,56 +36,37 @@ export class ReportComponent implements OnInit {
   }
 
   onStatusChange() {
-    this.reportInfo.status = this.getStatusValue(this.selectedDemandStatus)
+    // console.log("selectedDemandStatus", this.selectedDemandStatus)
+    this.reportInfo.status = this.selectedDemandStatus;
   }
 
   generateReport() {
     this.eventService.progressBarEvent.emit(true);
-    console.log("generateReport ", this.reportInfo)
+    // console.log("generateReport ", this.reportInfo)
 
+    let temp: string[] = [];
     if (this.selectedSolutionDirectionList != '') {
       this.reportInfo.solutionDirectionList = this.selectedSolutionDirectionList;
+      this.reportInfo.solutionDirectionList.forEach(item => {
+        temp.push(this.getSDKey(item));
+      });
+      this.reportInfo.solutionDirectionList = temp;
     }
 
-    if (this.stakeholderList != '') {
-      console.log("this.selectedSolutionDirectionList", this.selectedSolutionDirectionList)
-      this.reportInfo.stakeholderList = this.stakeholderList.split(',');
-    }
-
-    // let today = new Date;
-    // this.reportResult = [
-    //   {
-    //     demandIntakeId: 10001,
-    //     title: 'Demand1',
-    //     description: 'Demand1 Descritpion',
-    //     status: 'ACCEPTED',
-    //     requestedBy: 'partner.pradnya.valsangkar@philips.com',
-    //     isCrossFunctional: false,
-    //     requestedDate: new Date(today.setDate(today.getDate() - 5)),
-    //     dmDecisionDate: new Date(today.setDate(today.getDate() + 2)),
-    //     ccbDecisionDate: new Date,
-    //   },
-    //   {
-    //     demandIntakeId: 10002,
-    //     title: 'Demand2',
-    //     description: 'Demand2 Descritpion',
-    //     status: 'CCB_REJECTED',
-    //     requestedBy: 'partner.sachin.kapkoti@philips.com',
-    //     isCrossFunctional: false,
-    //     requestedDate: new Date(today.setDate(today.getDate() - 10)),
-    //     dmDecisionDate: new Date(today.setDate(today.getDate() + 3)),
-    //     ccbDecisionDate: new Date(today.setDate(today.getDate() + 2)),
-    //   }
-    // ];
-
+    // if (this.stakeholderList != '') {
+    //   console.log("this.selectedSolutionDirectionList", this.selectedSolutionDirectionList)
+    //   this.reportInfo.stakeholderList = this.stakeholderList.split(',');
+    // }
+  
     this.demandIntakeService.generateReport(this.reportInfo).pipe(
       map((response: any) => {
+        console.log("generateReport() : Response -> ", response)
         this.reportResult = response;
         this.errorData = "";
         this.eventService.progressBarEvent.emit(false);
       }),
       catchError((error: any) => {
-        console.log('Error', error);
+        console.log('generateReport() : ERROR', error);
         this.errorData = JSON.stringify(error.error);
         this.eventService.progressBarEvent.emit(false);
         return throwError(error);
@@ -94,10 +75,11 @@ export class ReportComponent implements OnInit {
 
   }
 
-  getStatusValue(key: string): string {
-    const status = Object.keys(DemandStatusFilter).indexOf(key as unknown as DemandStatusFilter);
-    let s = Object.values(DemandStatusFilter)[status];
-    return s;
+  refreshReport() {
+    this.reportResult = "";
+    this.reportInfo = new ReportRequest;
+    this.selectedDemandStatus = DemandStatusFilter.ALL;
+    this.selectedSolutionDirectionList = "";
   }
 
   getSDKey(value: string): string {

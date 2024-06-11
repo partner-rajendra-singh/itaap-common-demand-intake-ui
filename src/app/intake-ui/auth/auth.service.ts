@@ -9,6 +9,8 @@ import {MsalService} from "@azure/msal-angular";
 import {MessageService} from "primeng/api";
 import {Router} from "@angular/router";
 import {DomSanitizer, SafeUrl} from "@angular/platform-browser";
+import {EventService} from "../services/event.service";
+import {Constants} from "../constants";
 
 @Injectable({
   providedIn: 'root'
@@ -25,14 +27,15 @@ export class AuthService {
   constructor(private http: HttpClient,
               private router: Router,
               private msalAuthService: MsalService,
+              private eventService: EventService,
               private sanitizer: DomSanitizer,
+              private constants: Constants,
               private messageService: MessageService) {
 
     const userJson = localStorage.getItem('currentUser');
     this.currentUserSubject = new BehaviorSubject<User>(userJson !== null ? JSON.parse(userJson) : null);
     this.currentUser = this.currentUserSubject.asObservable();
-
-    console.log("AuthService : this.currentUser", this.currentUserValue);
+    console.log("AuthService : this.currentUser -> ", this.currentUserValue);
   }
 
   public get currentUserValue(): User {
@@ -69,20 +72,10 @@ export class AuthService {
 
   ssoLogin(response: AuthenticationResult) {
     let url = this.baseUrl + '/common/demand-intake/login';
-    let headerOptions = {
-      headers: new HttpHeaders({
-        'Access-Control-Allow-Origin': '*', // This allows requests from all domains, adjust as needed
-        'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
-        'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept',
-        'Content-Type': 'application/json',
-        'X-Correlation-ID': 'abc',
-        'Authorization': `Bearer ${response.accessToken}`
-      })
-    };
     return this.http
-      .post<any>(url, response, headerOptions)
+      .post<any>(url, response, this.constants.headerOptions)
       .pipe(map(user => {
-        console.log("ssoLogin() Response :", user)
+        // console.log("ssoLogin() Response :", user)
         // if (user && user.isAuthenticated) {
         localStorage.setItem('currentUser', JSON.stringify(user));
         this.currentUserSubject.next(user);
@@ -106,9 +99,11 @@ export class AuthService {
       .subscribe({
         next: (result) => {
           this.getUserDataAndSilentToken();
+          this.eventService.progressBarEvent.emit(true);
         },
         error: (error) => {
           console.error(error);
+          this.eventService.progressBarEvent.emit(false);
           this.messageService.add({severity: 'error', summary: 'error', detail: 'Login Failed! : ' + error});
         }
       });
@@ -124,7 +119,7 @@ export class AuthService {
       .getHandleRedirect()
       .subscribe({
         next: (result) => {
-          console.log('Redirect Result:', result);
+          // console.log('Redirect Result:', result);
           this.currentLoggedInUser = result;
           this.getUserDataAndSilentToken();
         },
@@ -150,12 +145,12 @@ export class AuthService {
         this.populateResponse(response);
       })
       .catch(error => {
-        console.log('getUserDataAndSilentToken() : ERROR : ', error);
+        console.log('getUserDataAndSilentToken() : ERROR -> ', error);
         if (error instanceof InteractionRequiredAuthError) {
           this.msalAuthService.instance
             .acquireTokenPopup(popupRequest)
             .then(response => {
-              console.log(response);
+              // console.log(response);
               this.populateResponse(response);
             });
         }
@@ -170,16 +165,18 @@ export class AuthService {
       .subscribe(
         data => {
           this.getProfilePhoto();
+          this.eventService.progressBarEvent.emit(true);
           this.messageService.add({severity: 'success', summary: 'Success', detail: 'Login Successful!'});
           this.router.navigate(['dashboard']);
         },
         error => {
+          this.eventService.progressBarEvent.emit(false);
           this.messageService.clear('retry');
           this.messageService.add({
             key: 'retry',
             severity: 'error',
             sticky: true,
-            summary: error.statusText,
+            summary: 'Login Error',
             detail: error.message
           });
         });
@@ -192,13 +189,25 @@ export class AuthService {
     };
     return this.http.get('https://graph.microsoft.com/v1.0/me/photo/$value', {headers, responseType: 'blob'})
       .subscribe(response => {
-          console.log('getProfilePhoto() : SUCCESS : ', response);
+          console.log('getProfilePhoto() : SUCCESS -> ', response);
           const url = URL.createObjectURL(response);
           this.profilePhoto = this.sanitizer.bypassSecurityTrustUrl(url);
         },
         error => {
-          console.log('getProfilePhoto() : ERROR : ', error);
+          console.log('getProfilePhoto() : ERROR -> ', error);
         }
       );
+  }
+
+  logout(): void {
+    localStorage.clear();
+    this.currentUserSubject.next(null!);
+    this.msalAuthService.instance.clearCache().then(r => {
+        console.info("logout() : SUCCESS : Authenticated USER Cache Cleared");
+      },
+      error => {
+        console.info("logout() : ERROR : Authenticated USER Cache Clearing Error -> ", error);
+      });
+    window.location.reload();
   }
 }

@@ -5,7 +5,7 @@
         <p-fieldset legend="Field Label/Tooltip Management">
           <div class="grid">
             <div class="col-12 xs:col-12 sm:col-12 lg:col-12 xl:col-12">
-              <p-table [value]="fields" [paginator]="true" [rows]="10" dataKey="key" editMode="row" [tableStyle]="{ 'min-width': '50rem' }">
+              <p-table styleClass="p-datatable-sm" [value]="fields" [paginator]="true" [rows]="10" dataKey="key" editMode="row" [tableStyle]="{ 'min-width': '50rem' }">
                   <ng-template pTemplate="header">
                       <tr>
                           <th style="width:15%">Key</th>
@@ -37,10 +37,10 @@
                           <td>
                               <p-cellEditor>
                                   <ng-template pTemplate="input">
-                                      <input 
-                                          pInputText 
-                                          type="text" 
-                                          [(ngModel)]="field.label" 
+                                      <input
+                                          pInputText
+                                          type="text"
+                                          [(ngModel)]="field.label"
                                           required />
                                   </ng-template>
                                   <ng-template pTemplate="output">
@@ -51,8 +51,8 @@
                           <td >
                               <p-cellEditor>
                                   <ng-template pTemplate="input">
-                                      <input 
-                                          pInputText 
+                                      <input
+                                          pInputText
                                           [(ngModel)]="field.tooltip" />
                                   </ng-template>
                                   <ng-template pTemplate="output">
@@ -63,8 +63,8 @@
                           <td>
                               <p-cellEditor>
                                   <ng-template pTemplate="input">
-                                      <input 
-                                          pInputText type="text" 
+                                      <input
+                                          pInputText type="text"
                                           [(ngModel)]="field.mandatory" />
                                   </ng-template>
                                   <ng-template pTemplate="output">
@@ -74,33 +74,33 @@
                           </td>
                           <td>
                             <div class="flex align-items-center justify-content-center gap-2">
-                              <button 
-                                  *ngIf="!editing" 
-                                  pButton 
-                                  pRipple 
-                                  type="button" 
-                                  pInitEditableRow 
-                                  icon="pi pi-pencil" 
-                                  (click)="onRowEditInit(field)" 
+                              <button
+                                  *ngIf="!editing"
+                                  pButton
+                                  pRipple
+                                  type="button"
+                                  pInitEditableRow
+                                  icon="pi pi-pencil"
+                                  (click)="onRowEditInit(field)"
                                   class="p-button-rounded p-button-text">
                               </button>
-                              <button 
-                                  *ngIf="editing" 
-                                  pButton 
-                                  pRipple 
-                                  type="button" 
-                                  pSaveEditableRow 
-                                  icon="pi pi-check" 
-                                  (click)="onRowEditSave(field)" 
+                              <button
+                                  *ngIf="editing"
+                                  pButton
+                                  pRipple
+                                  type="button"
+                                  pSaveEditableRow
+                                  icon="pi pi-check"
+                                  (click)="onRowEditSave(field)"
                                   class="p-button-rounded p-button-text p-button-success mr-2">
                               </button>
-                              <button 
-                                  *ngIf="editing" 
-                                  pButton pRipple 
-                                  type="button" 
-                                  pCancelEditableRow 
-                                  icon="pi pi-times" 
-                                  (click)="onRowEditCancel(field, ri)" 
+                              <button
+                                  *ngIf="editing"
+                                  pButton pRipple
+                                  type="button"
+                                  pCancelEditableRow
+                                  icon="pi pi-times"
+                                  (click)="onRowEditCancel(field, ri)"
                                   class="p-button-rounded p-button-text p-button-danger">
                               </button>
                           </div>

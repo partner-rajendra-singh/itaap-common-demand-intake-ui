@@ -43,8 +43,8 @@ export class DemandIntakeComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    console.log("DemandIntakeComponent id ", this.eventService.currentDemandIntakeId);
-    console.log("DemandIntakeComponent isNewDemand ", this.eventService.isNewDemand);
+    // console.log("DemandIntakeComponent id ", this.eventService.currentDemandIntakeId);
+    // console.log("DemandIntakeComponent isNewDemand ", this.eventService.isNewDemand);
 
     if (this.eventService.isNewDemand) {
       this.items = [

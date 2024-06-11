@@ -1,4 +1,3 @@
-// src/app/auth-config.ts
 import {BrowserCacheLocation, Configuration, InteractionType, LogLevel} from '@azure/msal-browser';
 import {environment} from "../../../environments/environment";
 import {MsalGuardConfiguration, MsalInterceptorConfiguration} from "@azure/msal-angular";

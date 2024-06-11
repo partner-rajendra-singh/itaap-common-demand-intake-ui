@@ -38,7 +38,7 @@ export class ViewDemandsComponent implements OnInit {
     this.demandStatusList = Object.keys(DemandStatusFilter);
     this.selectedDemandStatus = DemandStatusFilter.ALL;
 
-    console.log("ViewDemandsComponent isMyDemand", this.eventService.isMyDemand)
+    // console.log("ViewDemandsComponent isMyDemand", this.eventService.isMyDemand)
     this.isRequester = this.authService.isRequester();
     if (!this.isRequester) {
       this.eventService.selectedDemandTabIndex = 1;
@@ -48,16 +48,14 @@ export class ViewDemandsComponent implements OnInit {
   fetchAllDemands() {
     this.demandIntakeService.getAllDemands().pipe(
       map((response: any) => {
-        console.log('View1 getAllDemands() Response :', response);
+        console.log('View getAllDemands() : Response -> ', response);
         this.allDemands = response;
         this.onCategoryChange();
-
         this.errorData = "";
-        console.log('View getAllDemands() Response :', this.allDemands);
         this.eventService.progressBarEvent.emit(false);
       }),
       catchError((error: any) => {
-        console.log('Error', error);
+        console.log('View getAllDemands() : ERROR -> ', error);
         this.errorData = JSON.stringify(error.error);
         this.eventService.progressBarEvent.emit(false);
         return throwError(error);
@@ -123,9 +121,9 @@ export class ViewDemandsComponent implements OnInit {
 
           }
         });
-        console.log("actionInProgressList", actionInProgressList)
+        // console.log("actionInProgressList", actionInProgressList)
         this.allCurrentPendingDemands = actionInProgressList;
-        console.log("this.allCurrentPendingDemands 1", this.allCurrentPendingDemands)
+        // console.log("this.allCurrentPendingDemands 1", this.allCurrentPendingDemands)
       }
 
     } else if (this.selectedDemandCategory == DemandCategory.ACTION_COMPLETED) {
@@ -140,9 +138,9 @@ export class ViewDemandsComponent implements OnInit {
             actionDoneList.push(demand);
           }
         });
-        console.log("actionDoneList", actionDoneList)
+        // console.log("actionDoneList", actionDoneList)
         this.allCurrentPendingDemands = actionDoneList;
-        console.log("this.allCurrentPendingDemands 1", this.allCurrentPendingDemands)
+        // console.log("this.allCurrentPendingDemands 1", this.allCurrentPendingDemands)
       } else {
         this.allCurrentPendingDemands = this.allCurrentPendingDemands.filter(item => !statusList.find(s => s == item.introduction.status));
       }
@@ -156,7 +154,7 @@ export class ViewDemandsComponent implements OnInit {
   }
 
   onDemandSelect(event: any, isMyDemand: boolean, isStakeholderDemand: boolean) {
-    console.log("selectedDemand, isMyDemand, isStakeholderDemand", this.selectedDemand, isMyDemand, isStakeholderDemand)
+    // console.log("selectedDemand, isMyDemand, isStakeholderDemand", this.selectedDemand, isMyDemand, isStakeholderDemand)
     this.eventService.isMyDemand = isMyDemand;
     this.eventService.isStakeholderDemand = isStakeholderDemand;
     this.eventService.isNewDemand = false;

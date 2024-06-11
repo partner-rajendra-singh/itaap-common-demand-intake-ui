@@ -41,7 +41,7 @@ export class RequirementsComponent implements OnInit {
             this.demandIntakeService.getDemandInformation().requirementFunctionalInfo.bglDate = new Date(today.setDate(today.getDate() + 1));
         }
 
-        console.log("RequirementsComponent Init: ", this.demandIntakeService.demandInformation)
+        // console.log("RequirementsComponent Init: ", this.demandIntakeService.demandInformation)
         this.requirementFunctionalInfo = this.demandIntakeService.getDemandInformation().requirementFunctionalInfo;
         this.requirementNonFunctionalInfo = this.demandIntakeService.getDemandInformation().requirementNonFunctionalInfo;
         this.requirementComplianceInfo = this.demandIntakeService.getDemandInformation().requirementComplianceInfo;
@@ -104,19 +104,17 @@ export class RequirementsComponent implements OnInit {
         }
     }
 
-    setGoLiveApproach() {
-        console.log(this.goLiveApproach)
-    }
-
     savePage() {
-        this.demandIntakeService.saveDemandWithAttachment()
+        this.demandIntakeService.saveDemand()
             .pipe(first())
             .subscribe(
                 response => {
+                    console.log("saveDemand() : Response -> ", response)
                     this.messageService.add({ key: 'success', severity: 'success', summary: 'Success', detail: 'Demand Saved Successfully!' });
                     this.router.navigate(['view']);
                 },
                 error => {
+                    console.log("saveDemand() : ERROR -> ", error)
                     this.messageService.add({ key: 'error', severity: 'error', summary: 'Error', detail: 'Demand Failed to Save!' });
                 });
     }

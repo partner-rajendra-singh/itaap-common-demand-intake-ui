@@ -1,29 +1,31 @@
-import { Component } from '@angular/core';
-import { Router } from '@angular/router';
-import { DemandIntakeService } from '../../services/demand-intake.service';
-import { first } from 'rxjs';
-import { MessageService } from 'primeng/api';
-import { EventService } from '../../services/event.service';
-import { AuthService } from '../../auth/auth.service';
-import { SolutionDirection1 } from '../../models/solution-direction1';
-import { SolutionDirection } from '../../models/solution-direction';
-import { DemandStatus } from '../../enums/demand-status';
+import {Component, OnInit} from '@angular/core';
+import {Router} from '@angular/router';
+import {DemandIntakeService} from '../../services/demand-intake.service';
+import {MessageService} from 'primeng/api';
+import {EventService} from '../../services/event.service';
+import {SolutionDirection1} from '../../models/solution-direction1';
+import {SolutionDirection} from '../../models/solution-direction';
 import {FieldsService} from "../../services/fields.service";
+import {AuthService} from "../../auth/auth.service";
 
 @Component({
   selector: 'app-solution-direction',
   templateUrl: './solution-direction.component.html'
 })
-export class SolutionDirectionComponent {
+export class SolutionDirectionComponent implements OnInit {
 
   solutionDirectionInfo!: SolutionDirection1[];
   sdInfo: SolutionDirection = new SolutionDirection;
   dmDomainList: string[] = [];
 
-  constructor(private authService: AuthService,public fieldsService: FieldsService, public demandIntakeService: DemandIntakeService, private router: Router, private messageService: MessageService, private eventService: EventService) { }
+  constructor(private authService: AuthService,
+              public fieldsService: FieldsService,
+              public demandIntakeService: DemandIntakeService,
+              private router: Router, private messageService: MessageService, private eventService: EventService) {
+  }
 
   ngOnInit() {
-    console.log("SolutionDirectionComponent Init: ", this.demandIntakeService.demandInformation)
+    // console.log("SolutionDirectionComponent Init: ", this.demandIntakeService.demandInformation)
 
     this.solutionDirectionInfo = this.demandIntakeService.getDemandInformation().solutionDirectionInfo;
     this.eventService.solutionDirectionValue = this.solutionDirectionInfo;
@@ -35,16 +37,36 @@ export class SolutionDirectionComponent {
 
   setLocalSD(sd: SolutionDirection1) {
     switch (sd.solution) {
-      case 'integration': this.sdInfo.integration = sd.value; break;
-      case 'dataModelling': this.sdInfo.dataModelling = sd.value; break;
-      case 'adlL1': this.sdInfo.adlL1 = sd.value; break;
-      case 'adlL2': this.sdInfo.adlL2 = sd.value; break;
-      case 'gold': this.sdInfo.gold = sd.value; break;
-      case 'mdm': this.sdInfo.mdm = sd.value; break;
-      case 'ia': this.sdInfo.ia = sd.value; break;
-      case 'dataQuality': this.sdInfo.dataQuality = sd.value; break;
-      case 'informatica': this.sdInfo.informatica = sd.value; break;
-      case 'azureSynapse': this.sdInfo.azureSynapse = sd.value; break;
+      case 'integration':
+        this.sdInfo.integration = sd.value;
+        break;
+      case 'dataModelling':
+        this.sdInfo.dataModelling = sd.value;
+        break;
+      case 'adlL1':
+        this.sdInfo.adlL1 = sd.value;
+        break;
+      case 'adlL2':
+        this.sdInfo.adlL2 = sd.value;
+        break;
+      case 'gold':
+        this.sdInfo.gold = sd.value;
+        break;
+      case 'mdm':
+        this.sdInfo.mdm = sd.value;
+        break;
+      case 'ia':
+        this.sdInfo.ia = sd.value;
+        break;
+      case 'dataQuality':
+        this.sdInfo.dataQuality = sd.value;
+        break;
+      case 'informatica':
+        this.sdInfo.informatica = sd.value;
+        break;
+      case 'azureSynapse':
+        this.sdInfo.azureSynapse = sd.value;
+        break;
     }
   }
 
@@ -85,7 +107,11 @@ export class SolutionDirectionComponent {
       }
 
     } else {
-      this.messageService.add({ severity: 'warn', summary: 'Warning', detail: 'Please select atleast one Solution Direction!' });
+      this.messageService.add({
+        severity: 'warn',
+        summary: 'Warning',
+        detail: 'Please select atleast one Solution Direction!'
+      });
     }
   }
 

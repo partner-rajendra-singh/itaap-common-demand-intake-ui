@@ -66,7 +66,6 @@ export class IntroductionComponent implements OnInit {
       movenext1 = false;
     }
 
-    console.log("c**", movenext, movenext1)
     if (movenext && movenext1) {
       if (this.eventService.isNewDemand) {
         this.router.navigate(['demand-intake/requester']);
@@ -80,7 +79,7 @@ export class IntroductionComponent implements OnInit {
   }
 
   validateIntroductionInfoAndSave(saveAndNavigateToViewFlag: boolean) {
-    console.log("Introduction : ", this.demandIntakeService.demandInformation)
+    // console.log("Introduction : ", this.demandIntakeService.demandInformation)
     let movenext = true;
     this.architectAlignmentInfo.forEach(item => {
       if ((this.demandInfo.architectAligned) && (!this.eventService.checkEmailValue(item.email) || item.comment == '')) {
@@ -110,10 +109,11 @@ export class IntroductionComponent implements OnInit {
   savePage(saveAndNavigateToViewFlag: boolean) {
     if (this.demandIntakeService.demandInformation.introduction.status != DemandStatus.ACCEPTED && this.demandIntakeService.demandInformation.introduction.status != 'REJECTED') {
       this.demandIntakeService.getDemandInformation().introduction.requestedBy = this.authService.currentUserValue.email;
-      this.demandIntakeService.saveDemandWithAttachment()
+      this.demandIntakeService.saveDemand()
         .pipe(first())
         .subscribe(
           response => {
+            console.log("saveDemand() : Response -> ", response)
             this.messageService.add({
               key: 'success',
               severity: 'success',
@@ -130,6 +130,7 @@ export class IntroductionComponent implements OnInit {
             }
           },
           error => {
+            console.log("saveDemand() : ERROR -> ", error)
             this.messageService.add({
               key: 'error',
               severity: 'error',

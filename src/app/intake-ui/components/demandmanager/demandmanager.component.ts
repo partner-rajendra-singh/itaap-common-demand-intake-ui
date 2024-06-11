@@ -34,7 +34,7 @@ export class DemandManagerComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log("DemandManagerComponent ", this.demandIntakeService.demandInformation)
+    // console.log("DemandManagerComponent ", this.demandIntakeService.demandInformation)
 
     this.submitDemandLabel = 'Submit Demand';
     if (this.demandIntakeService.getDemandInformation().introduction.status === DemandStatus.DM_MODIFICATION || this.demandIntakeService.getDemandInformation().introduction.status === DemandStatus.CCB_MODIFICATION) {

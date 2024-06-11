@@ -1,12 +1,12 @@
 import { Injector, OnInit } from '@angular/core';
 import { Component } from '@angular/core';
 import { LayoutService } from '../service/app.layout.service';
-import { AuthService } from 'src/app/intake-ui/auth/auth.service';
 import { DemandIntakeService } from 'src/app/intake-ui/services/demand-intake.service';
 import { EventService } from 'src/app/intake-ui/services/event.service';
 import { Demand } from 'src/app/intake-ui/models/demand';
 import { Router } from '@angular/router';
 import { DemandIntakeComponent } from 'src/app/intake-ui/components/demand-intake/demand-intake.component';
+import {AuthService} from "../../intake-ui/auth/auth.service";
 
 @Component({
   selector: 'app-menu',
@@ -18,11 +18,11 @@ export class AppMenuComponent implements OnInit {
   model: any[] = [];
 
   constructor(private router: Router,
-    public layoutService: LayoutService,
-    private authService: AuthService,
-    private demandIntakeService: DemandIntakeService,
-    private eventService: EventService,
-    private injector: Injector
+              public layoutService: LayoutService,
+              private authService: AuthService,
+              private demandIntakeService: DemandIntakeService,
+              private eventService: EventService,
+              private injector: Injector
   ) { }
 
   ngOnInit() {
@@ -41,8 +41,7 @@ export class AppMenuComponent implements OnInit {
         items: [
           { label: 'New', icon: 'pi pi-fw pi-plus', command: () => this.newDemand() },
           { label: 'View', icon: 'pi pi-fw pi-search', routerLink: ["/view"] },
-          { label: 'Report', icon: 'pi pi-fw pi-file-excel', routerLink: ["/report"], visible: false },
-          { label: 'Chart', icon: 'pi pi-chart-pie', routerLink: ["/chart"], visible: true }
+          { label: 'Report', icon: 'pi pi-fw pi-file-excel', routerLink: ["/report"], visible: true }
         ],
         expanded: true
       },
@@ -51,7 +50,8 @@ export class AppMenuComponent implements OnInit {
         icon: 'pi pi-fw pi-user',
         items: [
           { label: 'DM List', icon: 'pi pi-fw pi-align-left', routerLink: ["/dmcrud"] },
-          { label: 'CCB List', icon: 'pi pi-fw pi-align-right', routerLink: ["/ccbcrud"] }
+          { label: 'CCB List', icon: 'pi pi-fw pi-align-right', routerLink: ["/ccbcrud"] },
+          { label: 'Field Management', icon: 'pi pi-fw pi-align-right', routerLink: ["/fieldmgmt"] }
         ],
         expanded: true,
         visible: this.authService.isAdmin()
@@ -66,7 +66,7 @@ export class AppMenuComponent implements OnInit {
     this.eventService.isNewDemand = true;
     this.eventService.isMyDemand = true;
     this.eventService.isStakeholderDemand = false;
-    console.log("MenuComponent1 isNewDemand, isMyDemand ", this.eventService.isNewDemand, this.eventService.isMyDemand);
+    // console.log("MenuComponent1 isNewDemand, isMyDemand ", this.eventService.isNewDemand, this.eventService.isMyDemand);
 
     this.eventService.solutionDirectionValue = new Array();
     this.eventService.selectedDemandTabIndex = 0;

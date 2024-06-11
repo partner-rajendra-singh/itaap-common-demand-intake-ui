@@ -32,11 +32,11 @@ export class DMCRUDComponent {
       map((response: any) => {
         this.dmList = response;
 
-        console.log('getAllDM() Response :', this.dmList);
+        console.log('getAllDM() : Response -> ', this.dmList);
         this.eventService.progressBarEvent.emit(false);
       }),
       catchError((error: any) => {
-        console.log('Error', error);
+        console.log('getAllDM() : ERROR -> ', error);
         this.eventService.progressBarEvent.emit(false);
         return throwError(error);
       })
@@ -77,7 +77,7 @@ export class DMCRUDComponent {
 
   onSubmit() {
     this.eventService.progressBarEvent.emit(true);
-    console.log("this.selectedDomain", this.selectedDomain)
+    // console.log("this.selectedDomain", this.selectedDomain)
     // if (this.selectedDomain && this.selectedDomain != '') {
 
     if (this.adminService.validateApproverRequest()) {

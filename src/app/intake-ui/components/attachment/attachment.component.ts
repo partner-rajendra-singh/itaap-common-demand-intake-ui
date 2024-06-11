@@ -10,7 +10,7 @@ import {HttpHeaders} from '@angular/common/http';
 import {FileUploadEvent} from 'primeng/fileupload';
 import {DemandStatus} from '../../enums/demand-status';
 import {FieldsService} from "../../services/fields.service";
-
+import {Constants} from "../../constants";
 
 @Component({
   selector: 'app-attachment',
@@ -31,6 +31,7 @@ export class AttachmentComponent implements OnInit {
 
   constructor(private config: PrimeNGConfig,
               public fieldsService: FieldsService,
+              public constants: Constants,
               public demandIntakeService: DemandIntakeService, private router: Router,
               private messageService: MessageService, public authService: AuthService, public eventService: EventService, private confirmationService: ConfirmationService) {
     this.visibleAttachmentUpload = true;
@@ -99,15 +100,9 @@ export class AttachmentComponent implements OnInit {
     if (this.demandIntakeService.getDemandInformation().introduction.status === DemandStatus.DM_MODIFICATION || this.demandIntakeService.getDemandInformation().introduction.status === DemandStatus.CCB_MODIFICATION) {
       this.submitDemandLabel = 'Update Demand';
     }
-
     this.getAllAttachmentsByDemandId();
-    console.log("this.demandIntakeService.isNew -> " + this.demandIntakeService.isNew)
-    console.log("attachment demand", this.demandIntakeService.getDemandInformation())
     this.attachmentInfo = this.demandIntakeService.getDemandInformation().attachmentInfo;
     this.fileUploadUrl = this.demandIntakeService.getAttachmentUploadURL();
-    this.httpHeaders.set('X-Correlation-ID', 'abc');
-    this.httpHeaders.set('Access-Control-Allow-Origin', 'http://localhost:4200')
-    console.log("this.fileUploadUrl -> " + this.fileUploadUrl);
   }
 
   isDeleteDisabled(attachment: Attachment): boolean {
@@ -143,10 +138,11 @@ export class AttachmentComponent implements OnInit {
     if (this.files.length > 0) {
       this.uploadEvent(this.uploadCallback);
     }
-    this.demandIntakeService.saveDemandWithAttachment()
+    this.demandIntakeService.saveDemand()
       .pipe(first())
       .subscribe(
         response => {
+          console.log("saveDemand() : Response -> ", response)
           this.messageService.add({
             key: 'success',
             severity: 'success',
@@ -156,6 +152,7 @@ export class AttachmentComponent implements OnInit {
           this.router.navigate(['view']);
         },
         error => {
+          console.log("saveDemand() : ERROR -> ", error)
           this.messageService.add({
             key: 'error',
             severity: 'error',
@@ -193,8 +190,6 @@ export class AttachmentComponent implements OnInit {
   }
 
   nextPage() {
-    // this.demandIntakeService.getDemandInformation().attachmentInfo = this.attachmentInfo;
-    console.log("files: ", this.demandIntakeService.getDemandInformation().attachmentInfo)
     if (!this.eventService.isNewDemand) {
       if (this.eventService.isNewDemand) {
         this.router.navigate(['demand-intake/demandmanager']);
@@ -203,19 +198,6 @@ export class AttachmentComponent implements OnInit {
       }
     }
   }
-
-  // onUpload(event: any, index: any) {
-  //   for (let file of event.files) {
-  //     this.demandIntakeService.attachments[index] = file;
-  //   }
-  //   console.log("attachments1: ", this.demandIntakeService.attachments);
-  //   this.messageService.add({severity: 'info', summary: 'Success', detail: 'Files Uploaded Successfully!'});
-  // }
-  //
-  // setDescription(description: HTMLInputElement, file: any) {
-  //   file.description = description.value;
-  //   description.disabled = true;
-  // }
 
   getAllAttachmentsByDemandId() {
     this.demandIntakeService
@@ -233,7 +215,7 @@ export class AttachmentComponent implements OnInit {
       .deleteAttachmentsById(index)
       .subscribe(
         response => {
-          console.log(response);
+          console.log("deleteAttachment() : SUCCESS -> ", response);
           this.messageService.add({
             severity: 'info',
             summary: 'Success',
@@ -243,7 +225,7 @@ export class AttachmentComponent implements OnInit {
           this.getAllAttachmentsByDemandId();
         },
         error => {
-          console.log(error);
+          console.log("deleteAttachment() : ERROR -> ", error);
           this.messageService.add({
             severity: 'error',
             summary: 'Error',
@@ -256,10 +238,10 @@ export class AttachmentComponent implements OnInit {
 
   updateAttachment(attachment: Attachment) {
     this.demandIntakeService
-      .updateAttachmentsById(attachment.attachmentId, attachment.description)
+      .updateDescAttachmentsById(attachment.attachmentId, attachment.description)
       .subscribe(
         response => {
-          console.log(response);
+          console.log("updateAttachment() : SUCCESS -> ", response);
           this.messageService.add({
             severity: 'info',
             summary: 'Success',
@@ -269,7 +251,7 @@ export class AttachmentComponent implements OnInit {
           this.getAllAttachmentsByDemandId();
         },
         error => {
-          console.log(error);
+          console.log("updateAttachment() : ERROR -> ", error);
           this.messageService.add({
             severity: 'error',
             summary: 'Error',
@@ -299,7 +281,7 @@ export class AttachmentComponent implements OnInit {
             link.remove();
             this.eventService.progressBarEvent.emit(false);
           } else {
-            console.log("Unable to extract file")
+            console.log("downloadAttachment() : ERROR -> Unable to extract file")
           }
         }
       )
@@ -370,7 +352,12 @@ export class AttachmentComponent implements OnInit {
     }
     this.demandIntakeService
       .http
-      .post<any>(this.demandIntakeService.getAttachmentUploadURL(), formData)
+      .post<any>(this.demandIntakeService.getAttachmentUploadURL(), formData, {
+        headers: new HttpHeaders({
+          'X-Correlation-ID': this.constants.x_correlation_id,
+          'Authorization': this.authService.currentLoggedInUser.accessToken
+        })
+      })
       .subscribe((response) => {
         this.uploadedFiles.push(...this.files);
         this.files.splice(0, this.files.length);
@@ -385,10 +372,6 @@ export class AttachmentComponent implements OnInit {
   }
 
   clonedAttachments: { [s: number]: Attachment } = {};
-
-  onDescRowEdit(attachment: Attachment) {
-    throw new Error('Method not implemented.');
-  }
 
   onRowEditInit(attachment: Attachment) {
     this.clonedAttachments[attachment.attachmentId] = {...attachment};

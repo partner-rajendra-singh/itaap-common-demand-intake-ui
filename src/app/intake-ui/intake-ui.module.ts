@@ -57,12 +57,10 @@ import {RequirementsComponent} from './components/requirements/requirements.comp
 import {SolutionDirectionComponent} from './components/solution-direction/solution-direction.component';
 import {ChecklistComponent} from './components/checklist/checklist.component';
 import {IntroductionComponent} from './components/introduction/introduction.component';
-import {WipComponent} from './components/wip/wip.component';
 import {DemandManagerComponent} from './components/demandmanager/demandmanager.component';
 import {CCBComponent} from './components/ccb/ccb.component';
 import {LoginComponent} from './auth/login/login.component';
 import {LogoutComponent} from './auth/logout/logout.component';
-import {ChartComponent} from './components/chart/chart.component';
 import {DMCRUDComponent} from './components/dmcrud/dmcrud.component';
 import {CCBCRUDComponent} from './components/ccbcrud/ccbcrud.component';
 import {ViewDemandsComponent} from './components/view-demands/view-demands.component';
@@ -75,9 +73,9 @@ import {InputOtpModule} from 'primeng/inputotp';
 import {ConfirmComponent} from './components/confirm/confirm.component';
 import {DashboardComponent} from './components/dashboard/dashboard.component';
 import {ButtonGroupModule} from "primeng/buttongroup";
-import { ReportComponent } from './components/report/report.component';
+import {ReportComponent} from './components/report/report.component';
 import {TooltipModule} from "primeng/tooltip";
-import { FieldManagementComponent } from './components/field-management/field-management.component';
+import {FieldManagementComponent} from './components/field-management/field-management.component';
 
 
 @NgModule({
@@ -90,12 +88,10 @@ import { FieldManagementComponent } from './components/field-management/field-ma
     AttachmentComponent,
     ChecklistComponent,
     IntroductionComponent,
-    WipComponent,
     DemandManagerComponent,
     CCBComponent,
     LoginComponent,
     LogoutComponent,
-    ChartComponent,
     DMCRUDComponent,
     CCBCRUDComponent,
     ViewDemandsComponent,
@@ -103,70 +99,70 @@ import { FieldManagementComponent } from './components/field-management/field-ma
     ConfirmComponent,
     ReportComponent,
     FieldManagementComponent
-    ],
-    imports: [
-        CommonModule,
-        FormsModule,
-        ReactiveFormsModule,
-        HttpClientModule,
-        CardModule,
-        CalendarModule,
-        ButtonModule,
-        ListboxModule,
-        RippleModule,
-        MenubarModule,
-        InputTextModule,
-        TabViewModule,
-        SplitterModule,
-        DividerModule,
-        SplitButtonModule,
-        CheckboxModule,
-        TableModule,
-        ToolbarModule,
-        DialogModule,
-        InputTextareaModule,
-        AutoFocusModule,
-        ToastModule,
-        MessagesModule,
-        MessageModule,
-        RadioButtonModule,
-        BadgeModule,
-        AvatarModule,
-        BlockUIModule,
-        OverlayModule,
-        ConfirmDialogModule,
-        OverlayPanelModule,
-        FileUploadModule,
-        ConfirmPopupModule,
-        TagModule,
-        DropdownModule,
-        TimelineModule,
-        TreeModule,
-        BreadcrumbModule,
-        AccordionModule,
-        SidebarModule,
-        EditorModule,
-        AutoCompleteModule,
-        InplaceModule,
-        ChartModule,
-        ScrollPanelModule,
-        ProgressBarModule,
-        ProgressSpinnerModule,
-        TabMenuModule,
-        InputNumberModule,
-        AvatarGroupModule,
-        SelectButtonModule,
-        ChipModule,
-        FieldsetModule,
-        StepsModule,
-        PanelMenuModule,
-        MultiSelectModule,
-        ProgressSpinnerModule,
-        StepperModule,
-        InputOtpModule,
-        ButtonGroupModule,
-        TooltipModule
-    ]
+  ],
+  imports: [
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    HttpClientModule,
+    CardModule,
+    CalendarModule,
+    ButtonModule,
+    ListboxModule,
+    RippleModule,
+    MenubarModule,
+    InputTextModule,
+    TabViewModule,
+    SplitterModule,
+    DividerModule,
+    SplitButtonModule,
+    CheckboxModule,
+    TableModule,
+    ToolbarModule,
+    DialogModule,
+    InputTextareaModule,
+    AutoFocusModule,
+    ToastModule,
+    MessagesModule,
+    MessageModule,
+    RadioButtonModule,
+    BadgeModule,
+    AvatarModule,
+    BlockUIModule,
+    OverlayModule,
+    ConfirmDialogModule,
+    OverlayPanelModule,
+    FileUploadModule,
+    ConfirmPopupModule,
+    TagModule,
+    DropdownModule,
+    TimelineModule,
+    TreeModule,
+    BreadcrumbModule,
+    AccordionModule,
+    SidebarModule,
+    EditorModule,
+    AutoCompleteModule,
+    InplaceModule,
+    ChartModule,
+    ScrollPanelModule,
+    ProgressBarModule,
+    ProgressSpinnerModule,
+    TabMenuModule,
+    InputNumberModule,
+    AvatarGroupModule,
+    SelectButtonModule,
+    ChipModule,
+    FieldsetModule,
+    StepsModule,
+    PanelMenuModule,
+    MultiSelectModule,
+    ProgressSpinnerModule,
+    StepperModule,
+    InputOtpModule,
+    ButtonGroupModule,
+    TooltipModule
+  ]
 })
 export class IntakeUIComponentsModule {
 }

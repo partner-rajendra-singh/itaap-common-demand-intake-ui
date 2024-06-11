@@ -34,8 +34,9 @@
       </div>
       <div style="align-self: center;" *ngIf="this.authService.profilePhoto">
         <p-avatar class="p-element"
-          styleClass="ml-2"
-          size="xlarge">
+                  styleClass="ml-2"
+                  shape="circle"
+                  size="xlarge">
           <img [src]="this.authService.profilePhoto" alt="Profile Photo">
         </p-avatar>
       </div>

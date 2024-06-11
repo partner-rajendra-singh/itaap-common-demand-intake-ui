@@ -28,7 +28,7 @@ export class FieldManagementComponent implements OnInit {
     this.adminService.getAllFields().pipe(
       map((response: any) => {
         this.fields = response;
-        console.log('getAllFields() : response -> ', this.fields);
+        console.log('getAllFields() : Response -> ', this.fields);
         this.eventService.progressBarEvent.emit(false);
       })
     ).subscribe();
@@ -46,7 +46,7 @@ export class FieldManagementComponent implements OnInit {
   onRowEditSave(field: FieldMgmt) {
     this.adminService.updateField(field).pipe(
       map((response: any) => {
-        console.log('updateField() Response :', response);
+        console.log('updateField() : Response -> ', response);
         this.loadTableData();
         this.eventService.progressBarEvent.emit(false);
       })

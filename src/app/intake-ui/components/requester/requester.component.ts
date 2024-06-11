@@ -61,18 +61,18 @@ export class RequesterComponent implements OnInit {
 
     this.demandIntakeService.getRequesterDomain().pipe(
       map((response: any) => {
+        // console.log("getRequesterDomain() : Response -> ", response);
         this.domainList = response;
         this.selectedDomain = this.getSelectedDomain();
         this.eventService.progressBarEvent.emit(false);
       }),
       catchError((error: any) => {
-        console.log('Error', error);
+        console.log('getRequesterDomain() : ERROR -> ', error);
         this.eventService.progressBarEvent.emit(false);
         return throwError(error);
       })
     ).subscribe();
 
-    console.log("RequesterComponent Init: ", this.demandIntakeService.demandInformation)
   }
 
   requesterChange(event: any) {
@@ -203,10 +203,11 @@ export class RequesterComponent implements OnInit {
     this.selectedBusinessUnit.forEach(item => this.requesterInfo.businessUnit.push(this.getBUKey(item)));
     this.selectedBusinessUnit = Array.from(new Set(this.selectedBusinessUnit))
 
-    this.demandIntakeService.saveDemandWithAttachment()
+    this.demandIntakeService.saveDemand()
       .pipe(first())
       .subscribe(
         response => {
+          console.log("saveDemand() : Response -> ", response)
           this.messageService.add({
             key: 'success',
             severity: 'success',
@@ -216,6 +217,7 @@ export class RequesterComponent implements OnInit {
           this.router.navigate(['view']);
         },
         error => {
+          console.log("saveDemand() : ERROR -> ", error)
           this.messageService.add({
             key: 'error',
             severity: 'error',

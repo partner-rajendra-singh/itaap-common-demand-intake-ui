@@ -47,13 +47,13 @@
       </p-card>
       </ng-template>
     </p-timeline>
- 
+
 </p-sidebar>
 
 <div class="card grid">
   <div class="col-11 xs:col-11 sm:col-11 lg:col-11 xl:col-11">
     <p-steps [model]="items"
-      [readonly]="authService.isRequester() && demandIntakeService.demandInformation.introduction.status=='DRAFT'"></p-steps>
+      [readonly]="false"></p-steps>
   </div>
   <div class="col-1 xs:col-1 sm:col-1 lg:col-1 xl:col-1" *ngIf="!eventService.isNewDemand">
     <p-button type="button" class="mr-2" (click)="sidebarVisible2 = true" icon="pi pi-arrow-left" />
