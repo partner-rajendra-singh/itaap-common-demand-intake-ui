@@ -536,6 +536,10 @@ p:last-child {
   letter-spacing: 0.3px;
 }
 
+.text-color-white {
+  color: white;
+}
+
 .approver-badge {
   border-radius: var(--border-radius);
   padding: 0.25em 0.5rem;
@@ -566,6 +570,10 @@ p:last-child {
   background: #ECCFFF;
   color: #694382;
 }
+.demand-badge.status-on_hold {
+  background: #ECCFFF;
+  color: #694382;
+}
 .demand-badge.status-dm_modification {
   background: #ECCFFF;
   color: #694382;
@@ -578,6 +586,10 @@ p:last-child {
   background: #FEEDAF;
   color: #8A5340;
 }
+.demand-badge.status-modification {
+  background: #FEEDAF;
+  color: #8A5340;
+}
 .demand-badge.status-ccb_modification {
   background: #FEEDAF;
   color: #8A5340;
@@ -585,6 +597,14 @@ p:last-child {
 .demand-badge.status-accepted {
   background: #C8E6C9;
   color: #256029;
+}
+.demand-badge.status-approved {
+  background: #C8E6C9;
+  color: #256029;
+}
+.demand-badge.status-rejected {
+  background: #FFCDD2;
+  color: #C63737;
 }
 .demand-badge.status-ccb_rejected {
   background: #FFCDD2;
@@ -599,6 +619,10 @@ p:last-child {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+.text-align-center {
+  text-align: center;
 }
 
 /* PrimeNG */
