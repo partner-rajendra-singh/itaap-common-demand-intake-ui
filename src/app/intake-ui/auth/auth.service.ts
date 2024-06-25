@@ -10,7 +10,6 @@ import {MessageService} from "primeng/api";
 import {Router} from "@angular/router";
 import {DomSanitizer, SafeUrl} from "@angular/platform-browser";
 import {EventService} from "../services/event.service";
-import {Constants} from "../constants";
 
 @Injectable({
   providedIn: 'root'
@@ -29,7 +28,6 @@ export class AuthService {
               private msalAuthService: MsalService,
               private eventService: EventService,
               private sanitizer: DomSanitizer,
-              private constants: Constants,
               private messageService: MessageService) {
 
     const userJson = localStorage.getItem('currentUser');
@@ -72,8 +70,15 @@ export class AuthService {
 
   ssoLogin(response: AuthenticationResult) {
     let url = this.baseUrl + '/common/demand-intake/login';
+    let headerOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'X-Correlation-ID': this.currentLoggedInUser.account.localAccountId + '.' + this.currentLoggedInUser.correlationId,
+        'Authorization': `Bearer ${response.accessToken}`
+      })
+    };
     return this.http
-      .post<any>(url, response, this.constants.headerOptions)
+      .post<any>(url, response, headerOptions)
       .pipe(map(user => {
         // console.log("ssoLogin() Response :", user)
         // if (user && user.isAuthenticated) {
@@ -82,14 +87,6 @@ export class AuthService {
         // }
         return user;
       }));
-  }
-
-  isAuthenticatedUser(): boolean {
-    if (this.currentUserValue) {
-      this.currentUserValue.expireTime = new Date(this.currentUserValue.expireTime);
-    }
-    // return (this.currentUserValue != null && this.currentUserValue.isAuthenticated && new Date().getTime() < this.currentUserValue.expireTime.getTime());
-    return true;
   }
 
   loginPopUp() {
@@ -141,7 +138,7 @@ export class AuthService {
       .instance
       .acquireTokenSilent(popupRequest)
       .then(response => {
-        console.log('getUserDataAndSilentToken() : SUCCESS : ', response);
+        console.log('getUserDataAndSilentToken() : SUCCESS : ', response.account.username);
         this.populateResponse(response);
       })
       .catch(error => {
@@ -168,6 +165,7 @@ export class AuthService {
           this.eventService.progressBarEvent.emit(true);
           this.messageService.add({severity: 'success', summary: 'Success', detail: 'Login Successful!'});
           this.router.navigate(['dashboard']);
+          // this.router.navigateByUrl(this.router.url);
         },
         error => {
           this.eventService.progressBarEvent.emit(false);

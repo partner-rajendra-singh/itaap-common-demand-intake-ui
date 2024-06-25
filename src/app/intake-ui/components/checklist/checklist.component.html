@@ -1,904 +1,987 @@
-<p-card>
-    <ng-template pTemplate="content">
+<div class="grid p-fluid">
+  <div class="col-12">
+    <div
+      *ngIf="!this.showTab('integration') && !this.showTab('dataModelling') && !this.showTab('adlL1') && !this.showTab('adlL2') && !this.showTab('gold') && !this.showTab('mdm') && !this.showTab('ia')">
+      <p>{{ fieldsService.getLabel('EADI_INTEGRATION_WARNING') }}</p>
+    </div>
+    <p-tabView [activeIndex]="eventService.selectedEADITabIndex" (onChange)="onTabChange($event)">
+      <p-tabPanel header="{{ fieldsService.getLabel('EADI_INTEGRATION_HEADER') }}"
+                  *ngIf="showTab('integration')">
         <div class="grid">
-            <div class="col-12 xs:col-12 sm:col-12 lg:col-12 xl:col-12">
-                <div
-                    *ngIf="!this.showTab('integration') && !this.showTab('dataModelling') && !this.showTab('adlL1') && !this.showTab('adlL2') && !this.showTab('gold') && !this.showTab('mdm') && !this.showTab('ia')">
-                    <p>{{ fieldsService.getLabel('EADI_INTEGRATION_WARNING') }}</p>
-                </div>
-                <p-tabView [activeIndex]="eventService.selectedEADITabIndex" (onChange)="onTabChange($event)">
-                    <p-tabPanel header="{{ fieldsService.getLabel('EADI_INTEGRATION_HEADER') }}"
-                        *ngIf="showTab('integration')">
-                        <div class="grid">
-                            <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                                <label for="platformsCapabilityDef">{{
-                                    fieldsService.getLabel('EADI_INTEGRATION_PLATFORM_CAPABILITY') }}</label>
-                            </div>
-                            <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
-                                <input id="platformsCapabilityDef" type="text"
-                                    [pTooltip]="fieldsService.getToolTip('EADI_INTEGRATION_PLATFORM_CAPABILITY')"
-                                    [(ngModel)]="eADIInfo.platformsCapabilityDef"
-                                    class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary">
-                            </div>
-                            <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                                <label for="pAndCSystems">{{ fieldsService.getLabel('EADI_INTEGRATION_P_AND_C_SYSTEM')
-                                    }}</label>
-                            </div>
-                            <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
-                                <input id="title" type="text" [(ngModel)]="eADIInfo.producerAndConsumerSystems"
-                                    [pTooltip]="fieldsService.getToolTip('EADI_INTEGRATION_P_AND_C_SYSTEM')"
-                                    class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary">
-                            </div>
-                            <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                                <label for="philipsCapabilityApis">{{ fieldsService.getLabel('EADI_INTEGRATION_PCA')
-                                    }}</label>
-                            </div>
-                            <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
-                                <input id="capabilityAPI" type="text" [(ngModel)]="eADIInfo.capabilityAPI"
-                                    [pTooltip]="fieldsService.getToolTip('EADI_INTEGRATION_PCA')"
-                                    class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary">
-                            </div>
-                            <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                                <label for="dataModelDefinition">{{
-                                    fieldsService.getLabel('EADI_INTEGRATION_DATA_MODEL_DEF') }}</label>
-                            </div>
-                            <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
-                                <input id="dataModelDefinition" type="text" [(ngModel)]="eADIInfo.dataModelDefinition"
-                                    [pTooltip]="fieldsService.getToolTip('EADI_INTEGRATION_DATA_MODEL_DEF')"
-                                    class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary">
-                            </div>
+          <div class="col-3">
+            <label for="platformsCapabilityDef">{{
+                fieldsService.getLabel('EADI_INTEGRATION_PLATFORM_CAPABILITY')
+              }}</label>
+          </div>
+          <div class="col-9">
+            <input id="platformsCapabilityDef" type="text" pInputText
+                   tooltipPosition="left" [pTooltip]="fieldsService.getToolTip('EADI_INTEGRATION_PLATFORM_CAPABILITY')"
+                   [(ngModel)]="eADIInfo.platformsCapabilityDef">
+          </div>
+          <div class="col-3">
+            <label for="pAndCSystems">{{
+                fieldsService.getLabel('EADI_INTEGRATION_P_AND_C_SYSTEM')
+              }}</label>
+          </div>
+          <div class="col-9">
+            <input id="title" type="text" pInputText [(ngModel)]="eADIInfo.producerAndConsumerSystems"
+                   tooltipPosition="left" [pTooltip]="fieldsService.getToolTip('EADI_INTEGRATION_P_AND_C_SYSTEM')"
+            >
+          </div>
+          <div class="col-3">
+            <label for="philipsCapabilityApis">{{
+                fieldsService.getLabel('EADI_INTEGRATION_PCA')
+              }}</label>
+          </div>
+          <div class="col-9">
+            <input id="capabilityAPI" type="text" pInputText [(ngModel)]="eADIInfo.capabilityAPI"
+                   tooltipPosition="left" [pTooltip]="fieldsService.getToolTip('EADI_INTEGRATION_PCA')"
+            >
+          </div>
+          <div class="col-3">
+            <label for="dataModelDefinition">{{
+                fieldsService.getLabel('EADI_INTEGRATION_DATA_MODEL_DEF')
+              }}</label>
+          </div>
+          <div class="col-9">
+            <input id="dataModelDefinition" type="text" pInputText [(ngModel)]="eADIInfo.dataModelDefinition"
+                   tooltipPosition="left" [pTooltip]="fieldsService.getToolTip('EADI_INTEGRATION_DATA_MODEL_DEF')"
+            >
+          </div>
 
-                            <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                                <label for="additionalInfo">{{
-                                    fieldsService.getLabel('EADI_INTEGRATION_ADDITIONAL_INFO') }}</label>
-                            </div>
-                            <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
-                                <input id="title" type="text" [(ngModel)]="eADIInfo.additionalInfo"
-                                    [pTooltip]="fieldsService.getToolTip('EADI_INTEGRATION_ADDITIONAL_INFO')"
-                                    class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary">
-                            </div>
-                        </div>
-                    </p-tabPanel>
-                    <p-tabPanel header="{{ fieldsService.getLabel('EADI_DATA_MODEL') }}"
-                        *ngIf="showTab('dataModelling')">
-                        <div>
-                            <div class="grid">
-                                <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                                    <label for="dataModelType">{{ fieldsService.getLabel('EADI_DEMAND_MODEL_TYPE')
-                                        }}</label>
-                                </div>
-                                <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
-                                    <input type="radio" id="dm1" name="dataModelType" checked="checked"
-                                        [pTooltip]="fieldsService.getToolTip('EADI_NEW_MODEL')"
-                                        [(ngModel)]="eADIInfo.dataModel.dataModelType" value="New Model">
-                                    <label for="dm1">{{ fieldsService.getLabel('EADI_NEW_MODEL') }}</label> &nbsp;
-                                    <input type="radio" id="dm2" name="dataModelType"
-                                        [pTooltip]="fieldsService.getToolTip('EADI_EXISTING_MODEL')"
-                                        [(ngModel)]="eADIInfo.dataModel.dataModelType" value="Change To Existing Model">
-                                    <label for="dm2">{{ fieldsService.getLabel('EADI_EXISTING_MODEL') }}</label> &nbsp;
-                                    <input type="radio" id="dm3" name="dataModelType"
-                                        [pTooltip]="fieldsService.getToolTip('EADI_TARGET_DATE_POSTPONEMENT')"
-                                        [(ngModel)]="eADIInfo.dataModel.dataModelType" value="Target Date Postponement">
-                                    <label for="dm3">{{ fieldsService.getLabel('EADI_TARGET_DATE_POSTPONEMENT')
-                                        }}</label>
-                                </div>
-
-                                <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                                    <label for="dataDomain">{{ fieldsService.getLabel('EADI_DATA_DOMAIN') }}</label>
-                                </div>
-                                <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
-                                    <input id="dataDomain" type="text" [(ngModel)]="eADIInfo.dataModel.dataDomain"
-                                        [pTooltip]="fieldsService.getToolTip('EADI_DATA_DOMAIN')"
-                                        class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary">
-                                </div>
-
-                                <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                                    <label for="modelName">{{ fieldsService.getLabel('EADI_MODEL_NAME') }}</label>
-                                </div>
-                                <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
-                                    <input id="modelName" type="text" [(ngModel)]="eADIInfo.dataModel.modelName"
-                                        [pTooltip]="fieldsService.getToolTip('EADI_MODEL_NAME')"
-                                        class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary">
-                                </div>
-
-                                <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                                    <label for="modelType">{{ fieldsService.getLabel('EADI_MODEL_TYPE') }}</label>
-                                </div>
-                                <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
-                                    <input type="radio" id="mt1" name="modelType" checked="checked"
-                                        [pTooltip]="fieldsService.getToolTip('EADI_MODEL_TYPE_CONCEPTUAL')"
-                                        [(ngModel)]="eADIInfo.dataModel.modelType" value="Conceptual">
-                                    <label for="mt1">{{ fieldsService.getLabel('EADI_MODEL_TYPE_CONCEPTUAL') }}</label>
-                                    &nbsp;
-                                    <input type="radio" id="mt2" name="modelType"
-                                        [pTooltip]="fieldsService.getToolTip('EADI_MODEL_TYPE_LOGICAL')"
-                                        [(ngModel)]="eADIInfo.dataModel.modelType" value="Logical">
-                                    <label for="mt2">{{ fieldsService.getLabel('EADI_MODEL_TYPE_LOGICAL') }}</label>
-                                    &nbsp;
-                                    <input type="radio" id="mt3" name="modelType"
-                                        [pTooltip]="fieldsService.getToolTip('EADI_MODEL_TYPE_PHYSICAL')"
-                                        [(ngModel)]="eADIInfo.dataModel.modelType" value="Physical">
-                                    <label for="mt3">{{ fieldsService.getLabel('EADI_MODEL_TYPE_PHYSICAL') }}</label>
-                                </div>
-
-                                <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                                    <label for="requestingProgram">{{ fieldsService.getLabel('EADI_REQUESTING_PROGRAM')
-                                        }}</label>
-                                </div>
-                                <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
-                                    <input id="requestingProgram" type="text"
-                                        [pTooltip]="fieldsService.getToolTip('EADI_REQUESTING_PROGRAM')"
-                                        [(ngModel)]="eADIInfo.dataModel.requestingProgram"
-                                        class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary">
-                                </div>
-
-                                <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                                    <label for="isAPIRelevant">{{ fieldsService.getLabel('EADI_API_RELEVANT') }}</label>
-                                </div>
-                                <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
-                                    <p-checkbox [binary]="true" [(ngModel)]="eADIInfo.dataModel.isAPIRelevant"
-                                        [pTooltip]="fieldsService.getToolTip('EADI_API_RELEVANT')"
-                                        inputId="isAPIRelevant"></p-checkbox>
-                                </div>
-
-                                <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                                    <label for="relevantITApplication">{{ fieldsService.getLabel('EADI_RELEVANT_IT_APP')
-                                        }}</label>
-                                </div>
-                                <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
-                                    <input id="relevantITApplication" type="text"
-                                        [pTooltip]="fieldsService.getToolTip('EADI_RELEVANT_IT_APP')"
-                                        [(ngModel)]="eADIInfo.dataModel.relevantITApplication"
-                                        class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary">
-                                </div>
-
-                                <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                                    <label for="businessDataObject">{{
-                                        fieldsService.getLabel('EADI_BUSINESS_DATA_OBJECT') }}</label>
-                                </div>
-                                <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
-                                    <input id="businessDataObject" type="text"
-                                        [pTooltip]="fieldsService.getToolTip('EADI_BUSINESS_DATA_OBJECT')"
-                                        [(ngModel)]="eADIInfo.dataModel.businessDataObject"
-                                        class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary">
-                                </div>
-
-                                <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                                    <label for="isMappingReqProvided">{{
-                                        fieldsService.getLabel('EADI_DETAILED_MAPPING_PROVIDED') }}</label>
-                                </div>
-                                <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
-                                    <p-checkbox [binary]="true" [(ngModel)]="eADIInfo.dataModel.isMappingReqProvided"
-                                        [pTooltip]="fieldsService.getToolTip('EADI_DETAILED_MAPPING_PROVIDED')"
-                                        inputId="isMappingReqProvided"></p-checkbox>
-                                </div>
-                            </div>
-                        </div>
-                    </p-tabPanel>
-                    <p-tabPanel header="{{ fieldsService.getLabel('EADI_ADL_L1_HEADER') }}" *ngIf="showTab('adlL1')">
-                        <div>
-                            <div class="grid">
-                                <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                                    <label for="dataDemandType">{{
-                                        fieldsService.getLabel('EADI_ADL_L1_DATA_DEMAND_TYPE') }}</label>
-                                </div>
-                                <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
-                                    <input type="radio" id="dt1" name="dataDemandType"
-                                        [pTooltip]="fieldsService.getToolTip('EADI_ADL_L1_NEW_DATA_ONBOARDING')"
-                                        [(ngModel)]="eADIInfo.adlL1.dataDemandType" value="New Data Set Onboarding">
-                                    <label for="dt1">{{ fieldsService.getLabel('EADI_ADL_L1_NEW_DATA_ONBOARDING')
-                                        }}</label> &nbsp;
-                                    <input type="radio" id="dt2" name="dataDemandType"
-                                        [pTooltip]="fieldsService.getToolTip('EADI_ADL_L1_DATA_SET_ENHANCEMENT')"
-                                        [(ngModel)]="eADIInfo.adlL1.dataDemandType" value="Data Set Enhancement">
-                                    <label for="dt2">{{ fieldsService.getLabel('EADI_ADL_L1_DATA_SET_ENHANCEMENT')
-                                        }}</label> &nbsp;
-                                    <input type="radio" id="dt3" name="dataDemandType"
-                                        [pTooltip]="fieldsService.getToolTip('EADI_ADL_L1_DATA_SET_MODIFICATION')"
-                                        [(ngModel)]="eADIInfo.adlL1.dataDemandType" value="Data Set Modifications">
-                                    <label for="dt3">{{ fieldsService.getLabel('EADI_ADL_L1_DATA_SET_MODIFICATION')
-                                        }}</label>
-                                </div>
-
-                                <p-fieldset [toggleable]="true">
-                                    <ng-template pTemplate="header">
-                                        <div class="flex align-items-center gap-2 px-2">
-                                            <span class="font-bold"
-                                                [pTooltip]="fieldsService.getToolTip('EADI_ADL_L1_SOURCE_DETAILS')">{{
-                                                fieldsService.getLabel('EADI_ADL_L1_SOURCE_DETAILS') }}</span>
-                                        </div>
-                                    </ng-template>
-                                    <div class="grid">
-                                        <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                                            <label required for="sourceSystemName" style="width: 100px">{{
-                                                fieldsService.getLabel('EADI_ADL_L1_SYSTEM_NAME') }}</label>
-                                        </div>
-                                        <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
-                                            <input required id="sourceSystemName" type="text"
-                                                [pTooltip]="fieldsService.getToolTip('EADI_ADL_L1_SYSTEM_NAME')"
-                                                [(ngModel)]="eADIInfo.adlL1.sourceSystemName" size="70"
-                                                class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary" />
-                                        </div>
-
-                                        <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                                            <label required for="kernelSid" style="width: 100px">{{
-                                                fieldsService.getLabel('EADI_ADL_L1_KERNEL_SID') }}</label>
-                                        </div>
-                                        <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
-                                            <input required id="kernelSid" type="text"
-                                                [pTooltip]="fieldsService.getToolTip('EADI_ADL_L1_KERNEL_SID')"
-                                                [(ngModel)]="eADIInfo.adlL1.kernelSid" size="70"
-                                                class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary" />
-                                        </div>
-
-                                        <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                                            <label required for="database" style="width: 100px">{{
-                                                fieldsService.getLabel('EADI_ADL_L1_DATABASE') }}</label>
-                                        </div>
-                                        <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
-                                            <input required id="database" type="text"
-                                                [pTooltip]="fieldsService.getToolTip('EADI_ADL_L1_DATABASE')"
-                                                [(ngModel)]="eADIInfo.adlL1.database" size="70"
-                                                class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary" />
-                                        </div>
-
-                                        <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                                            <label required for="module" style="width: 100px">{{
-                                                fieldsService.getLabel('EADI_ADL_L1_MODULE') }}</label>
-                                        </div>
-                                        <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
-                                            <input required id="module" type="text" [(ngModel)]="eADIInfo.adlL1.module"
-                                                [pTooltip]="fieldsService.getToolTip('EADI_ADL_L1_MODULE')" size="70"
-                                                class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary" />
-                                        </div>
-
-                                        <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                                            <label required for="instance" style="width: 100px">{{
-                                                fieldsService.getLabel('EADI_ADL_L1_INSTANCE') }}</label>
-                                        </div>
-                                        <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
-                                            <input required id="instance" type="text"
-                                                [pTooltip]="fieldsService.getToolTip('EADI_ADL_L1_INSTANCE')"
-                                                [(ngModel)]="eADIInfo.adlL1.instance" size="70"
-                                                class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary" />
-                                        </div>
-
-                                        <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                                            <label required for="tableName" style="width: 100px">{{
-                                                fieldsService.getLabel('EADI_ADL_L1_TABLE_NAME') }}</label>
-                                        </div>
-                                        <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
-                                            <input required id="tableName" type="text"
-                                                [pTooltip]="fieldsService.getToolTip('EADI_ADL_L1_TABLE_NAME')"
-                                                [(ngModel)]="eADIInfo.adlL1.tableName" size="70"
-                                                class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary" />
-                                        </div>
-
-                                        <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                                            <label required for="capability" style="width: 100px">{{
-                                                fieldsService.getLabel('EADI_ADL_L1_CAPABILITY') }}</label>
-                                        </div>
-                                        <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
-                                            <input required id="capability" type="text"
-                                                [pTooltip]="fieldsService.getToolTip('EADI_ADL_L1_CAPABILITY')"
-                                                [(ngModel)]="eADIInfo.adlL1.capability" size="70"
-                                                class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary" />
-                                        </div>
-
-                                        <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                                            <label required for="functionality" style="width: 100px">{{
-                                                fieldsService.getLabel('EADI_ADL_L1_FUNCTIONALITY') }}</label>
-                                        </div>
-                                        <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
-                                            <input required id="functionality" type="text"
-                                                [pTooltip]="fieldsService.getToolTip('EADI_ADL_L1_FUNCTIONALITY')"
-                                                [(ngModel)]="eADIInfo.adlL1.functionality" size="70"
-                                                class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary" />
-                                        </div>
-
-                                        <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                                            <label required for="sourceEmail" style="width: 100px">{{
-                                                fieldsService.getLabel('EADI_ADL_L1_POC_EMAIL') }}</label>
-                                        </div>
-                                        <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
-                                            <input required id="sourceEmail" type="email"
-                                                [pTooltip]="fieldsService.getToolTip('EADI_ADL_L1_POC_EMAIL')"
-                                                (blur)="eventService.checkEmailValue(eADIInfo.adlL1.sourceEmail)"
-                                                [(ngModel)]="eADIInfo.adlL1.sourceEmail" size="70"
-                                                class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary" />
-                                        </div>
-
-                                        <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                                            <label for="additionalDocAttached">{{
-                                                fieldsService.getLabel('EADI_ADL_L1_ADDITIONAL_DOC_ATTACHED') }}</label>
-                                        </div>
-                                        <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
-                                            <p-checkbox [binary]="true"
-                                                [pTooltip]="fieldsService.getToolTip('EADI_ADL_L1_TABLE_COLUMN_ACCESS_INFO')"
-                                                [(ngModel)]="eADIInfo.adlL1.additionalDocAttached"
-                                                inputId="additionalDocAttached"></p-checkbox>
-                                        </div>
-                                    </div>
-                                </p-fieldset>
-                                <br>
-                                <p-fieldset [toggleable]="true">
-                                    <ng-template pTemplate="header">
-                                        <div class="flex align-items-center gap-2 px-2">
-                                            <span class="font-bold"
-                                                [pTooltip]="fieldsService.getToolTip('EADI_ADL_L1_DATA_FEED_DETAILS')">{{
-                                                fieldsService.getLabel('EADI_ADL_L1_DATA_FEED_DETAILS') }}</span>
-                                        </div>
-                                    </ng-template>
-                                    <div class="grid">
-                                        <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                                            <label required for="dataSetName" style="width: 100px">{{
-                                                fieldsService.getLabel('EADI_ADL_L1_DATASET_NAME') }}</label>
-                                        </div>
-                                        <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
-                                            <input required id="dataSetName" type="text"
-                                                [pTooltip]="fieldsService.getToolTip('EADI_ADL_L1_DATASET_NAME')"
-                                                [(ngModel)]="eADIInfo.adlL1.dataSetName" size="70"
-                                                class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary" />
-                                        </div>
-
-                                        <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                                            <label required for="dataSetOwner" style="width: 100px">{{
-                                                fieldsService.getLabel('EADI_ADL_L1_DATASET_OWNER') }}</label>
-                                        </div>
-                                        <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
-                                            <input required id="dataSetOwner" type="text"
-                                                [pTooltip]="fieldsService.getToolTip('EADI_ADL_L1_DATASET_OWNER')"
-                                                [(ngModel)]="eADIInfo.adlL1.dataSetOwner" size="70"
-                                                class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary" />
-                                        </div>
-
-                                        <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                                            <label required for="selectedFrequency" style="width: 100px">{{
-                                                fieldsService.getLabel('EADI_ADL_L1_DATA_REFRESH_FREQ') }}</label>
-                                        </div>
-                                        <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
-                                            <p-dropdown appendTo="body" [options]="refreshFrequencies"
-                                                [pTooltip]="fieldsService.getToolTip('EADI_ADL_L1_DATA_REFRESH_FREQ')"
-                                                [(ngModel)]="selectedFrequency"
-                                                placeholder="Select Refresh Frequency"></p-dropdown>
-                                        </div>
-
-                                        <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                                            <label required for="loadStrategy" style="width: 100px">{{
-                                                fieldsService.getLabel('EADI_ADL_L1_LOAD_STRATEGY') }}</label>
-                                        </div>
-                                        <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
-                                            <p-dropdown appendTo="body" [options]="loadStrategies"
-                                                [pTooltip]="fieldsService.getToolTip('EADI_ADL_L1_LOAD_STRATEGY')"
-                                                [(ngModel)]="selectedLoadStrategy"
-                                                placeholder="Select Refresh Frequency"></p-dropdown>
-                                        </div>
-
-                                        <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                                            <label required for="extractionlogic" style="width: 100px">{{
-                                                fieldsService.getLabel('EADI_ADL_L1_INCREMENTAL_EXTRACTION_LOGIC')
-                                                }}</label>
-                                        </div>
-                                        <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
-                                            <textarea id="extractionlogic" rows="3" cols="78"
-                                                [pTooltip]="fieldsService.getToolTip('EADI_ADL_L1_INCREMENTAL_EXTRACTION_LOGIC')"
-                                                [(ngModel)]="eADIInfo.adlL1.extractionlogic" pInputTextarea></textarea>
-                                        </div>
-
-                                        <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                                            <label required for="tableAccessInfo" style="width: 100px">{{
-                                                fieldsService.getLabel('EADI_ADL_L1_TABLE_COLUMN_ACCESS_INFO')
-                                                }}</label>
-                                        </div>
-                                        <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
-                                            <textarea id="tableAccessInfo" rows="3" cols="78"
-                                                [pTooltip]="fieldsService.getToolTip('EADI_ADL_L1_TABLE_COLUMN_ACCESS_INFO')"
-                                                [(ngModel)]="eADIInfo.adlL1.tableAccessInfo" pInputTextarea></textarea>
-                                        </div>
-
-                                        <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                                            <label required for="history" style="width: 100px">{{
-                                                fieldsService.getLabel('EADI_ADL_L1_HISTORY_DATA_REQ') }}</label>
-                                        </div>
-                                        <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
-                                            <textarea id="history" rows="3" cols="78"
-                                                [pTooltip]="fieldsService.getToolTip('EADI_ADL_L1_HISTORY_DATA_REQ')"
-                                                [(ngModel)]="eADIInfo.adlL1.history" pInputTextarea></textarea>
-                                        </div>
-                                    </div>
-                                </p-fieldset>
-
-                            </div>
-                        </div>
-                    </p-tabPanel>
-                    <p-tabPanel header="{{ fieldsService.getLabel('EADI_ADL_L2_HEADER') }}" *ngIf="showTab('adlL2')">
-                        <div>
-                            <div class="grid">
-                                <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                                    <label required for="architectureReview" style="width: 100px">{{
-                                        fieldsService.getLabel('EADI_ADL_L2_ARCHITECTURE_REVIEW') }}</label>
-                                </div>
-                                <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
-                                    <textarea id="architectureReview" rows="3" cols="78"
-                                        [pTooltip]="fieldsService.getToolTip('EADI_ADL_L2_ARCHITECTURE_REVIEW')"
-                                        [(ngModel)]="eADIInfo.adlL2.architectureReview" pInputTextarea></textarea>
-                                </div>
-
-                                <div class="col-12 xs:col-12 sm:col-12 lg:col-12 xl:col-12">
-                                    <label><b>{{ fieldsService.getLabel('EADI_ADL_L2_COMMON_DATA_MODEL') }}</b></label>
-                                </div>
-                                <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                                    <label for="certifiedDataModel">{{ fieldsService.getLabel('EADI_ADL_L2_CERTIFIED')
-                                        }}</label>
-                                </div>
-                                <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
-                                    <p-checkbox [binary]="true" [(ngModel)]="eADIInfo.adlL2.certifiedDataModel"
-                                        [pTooltip]="fieldsService.getToolTip('EADI_ADL_L2_CERTIFIED')"
-                                        inputId="certifiedDataModel"></p-checkbox>
-                                </div>
-                                <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                                    <label for="existingDataModel">{{ fieldsService.getLabel('EADI_ADL_L2_EXISTING')
-                                        }}</label>
-                                </div>
-                                <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
-                                    <p-checkbox [binary]="true" [(ngModel)]="eADIInfo.adlL2.existingDataModel"
-                                        [pTooltip]="fieldsService.getToolTip('EADI_ADL_L2_EXISTING')"
-                                        inputId="existingDataModel"></p-checkbox>
-                                </div>
-                                <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                                    <label for="newDataModel">{{ fieldsService.getLabel('EADI_ADL_L2_NEW') }}</label>
-                                </div>
-                                <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
-                                    <p-checkbox [binary]="true" [(ngModel)]="eADIInfo.adlL2.newDataModel"
-                                        [pTooltip]="fieldsService.getToolTip('EADI_ADL_L2_NEW')"
-                                        inputId="newDataModel"></p-checkbox>
-                                </div>
-                                <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                                    <label for="leadBioDataModel">{{ fieldsService.getLabel('EADI_ADL_L2_LEAD_BIO')
-                                        }}</label>
-                                </div>
-                                <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
-                                    <p-checkbox [binary]="true" [(ngModel)]="eADIInfo.adlL2.leadBioDataModel"
-                                        [pTooltip]="fieldsService.getToolTip('EADI_ADL_L2_LEAD_BIO')"
-                                        inputId="leadBioDataModel"></p-checkbox>
-                                </div>
-                            </div>
-                        </div>
-                    </p-tabPanel>
-                    <p-tabPanel header="{{ fieldsService.getLabel('EADI_ADL_GOLD_HEADER') }}" *ngIf="showTab('gold')">
-                        <div>
-                            <div class="grid">
-                                <div class="col-8 xs:col-8 sm:col-8 lg:col-8 xl:col-8">
-                                    <label for="kpiRequired" required style="width:100px">{{
-                                        fieldsService.getLabel('EADI_ADL_GOLD_KPI_REQ') }}</label>
-                                </div>
-                                <div class="col-4 xs:col-4 sm:col-4 lg:col-4 xl:col-4">
-                                    <input type="radio" name="kpiRequired" [(ngModel)]="eADIInfo.gold.kpiRequired"
-                                        [pTooltip]="fieldsService.getToolTip('EADI_ADL_GOLD_KPI_REQ_YES')"
-                                        [value]="true">
-                                    <label>{{ fieldsService.getLabel('EADI_ADL_GOLD_KPI_REQ_YES') }}</label>
-                                    <input type="radio" name="kpiRequired" checked="checked"
-                                        [pTooltip]="fieldsService.getToolTip('EADI_ADL_GOLD_KPI_REQ_NO')"
-                                        [(ngModel)]="eADIInfo.gold.kpiRequired" [value]="false">
-                                    <label>{{ fieldsService.getLabel('EADI_ADL_GOLD_KPI_REQ_NO') }}</label>
-                                </div>
-
-                                <div class="col-8 xs:col-8 sm:col-8 lg:col-8 xl:col-8">
-                                    <label for="aggregation" required style="width:100px">{{
-                                        fieldsService.getLabel('EADI_ADL_GOLD_AGGREGATION_FROM_ADLL2') }}</label>
-                                </div>
-                                <div class="col-4 xs:col-4 sm:col-4 lg:col-4 xl:col-4">
-                                    <input type="radio" name="aggregation" [(ngModel)]="eADIInfo.gold.aggregation"
-                                        [pTooltip]="fieldsService.getToolTip('EADI_ADL_GOLD_AGGREGATION_FROM_ADLL2_YES')"
-                                        [value]="true">
-                                    <label>{{ fieldsService.getLabel('EADI_ADL_GOLD_AGGREGATION_FROM_ADLL2_YES')
-                                        }}</label>
-                                    <input type="radio" name="aggregation" checked="checked"
-                                        [pTooltip]="fieldsService.getToolTip('EADI_ADL_GOLD_AGGREGATION_FROM_ADLL2_NO')"
-                                        [(ngModel)]="eADIInfo.gold.aggregation" [value]="false">
-                                    <label>{{ fieldsService.getLabel('EADI_ADL_GOLD_AGGREGATION_FROM_ADLL2_NO')
-                                        }}</label>
-                                </div>
-
-                                <div class="col-8 xs:col-8 sm:col-8 lg:col-8 xl:col-8"></div>
-                                <div class="col-4 xs:col-4 sm:col-4 lg:col-4 xl:col-4"
-                                    *ngIf="eADIInfo.gold.aggregation==true">
-                                    <input required id="aggregationInfo" type="text"
-                                        placeholder="Specify Aggregation Information"
-                                        [(ngModel)]="eADIInfo.gold.aggregationInfo" size="40"
-                                        class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary" />
-                                </div>
-
-                                <div class="grid">
-                                    <div class="col-4 xs:col-4 sm:col-4 lg:col-4 xl:col-4">
-                                        <label required for="workbench" style="width: 100px">{{
-                                            fieldsService.getLabel('EADI_ADL_GOLD_CREATED_WORKBENCH') }}</label>
-                                    </div>
-                                    <div class="col-8 xs:col-8 sm:col-8 lg:col-8 xl:col-8">
-                                        <input required id="workbench" type="text" [(ngModel)]="eADIInfo.gold.workbench"
-                                            [pTooltip]="fieldsService.getToolTip('EADI_ADL_GOLD_CREATED_WORKBENCH')"
-                                            size="70"
-                                            class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary" />
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-                    </p-tabPanel>
-                    <p-tabPanel header="{{ fieldsService.getLabel('EADI_MDM_HEADER') }}" *ngIf="showTab('mdm')">
-                        <div class="grid">
-                            <div class="col-12 xs:col-12 sm:col-12 lg:col-12 xl:col-12">
-                                <label required><b>{{ fieldsService.getLabel('EADI_MDM_PROVIDED_DETAILS_ON')
-                                        }}</b></label>
-                            </div>
-                            <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                                <label required for="bpdh" style="width: 100px">{{
-                                    fieldsService.getLabel('EADI_MDM_BPDH_FIORI') }}</label>
-                            </div>
-                            <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
-                                <textarea id="bpdh" rows="3" cols="78" [(ngModel)]="eADIInfo.mdm.bpdh"
-                                    [pTooltip]="fieldsService.getToolTip('EADI_MDM_BPDH_FIORI')"
-                                    pInputTextarea></textarea>
-                            </div>
-                            <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                                <label required for="pdh" style="width: 100px">{{ fieldsService.getLabel('EADI_MDM_PDH')
-                                    }}</label>
-                            </div>
-                            <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
-                                <textarea id="pdh" rows="3" cols="78" [(ngModel)]="eADIInfo.mdm.pdh"
-                                    [pTooltip]="fieldsService.getToolTip('EADI_MDM_PDH')" pInputTextarea></textarea>
-                            </div>
-                            <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                                <label required for="fordh" style="width: 100px">{{
-                                    fieldsService.getLabel('EADI_MDM_FORDH') }}</label>
-                            </div>
-                            <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
-                                <textarea id="fordh" rows="3" cols="78" [(ngModel)]="eADIInfo.mdm.fordh"
-                                    [pTooltip]="fieldsService.getToolTip('EADI_MDM_FORDH')" pInputTextarea></textarea>
-                            </div>
-                        </div>
-                    </p-tabPanel>
-                    <p-tabPanel header="{{ fieldsService.getLabel('EADI_I_AND_A_HEADER') }}" *ngIf="showTab('ia')">
-                        <div>
-                            <div class="grid">
-                                <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                                    <label required for="location" style="width: 100px">{{
-                                        fieldsService.getLabel('EADI_I_AND_A_LOCATION_OF_REPORT') }}</label>
-                                </div>
-                                <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
-                                    <input required id="location" type="text" [(ngModel)]="eADIInfo.ia.location"
-                                        [pTooltip]="fieldsService.getToolTip('EADI_I_AND_A_LOCATION_OF_REPORT')"
-                                        size="70"
-                                        class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary" />
-                                </div>
-                                <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                                    <label required for="team" style="width: 100px">{{
-                                        fieldsService.getLabel('EADI_I_AND_A_REPORT_TEAM') }}</label>
-                                </div>
-                                <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
-                                    <input required id="team" type="text" [(ngModel)]="eADIInfo.ia.team" size="70"
-                                        [pTooltip]="fieldsService.getToolTip('EADI_I_AND_A_REPORT_TEAM')"
-                                        class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary" />
-                                </div>
-
-                                <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                                    <label for="newReportRequired" required style="width:100px">{{
-                                        fieldsService.getLabel('EADI_I_AND_A_NEW_REPORT_REQ') }}</label>
-                                </div>
-                                <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
-                                    <input type="radio" name="newReportRequired" checked="checked"
-                                        [pTooltip]="fieldsService.getToolTip('EADI_I_AND_A_NEW_REPORT_REQ_YES')"
-                                        [(ngModel)]="eADIInfo.ia.newReportRequired" [value]="true">
-                                    <label>{{ fieldsService.getLabel('EADI_I_AND_A_NEW_REPORT_REQ_YES') }}</label>
-                                    <input type="radio" name="newReportRequired"
-                                        [pTooltip]="fieldsService.getToolTip('EADI_I_AND_A_NEW_REPORT_REQ_NO')"
-                                        [(ngModel)]="eADIInfo.ia.newReportRequired" [value]="false">
-                                    <label>{{ fieldsService.getLabel('EADI_I_AND_A_NEW_REPORT_REQ_NO') }}</label>
-                                </div>
-
-                                <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                                    <label required for="reportDescription" style="width: 100px">{{
-                                        fieldsService.getLabel('EADI_I_AND_A_REPORT_DESC') }}</label>
-                                </div>
-                                <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
-                                    <textarea id="reportDescription" rows="3" cols="78"
-                                        [pTooltip]="fieldsService.getToolTip('EADI_I_AND_A_REPORT_DESC')"
-                                        [(ngModel)]="eADIInfo.ia.reportDescription" pInputTextarea></textarea>
-                                </div>
-                                <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                                    <label required for="reportUsage" style="width: 100px">{{
-                                        fieldsService.getLabel('EADI_I_AND_A_REPORT_USAGE') }}</label>
-                                </div>
-                                <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
-                                    <textarea id="reportUsage" rows="3" cols="78" [(ngModel)]="eADIInfo.ia.reportUsage"
-                                        [pTooltip]="fieldsService.getToolTip('EADI_I_AND_A_REPORT_USAGE')"
-                                        pInputTextarea></textarea>
-                                </div>
-                                <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                                    <label required for="businessCase" style="width: 100px">{{
-                                        fieldsService.getLabel('EADI_I_AND_A_BUSINESS_CASE') }}</label>
-                                </div>
-                                <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
-                                    <textarea id="businessCase" rows="3" cols="78"
-                                        [pTooltip]="fieldsService.getToolTip('EADI_I_AND_A_BUSINESS_CASE')"
-                                        [(ngModel)]="eADIInfo.ia.businessCase" pInputTextarea></textarea>
-                                </div>
-                                <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                                    <label required for="refreshFrequency" style="width: 100px">{{
-                                        fieldsService.getLabel('EADI_I_AND_A_REFRESH_FREQ') }}</label>
-                                </div>
-                                <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
-                                    <input required id="refreshFrequency" type="text"
-                                        [pTooltip]="fieldsService.getToolTip('EADI_I_AND_A_REFRESH_FREQ')"
-                                        [(ngModel)]="eADIInfo.ia.refreshFrequency" size="70"
-                                        class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary" />
-                                </div>
-                                <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                                    <label required for="reportType" style="width: 100px">{{
-                                        fieldsService.getLabel('EADI_I_AND_A_REPORT_TYPE') }}</label>
-                                </div>
-                                <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
-                                    <input type="radio" id="Temporary" name="reportType" checked="checked"
-                                        [pTooltip]="fieldsService.getToolTip('EADI_I_AND_A_TEMPORARY')"
-                                        [(ngModel)]="eADIInfo.ia.reportType" value="Temporary">
-                                    <label for="Temporary">{{ fieldsService.getLabel('EADI_I_AND_A_TEMPORARY')
-                                        }}</label>
-                                    <input type="radio" id="Permanent" name="reportType"
-                                        [pTooltip]="fieldsService.getToolTip('EADI_I_AND_A_PERMANENT')"
-                                        [(ngModel)]="eADIInfo.ia.reportType" value="Permanent">
-                                    <label for="Permanent">{{ fieldsService.getLabel('EADI_I_AND_A_PERMANENT')
-                                        }}</label>
-                                </div>
-                                <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                                    <label required for="projectCode" style="width: 100px">{{
-                                        fieldsService.getLabel('EADI_I_AND_A_PROJECT_CODE') }}</label>
-                                </div>
-                                <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
-                                    <input required id="projectCode" type="text" [(ngModel)]="eADIInfo.ia.projectCode"
-                                        [pTooltip]="fieldsService.getToolTip('EADI_I_AND_A_PROJECT_CODE')" size="70"
-                                        class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary" />
-                                </div>
-                                <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                                    <label required for="reportTool" style="width: 100px">{{
-                                        fieldsService.getLabel('EADI_I_AND_A_TOOL_PREFERENCE') }}</label>
-                                </div>
-                                <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
-                                    <input required id="reportTool" type="text" [(ngModel)]="eADIInfo.ia.reportTool"
-                                        [pTooltip]="fieldsService.getToolTip('EADI_I_AND_A_TOOL_PREFERENCE')" size="70"
-                                        class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary" />
-                                </div>
-
-                                <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                                    <label for="designReportAttached">{{
-                                        fieldsService.getLabel('EADI_I_AND_A_DESIGN_ATTACHED') }}</label>
-                                </div>
-                                <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
-                                    <p-checkbox [binary]="true" [(ngModel)]="eADIInfo.ia.designReportAttached"
-                                        [pTooltip]="fieldsService.getToolTip('EADI_I_AND_A_DESIGN_ATTACHED')"
-                                        inputId="designReportAttached"></p-checkbox>
-                                </div>
-                                <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                                    <label for="cdmConsumed">{{
-                                        fieldsService.getLabel('EADI_I_AND_A_EXISTING_CDM_CONSUMED') }}</label>
-                                </div>
-                                <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
-                                    <p-checkbox [binary]="true" [(ngModel)]="eADIInfo.ia.cdmConsumed"
-                                        [pTooltip]="fieldsService.getToolTip('EADI_I_AND_A_EXISTING_CDM_CONSUMED')"
-                                        inputId="cdmConsumed"></p-checkbox>
-                                </div>
-                                <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                                    <label for="datasetConsumed">{{
-                                        fieldsService.getLabel('EADI_I_AND_A_EXISTING_DATASET_CONSUMED') }}</label>
-                                </div>
-                                <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
-                                    <p-checkbox [binary]="true" [(ngModel)]="eADIInfo.ia.datasetConsumed"
-                                        [pTooltip]="fieldsService.getToolTip('EADI_I_AND_A_EXISTING_DATASET_CONSUMED')"
-                                        inputId="datasetConsumed"></p-checkbox>
-                                </div>
-
-                            </div>
-                        </div>
-                    </p-tabPanel>
-                    <p-tabPanel header="{{ fieldsService.getLabel('EADI_DATA_QUALITY_HEADER') }}"
-                        *ngIf="showTab('dataQuality')">
-                        <div>
-                            <p-fieldset [toggleable]="true">
-                                <ng-template pTemplate="header">
-                                    <div class="flex align-items-center gap-2 px-2">
-                                        <span class="font-bold"
-                                            [pTooltip]="fieldsService.getToolTip('EADI_DATA_QUALITY_DATA_CLEANING_SPOC')">{{
-                                            fieldsService.getLabel('EADI_DATA_QUALITY_DATA_CLEANING_SPOC') }}</span>
-                                    </div>
-                                </ng-template>
-                                <div class="grid">
-                                    <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                                        <label required for="name" style="width: 100px">{{
-                                            fieldsService.getLabel('EADI_DATA_QUALITY_DATA_CLEANING_SPOC_NAME')
-                                            }}</label>
-                                    </div>
-                                    <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
-                                        <input required id="name" type="text"
-                                            [pTooltip]="fieldsService.getToolTip('EADI_DATA_QUALITY_DATA_CLEANING_SPOC_NAME')"
-                                            [(ngModel)]="eADIInfo.dataQuality.dataCleaningSpocName" size="70"
-                                            class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary" />
-                                    </div>
-                                    <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                                        <label required for="email" style="width: 100px">{{
-                                            fieldsService.getLabel('EADI_DATA_QUALITY_DATA_CLEANING_SPOC_EMAIL')
-                                            }}</label>
-                                    </div>
-                                    <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
-                                        <input required id="email"
-                                            [pTooltip]="fieldsService.getToolTip('EADI_DATA_QUALITY_DATA_CLEANING_SPOC_EMAIL')"
-                                            [(ngModel)]="eADIInfo.dataQuality.dataCleaningSpocEmail" size="70"
-                                            type="email"
-                                            (blur)="eventService.checkEmailValue(eADIInfo.dataQuality.dataCleaningSpocEmail)"
-                                            class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary" />
-                                    </div>
-                                </div>
-                            </p-fieldset>
-                            <br>
-                            <p-fieldset [toggleable]="true">
-                                <ng-template pTemplate="header">
-                                    <div class="flex align-items-center gap-2 px-2">
-                                        <span class="font-bold"
-                                            [pTooltip]="fieldsService.getToolTip('EADI_DATA_QUALITY_BPO_INFO')">{{
-                                            fieldsService.getLabel('EADI_DATA_QUALITY_BPO_INFO') }}</span>
-                                    </div>
-                                </ng-template>
-                                <div class="grid">
-                                    <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                                        <label required for="name" style="width: 100px">{{
-                                            fieldsService.getLabel('EADI_DATA_QUALITY_BPO_INFO_NAME') }}</label>
-                                    </div>
-                                    <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
-                                        <input required id="name" type="text" [(ngModel)]="eADIInfo.dataQuality.bpoName"
-                                            [pTooltip]="fieldsService.getToolTip('EADI_DATA_QUALITY_BPO_INFO_NAME')"
-                                            size="70"
-                                            class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary" />
-                                    </div>
-                                    <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                                        <label required for="email" style="width: 100px">{{
-                                            fieldsService.getLabel('EADI_DATA_QUALITY_BPO_INFO_EMAIL') }}</label>
-                                    </div>
-                                    <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
-                                        <input required id="email" type="email"
-                                            [pTooltip]="fieldsService.getToolTip('EADI_DATA_QUALITY_BPO_INFO_EMAIL')"
-                                            (blur)="eventService.checkEmailValue(eADIInfo.dataQuality.bpoEmail)"
-                                            [(ngModel)]="eADIInfo.dataQuality.bpoEmail" size="70"
-                                            class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary" />
-                                    </div>
-                                </div>
-                            </p-fieldset>
-                            <br>
-                            <p-fieldset [toggleable]="true">
-                                <ng-template pTemplate="header">
-                                    <div class="flex align-items-center gap-2 px-2">
-                                        <span class="font-bold"
-                                            [pTooltip]="fieldsService.getToolTip('EADI_DATA_QUALITY_OTHER')">{{
-                                            fieldsService.getLabel('EADI_DATA_QUALITY_OTHER') }}</span>
-                                    </div>
-                                </ng-template>
-                                <div class="grid">
-                                    <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                                        <label required for="name" style="width: 100px">{{
-                                            fieldsService.getLabel('EADI_DATA_QUALITY_EXCEPTIONS') }}</label>
-                                    </div>
-                                    <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
-                                        <textarea id="description" rows="3" cols="78"
-                                            [pTooltip]="fieldsService.getToolTip('EADI_DATA_QUALITY_EXCEPTIONS')"
-                                            [(ngModel)]="eADIInfo.dataQuality.exceptions" pInputTextarea></textarea>
-                                    </div>
-                                    <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                                        <label required for="businessKPIImpacted" style="width: 100px">{{
-                                            fieldsService.getLabel('EADI_DATA_QUALITY_BUSINESS_KPI_IMPACTED') }}</label>
-                                    </div>
-                                    <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
-                                        <input required id="businessKPIImpacted" type="text"
-                                            [pTooltip]="fieldsService.getToolTip('EADI_DATA_QUALITY_BUSINESS_KPI_IMPACTED')"
-                                            [(ngModel)]="eADIInfo.dataQuality.businessKPIImpacted" size="70"
-                                            class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary" />
-                                    </div>
-
-                                    <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                                        <label required for="dataRuleDescription" style="width: 100px">{{
-                                            fieldsService.getLabel('EADI_DATA_QUALITY_DATA_RULE_DESC') }}</label>
-                                    </div>
-                                    <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
-                                        <textarea id="dataRuleDescription" rows="3" cols="78"
-                                            [pTooltip]="fieldsService.getToolTip('EADI_DATA_QUALITY_DATA_RULE_DESC')"
-                                            [(ngModel)]="eADIInfo.dataQuality.dataRuleDescription"
-                                            pInputTextarea></textarea>
-                                    </div>
-
-                                    <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                                        <label required for="processPEPFInScope" style="width: 100px">{{
-                                            fieldsService.getLabel('EADI_DATA_QUALITY_PEPF_IN_SCOPE') }}</label>
-                                    </div>
-                                    <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
-                                        <input required id="processPEPFInScope" type="text"
-                                            [pTooltip]="fieldsService.getToolTip('EADI_DATA_QUALITY_PEPF_IN_SCOPE')"
-                                            [(ngModel)]="eADIInfo.dataQuality.processPEPFInScope" size="70"
-                                            class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary" />
-                                    </div>
-
-                                    <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                                        <label for="requirementType" required style="width:100px">{{
-                                            fieldsService.getLabel('EADI_DATA_QUALITY_REQ_TYPE') }}</label>
-                                    </div>
-
-                                    <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
-                                        <input type="radio" id="Global" name="approvedBudget" checked="checked"
-                                            [pTooltip]="fieldsService.getToolTip('EADI_DATA_QUALITY_GLOBAL')"
-                                            [(ngModel)]="eADIInfo.dataQuality.requirementType" value="Global">
-                                        <label for="Global">{{ fieldsService.getLabel('EADI_DATA_QUALITY_GLOBAL')
-                                            }}</label>
-                                        <input type="radio" id="BU/Market" name="approvedBudget"
-                                            [pTooltip]="fieldsService.getToolTip('EADI_DATA_QUALITY_BU_MARKET')"
-                                            [(ngModel)]="eADIInfo.dataQuality.requirementType" value="BU/Market">
-                                        <label for="BU/Market">{{ fieldsService.getLabel('EADI_DATA_QUALITY_BU_MARKET')
-                                            }}</label>
-                                    </div>
-
-                                    <div class="col-12 xs:col-12 sm:col-12 lg:col-12 xl:col-12"
-                                        *ngIf="eADIInfo.dataQuality.requirementType == 'BU/Market'"
-                                        style="display: inline-flex;">
-                                        <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                                            <label for="market" required>{{
-                                                fieldsService.getLabel('EADI_DATA_QUALITY_MARKET') }}</label>
-                                        </div>
-                                        <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
-                                            <input id="market" type="text" [(ngModel)]="eADIInfo.dataQuality.market"
-                                                [pTooltip]="fieldsService.getToolTip('EADI_DATA_QUALITY_MARKET')"
-                                                size="60"
-                                                class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary">
-                                        </div>
-                                    </div>
-
-                                </div>
-
-
-                            </p-fieldset>
-                        </div>
-                    </p-tabPanel>
-                    <p-tabPanel header="{{ fieldsService.getLabel('EADI_INFORMATICA_HEADER') }}"
-                        *ngIf="showTab('informatica')">
-                        <div class="grid">
-                            <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                                <label required for="etlRequirements" style="width: 100px">{{
-                                    fieldsService.getLabel('EADI_INFORMATICA_ETL_REQ') }}</label>
-                            </div>
-                            <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
-                                <textarea id="reportDescription" rows="3" cols="78"
-                                    [pTooltip]="fieldsService.getToolTip('EADI_INFORMATICA_ETL_REQ')"
-                                    [(ngModel)]="eADIInfo.informatica.etlRequirements" pInputTextarea></textarea>
-                            </div>
-                        </div>
-                    </p-tabPanel>
-                    <p-tabPanel header="{{ fieldsService.getLabel('EADI_AZURE_SYNAPSE_HEADER') }}"
-                        *ngIf="showTab('azureSynapse')">
-                        <div class="grid">
-                            <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                                <label required for="azureRequirements" style="width: 100px">{{
-                                    fieldsService.getLabel('EADI_AZURE_SYNAPSE_REQ') }}</label>
-                            </div>
-                            <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
-                                <textarea id="azureRequirements" rows="3" cols="78"
-                                    [pTooltip]="fieldsService.getToolTip('EADI_AZURE_SYNAPSE_REQ')"
-                                    [(ngModel)]="eADIInfo.azureSynapse.azureRequirements" pInputTextarea></textarea>
-                            </div>
-                        </div>
-                    </p-tabPanel>
-                </p-tabView>
+          <div class="col-3">
+            <label for="additionalInfo">{{
+                fieldsService.getLabel('EADI_INTEGRATION_ADDITIONAL_INFO')
+              }}</label>
+          </div>
+          <div class="col-9">
+            <input id="title" type="text" pInputText [(ngModel)]="eADIInfo.additionalInfo"
+                   tooltipPosition="left" [pTooltip]="fieldsService.getToolTip('EADI_INTEGRATION_ADDITIONAL_INFO')"
+            >
+          </div>
+        </div>
+      </p-tabPanel>
+      <p-tabPanel header="{{ fieldsService.getLabel('EADI_DATA_MODEL') }}"
+                  *ngIf="showTab('dataModelling')">
+        <div>
+          <div class="grid">
+            <div class="col-3">
+              <label for="dataModelType">{{
+                  fieldsService.getLabel('EADI_DEMAND_MODEL_TYPE')
+                }}</label>
             </div>
+            <div class="col-9">
+              <input type="radio" id="dm1" name="dataModelType" checked="checked"
+                     tooltipPosition="left" [pTooltip]="fieldsService.getToolTip('EADI_NEW_MODEL')"
+                     [(ngModel)]="eADIInfo.dataModel.dataModelType" value="New Model">
+              <label for="dm1">{{ fieldsService.getLabel('EADI_NEW_MODEL') }}</label> &nbsp;
+              <input type="radio" id="dm2" name="dataModelType"
+                     tooltipPosition="left" [pTooltip]="fieldsService.getToolTip('EADI_EXISTING_MODEL')"
+                     [(ngModel)]="eADIInfo.dataModel.dataModelType" value="Change To Existing Model">
+              <label for="dm2">{{ fieldsService.getLabel('EADI_EXISTING_MODEL') }}</label> &nbsp;
+              <input type="radio" id="dm3" name="dataModelType"
+                     tooltipPosition="left" [pTooltip]="fieldsService.getToolTip('EADI_TARGET_DATE_POSTPONEMENT')"
+                     [(ngModel)]="eADIInfo.dataModel.dataModelType" value="Target Date Postponement">
+              <label for="dm3">{{
+                  fieldsService.getLabel('EADI_TARGET_DATE_POSTPONEMENT')
+                }}</label>
+            </div>
+
+            <div class="col-3">
+              <label for="dataDomain">{{ fieldsService.getLabel('EADI_DATA_DOMAIN') }}</label>
+            </div>
+            <div class="col-9">
+              <input id="dataDomain" type="text" pInputText [(ngModel)]="eADIInfo.dataModel.dataDomain"
+                     tooltipPosition="left" [pTooltip]="fieldsService.getToolTip('EADI_DATA_DOMAIN')">
+            </div>
+
+            <div class="col-3">
+              <label for="modelName">{{ fieldsService.getLabel('EADI_MODEL_NAME') }}</label>
+            </div>
+            <div class="col-9">
+              <input id="modelName" type="text" pInputText [(ngModel)]="eADIInfo.dataModel.modelName"
+                     tooltipPosition="left" [pTooltip]="fieldsService.getToolTip('EADI_MODEL_NAME')"
+              >
+            </div>
+
+            <div class="col-3">
+              <label for="modelType">{{ fieldsService.getLabel('EADI_MODEL_TYPE') }}</label>
+            </div>
+            <div class="col-9">
+              <input type="radio" id="mt1" name="modelType" checked="checked"
+                     tooltipPosition="left" [pTooltip]="fieldsService.getToolTip('EADI_MODEL_TYPE_CONCEPTUAL')"
+                     [(ngModel)]="eADIInfo.dataModel.modelType" value="Conceptual">
+              <label for="mt1">{{ fieldsService.getLabel('EADI_MODEL_TYPE_CONCEPTUAL') }}</label>
+              &nbsp;
+              <input type="radio" id="mt2" name="modelType"
+                     tooltipPosition="left" [pTooltip]="fieldsService.getToolTip('EADI_MODEL_TYPE_LOGICAL')"
+                     [(ngModel)]="eADIInfo.dataModel.modelType" value="Logical">
+              <label for="mt2">{{ fieldsService.getLabel('EADI_MODEL_TYPE_LOGICAL') }}</label>
+              &nbsp;
+              <input type="radio" id="mt3" name="modelType"
+                     tooltipPosition="left" [pTooltip]="fieldsService.getToolTip('EADI_MODEL_TYPE_PHYSICAL')"
+                     [(ngModel)]="eADIInfo.dataModel.modelType" value="Physical">
+              <label for="mt3">{{ fieldsService.getLabel('EADI_MODEL_TYPE_PHYSICAL') }}</label>
+            </div>
+
+            <div class="col-3">
+              <label for="requestingProgram">{{
+                  fieldsService.getLabel('EADI_REQUESTING_PROGRAM')
+                }}</label>
+            </div>
+            <div class="col-9">
+              <input id="requestingProgram" type="text" pInputText
+                     tooltipPosition="left" [pTooltip]="fieldsService.getToolTip('EADI_REQUESTING_PROGRAM')"
+                     [(ngModel)]="eADIInfo.dataModel.requestingProgram"
+              >
+            </div>
+
+            <div class="col-3">
+              <label for="isAPIRelevant">{{ fieldsService.getLabel('EADI_API_RELEVANT') }}</label>
+            </div>
+            <div class="col-9">
+              <p-checkbox [binary]="true" [(ngModel)]="eADIInfo.dataModel.isAPIRelevant"
+                          tooltipPosition="left" [pTooltip]="fieldsService.getToolTip('EADI_API_RELEVANT')"
+                          inputId="isAPIRelevant"></p-checkbox>
+            </div>
+
+            <div class="col-3">
+              <label for="relevantITApplication">{{
+                  fieldsService.getLabel('EADI_RELEVANT_IT_APP')
+                }}</label>
+            </div>
+            <div class="col-9">
+              <input id="relevantITApplication" type="text" pInputText
+                     tooltipPosition="left" [pTooltip]="fieldsService.getToolTip('EADI_RELEVANT_IT_APP')"
+                     [(ngModel)]="eADIInfo.dataModel.relevantITApplication"
+              >
+            </div>
+
+            <div class="col-3">
+              <label for="businessDataObject">{{
+                  fieldsService.getLabel('EADI_BUSINESS_DATA_OBJECT')
+                }}</label>
+            </div>
+            <div class="col-9">
+              <input id="businessDataObject" type="text" pInputText
+                     tooltipPosition="left" [pTooltip]="fieldsService.getToolTip('EADI_BUSINESS_DATA_OBJECT')"
+                     [(ngModel)]="eADIInfo.dataModel.businessDataObject"
+              >
+            </div>
+
+            <div class="col-3">
+              <label for="isMappingReqProvided">{{
+                  fieldsService.getLabel('EADI_DETAILED_MAPPING_PROVIDED')
+                }}</label>
+            </div>
+            <div class="col-9">
+              <p-checkbox [binary]="true" [(ngModel)]="eADIInfo.dataModel.isMappingReqProvided"
+                          tooltipPosition="left" [pTooltip]="fieldsService.getToolTip('EADI_DETAILED_MAPPING_PROVIDED')"
+                          inputId="isMappingReqProvided"></p-checkbox>
+            </div>
+          </div>
         </div>
-    </ng-template>
-    <ng-template pTemplate="footer">
-        <div class="grid grid-nogutter justify-content-between">
-            <p-button label="{{ fieldsService.getLabel('BACK_BUTTON') }}" (onClick)="prevPage()"
-                icon="pi pi-angle-left"></p-button>
-            <p-button label="{{ fieldsService.getLabel('NEXT_BUTTON') }}" (onClick)="nextPage()"
-                icon="pi pi-angle-right" iconPos="right"></p-button>
+      </p-tabPanel>
+      <p-tabPanel header="{{ fieldsService.getLabel('EADI_ADL_L1_HEADER') }}" *ngIf="showTab('adlL1')">
+        <div>
+          <div class="grid">
+            <div class="col-3">
+              <label for="dataDemandType">{{
+                  fieldsService.getLabel('EADI_ADL_L1_DATA_DEMAND_TYPE')
+                }}</label>
+            </div>
+            <div class="col-9">
+              <input type="radio" id="dt1" name="dataDemandType"
+                     tooltipPosition="left" [pTooltip]="fieldsService.getToolTip('EADI_ADL_L1_NEW_DATA_ONBOARDING')"
+                     [(ngModel)]="eADIInfo.adlL1.dataDemandType" value="New Data Set Onboarding">
+              <label for="dt1">{{
+                  fieldsService.getLabel('EADI_ADL_L1_NEW_DATA_ONBOARDING')
+                }}</label> &nbsp;
+              <input type="radio" id="dt2" name="dataDemandType"
+                     tooltipPosition="left" [pTooltip]="fieldsService.getToolTip('EADI_ADL_L1_DATA_SET_ENHANCEMENT')"
+                     [(ngModel)]="eADIInfo.adlL1.dataDemandType" value="Data Set Enhancement">
+              <label for="dt2">{{
+                  fieldsService.getLabel('EADI_ADL_L1_DATA_SET_ENHANCEMENT')
+                }}</label> &nbsp;
+              <input type="radio" id="dt3" name="dataDemandType"
+                     tooltipPosition="left" [pTooltip]="fieldsService.getToolTip('EADI_ADL_L1_DATA_SET_MODIFICATION')"
+                     [(ngModel)]="eADIInfo.adlL1.dataDemandType" value="Data Set Modifications">
+              <label for="dt3">{{
+                  fieldsService.getLabel('EADI_ADL_L1_DATA_SET_MODIFICATION')
+                }}</label>
+            </div>
+
+            <p-fieldset [toggleable]="true">
+              <ng-template pTemplate="header">
+                <div class="flex align-items-center gap-2 px-2">
+                                            <span class="font-bold"
+                                                  tooltipPosition="left"
+                                                  [pTooltip]="fieldsService.getToolTip('EADI_ADL_L1_SOURCE_DETAILS')">{{
+                                                fieldsService.getLabel('EADI_ADL_L1_SOURCE_DETAILS')
+                                              }}</span>
+                </div>
+              </ng-template>
+              <div class="grid">
+                <div class="col-3">
+                  <label required for="sourceSystemName">{{
+                      fieldsService.getLabel('EADI_ADL_L1_SYSTEM_NAME')
+                    }}</label>
+                </div>
+                <div class="col-9">
+                  <input required id="sourceSystemName" type="text" pInputText
+                         tooltipPosition="left" [pTooltip]="fieldsService.getToolTip('EADI_ADL_L1_SYSTEM_NAME')"
+                         [(ngModel)]="eADIInfo.adlL1.sourceSystemName" size="70"
+                  />
+                </div>
+
+                <div class="col-3">
+                  <label required for="kernelSid">{{
+                      fieldsService.getLabel('EADI_ADL_L1_KERNEL_SID')
+                    }}</label>
+                </div>
+                <div class="col-9">
+                  <input required id="kernelSid" type="text" pInputText
+                         tooltipPosition="left" [pTooltip]="fieldsService.getToolTip('EADI_ADL_L1_KERNEL_SID')"
+                         [(ngModel)]="eADIInfo.adlL1.kernelSid" size="70"
+                  />
+                </div>
+
+                <div class="col-3">
+                  <label required for="database">{{
+                      fieldsService.getLabel('EADI_ADL_L1_DATABASE')
+                    }}</label>
+                </div>
+                <div class="col-9">
+                  <input required id="database" type="text" pInputText
+                         tooltipPosition="left" [pTooltip]="fieldsService.getToolTip('EADI_ADL_L1_DATABASE')"
+                         [(ngModel)]="eADIInfo.adlL1.database" size="70"
+                  />
+                </div>
+
+                <div class="col-3">
+                  <label required for="module">{{
+                      fieldsService.getLabel('EADI_ADL_L1_MODULE')
+                    }}</label>
+                </div>
+                <div class="col-9">
+                  <input required id="module" type="text" pInputText [(ngModel)]="eADIInfo.adlL1.module"
+                         tooltipPosition="left" [pTooltip]="fieldsService.getToolTip('EADI_ADL_L1_MODULE')" size="70"
+                  />
+                </div>
+
+                <div class="col-3">
+                  <label required for="instance">{{
+                      fieldsService.getLabel('EADI_ADL_L1_INSTANCE')
+                    }}</label>
+                </div>
+                <div class="col-9">
+                  <input required id="instance" type="text" pInputText
+                         tooltipPosition="left" [pTooltip]="fieldsService.getToolTip('EADI_ADL_L1_INSTANCE')"
+                         [(ngModel)]="eADIInfo.adlL1.instance" size="70"
+                  />
+                </div>
+
+                <div class="col-3">
+                  <label required for="tableName">{{
+                      fieldsService.getLabel('EADI_ADL_L1_TABLE_NAME')
+                    }}</label>
+                </div>
+                <div class="col-9">
+                  <input required id="tableName" type="text" pInputText
+                         tooltipPosition="left" [pTooltip]="fieldsService.getToolTip('EADI_ADL_L1_TABLE_NAME')"
+                         [(ngModel)]="eADIInfo.adlL1.tableName" size="70"
+                  />
+                </div>
+
+                <div class="col-3">
+                  <label required for="capability">{{
+                      fieldsService.getLabel('EADI_ADL_L1_CAPABILITY')
+                    }}</label>
+                </div>
+                <div class="col-9">
+                  <input required id="capability" type="text" pInputText
+                         tooltipPosition="left" [pTooltip]="fieldsService.getToolTip('EADI_ADL_L1_CAPABILITY')"
+                         [(ngModel)]="eADIInfo.adlL1.capability" size="70"
+                  />
+                </div>
+
+                <div class="col-3">
+                  <label required for="functionality">{{
+                      fieldsService.getLabel('EADI_ADL_L1_FUNCTIONALITY')
+                    }}</label>
+                </div>
+                <div class="col-9">
+                  <input required id="functionality" type="text" pInputText
+                         tooltipPosition="left" [pTooltip]="fieldsService.getToolTip('EADI_ADL_L1_FUNCTIONALITY')"
+                         [(ngModel)]="eADIInfo.adlL1.functionality" size="70"
+                  />
+                </div>
+
+                <div class="col-3">
+                  <label required for="sourceEmail">{{
+                      fieldsService.getLabel('EADI_ADL_L1_POC_EMAIL')
+                    }}</label>
+                </div>
+                <div class="col-9">
+                  <input required id="sourceEmail" type="email" pInputText
+                         tooltipPosition="left" [pTooltip]="fieldsService.getToolTip('EADI_ADL_L1_POC_EMAIL')"
+                         (blur)="eventService.checkEmailValue(eADIInfo.adlL1.sourceEmail)"
+                         [(ngModel)]="eADIInfo.adlL1.sourceEmail" size="70"
+                  />
+                </div>
+
+                <div class="col-3">
+                  <label for="additionalDocAttached">{{
+                      fieldsService.getLabel('EADI_ADL_L1_ADDITIONAL_DOC_ATTACHED')
+                    }}</label>
+                </div>
+                <div class="col-9">
+                  <p-checkbox [binary]="true"
+                              tooltipPosition="left"
+                              [pTooltip]="fieldsService.getToolTip('EADI_ADL_L1_TABLE_COLUMN_ACCESS_INFO')"
+                              [(ngModel)]="eADIInfo.adlL1.additionalDocAttached"
+                              inputId="additionalDocAttached"></p-checkbox>
+                </div>
+              </div>
+            </p-fieldset>
+            <br>
+            <p-fieldset [toggleable]="true">
+              <ng-template pTemplate="header">
+                <div class="flex align-items-center gap-2 px-2">
+                                            <span class="font-bold"
+                                                  tooltipPosition="left"
+                                                  [pTooltip]="fieldsService.getToolTip('EADI_ADL_L1_DATA_FEED_DETAILS')">{{
+                                                fieldsService.getLabel('EADI_ADL_L1_DATA_FEED_DETAILS')
+                                              }}</span>
+                </div>
+              </ng-template>
+              <div class="grid">
+                <div class="col-3">
+                  <label required for="dataSetName">{{
+                      fieldsService.getLabel('EADI_ADL_L1_DATASET_NAME')
+                    }}</label>
+                </div>
+                <div class="col-9">
+                  <input required id="dataSetName" type="text" pInputText
+                         tooltipPosition="left" [pTooltip]="fieldsService.getToolTip('EADI_ADL_L1_DATASET_NAME')"
+                         [(ngModel)]="eADIInfo.adlL1.dataSetName" size="70"
+                  />
+                </div>
+
+                <div class="col-3">
+                  <label required for="dataSetOwner">{{
+                      fieldsService.getLabel('EADI_ADL_L1_DATASET_OWNER')
+                    }}</label>
+                </div>
+                <div class="col-9">
+                  <input required id="dataSetOwner" type="text" pInputText
+                         tooltipPosition="left" [pTooltip]="fieldsService.getToolTip('EADI_ADL_L1_DATASET_OWNER')"
+                         [(ngModel)]="eADIInfo.adlL1.dataSetOwner" size="70"
+                  />
+                </div>
+
+                <div class="col-3">
+                  <label required for="selectedFrequency">{{
+                      fieldsService.getLabel('EADI_ADL_L1_DATA_REFRESH_FREQ')
+                    }}</label>
+                </div>
+                <div class="col-9">
+                  <p-dropdown appendTo="body" [options]="refreshFrequencies"
+                              (onChange)="onFrequencySelect()"
+                              tooltipPosition="left"
+                              [pTooltip]="fieldsService.getToolTip('EADI_ADL_L1_DATA_REFRESH_FREQ')"
+                              [(ngModel)]="selectedFrequency"
+                              placeholder="Select Refresh Frequency"></p-dropdown>
+                </div>
+
+                <div class="col-3">
+                  <label required for="loadStrategy">{{
+                      fieldsService.getLabel('EADI_ADL_L1_LOAD_STRATEGY')
+                    }}</label>
+                </div>
+                <div class="col-9">
+                  <p-dropdown appendTo="body" [options]="loadStrategies"
+                              (onChange)="onLoadStrategySelect()"
+                              tooltipPosition="left" [pTooltip]="fieldsService.getToolTip('EADI_ADL_L1_LOAD_STRATEGY')"
+                              [(ngModel)]="selectedLoadStrategy"
+                              placeholder="Select Refresh Frequency"></p-dropdown>
+                </div>
+
+                <div class="col-3">
+                  <label required for="extractionlogic">{{
+                      fieldsService.getLabel('EADI_ADL_L1_INCREMENTAL_EXTRACTION_LOGIC')
+                    }}</label>
+                </div>
+                <div class="col-9">
+                                            <textarea id="extractionlogic" rows="3" cols="78"
+                                                      tooltipPosition="left"
+                                                      [pTooltip]="fieldsService.getToolTip('EADI_ADL_L1_INCREMENTAL_EXTRACTION_LOGIC')"
+                                                      [(ngModel)]="eADIInfo.adlL1.extractionlogic"
+                                                      pInputTextarea></textarea>
+                </div>
+
+                <div class="col-3">
+                  <label required for="tableAccessInfo">{{
+                      fieldsService.getLabel('EADI_ADL_L1_TABLE_COLUMN_ACCESS_INFO')
+                    }}</label>
+                </div>
+                <div class="col-9">
+                                            <textarea id="tableAccessInfo" rows="3" cols="78"
+                                                      tooltipPosition="left"
+                                                      [pTooltip]="fieldsService.getToolTip('EADI_ADL_L1_TABLE_COLUMN_ACCESS_INFO')"
+                                                      [(ngModel)]="eADIInfo.adlL1.tableAccessInfo"
+                                                      pInputTextarea></textarea>
+                </div>
+
+                <div class="col-3">
+                  <label required for="history">{{
+                      fieldsService.getLabel('EADI_ADL_L1_HISTORY_DATA_REQ')
+                    }}</label>
+                </div>
+                <div class="col-9">
+                                            <textarea id="history" rows="3" cols="78"
+                                                      tooltipPosition="left"
+                                                      [pTooltip]="fieldsService.getToolTip('EADI_ADL_L1_HISTORY_DATA_REQ')"
+                                                      [(ngModel)]="eADIInfo.adlL1.history" pInputTextarea></textarea>
+                </div>
+              </div>
+            </p-fieldset>
+
+          </div>
         </div>
-    </ng-template>
-</p-card>
+      </p-tabPanel>
+      <p-tabPanel header="{{ fieldsService.getLabel('EADI_ADL_L2_HEADER') }}" *ngIf="showTab('adlL2')">
+        <div>
+          <div class="grid">
+            <div class="col-3">
+              <label required for="architectureReview">{{
+                  fieldsService.getLabel('EADI_ADL_L2_ARCHITECTURE_REVIEW')
+                }}</label>
+            </div>
+            <div class="col-9">
+                                    <textarea id="architectureReview" rows="3" cols="78"
+                                              tooltipPosition="left"
+                                              [pTooltip]="fieldsService.getToolTip('EADI_ADL_L2_ARCHITECTURE_REVIEW')"
+                                              [(ngModel)]="eADIInfo.adlL2.architectureReview" pInputTextarea></textarea>
+            </div>
+
+            <div class="col-12">
+              <label><b>{{ fieldsService.getLabel('EADI_ADL_L2_COMMON_DATA_MODEL') }}</b></label>
+            </div>
+            <div class="col-3">
+              <label for="certifiedDataModel">{{
+                  fieldsService.getLabel('EADI_ADL_L2_CERTIFIED')
+                }}</label>
+            </div>
+            <div class="col-9">
+              <p-checkbox [binary]="true" [(ngModel)]="eADIInfo.adlL2.certifiedDataModel"
+                          tooltipPosition="left" [pTooltip]="fieldsService.getToolTip('EADI_ADL_L2_CERTIFIED')"
+                          inputId="certifiedDataModel"></p-checkbox>
+            </div>
+            <div class="col-3">
+              <label for="existingDataModel">{{
+                  fieldsService.getLabel('EADI_ADL_L2_EXISTING')
+                }}</label>
+            </div>
+            <div class="col-9">
+              <p-checkbox [binary]="true" [(ngModel)]="eADIInfo.adlL2.existingDataModel"
+                          tooltipPosition="left" [pTooltip]="fieldsService.getToolTip('EADI_ADL_L2_EXISTING')"
+                          inputId="existingDataModel"></p-checkbox>
+            </div>
+            <div class="col-3">
+              <label for="newDataModel">{{ fieldsService.getLabel('EADI_ADL_L2_NEW') }}</label>
+            </div>
+            <div class="col-9">
+              <p-checkbox [binary]="true" [(ngModel)]="eADIInfo.adlL2.newDataModel"
+                          tooltipPosition="left" [pTooltip]="fieldsService.getToolTip('EADI_ADL_L2_NEW')"
+                          inputId="newDataModel"></p-checkbox>
+            </div>
+            <div class="col-3">
+              <label for="leadBioDataModel">{{
+                  fieldsService.getLabel('EADI_ADL_L2_LEAD_BIO')
+                }}</label>
+            </div>
+            <div class="col-9">
+              <p-checkbox [binary]="true" [(ngModel)]="eADIInfo.adlL2.leadBioDataModel"
+                          tooltipPosition="left" [pTooltip]="fieldsService.getToolTip('EADI_ADL_L2_LEAD_BIO')"
+                          inputId="leadBioDataModel"></p-checkbox>
+            </div>
+          </div>
+        </div>
+      </p-tabPanel>
+      <p-tabPanel header="{{ fieldsService.getLabel('EADI_ADL_GOLD_HEADER') }}" *ngIf="showTab('gold')">
+        <div>
+          <div class="grid">
+            <div class="col-8 xs:col-8 sm:col-8 lg:col-8 xl:col-8">
+              <label for="kpiRequired" required style="width:100px">{{
+                  fieldsService.getLabel('EADI_ADL_GOLD_KPI_REQ')
+                }}</label>
+            </div>
+            <div class="col-4 xs:col-4 sm:col-4 lg:col-4 xl:col-4">
+              <input type="radio" name="kpiRequired" [(ngModel)]="eADIInfo.gold.kpiRequired"
+                     tooltipPosition="left" [pTooltip]="fieldsService.getToolTip('EADI_ADL_GOLD_KPI_REQ_YES')"
+                     [value]="true">
+              <label>{{ fieldsService.getLabel('EADI_ADL_GOLD_KPI_REQ_YES') }}</label>
+              <input type="radio" name="kpiRequired" checked="checked"
+                     tooltipPosition="left" [pTooltip]="fieldsService.getToolTip('EADI_ADL_GOLD_KPI_REQ_NO')"
+                     [(ngModel)]="eADIInfo.gold.kpiRequired" [value]="false">
+              <label>{{ fieldsService.getLabel('EADI_ADL_GOLD_KPI_REQ_NO') }}</label>
+            </div>
+
+            <div class="col-8 xs:col-8 sm:col-8 lg:col-8 xl:col-8">
+              <label for="aggregation" required style="width:100px">{{
+                  fieldsService.getLabel('EADI_ADL_GOLD_AGGREGATION_FROM_ADLL2')
+                }}</label>
+            </div>
+            <div class="col-4 xs:col-4 sm:col-4 lg:col-4 xl:col-4">
+              <input type="radio" name="aggregation" [(ngModel)]="eADIInfo.gold.aggregation"
+                     tooltipPosition="left"
+                     [pTooltip]="fieldsService.getToolTip('EADI_ADL_GOLD_AGGREGATION_FROM_ADLL2_YES')"
+                     [value]="true">
+              <label>{{
+                  fieldsService.getLabel('EADI_ADL_GOLD_AGGREGATION_FROM_ADLL2_YES')
+                }}</label>
+              <input type="radio" name="aggregation" checked="checked"
+                     tooltipPosition="left"
+                     [pTooltip]="fieldsService.getToolTip('EADI_ADL_GOLD_AGGREGATION_FROM_ADLL2_NO')"
+                     [(ngModel)]="eADIInfo.gold.aggregation" [value]="false">
+              <label>{{
+                  fieldsService.getLabel('EADI_ADL_GOLD_AGGREGATION_FROM_ADLL2_NO')
+                }}</label>
+            </div>
+
+            <div class="col-8 xs:col-8 sm:col-8 lg:col-8 xl:col-8"></div>
+            <div class="col-4 xs:col-4 sm:col-4 lg:col-4 xl:col-4"
+                 *ngIf="eADIInfo.gold.aggregation==true">
+              <input required id="aggregationInfo" type="text" pInputText
+                     placeholder="Specify Aggregation Information"
+                     [(ngModel)]="eADIInfo.gold.aggregationInfo" size="40"
+              />
+            </div>
+
+            <div class="grid">
+              <div class="col-4 xs:col-4 sm:col-4 lg:col-4 xl:col-4">
+                <label required for="workbench">{{
+                    fieldsService.getLabel('EADI_ADL_GOLD_CREATED_WORKBENCH')
+                  }}</label>
+              </div>
+              <div class="col-8 xs:col-8 sm:col-8 lg:col-8 xl:col-8">
+                <input required id="workbench" type="text" pInputText [(ngModel)]="eADIInfo.gold.workbench"
+                       tooltipPosition="left" [pTooltip]="fieldsService.getToolTip('EADI_ADL_GOLD_CREATED_WORKBENCH')"
+                       size="70"
+                />
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </p-tabPanel>
+      <p-tabPanel header="{{ fieldsService.getLabel('EADI_MDM_HEADER') }}" *ngIf="showTab('mdm')">
+        <div class="grid">
+          <div class="col-12">
+            <label required><b>{{
+                fieldsService.getLabel('EADI_MDM_PROVIDED_DETAILS_ON')
+              }}</b></label>
+          </div>
+          <div class="col-3">
+            <label required for="bpdh">{{
+                fieldsService.getLabel('EADI_MDM_BPDH_FIORI')
+              }}</label>
+          </div>
+          <div class="col-9">
+                                <textarea id="bpdh" rows="3" cols="78" [(ngModel)]="eADIInfo.mdm.bpdh"
+                                          tooltipPosition="left"
+                                          [pTooltip]="fieldsService.getToolTip('EADI_MDM_BPDH_FIORI')"
+                                          pInputTextarea></textarea>
+          </div>
+          <div class="col-3">
+            <label required for="pdh">{{
+                fieldsService.getLabel('EADI_MDM_PDH')
+              }}</label>
+          </div>
+          <div class="col-9">
+                                <textarea id="pdh" rows="3" cols="78" [(ngModel)]="eADIInfo.mdm.pdh"
+                                          tooltipPosition="left" [pTooltip]="fieldsService.getToolTip('EADI_MDM_PDH')"
+                                          pInputTextarea></textarea>
+          </div>
+          <div class="col-3">
+            <label required for="fordh">{{
+                fieldsService.getLabel('EADI_MDM_FORDH')
+              }}</label>
+          </div>
+          <div class="col-9">
+                                <textarea id="fordh" rows="3" cols="78" [(ngModel)]="eADIInfo.mdm.fordh"
+                                          tooltipPosition="left" [pTooltip]="fieldsService.getToolTip('EADI_MDM_FORDH')"
+                                          pInputTextarea></textarea>
+          </div>
+        </div>
+      </p-tabPanel>
+      <p-tabPanel header="{{ fieldsService.getLabel('EADI_I_AND_A_HEADER') }}" *ngIf="showTab('ia')">
+        <div>
+          <div class="grid">
+            <div class="col-3">
+              <label required for="location">{{
+                  fieldsService.getLabel('EADI_I_AND_A_LOCATION_OF_REPORT')
+                }}</label>
+            </div>
+            <div class="col-9">
+              <input required id="location" type="text" pInputText [(ngModel)]="eADIInfo.ia.location"
+                     tooltipPosition="left" [pTooltip]="fieldsService.getToolTip('EADI_I_AND_A_LOCATION_OF_REPORT')"
+                     size="90"
+              />
+            </div>
+
+            <div class="col-3">
+              <label for="newReportRequired" required style="width:100px">{{
+                  fieldsService.getLabel('EADI_I_AND_A_NEW_REPORT_REQ')
+                }}</label>
+            </div>
+            <div class="col-9">
+              <input type="radio" name="newReportRequired" checked="checked"
+                     tooltipPosition="left" [pTooltip]="fieldsService.getToolTip('EADI_I_AND_A_NEW_REPORT_REQ_YES')"
+                     [(ngModel)]="eADIInfo.ia.newReportRequired" [value]="true">
+              <label>{{ fieldsService.getLabel('EADI_I_AND_A_NEW_REPORT_REQ_YES') }}</label>
+              <input type="radio" name="newReportRequired"
+                     tooltipPosition="left" [pTooltip]="fieldsService.getToolTip('EADI_I_AND_A_NEW_REPORT_REQ_NO')"
+                     [(ngModel)]="eADIInfo.ia.newReportRequired" [value]="false">
+              <label>{{ fieldsService.getLabel('EADI_I_AND_A_NEW_REPORT_REQ_NO') }}</label>
+            </div>
+
+            <div class="col-3">
+              <label required for="reportDescription">{{
+                  fieldsService.getLabel('EADI_I_AND_A_REPORT_DESC')
+                }}</label>
+            </div>
+            <div class="col-9">
+                                    <textarea id="reportDescription" rows="3" cols="100"
+                                              tooltipPosition="left"
+                                              [pTooltip]="fieldsService.getToolTip('EADI_I_AND_A_REPORT_DESC')"
+                                              [(ngModel)]="eADIInfo.ia.reportDescription" pInputTextarea></textarea>
+            </div>
+            <div class="col-3">
+              <label required for="reportUsage">{{
+                  fieldsService.getLabel('EADI_I_AND_A_REPORT_USAGE')
+                }}</label>
+            </div>
+            <div class="col-9">
+                                    <textarea id="reportUsage" rows="3" cols="100" [(ngModel)]="eADIInfo.ia.reportUsage"
+                                              tooltipPosition="left"
+                                              [pTooltip]="fieldsService.getToolTip('EADI_I_AND_A_REPORT_USAGE')"
+                                              pInputTextarea></textarea>
+            </div>
+
+            <div class="col-3">
+              <label required for="reportType">{{
+                  fieldsService.getLabel('EADI_I_AND_A_REPORT_TYPE')
+                }}</label>
+            </div>
+            <div class="col-9">
+              <input type="radio" id="Temporary" name="reportType" checked="checked"
+                     tooltipPosition="left" [pTooltip]="fieldsService.getToolTip('EADI_I_AND_A_TEMPORARY')"
+                     [(ngModel)]="eADIInfo.ia.reportType" value="Temporary">
+              <label for="Temporary">{{
+                  fieldsService.getLabel('EADI_I_AND_A_TEMPORARY')
+                }}</label>
+              <input type="radio" id="Permanent" name="reportType"
+                     tooltipPosition="left" [pTooltip]="fieldsService.getToolTip('EADI_I_AND_A_PERMANENT')"
+                     [(ngModel)]="eADIInfo.ia.reportType" value="Permanent">
+              <label for="Permanent">{{
+                  fieldsService.getLabel('EADI_I_AND_A_PERMANENT')
+                }}</label>
+            </div>
+            <div class="col-3">
+              <label required for="reportTool">{{
+                  fieldsService.getLabel('EADI_I_AND_A_TOOL_PREFERENCE')
+                }}</label>
+            </div>
+            <div class="col-9">
+              <p-dropdown appendTo="body" [options]="referenceTools" (onChange)="onToolSelect()"
+                          tooltipPosition="left" [pTooltip]="fieldsService.getToolTip('EADI_I_AND_A_TOOL_PREFERENCE')"
+                          [(ngModel)]="selectedTool" placeholder="Select Reference Tool"></p-dropdown>
+            </div>
+            <div class="col-3"></div>
+            <div class="col-9">
+              <div *ngIf="selectedTool=='Other'">
+                <input id="selectedTool" type="text" pInputText [(ngModel)]="eADIInfo.ia.reportTool"
+                       placeholder="Please Specify Reference Tool" size="70"
+                >
+              </div>
+            </div>
+
+            <div class="col-3">
+              <label for="designReportAttached">{{
+                  fieldsService.getLabel('EADI_I_AND_A_DESIGN_ATTACHED')
+                }}</label>
+            </div>
+            <div class="col-9">
+              <p-checkbox [binary]="true" [(ngModel)]="eADIInfo.ia.designReportAttached"
+                          tooltipPosition="left" [pTooltip]="fieldsService.getToolTip('EADI_I_AND_A_DESIGN_ATTACHED')"
+                          inputId="designReportAttached"></p-checkbox>
+            </div>
+            <div class="col-3">
+              <label for="cdmConsumed">{{
+                  fieldsService.getLabel('EADI_I_AND_A_EXISTING_CDM_CONSUMED')
+                }}</label>
+            </div>
+            <div class="col-6 xs:col-6 sm:col-6 lg:col-6 xl:col-6">
+              <p-inputGroup>
+                <p-inputGroupAddon>
+                  <p-checkbox [(ngModel)]="eADIInfo.ia.cdmConsumed" (onChange)="onCDMChange()"
+                              [binary]="true"/>
+                </p-inputGroupAddon>
+                <input type="text" pInputText pInputText placeholder="Specify CDM"
+                       [(ngModel)]="eADIInfo.ia.cdmConsumedText"
+                       tooltipPosition="left"
+                       [pTooltip]="fieldsService.getToolTip('EADI_I_AND_A_EXISTING_CDM_CONSUMED')"
+                       [disabled]="eADIInfo.ia.cdmConsumed==false"/>
+              </p-inputGroup>
+            </div>
+            <div class="col-3"></div>
+
+            <div class="col-3">
+              <label for="datasetConsumed">{{
+                  fieldsService.getLabel('EADI_I_AND_A_EXISTING_DATASET_CONSUMED')
+                }}</label>
+            </div>
+            <div class="col-6 xs:col-6 sm:col-6 lg:col-6 xl:col-6">
+              <!-- <p-checkbox [binary]="true" [(ngModel)]="eADIInfo.ia.datasetConsumed"
+                  tooltipPosition="left" [pTooltip]="fieldsService.getToolTip('EADI_I_AND_A_EXISTING_DATASET_CONSUMED')"
+                  inputId="datasetConsumed"></p-checkbox> -->
+              <p-inputGroup>
+                <p-inputGroupAddon>
+                  <p-checkbox [(ngModel)]="eADIInfo.ia.datasetConsumed" (onChange)="onDatasetChange()"
+                              [binary]="true"/>
+                </p-inputGroupAddon>
+                <input type="text" pInputText pInputText placeholder="Specify Dataset"
+                       [(ngModel)]="eADIInfo.ia.datasetConsumedText"
+                       tooltipPosition="left"
+                       [pTooltip]="fieldsService.getToolTip('EADI_I_AND_A_EXISTING_DATASET_CONSUMED')"
+                       [disabled]="eADIInfo.ia.datasetConsumed==false"/>
+              </p-inputGroup>
+            </div>
+            <div class="col-3"></div>
+          </div>
+        </div>
+      </p-tabPanel>
+      <p-tabPanel header="{{ fieldsService.getLabel('EADI_DATA_QUALITY_HEADER') }}"
+                  *ngIf="showTab('dataQuality')">
+        <div>
+          <p-fieldset [toggleable]="true">
+            <ng-template pTemplate="header">
+              <div class="flex align-items-center gap-2 px-2">
+                <span class="font-bold"
+                      tooltipPosition="left"
+                      [pTooltip]="fieldsService.getToolTip('EADI_DATA_QUALITY_DATA_CLEANING_SPOC')">{{ fieldsService.getLabel('EADI_DATA_QUALITY_DATA_CLEANING_SPOC') }}</span>
+              </div>
+            </ng-template>
+            <div class="grid">
+              <div class="col-3">
+                <label required
+                       for="name">{{ fieldsService.getLabel('EADI_DATA_QUALITY_DATA_CLEANING_SPOC_NAME') }}</label>
+              </div>
+              <div class="col-9">
+                <input required id="name" type="text" pInputText
+                       tooltipPosition="left"
+                       [pTooltip]="fieldsService.getToolTip('EADI_DATA_QUALITY_DATA_CLEANING_SPOC_NAME')"
+                       [(ngModel)]="eADIInfo.dataQuality.dataCleaningSpocName" size="70"
+                />
+              </div>
+              <div class="col-3">
+                <label required
+                       for="email">{{ fieldsService.getLabel('EADI_DATA_QUALITY_DATA_CLEANING_SPOC_EMAIL') }}</label>
+              </div>
+              <div class="col-9">
+                <input required id="email"
+                       tooltipPosition="left"
+                       pInputText
+                       [pTooltip]="fieldsService.getToolTip('EADI_DATA_QUALITY_DATA_CLEANING_SPOC_EMAIL')"
+                       [(ngModel)]="eADIInfo.dataQuality.dataCleaningSpocEmail" size="70"
+                       type="email"
+                       (blur)="eventService.checkEmailValue(eADIInfo.dataQuality.dataCleaningSpocEmail)"
+                />
+              </div>
+            </div>
+          </p-fieldset>
+          <br>
+          <p-fieldset [toggleable]="true">
+            <ng-template pTemplate="header">
+              <div class="flex align-items-center gap-2 px-2">
+                <span class="font-bold" tooltipPosition="left"
+                      [pTooltip]="fieldsService.getToolTip('EADI_DATA_QUALITY_BPO_INFO')">{{ fieldsService.getLabel('EADI_DATA_QUALITY_BPO_INFO') }}</span>
+              </div>
+            </ng-template>
+            <div class="grid">
+              <div class="col-3">
+                <label required for="name">{{
+                    fieldsService.getLabel('EADI_DATA_QUALITY_BPO_INFO_NAME')
+                  }}</label>
+              </div>
+              <div class="col-9">
+                <input required id="name" type="text" pInputText [(ngModel)]="eADIInfo.dataQuality.bpoName"
+                       tooltipPosition="left" [pTooltip]="fieldsService.getToolTip('EADI_DATA_QUALITY_BPO_INFO_NAME')"
+                       size="70"
+                />
+              </div>
+              <div class="col-3">
+                <label required for="email">{{
+                    fieldsService.getLabel('EADI_DATA_QUALITY_BPO_INFO_EMAIL')
+                  }}</label>
+              </div>
+              <div class="col-9">
+                <input required id="email" type="email" pInputText
+                       tooltipPosition="left" [pTooltip]="fieldsService.getToolTip('EADI_DATA_QUALITY_BPO_INFO_EMAIL')"
+                       (blur)="eventService.checkEmailValue(eADIInfo.dataQuality.bpoEmail)"
+                       [(ngModel)]="eADIInfo.dataQuality.bpoEmail" size="70"
+                />
+              </div>
+            </div>
+          </p-fieldset>
+          <br>
+          <p-fieldset [toggleable]="true">
+            <ng-template pTemplate="header">
+              <div class="flex align-items-center gap-2 px-2">
+                                        <span class="font-bold"
+                                              tooltipPosition="left"
+                                              [pTooltip]="fieldsService.getToolTip('EADI_DATA_QUALITY_OTHER')">{{
+                                            fieldsService.getLabel('EADI_DATA_QUALITY_OTHER')
+                                          }}</span>
+              </div>
+            </ng-template>
+            <div class="grid">
+              <div class="col-3">
+                <label required for="name">{{
+                    fieldsService.getLabel('EADI_DATA_QUALITY_EXCEPTIONS')
+                  }}</label>
+              </div>
+              <div class="col-9">
+                                        <textarea id="description" rows="3" cols="78"
+                                                  tooltipPosition="left"
+                                                  [pTooltip]="fieldsService.getToolTip('EADI_DATA_QUALITY_EXCEPTIONS')"
+                                                  [(ngModel)]="eADIInfo.dataQuality.exceptions"
+                                                  pInputTextarea></textarea>
+              </div>
+              <div class="col-3">
+                <label required for="businessKPIImpacted">{{
+                    fieldsService.getLabel('EADI_DATA_QUALITY_BUSINESS_KPI_IMPACTED')
+                  }}</label>
+              </div>
+              <div class="col-9">
+                <input required id="businessKPIImpacted" type="text" pInputText
+                       tooltipPosition="left"
+                       [pTooltip]="fieldsService.getToolTip('EADI_DATA_QUALITY_BUSINESS_KPI_IMPACTED')"
+                       [(ngModel)]="eADIInfo.dataQuality.businessKPIImpacted" size="70"
+                />
+              </div>
+
+              <div class="col-3">
+                <label required for="dataRuleDescription">{{
+                    fieldsService.getLabel('EADI_DATA_QUALITY_DATA_RULE_DESC')
+                  }}</label>
+              </div>
+              <div class="col-9">
+                                        <textarea id="dataRuleDescription" rows="3" cols="78"
+                                                  tooltipPosition="left"
+                                                  [pTooltip]="fieldsService.getToolTip('EADI_DATA_QUALITY_DATA_RULE_DESC')"
+                                                  [(ngModel)]="eADIInfo.dataQuality.dataRuleDescription"
+                                                  pInputTextarea></textarea>
+              </div>
+
+              <div class="col-3">
+                <label required for="processPEPFInScope">{{
+                    fieldsService.getLabel('EADI_DATA_QUALITY_PEPF_IN_SCOPE')
+                  }}</label>
+              </div>
+              <div class="col-9">
+                <input required id="processPEPFInScope" type="text" pInputText
+                       tooltipPosition="left" [pTooltip]="fieldsService.getToolTip('EADI_DATA_QUALITY_PEPF_IN_SCOPE')"
+                       [(ngModel)]="eADIInfo.dataQuality.processPEPFInScope" size="70"
+                />
+              </div>
+
+              <div class="col-3">
+                <label for="requirementType" required style="width:100px">{{
+                    fieldsService.getLabel('EADI_DATA_QUALITY_REQ_TYPE')
+                  }}</label>
+              </div>
+
+              <div class="col-9">
+                <input type="radio" id="Global" name="approvedBudget" checked="checked"
+                       tooltipPosition="left" [pTooltip]="fieldsService.getToolTip('EADI_DATA_QUALITY_GLOBAL')"
+                       [(ngModel)]="eADIInfo.dataQuality.requirementType" value="Global">
+                <label for="Global">{{
+                    fieldsService.getLabel('EADI_DATA_QUALITY_GLOBAL')
+                  }}</label>
+                <input type="radio" id="BU/Market" name="approvedBudget"
+                       tooltipPosition="left" [pTooltip]="fieldsService.getToolTip('EADI_DATA_QUALITY_BU_MARKET')"
+                       [(ngModel)]="eADIInfo.dataQuality.requirementType" value="BU/Market">
+                <label for="BU/Market">{{
+                    fieldsService.getLabel('EADI_DATA_QUALITY_BU_MARKET')
+                  }}</label>
+              </div>
+
+              <div class="col-12"
+                   *ngIf="eADIInfo.dataQuality.requirementType == 'BU/Market'"
+                   style="display: inline-flex;">
+                <div class="col-3">
+                  <label for="market" required>{{
+                      fieldsService.getLabel('EADI_DATA_QUALITY_MARKET')
+                    }}</label>
+                </div>
+                <div class="col-9">
+                  <input id="market" type="text" pInputText [(ngModel)]="eADIInfo.dataQuality.market"
+                         tooltipPosition="left" [pTooltip]="fieldsService.getToolTip('EADI_DATA_QUALITY_MARKET')"
+                         size="60"
+                  >
+                </div>
+              </div>
+
+            </div>
+
+
+          </p-fieldset>
+        </div>
+      </p-tabPanel>
+      <p-tabPanel header="{{ fieldsService.getLabel('EADI_INFORMATICA_HEADER') }}"
+                  *ngIf="showTab('informatica')">
+        <div class="grid">
+          <div class="col-3">
+            <label required for="etlRequirements">{{
+                fieldsService.getLabel('EADI_INFORMATICA_ETL_REQ')
+              }}</label>
+          </div>
+          <div class="col-9">
+                                <textarea id="reportDescription" rows="3" cols="78"
+                                          tooltipPosition="left"
+                                          [pTooltip]="fieldsService.getToolTip('EADI_INFORMATICA_ETL_REQ')"
+                                          [(ngModel)]="eADIInfo.informatica.etlRequirements" pInputTextarea></textarea>
+          </div>
+        </div>
+      </p-tabPanel>
+      <p-tabPanel header="{{ fieldsService.getLabel('EADI_AZURE_SYNAPSE_HEADER') }}"
+                  *ngIf="showTab('azureSynapse')">
+        <div class="grid">
+          <div class="col-3">
+            <label required for="azureRequirements">{{
+                fieldsService.getLabel('EADI_AZURE_SYNAPSE_REQ')
+              }}</label>
+          </div>
+          <div class="col-9">
+                                <textarea id="azureRequirements" rows="3" cols="78"
+                                          tooltipPosition="left"
+                                          [pTooltip]="fieldsService.getToolTip('EADI_AZURE_SYNAPSE_REQ')"
+                                          [(ngModel)]="eADIInfo.azureSynapse.azureRequirements"
+                                          pInputTextarea></textarea>
+          </div>
+        </div>
+      </p-tabPanel>
+    </p-tabView>
+  </div>
+</div>
+<div class="grid justify-content-between">
+  <p-button label="{{ fieldsService.getLabel('BACK_BUTTON') }}" (onClick)="prevPage()"
+            icon="pi pi-angle-left"></p-button>
+  <p-button label="{{ fieldsService.getLabel('SAVE_FOR_LATER') }}" *ngIf="visibleSaveButton"
+            (onClick)="savePage()" iconPos="right"></p-button>
+  <p-button label="{{ fieldsService.getLabel('NEXT_BUTTON') }}" (onClick)="nextPage()"
+            icon="pi pi-angle-right" iconPos="right"></p-button>
+</div>

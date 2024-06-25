@@ -5,7 +5,6 @@ export class User {
   isAuthenticated!: boolean;
   isAdmin!: boolean;
   role!: string;
-  otpSent!: boolean;
   expireTime!: Date;
   domain!: string[];
 }

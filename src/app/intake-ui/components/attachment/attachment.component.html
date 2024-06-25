@@ -1,152 +1,196 @@
 <p-toast></p-toast>
 <p-toast key="success"></p-toast>
 <p-toast key="error"></p-toast>
+<p-confirmPopup/>
+<div class="grid p-fluid">
+  <div class="col-12">
+      <span class="font-bold text-xl mb-2">{{ fieldsService.getLabel('ATTACHMENTS') }}
+        <label class="ml-3" (click)="getAllAttachmentsByDemandId()">
+          <i class="p-link pi pi-refresh"></i>
+        </label>
+      </span>
+  </div>
+  <div class="col-12">
+    <p-fileUpload name="files" *ngIf="visibleAttachmentUpload" [url]="fileUploadUrl" [multiple]="true"
+                  [headers]="httpHeaders" [maxFileSize]="attachmentMaxFileSize"
+                  [customUpload]="true" (onUpload)="onTemplatedUpload($event)"
+                  (uploadHandler)="customUploadHandler()" (onSelect)="onSelectedFiles($event)">
+      <ng-template pTemplate="header" let-files let-chooseCallback="chooseCallback"
+                   let-clearCallback="clearCallback" let-uploadCallback="uploadCallback">
 
-<div class="grid">
-  <div class="col-12 xs:col-12 sm:col-12 lg:col-12 xl:col-12">
-    <div class="mb-5">
-      <h5 class="mb-2">{{ fieldsService.getLabel('ATTACHMENTS') }}<label (click)="getAllAttachmentsByDemandId()"><i
-        class="p-link pi pi-refresh"></i></label>
-      </h5>
-      <p-table styleClass="p-datatable-sm" dataKey="attachmentId" [value]="attachmentInfo" editMode="row"
-               [tableStyle]="{ 'min-width': '50rem' }">
-        <ng-template pTemplate="caption" *ngIf="visibleAttachmentUpload">
-          <p-fileUpload name="files" [url]="fileUploadUrl" [multiple]="true" [headers]="httpHeaders"
-                        [customUpload]="true" (onUpload)="onTemplatedUpload($event)"
-                        (uploadHandler)="customUploadHandler()" (onSelect)="onSelectedFiles($event)">
-            <ng-template pTemplate="header" let-files let-chooseCallback="chooseCallback"
-                         let-clearCallback="clearCallback" let-uploadCallback="uploadCallback">
-              <div class="flex flex-wrap align-items-center justify-content-between">
-                <p-button (onClick)="choose($event, chooseCallback, uploadCallback)" icon="pi pi-images"
-                          [rounded]="true" [outlined]="true" label="Select"></p-button>
-                <!-- <p-button (onClick)="uploadEvent(uploadCallback)"
-                    *ngIf="!eventService.isNewDemand && (visibleSubmitButton || visibleNextButton || eventService.isStakeholderDemand)"
-                    icon="pi pi-cloud-upload" [rounded]="true" [outlined]="true" severity="success"
-                    [disabled]="(!files || files.length === 0)" label="Upload"></p-button>
-                <p-button (onClick)="clearCallback()" icon="pi pi-times" [rounded]="true"
-                    [outlined]="true" severity="danger" label="Reset"
-                    [disabled]="!files || files.length === 0"></p-button> -->
+        <div class="w-full flex flex-wrap align-items-center justify-content-between">
+          <div>
+            <p-button (onClick)="choose($event, chooseCallback, uploadCallback)" icon="pi pi-images"
+                      [rounded]="true" [outlined]="true" label="Select"></p-button>
+            <p-button (onClick)="op.toggle($event)" icon="pi pi-plus"
+                      [rounded]="true" [outlined]="true" label="Add Hyperlink"></p-button>
+          </div>
+          <div class="flex gap-3 align-items-center justify-content-center flex-wrap">
+            <i
+              class="pi pi-cloud-upload border-2 border-circle p-2 text-2xl text-400 border-400"></i>
+            <span class="text-600 font-medium">{{ fieldsService.getLabel('ATTACHMENTS_DRAG_DROP') }}</span>
+          </div>
+          <div>
+            <p-progressBar styleClass="md:w-20rem h-1rem w-full md:ml-auto" [value]="uploadProgress"
+                           [showValue]="false" *ngIf="files.length > 0"></p-progressBar>
+          </div>
+        </div>
+      </ng-template>
+      <ng-template pTemplate="content" let-files let-removeFileCallback="removeFileCallback"
+                   let-removeUploadedFileCallback="removeUploadedFileCallback">
+        <div *ngIf="files.length > 0">
+          <h5>{{ fieldsService.getLabel('ATTACHMENTS_PENDING') }}</h5>
+          <div class="flex flex-wrap p-0 sm:p-5 gap-5">
+            <div *ngFor="let file of files; let i = index"
+                 class="card m-0 flex flex-wrap gap-3 border-1 surface-border align-items-center">
+              <div *ngIf="file.type.startsWith('image')">
+                <img role="presentation" [alt]="file.name" [src]="file.objectURL" width="100"/>
               </div>
-            </ng-template>
-            <ng-template pTemplate="content" let-files let-removeFileCallback="removeFileCallback"
-                         let-removeUploadedFileCallback="removeUploadedFileCallback">
-              <div *ngIf="files.length > 0">
-                <h5>{{ fieldsService.getLabel('ATTACHMENTS_PENDING') }}</h5>
-                <div class="flex flex-wrap p-0 sm:p-5 gap-5">
-                  <div *ngFor="let file of files; let i = index"
-                       class="card m-0 flex flex-wrap gap-3 border-1 surface-border align-items-center">
-                    <div *ngIf="file.type.startsWith('image')">
-                      <img role="presentation" [alt]="file.name" [src]="file.objectURL"
-                           width="100"/>
-                    </div>
-                    <div *ngIf="!file.type.startsWith('image')">
-                      <i class="pi pi-file" style="font-size: 4rem"></i>
-                    </div>
-                    <div>
-                      <span class="font-semibold">{{ file.name }}</span>
-                      <div>{{ formatSize(file.size) }}</div>
-                      <p-badge value="Pending" severity="warning"></p-badge>
-                    </div>
-                  </div>
-                </div>
+              <div *ngIf="!file.type.startsWith('image')">
+                <i class="pi pi-file" style="font-size: 4rem"></i>
               </div>
-              <div *ngIf="uploadedFiles.length > 0">
-                <h5>{{ fieldsService.getLabel('ATTACHMENTS_COMPLETED') }}</h5>
-                <div class="flex flex-wrap p-0 sm:p-5 gap-5">
-                  <div *ngFor="let file of uploadedFiles; let i = index"
-                       class="card m-0 flex flex-wrap border-1 surface-border align-items-center gap-3">
-                    <div *ngIf="file.type.startsWith('image')">
-                      <img role="presentation" [alt]="file.name" [src]="file.objectURL"
-                           width="100"/>
-                    </div>
-                    <div *ngIf="!file.type.startsWith('image')">
-                      <i class="pi pi-file" style="font-size: 4rem"></i>
-                    </div>
-                    <div>
-                      <span class="font-semibold">{{ file.name }}</span>
-                      <div>{{ formatSize(file.size) }}</div>
-                      <p-badge value="Completed" class="mt-3" severity="success"></p-badge>
-                    </div>
-                  </div>
-                </div>
+              <div>
+                <span class="font-semibold">{{ file.name }}</span>
+                <div>{{ formatSize(file.size) }}</div>
+                <p-badge value="Pending" severity="warning"></p-badge>
               </div>
-            </ng-template>
-            <ng-template pTemplate="file"></ng-template>
-            <ng-template pTemplate="empty">
-              <div class="flex gap-3 align-items-center justify-content-center flex-wrap">
-                <i
-                  class="pi pi-cloud-upload border-2 border-circle p-2 text-2xl text-400 border-400"></i>
-                <span class="text-600 font-medium">{{ fieldsService.getLabel('ATTACHMENTS_DRAG_DROP') }}</span>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="uploadedFiles.length > 0">
+          <h5>{{ fieldsService.getLabel('ATTACHMENTS_COMPLETED') }}</h5>
+          <div class="flex flex-wrap p-0 sm:p-5 gap-5">
+            <div *ngFor="let file of uploadedFiles; let i = index"
+                 class="card m-0 flex flex-wrap border-1 surface-border align-items-center gap-3">
+              <div *ngIf="file.type.startsWith('image')">
+                <img role="presentation" [alt]="file.name" [src]="file.objectURL"
+                     width="100"/>
               </div>
-            </ng-template>
-          </p-fileUpload>
-        </ng-template>
-        <ng-template pTemplate="header" class="mt-3">
-          <tr>
-            <th>{{ fieldsService.getLabel('ATTACHMENTS_FILE_NAME') }}</th>
-            <th>{{ fieldsService.getLabel('ATTACHMENTS_DESCRIPTION') }}</th>
-            <th>{{ fieldsService.getLabel('ATTACHMENTS_UPLOADED_BY') }}</th>
-            <th>{{ fieldsService.getLabel('ATTACHMENTS_ROLE') }}</th>
-            <th>{{ fieldsService.getLabel('ATTACHMENTS_UPLOADED_DATE') }}</th>
-            <th>{{ fieldsService.getLabel('ATTACHMENTS_SIZE') }}</th>
-            <th style="width: 15%"></th>
-          </tr>
-        </ng-template>
-        <ng-template pTemplate="body" let-attachment let-editing="editing" let-ri="rowIndex">
-          <tr [pEditableRow]="attachment">
-            <td class="text-900 font-semibold">{{ attachment.fileName }}</td>
-            <td>
-              <p-cellEditor>
-                <ng-template pTemplate="input">
+              <div *ngIf="!file.type.startsWith('image')">
+                <i class="pi pi-file" style="font-size: 4rem"></i>
+              </div>
+              <div>
+                <span class="font-semibold">{{ file.name }}</span>
+                <div>{{ formatSize(file.size) }}</div>
+                <p-badge value="Completed" class="mt-3" severity="success"></p-badge>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+      <ng-template pTemplate="file"></ng-template>
+    </p-fileUpload>
+  </div>
+
+  <div class="col-12">
+    <p-table styleClass="p-datatable-sm" dataKey="attachmentId" [value]="attachmentInfo" editMode="row"
+             [tableStyle]="{ 'min-width': '50rem' }">
+      <ng-template pTemplate="header" class="mt-3">
+        <tr>
+          <th>{{ fieldsService.getLabel('ATTACHMENTS_FILE_NAME') }}</th>
+          <th>{{ fieldsService.getLabel('ATTACHMENTS_DESCRIPTION') }}</th>
+          <th>{{ fieldsService.getLabel('ATTACHMENTS_UPLOADED_BY') }}</th>
+          <th>{{ fieldsService.getLabel('ATTACHMENTS_ROLE') }}</th>
+          <th>{{ fieldsService.getLabel('ATTACHMENTS_UPLOADED_DATE') }}</th>
+          <th>{{ fieldsService.getLabel('ATTACHMENTS_SIZE') }}</th>
+          <th style="width: 15%"></th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-attachment let-editing="editing" let-ri="rowIndex">
+        <tr [pEditableRow]="attachment">
+          <td class="text-900 font-semibold">{{ attachment.fileName }}</td>
+          <td>
+            <p-cellEditor>
+              <ng-template pTemplate="input">
+                <p-inputGroup>
                   <input pInputText placeholder="Description" type="text"
                          [(ngModel)]="attachment.description"/>
-                </ng-template>
-                <ng-template pTemplate="output">
-                  {{ attachment.description }}
-                </ng-template>
-              </p-cellEditor>
-            </td>
-            <td>{{ attachment.uploadedBy }}</td>
-            <td>{{ attachment.uploaderRole }}</td>
-            <td>{{ attachment.uploadedDate | date: 'MMM dd, yyyy hh:mm a' }}</td>
-            <td>{{ formatSize(attachment.size) }}</td>
-            <td class="flex flex-end">
-              <div class="w-full align-text-end">
-                <button pButton pRipple icon="pi pi-pencil" pInitEditableRow
-                        *ngIf="!editing && !isDeleteDisabled(attachment)"
-                        class="p-button-rounded p-button-text mr-2"
-                        (click)="onRowEditInit(attachment)"></button>
-                <button pButton pRipple icon="pi pi-check" pSaveEditableRow
-                        *ngIf="editing"
-                        class="p-button-rounded p-button-success p-button-text mr-2"
-                        (click)="onRowEditSave(attachment)"></button>
-                <button pButton pRipple icon="pi pi-times" pCancelEditableRow *ngIf="editing"
-                        class="p-button-rounded p-button-danger p-button-text mr-2"
-                        (click)="onRowEditCancel(attachment, ri)"></button>
-
-                <button pButton pRipple icon="pi pi-download" *ngIf="!editing"
-                        class="p-button-rounded p-button-success p-button-text mr-2"
-                        (click)="downloadAttachment(attachment.attachmentId, attachment.fileName)"></button>
-                <button pButton pRipple icon="pi pi-trash" *ngIf="!editing && !isDeleteDisabled(attachment)"
-                        (click)="deleteAttachment(attachment.attachmentId, attachment.fileName)"
-                        class="p-button-rounded p-button-warning p-button-text"></button>
-              </div>
-            </td>
-          </tr>
-        </ng-template>
-        <ng-template pTemplate="emptymessage">
-          <tr>
-            <td colspan="6">{{ fieldsService.getLabel('ATTACHMENTS_NOT_PRESENT') }}</td>
-          </tr>
-        </ng-template>
-      </p-table>
-    </div>
+                  <button pButton pRipple icon="pi pi-check" pSaveEditableRow
+                          *ngIf="editing"
+                          class="p-button-success"
+                          (click)="onRowEditSave(attachment)"></button>
+                  <button pButton pRipple icon="pi pi-times" pCancelEditableRow *ngIf="editing"
+                          class="p-button-danger"
+                          (click)="onRowEditCancel(attachment, ri)"></button>
+                </p-inputGroup>
+              </ng-template>
+              <ng-template pTemplate="output">
+                {{ attachment.description }}
+              </ng-template>
+            </p-cellEditor>
+          </td>
+          <td>{{ attachment.uploadedBy }}</td>
+          <td>{{ attachment.uploaderRole }}</td>
+          <td>{{ attachment.uploadedDate | date: 'MMM dd, yyyy hh:mm a' }}</td>
+          <td>{{ formatSize(attachment.size) }}</td>
+          <td class="flex flex-end">
+            <div class="w-full align-text-end">
+              <button pButton pRipple icon="pi pi-pencil" pInitEditableRow
+                      *ngIf="!editing && !isDeleteDisabled(attachment)"
+                      class="p-button-rounded p-button-text mr-2"
+                      (click)="onRowEditInit(attachment)"></button>
+              <button pButton pRipple icon="pi pi-download" *ngIf="!editing"
+                      class="p-button-rounded p-button-success p-button-text mr-2"
+                      (click)="downloadAttachment(attachment.attachmentId, attachment.fileName)"></button>
+              <button pButton pRipple icon="pi pi-trash" *ngIf="!isDeleteDisabled(attachment)" [disabled]="editing"
+                      (click)="deleteAttachmentPopup($event, attachment.attachmentId, attachment.fileName)"
+                      class="p-button-rounded p-button-warning p-button-text"></button>
+            </div>
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td colspan="7">{{ fieldsService.getLabel('ATTACHMENTS_NOT_PRESENT') }}</td>
+        </tr>
+      </ng-template>
+    </p-table>
   </div>
 </div>
 
 <div class="grid grid-nogutter justify-content-between">
-  <p-button label="{{ fieldsService.getLabel('BACK_BUTTON') }}" (onClick)="prevPage()" icon="pi pi-angle-left"></p-button>
-  <p-button label="{{ fieldsService.getLabel('NEXT_BUTTON') }}" *ngIf="visibleNextButton" (onClick)="nextPage()" icon="pi pi-angle-right"></p-button>
-  <p-button label="{{ fieldsService.getLabel('SAVE_FOR_LATER') }}" *ngIf="visibleSaveButton" (onClick)="savePage()" iconPos="right"></p-button>
-  <p-button label="{{submitDemandLabel}}" *ngIf="visibleSubmitButton" (onClick)="submitPage()" iconPos="right"></p-button>
+  <p-button label="{{ fieldsService.getLabel('BACK_BUTTON') }}" (onClick)="prevPage()"
+            icon="pi pi-angle-left"></p-button>
+  <p-button label="{{ fieldsService.getLabel('NEXT_BUTTON') }}" *ngIf="visibleNextButton" (onClick)="nextPage()"
+            icon="pi pi-angle-right"></p-button>
+  <p-button label="{{ fieldsService.getLabel('SAVE_FOR_LATER') }}" *ngIf="visibleSaveButton" (onClick)="savePage()"
+            iconPos="right"></p-button>
+  <p-button label="{{submitDemandLabel}}" *ngIf="visibleSubmitButton" (onClick)="submitPage()"
+            iconPos="right"></p-button>
 </div>
+
+<p-overlayPanel #op>
+  <div class="col-12 p-fluid">
+    <div class="grid">
+      <div class="col-12 grid">
+        <div class="col-4 font-bold">Description</div>
+        <div class="col-8 flex justify-content-between">
+          <span class="font-bold">URL</span>
+          <!--          <div class="grid gap-2">-->
+          <!--            <p-button>{{ fieldsService.getLabel('ADD_BUTTON') }}</p-button>-->
+          <!--            <p-button>{{ fieldsService.getLabel('REMOVE_BUTTON') }}</p-button>-->
+          <!--          </div>-->
+        </div>
+      </div>
+      <div class="col-12 m-0 p-0">
+        <p-divider styleClass="m-0"></p-divider>
+      </div>
+      <div class="col-12">
+        <div class="grid p-fluid">
+          <div class="col-4">
+            <input class="w-full" pInputText type="text" [(ngModel)]="hyperlinkDescription"
+            />
+          </div>
+          <div class="col-8">
+            <p-inputGroup>
+              <input class="w-full" pInputText [(ngModel)]="hyperlink"
+                     aria-describedby="program-help"/>
+              <button type="button" pButton icon="pi pi-check" class="p-button-success" (click)="saveHyperlink($event, op)"></button>
+              <button type="button" pButton icon="pi pi-times" class="p-button-danger" (click)="resetHyperlinkDialog($event, op)"></button>
+            </p-inputGroup>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</p-overlayPanel>

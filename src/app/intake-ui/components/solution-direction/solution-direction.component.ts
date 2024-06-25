@@ -7,6 +7,8 @@ import {SolutionDirection1} from '../../models/solution-direction1';
 import {SolutionDirection} from '../../models/solution-direction';
 import {FieldsService} from "../../services/fields.service";
 import {AuthService} from "../../auth/auth.service";
+import {first} from 'rxjs';
+import {DemandStatus} from '../../enums/demand-status';
 
 @Component({
   selector: 'app-solution-direction',
@@ -17,6 +19,7 @@ export class SolutionDirectionComponent implements OnInit {
   solutionDirectionInfo!: SolutionDirection1[];
   sdInfo: SolutionDirection = new SolutionDirection;
   dmDomainList: string[] = [];
+  visibleSaveButton!: boolean;
 
   constructor(private authService: AuthService,
               public fieldsService: FieldsService,
@@ -26,6 +29,12 @@ export class SolutionDirectionComponent implements OnInit {
 
   ngOnInit() {
     // console.log("SolutionDirectionComponent Init: ", this.demandIntakeService.demandInformation)
+
+    if (this.demandIntakeService.getDemandInformation().introduction.status != DemandStatus.DRAFT && this.demandIntakeService.getDemandInformation().introduction.status != null) {
+      this.visibleSaveButton = false;
+    } else {
+      this.visibleSaveButton = true;
+    }
 
     this.solutionDirectionInfo = this.demandIntakeService.getDemandInformation().solutionDirectionInfo;
     this.eventService.solutionDirectionValue = this.solutionDirectionInfo;
@@ -110,7 +119,7 @@ export class SolutionDirectionComponent implements OnInit {
       this.messageService.add({
         severity: 'warn',
         summary: 'Warning',
-        detail: 'Please select atleast one Solution Direction!'
+        detail: 'Please select at least one Solution Direction!'
       });
     }
   }
@@ -129,7 +138,32 @@ export class SolutionDirectionComponent implements OnInit {
   }
 
   isAnySD(): boolean {
-    return this.dmDomainList.length == 0 || this.solutionDirectionInfo.filter(item => item.value == true).length > 0;
+    return this.dmDomainList.length == 0 || this.solutionDirectionInfo.filter(item => item.value).length > 0;
+  }
+
+  savePage() {
+    this.demandIntakeService.saveDemand()
+      .pipe(first())
+      .subscribe(
+        response => {
+          console.log("saveDemand() : Response -> ", response)
+          this.messageService.add({
+            key: 'success',
+            severity: 'success',
+            summary: 'Success',
+            detail: 'Demand Saved Successfully!'
+          });
+          this.router.navigate(['view']);
+        },
+        error => {
+          console.log("saveDemand() : ERROR -> ", error)
+          this.messageService.add({
+            key: 'error',
+            severity: 'error',
+            summary: 'Error',
+            detail: 'Demand Failed to Save!'
+          });
+        });
   }
 
 }

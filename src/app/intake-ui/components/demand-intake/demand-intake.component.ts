@@ -1,11 +1,11 @@
 import {Component, HostListener, OnDestroy, OnInit} from '@angular/core';
 import {MenuItem, MessageService} from 'primeng/api';
-import {Subscription} from 'rxjs';
+import {Subscription, first} from 'rxjs';
 import {DemandIntakeService} from '../../services/demand-intake.service';
 import {AuthService} from '../../auth/auth.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {EventService} from '../../services/event.service';
-import { DemandStatus } from '../../enums/demand-status';
+import {DemandStatus} from '../../enums/demand-status';
 
 interface EventItem {
   status?: string;
@@ -32,19 +32,29 @@ export class DemandIntakeComponent implements OnInit, OnDestroy {
     this.eventService.currentDemandIntakeId = this.demandIntakeService.demandInformation.introduction.demandIntakeId;
 
     this.events = [
-      { status: 'Drafted', date: '15/10/2020 10:30', actionBy: 'Pankaj', description: 'Draft description' },
-      { status: 'Stakeholder - X', date: '15/10/2020 10:30', actionBy: 'Pradnya',  description: 'Stakeholder-X remarks' },
-      { status: 'Stakeholder - Y', date: '15/10/2020 10:30', actionBy: 'Sachin',  description: 'Stakeholder-Y remarks' },
-      { status: 'Demand Raised', date: '15/10/2020 10:30', actionBy: 'Pankaj',  description: 'Demand raising desc'},
-      { status: 'DM - ITaaP', date: '15/10/2020 10:30', actionBy: 'Lucy', description: 'DM-ItaaP remarks'},
-      { status: 'DM - ADL L1', date: '15/10/2020 10:30', actionBy: 'Rajendra',  description: 'DM-ADL L1 remarks' },
-      { status: 'CCM Member', date: '15/10/2020 16:15', actionBy: 'Rakesh',  description: 'CCB Member remarks' }
-  ];
+      {status: 'Drafted', date: '15/10/2020 10:30', actionBy: 'Pankaj', description: 'Draft description'},
+      {status: 'Stakeholder - X', date: '15/10/2020 10:30', actionBy: 'Pradnya', description: 'Stakeholder-X remarks'},
+      {status: 'Stakeholder - Y', date: '15/10/2020 10:30', actionBy: 'Sachin', description: 'Stakeholder-Y remarks'},
+      {status: 'Demand Raised', date: '15/10/2020 10:30', actionBy: 'Pankaj', description: 'Demand raising desc'},
+      {status: 'DM - ITaaP', date: '15/10/2020 10:30', actionBy: 'Lucy', description: 'DM-ItaaP remarks'},
+      {status: 'DM - ADL L1', date: '15/10/2020 10:30', actionBy: 'Rajendra', description: 'DM-ADL L1 remarks'},
+      {status: 'CCM Member', date: '15/10/2020 16:15', actionBy: 'Rakesh', description: 'CCB Member remarks'}
+    ];
   }
 
   ngOnInit() {
     // console.log("DemandIntakeComponent id ", this.eventService.currentDemandIntakeId);
     // console.log("DemandIntakeComponent isNewDemand ", this.eventService.isNewDemand);
+
+    // this.demandIntakeService.saveDemand()
+    //   .pipe(first())
+    //   .subscribe(
+    //     response => {
+    //       console.log("saveDemand() : Response -> ", response)
+    //     },
+    //     error => {
+    //       console.log("saveDemand() : ERROR -> ", error)
+    //     });
 
     if (this.eventService.isNewDemand) {
       this.items = [
@@ -66,13 +76,12 @@ export class DemandIntakeComponent implements OnInit, OnDestroy {
         {
           label: 'Solution Direction',
           routerLink: 'solution-direction',
-          visible: this.authService.isDM() || this.authService.isCCB()
-          // || (!this.eventService.isNewDemand && this.authService.isRequester() && this.eventService.isMyDemand && this.demandIntakeService.demandInformation.introduction.status!=DemandStatus.DRAFT),
+          visible: false
         },
         {
           label: 'EADI',
           routerLink: 'checklist',
-          visible: (this.authService.isDM() || this.authService.isCCB()),
+          visible: false
         },
         {
           label: 'Attachment',
@@ -110,16 +119,16 @@ export class DemandIntakeComponent implements OnInit, OnDestroy {
         {
           label: 'Solution Direction',
           routerLink: ['/demand-intake/solution-direction/' + this.eventService.currentDemandIntakeId],
-          visible: this.authService.isDM() || this.authService.isCCB()
-            || (this.authService.isRequester() && (this.eventService.isMyDemand || this.eventService.isStakeholderDemand) &&
-              (this.demandIntakeService.demandInformation.introduction.status != DemandStatus.DRAFT && this.demandIntakeService.demandInformation.introduction.status != DemandStatus.PENDING_WITH_DM)),
+          visible: ((!this.eventService.isMyDemand && !this.eventService.isStakeholderDemand) && (this.authService.isDM() || this.authService.isCCB())) ||
+          ((this.eventService.isMyDemand || this.eventService.isStakeholderDemand) &&
+            (this.demandIntakeService.demandInformation.introduction.status != DemandStatus.DRAFT && this.demandIntakeService.demandInformation.introduction.status != DemandStatus.PENDING_WITH_DM)),
         },
         {
           label: 'EADI',
           routerLink: ['/demand-intake/checklist/' + this.eventService.currentDemandIntakeId],
-          visible: (this.authService.isDM() || this.authService.isCCB())
-            || (this.authService.isRequester() && (this.eventService.isMyDemand || this.eventService.isStakeholderDemand) &&
-              (this.demandIntakeService.demandInformation.introduction.status != DemandStatus.DRAFT && this.demandIntakeService.demandInformation.introduction.status != DemandStatus.PENDING_WITH_DM)),
+          visible: ((!this.eventService.isMyDemand && !this.eventService.isStakeholderDemand) && (this.authService.isDM() || this.authService.isCCB())) ||
+          ((this.eventService.isMyDemand || this.eventService.isStakeholderDemand) &&
+            (this.demandIntakeService.demandInformation.introduction.status != DemandStatus.DRAFT && this.demandIntakeService.demandInformation.introduction.status != DemandStatus.PENDING_WITH_DM)),
         },
         {
           label: 'Attachment',
@@ -129,17 +138,17 @@ export class DemandIntakeComponent implements OnInit, OnDestroy {
         {
           label: 'DM',
           routerLink: ['/demand-intake/demandmanager/' + this.eventService.currentDemandIntakeId],
-          visible: (!this.eventService.isMyDemand && (this.authService.isDM() || this.authService.isCCB())) ||
+          visible: ((!this.eventService.isMyDemand && !this.eventService.isStakeholderDemand) && (this.authService.isDM() || this.authService.isCCB())) ||
             ((this.eventService.isMyDemand || this.eventService.isStakeholderDemand) &&
               (this.demandIntakeService.demandInformation.introduction.status != DemandStatus.DRAFT && this.demandIntakeService.demandInformation.introduction.status != DemandStatus.PENDING_WITH_DM)),
         },
         {
           label: 'CCB',
           routerLink: ['/demand-intake/ccb/' + this.eventService.currentDemandIntakeId],
-          visible: (!this.eventService.isMyDemand && this.authService.isCCB())
+          visible: (!this.eventService.isMyDemand && !this.eventService.isStakeholderDemand && this.authService.isCCB())
             || ((this.eventService.isMyDemand || this.eventService.isStakeholderDemand) &&
               (this.demandIntakeService.demandInformation.introduction.status == DemandStatus.CCB_HOLD || this.demandIntakeService.demandInformation.introduction.status == DemandStatus.ACCEPTED || this.demandIntakeService.demandInformation.introduction.status == DemandStatus.CCB_REJECTED || this.demandIntakeService.demandInformation.introduction.status == DemandStatus.CCB_MODIFICATION))
-            || (!this.eventService.isMyDemand && this.authService.isDM() && this.demandIntakeService.demandInformation.introduction.status != DemandStatus.PENDING_WITH_CCB && this.demandIntakeService.demandInformation.introduction.status != DemandStatus.PENDING_WITH_DM && this.demandIntakeService.demandInformation.introduction.status != DemandStatus.DM_HOLD),
+            || (!this.eventService.isMyDemand && this.authService.isDM() && this.demandIntakeService.demandInformation.introduction.status != DemandStatus.DRAFT && this.demandIntakeService.demandInformation.introduction.status != DemandStatus.PENDING_WITH_CCB && this.demandIntakeService.demandInformation.introduction.status != DemandStatus.PENDING_WITH_DM && this.demandIntakeService.demandInformation.introduction.status != DemandStatus.DM_HOLD),
         }
       ];
     }

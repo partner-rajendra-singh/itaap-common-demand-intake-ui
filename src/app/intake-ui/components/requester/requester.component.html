@@ -1,300 +1,284 @@
-<script src="requester.component.ts"></script>
-<p-card>
-  <p-toast></p-toast>
-  <p-toast></p-toast>
-  <p-toast></p-toast>
-  <ng-template pTemplate="content">
-    <div class="grid">
-      <div class="col-12 xs:col-12 sm:col-12 lg:col-12 xl:col-12">
-        <p-fieldset [toggleable]="true">
-          <ng-template pTemplate="header">
-            <div class="flex align-items-center gap-2 px-2">
-              <span class="font-bold" [pTooltip]="fieldsService.getToolTip('REQUESTER_FIELDSET')">{{
-                fieldsService.getLabel('REQUESTER_FIELDSET') }}</span>
-            </div>
-          </ng-template>
-          <div class="grid">
-            <div class="col-6 xs:col-6 sm:col-6 lg:col-6 xl:col-6">
-              <label for="goLiveApproach" required class="asterisk-if-mandatory" style="width:100px">{{
-                fieldsService.getLabel('REQUESTER_DEMAND_OTHER_BEHALF') }}</label>
-            </div>
-            <div class="col-6 xs:col-6 sm:col-6 lg:col-6 xl:col-6">
-              <input type="radio" name="isAnotherRequester"
-                [pTooltip]="fieldsService.getToolTip('REQUESTER_DEMAND_OTHER_BEHALF_YES')"
-                [disabled]="!authService.isRequester() && !eventService.isMyDemand"
-                [(ngModel)]="requesterInfo.isAnotherRequester" [value]="true" (change)="requesterChange($event)">
-              <label>{{ fieldsService.getLabel('REQUESTER_DEMAND_OTHER_BEHALF_YES') }}</label>
-              <input type="radio" name="isAnotherRequester" checked="checked"
-                [pTooltip]="fieldsService.getToolTip('REQUESTER_DEMAND_OTHER_BEHALF_NO')"
-                [disabled]="!authService.isRequester() && !eventService.isMyDemand"
-                [(ngModel)]="requesterInfo.isAnotherRequester" [value]="false" (change)="requesterChange($event)">
-              <label>{{ fieldsService.getLabel('REQUESTER_DEMAND_OTHER_BEHALF_NO') }}</label>
-            </div>
-            <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-              <label for="email" required class="asterisk-if-mandatory">{{ fieldsService.getLabel('REQUESTER_EMAIL')
-                }}</label>
-            </div>
-            <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
-              <input id="email" type="email" [(ngModel)]="requesterInfo.requestedBy" size="60"
-                [pTooltip]="fieldsService.getToolTip('REQUESTER_EMAIL')"
-                (blur)="eventService.checkEmailValue(requesterInfo.requestedBy)"
-                [disabled]="(eventService.isMyDemand && !requesterInfo.isAnotherRequester) || (!authService.isRequester() && !eventService.isMyDemand)"
-                class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary">
-            </div>
-            <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-              <label for="role" required class="asterisk-if-mandatory">{{ fieldsService.getLabel('REQUESTER_ROLE')
-                }}</label>
-            </div>
-            <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
-              <input id="role" type="text" [(ngModel)]="requesterInfo.requesterRole" size="60"
-                [pTooltip]="fieldsService.getToolTip('REQUESTER_ROLE')"
-                [disabled]="!authService.isRequester() && !eventService.isMyDemand"
-                class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary">
+<p-toast></p-toast>
+<div class="grid">
+  <div class="col-12">
+    <p-fieldset [toggleable]="true">
+      <ng-template pTemplate="header">
+        <div class="flex align-items-center gap-2 px-2">
+            <span class="font-bold"
+                  [pTooltip]="fieldsService.getToolTip('REQUESTER_FIELDSET')">{{ fieldsService.getLabel('REQUESTER_FIELDSET') }}</span>
+        </div>
+      </ng-template>
+      <div class="grid">
+        <div class="col-6 align-content-center">
+          <label class="asterisk-if-mandatory">
+            {{ fieldsService.getLabel('REQUESTER_DEMAND_OTHER_BEHALF') }}</label>
+        </div>
+        <div class="col-6 align-content-center">
+          <input type="radio" name="isAnotherRequester"
+                 [pTooltip]="fieldsService.getToolTip('REQUESTER_DEMAND_OTHER_BEHALF_YES')"
+                 [disabled]="!authService.isRequester() && !eventService.isMyDemand"
+                 [(ngModel)]="requesterInfo.isAnotherRequester" [value]="true" (change)="requesterChange($event)">
+          <label>{{ fieldsService.getLabel('REQUESTER_DEMAND_OTHER_BEHALF_YES') }}</label>
+          <input type="radio" name="isAnotherRequester" checked="checked"
+                 [pTooltip]="fieldsService.getToolTip('REQUESTER_DEMAND_OTHER_BEHALF_NO')"
+                 [disabled]="!authService.isRequester() && !eventService.isMyDemand"
+                 [(ngModel)]="requesterInfo.isAnotherRequester" [value]="false" (change)="requesterChange($event)">
+          <label>{{ fieldsService.getLabel('REQUESTER_DEMAND_OTHER_BEHALF_NO') }}</label>
+        </div>
+        <div class="col-3 align-content-center">
+          <label for="email" class="asterisk-if-mandatory">{{ fieldsService.getLabel('REQUESTER_EMAIL') }}</label>
+        </div>
+        <div class="col-9 align-content-center">
+          <input class="lg:w-6 md:w-full" pInputText id="email" type="email" [(ngModel)]="requesterInfo.requestedBy"
+                 [pTooltip]="fieldsService.getToolTip('REQUESTER_EMAIL')" (change)="requesterChange($event)"
+                 (blur)="eventService.checkEmailValue(requesterInfo.requestedBy)"
+                 [disabled]="(eventService.isMyDemand && !requesterInfo.isAnotherRequester) || (!authService.isRequester() && !eventService.isMyDemand)">
+        </div>
+        <div class="col-3 align-content-center">
+          <label for="role" class="asterisk-if-mandatory">{{ fieldsService.getLabel('REQUESTER_ROLE') }}</label>
+        </div>
+        <div class="col-9 align-content-center">
+          <input class="lg:w-6 md:w-full" pInputText id="role" type="text" [(ngModel)]="requesterInfo.requesterRole"
+                 [pTooltip]="fieldsService.getToolTip('REQUESTER_ROLE')" (change)="requesterChange($event)"
+                 [disabled]="!authService.isRequester() && !eventService.isMyDemand">
+        </div>
+      </div>
+    </p-fieldset>
+  </div>
+  <div class="col-12">
+    <p-fieldset [toggleable]="true">
+      <ng-template pTemplate="header">
+        <div class="flex align-items-center gap-2 px-2">
+          <span class="font-bold"
+                [pTooltip]="fieldsService.getToolTip('REQUESTER_DEMAND_INFO_FIELDSET')">{{ fieldsService.getLabel('REQUESTER_DEMAND_INFO_FIELDSET') }}</span>
+        </div>
+      </ng-template>
+      <div class="grid">
+        <div class="col-3 align-content-center">
+          <label for="program">{{ fieldsService.getLabel('REQUESTER_PROGRAM') }}</label>
+        </div>
+        <div class="col-9 align-content-center">
+          <input pInputText class="lg:w-6 md:w-full" id="program" type="text" [(ngModel)]="requesterInfo.program"
+                 [pTooltip]="fieldsService.getToolTip('REQUESTER_PROGRAM')">
+        </div>
+
+        <div class="col-3 align-content-center">
+          <label class="asterisk-if-mandatory">{{ fieldsService.getLabel('REQUESTER_IS_DEMAND_POC') }}</label>
+        </div>
+        <div class="col-9 align-content-center">
+          <input type="radio" [(ngModel)]="requesterInfo.isDemandPOC"
+                 [pTooltip]="fieldsService.getToolTip('REQUESTER_IS_DEMAND_POC_YES')" [value]="true">
+          <label>{{ fieldsService.getLabel('REQUESTER_IS_DEMAND_POC_YES') }}</label>
+          <input type="radio" checked="checked"
+                 [pTooltip]="fieldsService.getToolTip('REQUESTER_IS_DEMAND_POC_NO')"
+                 [(ngModel)]="requesterInfo.isDemandPOC" [value]="false">
+          <label>{{ fieldsService.getLabel('REQUESTER_IS_DEMAND_POC_NO') }}</label>
+        </div>
+
+        <div class="col-3 align-content-center">
+          <label for="project" *ngIf="!requesterInfo.isDemandPOC"
+                 class="asterisk-if-mandatory">{{ fieldsService.getLabel('REQUESTER_PROJECT_NAME') }}</label>
+          <label *ngIf="requesterInfo.isDemandPOC"
+                 for="project">{{ fieldsService.getLabel('REQUESTER_PROJECT_NAME') }}</label>
+        </div>
+        <div class="col-9 align-content-center">
+          <input pInputText class="lg:w-6 md:w-full" id="project" type="text" [(ngModel)]="requesterInfo.project"
+                 [pTooltip]="fieldsService.getToolTip('REQUESTER_PROJECT_NAME')">
+        </div>
+
+        <div class="col-3 align-content-center">
+          <label for="domain" class="asterisk-if-mandatory">{{ fieldsService.getLabel('REQUESTER_DOMAIN') }}</label>
+        </div>
+        <div class="col-9 align-content-center">
+          <div class="flex flex-wrap gap-3 w-full">
+            <p-dropdown appendTo="body" [options]="domainList" [(ngModel)]="selectedDomain"
+                        (onChange)="onDomainSelect()"
+                        [pTooltip]="fieldsService.getToolTip('REQUESTER_DOMAIN')" optionLabel="value"
+                        placeholder="Please Select Domain/Platform"></p-dropdown>
+
+            <div *ngIf="selectedDomain && selectedDomain.key=='Other'">
+              <input class="w-full" pInputText id="domain" type="text" [(ngModel)]="requesterInfo.domain"
+                     placeholder="Please Specify Domain/Platform">
             </div>
           </div>
-        </p-fieldset>
-        <br>
-        <p-fieldset [toggleable]="true">
-          <ng-template pTemplate="header">
-            <div class="flex align-items-center gap-2 px-2">
-              <span class="font-bold" [pTooltip]="fieldsService.getToolTip('REQUESTER_DEMAND_INFO_FIELDSET')">{{
-                fieldsService.getLabel('REQUESTER_DEMAND_INFO_FIELDSET') }}</span>
-            </div>
-          </ng-template>
-          <div class="grid">
-            <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-              <label for="program">{{ fieldsService.getLabel('REQUESTER_PROGRAM') }}</label>
-            </div>
-            <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
-              <input id="program" type="text" [(ngModel)]="requesterInfo.program" size="60"
-                [pTooltip]="fieldsService.getToolTip('REQUESTER_PROGRAM')"
-                class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary">
-            </div>
+        </div>
 
-            <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-              <label for="isDemandPOC" required class="asterisk-if-mandatory">{{
-                fieldsService.getLabel('REQUESTER_IS_DEMAND_POC') }}</label>
-            </div>
-            <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
-              <input type="radio" name="isDemandPOC" [(ngModel)]="requesterInfo.isDemandPOC"
-                [pTooltip]="fieldsService.getToolTip('REQUESTER_IS_DEMAND_POC_YES')" [value]="true">
-              <label>{{ fieldsService.getLabel('REQUESTER_IS_DEMAND_POC_YES') }}</label>
-              <input type="radio" name="isDemandPOC" checked="checked"
-                [pTooltip]="fieldsService.getToolTip('REQUESTER_IS_DEMAND_POC_NO')"
-                [(ngModel)]="requesterInfo.isDemandPOC" [value]="false">
-              <label>{{ fieldsService.getLabel('REQUESTER_IS_DEMAND_POC_NO') }}</label>
-            </div>
+        <div class="col-3 align-content-center">
+          <label for="domain" required
+                 class="asterisk-if-mandatory">{{ fieldsService.getLabel('REQUESTER_MARKET') }}</label>
+        </div>
+        <div class="col-9 align-content-center">
+          <p-multiSelect [options]="marketList" placeholder="Please Select Market" (onChange)="onMarketSelect()"
+                         [pTooltip]="fieldsService.getToolTip('REQUESTER_MARKET')" [(ngModel)]="selectedMarket"/>
+          <div class="flex align-items-center gap-2 flex-wrap mt-2">
+            <p-tag *ngFor="let item of selectedMarket" [value]="item" [rounded]="true"/>
+          </div>
+          <div *ngIf="isOtherMarketSelected()">
+            <input id="domain" type="text" [(ngModel)]="otherMarket" placeholder="Please Specify Market" class="w-full">
+          </div>
+        </div>
 
-            <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3" *ngIf="requesterInfo.isDemandPOC==false">
-              <label for="project" required class="asterisk-if-mandatory">{{
-                fieldsService.getLabel('REQUESTER_PROJECT_NAME') }}</label>
-            </div>
-            <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3" *ngIf="requesterInfo.isDemandPOC==true">
-              <label for="project">{{ fieldsService.getLabel('REQUESTER_PROJECT_NAME') }}</label>
-            </div>
-            <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
-              <input id="project" type="text" [(ngModel)]="requesterInfo.project" size="60"
-                [pTooltip]="fieldsService.getToolTip('REQUESTER_PROJECT_NAME')"
-                class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary">
-            </div>
-            <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-              <label for="domain" required class="asterisk-if-mandatory" style="width:100px">{{
-                fieldsService.getLabel('REQUESTER_DOMAIN') }}</label>
-            </div>
-            <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
-              <p-dropdown appendTo="body" [options]="domainList" [(ngModel)]="selectedDomain"
-                [pTooltip]="fieldsService.getToolTip('REQUESTER_DOMAIN')" optionLabel="value"
-                placeholder="Please Select Domain/Platform"></p-dropdown>
-            </div>
-            <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3"></div>
-            <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
-              <div *ngIf="selectedDomain && selectedDomain.key=='Other'">
-                <input id="domain" type="text" [(ngModel)]="requesterInfo.domain"
-                  placeholder="Please Specify Domain/Platform" size="70"
-                  class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary">
-              </div>
-            </div>
+        <div class="col-3 align-content-center">
+          <label class="asterisk-if-mandatory">{{ fieldsService.getLabel('REQUESTER_BUSINESS_UNIT') }}</label>
+        </div>
+        <div class="col-9 align-content-center">
+          <p-multiSelect [options]="businessUnitList" placeholder="Please Select Business Unit"
+                         (onChange)="onBUSelect()"
+                         [pTooltip]="fieldsService.getToolTip('REQUESTER_BUSINESS_UNIT')"
+                         [(ngModel)]="selectedBusinessUnit"/>
 
-            <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-              <label for="domain" required class="asterisk-if-mandatory" style="width:100px">{{
-                fieldsService.getLabel('REQUESTER_MARKET') }}</label>
-            </div>
-            <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
-              <p-multiSelect [options]="marketList" placeholder="Please Select Market"
-                [pTooltip]="fieldsService.getToolTip('REQUESTER_MARKET')" [(ngModel)]="selectedMarket" />
-            </div>
+          <div class="flex align-items-center gap-2 flex-wrap mt-2">
+            <p-tag severity="success" *ngFor="let item of selectedBusinessUnit" [value]="item" [rounded]="true"/>
+          </div>
+          <div *ngIf="isOtherBUSelected()">
+            <input id="domain" type="text" [(ngModel)]="otherBusinessUnit" placeholder="Please Specify Business Unit"
+                   class="w-full">
+          </div>
+        </div>
 
-            <div class="col-12 xs:col-12 sm:col-12 lg:col-12 xl:col-12">
-              <div style="display: inline-flex;" *ngFor="let item of selectedMarket ; let i =index">
-                <p-chip>{{ item }}</p-chip>
-              </div>
-            </div>
+        <div class="col-3 align-content-center">
+          <label class="asterisk-if-mandatory">{{ fieldsService.getLabel('REQUESTER_IS_BUDGET_APPROVED') }}</label>
+        </div>
+        <div class="col-9 align-content-center">
+          <input type="radio" name="approvedBudget"
+                 [pTooltip]="fieldsService.getToolTip('REQUESTER_IS_BUDGET_APPROVED_YES')"
+                 [(ngModel)]="requesterInfo.approvedBudget" [value]="true">
+          <label>{{ fieldsService.getLabel('REQUESTER_IS_BUDGET_APPROVED_YES') }}</label>
+          <input type="radio" name="approvedBudget" checked="checked"
+                 [pTooltip]="fieldsService.getToolTip('REQUESTER_IS_BUDGET_APPROVED_NO')"
+                 [(ngModel)]="requesterInfo.approvedBudget" [value]="false">
+          <label>{{ fieldsService.getLabel('REQUESTER_IS_BUDGET_APPROVED_NO') }}</label>
 
-            <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3"></div>
-            <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
-              <div *ngIf="isOtherMarketSelected()">
-                <input id="domain" type="text" [(ngModel)]="otherMarket" placeholder="Please Specify Market" size="70"
-                  class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary">
-              </div>
-            </div>
+          <small class="ml-3"
+                 *ngIf="!requesterInfo.approvedBudget && requesterInfo.isDemandPOC==false">{{ fieldsService.getLabel('REQUESTER_BUDGET_NOT_APPROVED_NOTE') }}</small>
 
-            <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-              <label for="businessUnit" required class="asterisk-if-mandatory" style="width:100px">{{
-                fieldsService.getLabel('REQUESTER_BUSINESS_UNIT') }}</label>
-            </div>
-            <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
-              <p-multiSelect [options]="businessUnitList" placeholder="Please Select Business Unit"
-                [pTooltip]="fieldsService.getToolTip('REQUESTER_BUSINESS_UNIT')" [(ngModel)]="selectedBusinessUnit" />
-            </div>
-            <div class="col-12 xs:col-12 sm:col-12 lg:col-12 xl:col-12">
-              <div style="display: inline-flex;" *ngFor="let item of selectedBusinessUnit ; let i =index">
-                <p-chip>{{ item }}</p-chip>
-              </div>
-            </div>
-            <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3"></div>
-            <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
-              <div *ngIf="isOtherBUSelected()">
-                <input id="domain" type="text" [(ngModel)]="otherBusinessUnit"
-                  placeholder="Please Specify Business Unit" size="70"
-                  class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary">
-              </div>
-            </div>
+        </div>
 
-            <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-              <label for="goLiveApproach" required class="asterisk-if-mandatory" style="width:100px">{{
-                fieldsService.getLabel('REQUESTER_IS_BUDGET_APPROVED') }}</label>
-            </div>
-            <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
-              <input type="radio" name="approvedBudget"
-                [pTooltip]="fieldsService.getToolTip('REQUESTER_IS_BUDGET_APPROVED_YES')"
-                [(ngModel)]="requesterInfo.approvedBudget" [value]="true">
-              <label>{{ fieldsService.getLabel('REQUESTER_IS_BUDGET_APPROVED_YES') }}</label>
-              <input type="radio" name="approvedBudget" checked="checked"
-                [pTooltip]="fieldsService.getToolTip('REQUESTER_IS_BUDGET_APPROVED_NO')"
-                [(ngModel)]="requesterInfo.approvedBudget" [value]="false">
-              <label>{{ fieldsService.getLabel('REQUESTER_IS_BUDGET_APPROVED_NO') }}</label>
-              <div *ngIf="!requesterInfo.approvedBudget && requesterInfo.isDemandPOC==false">
-                <label>{{ fieldsService.getLabel('REQUESTER_BUDGET_NOT_APPROVED_NOTE') }}</label>
-              </div>
-            </div>
+        <div class="col-3 align-content-center" *ngIf="requesterInfo.approvedBudget">
+          <label for="clarityProjectId"
+                 class="asterisk-if-mandatory">{{ fieldsService.getLabel('REQUESTER_CLARITY_PROJECT_ID') }}</label>
+        </div>
+        <div class="col-9 align-content-center" *ngIf="requesterInfo.approvedBudget">
+          <input class="lg:w-6 md:w-full" pInputText id="clarityProjectId" type="text"
+                 [(ngModel)]="requesterInfo.clarityProjectId"
+                 [pTooltip]="fieldsService.getToolTip('REQUESTER_CLARITY_PROJECT_ID')">
+        </div>
 
-            <div class="col-12 xs:col-12 sm:col-12 lg:col-12 xl:col-12" *ngIf="requesterInfo.approvedBudget"
-              style="display: inline-flex;">
+        <div class="col-12 mt-5">
+          <p-panel>
+            <ng-template pTemplate="header">
+              <span class="font-bold"
+                    [pTooltip]="fieldsService.getToolTip('REQUESTER_CONSUMPTION_PATTERN')">{{ fieldsService.getLabel('REQUESTER_CONSUMPTION_PATTERN') }}</span>
+            </ng-template>
+            <div class="grid">
               <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                <label for="clarityProjectId" required class="asterisk-if-mandatory">{{
-                  fieldsService.getLabel('REQUESTER_CLARITY_PROJECT_ID') }}</label>
+                <label>{{ fieldsService.getLabel('REQUESTER_VIA_API') }}</label>
               </div>
               <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
-                <input id="clarityProjectId" type="text" [(ngModel)]="requesterInfo.clarityProjectId"
-                  [pTooltip]="fieldsService.getToolTip('REQUESTER_CLARITY_PROJECT_ID')" size="60"
-                  class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary">
+                <p-checkbox [binary]="true" [(ngModel)]="requesterInfo.cpAPI"
+                            [pTooltip]="fieldsService.getToolTip('REQUESTER_VIA_API')" inputId="cpAPI"></p-checkbox>
+              </div>
+
+              <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
+                <label>{{ fieldsService.getLabel('REQUESTER_VIA_REPORT') }}</label>
+              </div>
+              <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
+                <p-checkbox [binary]="true" [(ngModel)]="requesterInfo.cpReport"
+                            [pTooltip]="fieldsService.getToolTip('REQUESTER_VIA_REPORT')"
+                            inputId="cpReport"></p-checkbox>
+              </div>
+
+              <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
+                <label>{{ fieldsService.getLabel('REQUESTER_VIA_DOWNSTREAM') }}</label>
+              </div>
+              <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
+                <p-checkbox [binary]="true" [(ngModel)]="requesterInfo.cpTransactionPlatform"
+                            [pTooltip]="fieldsService.getToolTip('REQUESTER_VIA_DOWNSTREAM')"
+                            inputId="cpTransactionPlatform"></p-checkbox>
+              </div>
+
+              <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
+                <label>{{ fieldsService.getLabel('REQUESTER_VIA_DATA_MODEL') }}</label>
+              </div>
+              <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
+                <p-checkbox [binary]="true" [(ngModel)]="requesterInfo.cpDataModel"
+                            [pTooltip]="fieldsService.getToolTip('REQUESTER_VIA_DATA_MODEL')"
+                            inputId="cpDataModel"></p-checkbox>
+              </div>
+
+              <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
+                <label>{{ fieldsService.getLabel('REQUESTER_VIA_DATA_PRODUCT') }}</label>
+              </div>
+              <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
+                <p-checkbox [binary]="true" [(ngModel)]="requesterInfo.cpDataProduct"
+                            [pTooltip]="fieldsService.getToolTip('REQUESTER_VIA_DATA_PRODUCT')"
+                            inputId="cpDataProduct"></p-checkbox>
               </div>
             </div>
+          </p-panel>
+        </div>
 
-            <div class="col-12 xs:col-12 sm:col-12 lg:col-12 xl:col-12">
-              <p-fieldset [toggleable]="true">
-                <ng-template pTemplate="header">
-                  <div class="flex align-items-center gap-2 px-2">
-                    <span class="font-bold" [pTooltip]="fieldsService.getToolTip('REQUESTER_CONSUMPTION_PATTERN')">{{
-                      fieldsService.getLabel('REQUESTER_CONSUMPTION_PATTERN') }}</span>
+        <div class="col-12">
+          <p-panel>
+            <ng-template pTemplate="header">
+              <div class="flex align-items-center justify-content-between w-full">
+                <span class="font-bold">{{ fieldsService.getLabel('REQUESTER_STAKEHOLDER') }}</span>
+                <div class="grid gap-3">
+                  <p-button (click)="addSpoc()"
+                            [disabled]="requesterInfo.spoc.length > 9">{{ fieldsService.getLabel('ADD_BUTTON') }}
+                  </p-button>
+                  <p-button (click)="removeSpoc()"
+                            [disabled]="requesterInfo.spoc.length < 2">{{ fieldsService.getLabel('REMOVE_BUTTON') }}
+                  </p-button>
+                </div>
+              </div>
+            </ng-template>
+            <div class="grid">
+              <div class="col-12 grid p-fluid">
+                <span class="col-3 font-bold">{{ fieldsService.getLabel('REQUESTER_STAKEHOLDER_EMAIL') }}</span>
+                <span class="col-2 font-bold">{{ fieldsService.getLabel('REQUESTER_STAKEHOLDER_ROLE') }}</span>
+                <span class="col-5 font-bold">{{ fieldsService.getLabel('REQUESTER_STAKEHOLDER_REMARKS') }}</span>
+              </div>
+              <div class="col-12 m-0 p-0">
+                <p-divider styleClass="m-0"></p-divider>
+              </div>
+              <div class="col-12">
+                <div class="grid p-fluid" *ngFor="let spoc of requesterInfo.spoc">
+                  <div class="col-3">
+                    <input class="w-full" pInputText id="spocEmail" [(ngModel)]="spoc.email" type="email"
+                           [pTooltip]="fieldsService.getToolTip('REQUESTER_STAKEHOLDER_EMAIL')"
+                           (blur)="eventService.checkEmailValue(spoc.email)" size="30"
+                           aria-describedby="program-help"
+                           [disabled]="demandIntakeService.isCurrentLoggedUserStakeholder()"/>
                   </div>
-                </ng-template>
-                <div class="grid">
-                  <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                    <label for="cpAPI">{{ fieldsService.getLabel('REQUESTER_VIA_API') }}</label>
+                  <div class="col-2">
+                    <input class="w-full" pInputText id="spocRole" [(ngModel)]="spoc.role" size="30"
+                           [pTooltip]="fieldsService.getToolTip('REQUESTER_STAKEHOLDER_ROLE')"
+                           aria-describedby="program-help"
+                           [disabled]="demandIntakeService.isCurrentLoggedUserStakeholder()"/>
                   </div>
-                  <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
-                    <p-checkbox [binary]="true" [(ngModel)]="requesterInfo.cpAPI"
-                      [pTooltip]="fieldsService.getToolTip('REQUESTER_VIA_API')" inputId="cpAPI"></p-checkbox>
-                  </div>
-                  <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                    <label for="cpReport">{{ fieldsService.getLabel('REQUESTER_VIA_REPORT') }}</label>
-                  </div>
-                  <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
-                    <p-checkbox [binary]="true" [(ngModel)]="requesterInfo.cpReport"
-                      [pTooltip]="fieldsService.getToolTip('REQUESTER_VIA_REPORT')" inputId="cpReport"></p-checkbox>
-                  </div>
-                  <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                    <label for="cpTransactionPlatform">{{ fieldsService.getLabel('REQUESTER_VIA_DOWNSTREAM') }}</label>
-                  </div>
-                  <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
-                    <p-checkbox [binary]="true" [(ngModel)]="requesterInfo.cpTransactionPlatform"
-                      [pTooltip]="fieldsService.getToolTip('REQUESTER_VIA_DOWNSTREAM')"
-                      inputId="cpTransactionPlatform"></p-checkbox>
+                  <div class="col-5">
+                    <input class="w-full" pInputText id="spocRemarks" [(ngModel)]="spoc.remarks" size="60"
+                           [pTooltip]="fieldsService.getToolTip('REQUESTER_STAKEHOLDER_REMARKS')"
+                           aria-describedby="program-help"
+                           [disabled]="demandIntakeService.isCurrentLoggedUserStakeholder() && this.authService.currentUserValue.email === spoc.email"/>
                   </div>
                 </div>
-              </p-fieldset>
-            </div>
-
-            <div class="grid">
-              <div class="col-12 xs:col-12 sm:col-12 lg:col-12 xl:col-12">
-                <p-fieldset [toggleable]="true">
-                  <ng-template pTemplate="header">
-                    <div class="flex align-items-center gap-2 px-2">
-                      <span class="font-bold" [pTooltip]="fieldsService.getToolTip('REQUESTER_STAKEHOLDER')">{{
-                        fieldsService.getLabel('REQUESTER_STAKEHOLDER') }}</span>
-                    </div>
-                  </ng-template>
-                  <div class="grid">
-                    <div class="col-10 xs:col-10 sm:col-10 lg:col-10 xl:col-10"></div>
-                    <div class="col-2 xs:col-2 sm:col-2 lg:col-2 xl:col-2" style="margin-top: -2rem;">
-                      <p-button (click)="addSpoc()">{{ fieldsService.getLabel('ADD_BUTTON') }}</p-button> &nbsp;
-                      <p-button (click)="removeSpoc()">{{ fieldsService.getLabel('REMOVE_BUTTON') }}</p-button>
-                    </div>
-
-                    <div class="col-12 xs:col-12 sm:col-12 lg:col-12 xl:col-12" *ngIf="requesterInfo.spoc.length > 0"
-                      style="display: inline-flex;">
-                      <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                        <label for="role">{{ fieldsService.getLabel('REQUESTER_STAKEHOLDER_ROLE') }}</label>
-                      </div>
-                      <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                        <label for="email">{{ fieldsService.getLabel('REQUESTER_STAKEHOLDER_EMAIL') }}</label>
-                      </div>
-                      <div class="col-6 xs:col-6 sm:col-6 lg:col-6 xl:col-6">
-                        <label for="role">{{ fieldsService.getLabel('REQUESTER_STAKEHOLDER_REMARKS') }}</label>
-                      </div>
-                    </div>
-
-                    <div class="col-12 xs:col-12 sm:col-12 lg:col-12 xl:col-12" style="display: inline-flex;"
-                      *ngFor="let item of requesterInfo.spoc">
-                      <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                        <input pInputText id="spocRole" [(ngModel)]="item.role" size="30"
-                          [pTooltip]="fieldsService.getToolTip('REQUESTER_STAKEHOLDER_ROLE')"
-                          aria-describedby="program-help" />
-                      </div>
-                      <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                        <input pInputText id="spocEmail" [(ngModel)]="item.email" type="email"
-                          [pTooltip]="fieldsService.getToolTip('REQUESTER_STAKEHOLDER_EMAIL')"
-                          (blur)="eventService.checkEmailValue(item.email)" size="30" aria-describedby="program-help" />
-                      </div>
-                      <div class="col-6 xs:col-6 sm:col-6 lg:col-6 xl:col-6">
-                        <input pInputText id="spocRemarks" [(ngModel)]="item.remarks" size="60"
-                          [pTooltip]="fieldsService.getToolTip('REQUESTER_STAKEHOLDER_REMARKS')"
-                          aria-describedby="program-help" />
-                      </div>
-                    </div>
-
-                  </div>
-                </p-fieldset>
               </div>
             </div>
-          </div>
-        </p-fieldset>
-
+          </p-panel>
+        </div>
       </div>
-    </div>
-  </ng-template>
-  <ng-template pTemplate="footer">
-    <div class="grid grid-nogutter justify-content-between">
-      <p-button label="{{ fieldsService.getLabel('BACK_BUTTON') }}" (onClick)="prevPage()"
-        icon="pi pi-angle-left"></p-button>
-      <p-button label="{{ fieldsService.getLabel('SAVE_FOR_LATER') }}" *ngIf="visibleSaveButton" (onClick)="savePage()"
-        iconPos="right"></p-button>
-      <p-button label="{{ fieldsService.getLabel('NEXT_BUTTON') }}" (onClick)="nextPage()" icon="pi pi-angle-right"
-        iconPos="right"></p-button>
-    </div>
-    <!-- <div class="grid grid-nogutter justify-content-end" *ngIf="!visibleSaveButton">
-        <p-button label="Next" (onClick)="nextPage()" icon="pi pi-angle-right" iconPos="right"></p-button>
-    </div> -->
-  </ng-template>
-</p-card>
+    </p-fieldset>
+
+  </div>
+</div>
+
+<div class="grid grid-nogutter justify-content-between">
+  <p-button label="{{ fieldsService.getLabel('BACK_BUTTON') }}" (onClick)="prevPage()"
+            icon="pi pi-angle-left"></p-button>
+  <p-button label="{{ fieldsService.getLabel('SAVE_FOR_LATER') }}" *ngIf="visibleSaveButton" (onClick)="savePage()"
+            iconPos="right"></p-button>
+  <p-button label="{{ fieldsService.getLabel('NEXT_BUTTON') }}" (onClick)="nextPage()" icon="pi pi-angle-right"
+            iconPos="right"></p-button>
+</div>

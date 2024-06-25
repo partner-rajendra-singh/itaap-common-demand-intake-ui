@@ -1,122 +1,125 @@
 <p-toast></p-toast>
 
 <div class="grid">
-  <div class="col-12 xs:col-12 sm:col-12 lg:col-12 xl:col-12">
-    <div class="grid">
-      <div class="col-4 xs:col-4 sm:col-4 lg:col-4 xl:col-4">
-        <label required for="isDocReferred" class="asterisk-if-mandatory"
-               style="width: 100px">{{ fieldsService.getLabel('INTRODUCTION_EXISTING_DEMAND_CATALOG_START') }}<a
-          target="_blank"
-          href="https://share.philips.com/sites/STS020210604094742/Pages/ADLDemandFunnelGrid.aspx">{{ fieldsService.getLabel('INTRODUCTION_EXISTING_DEMAND_CATALOG_END') }}</a>
-        </label>
-      </div>
-      <div class="col-8 xs:col-8 sm:col-8 lg:col-8 xl:col-8">
-        <input type="radio" name="isDocReferred"
-               [pTooltip]="fieldsService.getToolTip('INTRODUCTION_EXISTING_DEMAND_CATALOG_YES')"
-               [(ngModel)]="demandInfo.isDocReferred" [value]="true">
-        <label>{{ fieldsService.getLabel('INTRODUCTION_EXISTING_DEMAND_CATALOG_YES') }}</label>
-        <input type="radio" name="isDocReferred"
-               [pTooltip]="fieldsService.getToolTip('INTRODUCTION_EXISTING_DEMAND_CATALOG_NO')" checked="checked"
-               [(ngModel)]="demandInfo.isDocReferred"
-               [value]="false">
-        <label>{{ fieldsService.getLabel('INTRODUCTION_EXISTING_DEMAND_CATALOG_NO') }}</label> &nbsp;
-        <label>{{ fieldsService.getLabel('INTRODUCTION_EXISTING_DEMAND_FOUND') }}</label>
-      </div>
+  <div class="col-4">
+    <label class="asterisk-if-mandatory">
+      {{ fieldsService.getLabel('INTRODUCTION_EXISTING_DEMAND_CATALOG_START') + ' ' }}
+      <a target="_blank" href="https://share.philips.com/sites/STS020210604094742/Pages/ADLDemandFunnelGrid.aspx">
+        {{ fieldsService.getLabel('INTRODUCTION_EXISTING_DEMAND_CATALOG_END') }}</a>
+    </label>
+  </div>
+  <div class="col-8">
+    <input type="radio" name="isDocReferred"
+           [pTooltip]="fieldsService.getToolTip('INTRODUCTION_EXISTING_DEMAND_CATALOG_YES')"
+           [(ngModel)]="demandInfo.isDocReferred" [value]="true">
+    <label>{{ fieldsService.getLabel('INTRODUCTION_EXISTING_DEMAND_CATALOG_YES') }}</label>
+    <input type="radio" name="isDocReferred"
+           [pTooltip]="fieldsService.getToolTip('INTRODUCTION_EXISTING_DEMAND_CATALOG_NO')" checked="checked"
+           [(ngModel)]="demandInfo.isDocReferred" [value]="false">
+    <label>{{ fieldsService.getLabel('INTRODUCTION_EXISTING_DEMAND_CATALOG_NO') }}</label> &nbsp;
+    <label>{{ fieldsService.getLabel('INTRODUCTION_EXISTING_DEMAND_FOUND') }}</label>
+  </div>
 
-      <div class="col-4 xs:col-4 sm:col-4 lg:col-4 xl:col-4">
-        <label required for="architectAligned" class="asterisk-if-mandatory"
-               style="width: 100px">{{ fieldsService.getLabel('INTRODUCTION_ARCHITECT_ALIGNED') }}</label>
-      </div>
-      <div class="col-8 xs:col-8 sm:col-8 lg:col-8 xl:col-8">
-        <input type="radio" name="architectAligned"
-               [pTooltip]="fieldsService.getToolTip('INTRODUCTION_ARCHITECT_ALIGNED_YES')"
-               [(ngModel)]="demandInfo.architectAligned" [value]="true">
-        <label>{{ fieldsService.getLabel('INTRODUCTION_ARCHITECT_ALIGNED_YES') }}</label>
-        <input type="radio" name="architectAligned"
-               [pTooltip]="fieldsService.getToolTip('INTRODUCTION_ARCHITECT_ALIGNED_NO')" checked="checked"
-               [(ngModel)]="demandInfo.architectAligned"
-               [value]="false">
-        <label>{{ fieldsService.getLabel('INTRODUCTION_ARCHITECT_ALIGNED_NO') }}</label>
-      </div>
+  <div class="col-4">
+    <label class="asterisk-if-mandatory w-full">
+      {{ fieldsService.getLabel('INTRODUCTION_ARCHITECT_ALIGNED') }}
+    </label>
+  </div>
+  <div class="col-8">
+    <input type="radio" name="architectAligned"
+           [pTooltip]="fieldsService.getToolTip('INTRODUCTION_ARCHITECT_ALIGNED_YES')"
+           [(ngModel)]="demandInfo.architectAligned" [value]="true">
+    <label>{{ fieldsService.getLabel('INTRODUCTION_ARCHITECT_ALIGNED_YES') }}</label>
+    <input type="radio" name="architectAligned"
+           [pTooltip]="fieldsService.getToolTip('INTRODUCTION_ARCHITECT_ALIGNED_NO')" checked="checked"
+           [(ngModel)]="demandInfo.architectAligned" [value]="false">
+    <label>{{ fieldsService.getLabel('INTRODUCTION_ARCHITECT_ALIGNED_NO') }}</label>
+  </div>
 
-      <p-fieldset legend="{{ fieldsService.getLabel('INTRODUCTION_ARCHITECT_ALIGNMENT_FIELDSET') }}"
-                  *ngIf="demandInfo.architectAligned">
-        <div class="grid">
-          <div class="col-10 xs:col-10 sm:col-10 lg:col-10 xl:col-10"></div>
-          <div class="col-2 xs:col-2 sm:col-2 lg:col-2 xl:col-2" style="margin-top: -2rem;">
-            <p-button (click)="addAlignment()">{{ fieldsService.getLabel('ADD_BUTTON') }}</p-button> &nbsp;
-            <p-button (click)="removeAlignment()">{{ fieldsService.getLabel('REMOVE_BUTTON') }}</p-button>
+  <div class="col-12" *ngIf="demandInfo.architectAligned">
+    <p-panel>
+      <ng-template pTemplate="header">
+        <div class="flex align-items-center justify-content-between w-full">
+          <span class="font-bold">{{ fieldsService.getLabel('INTRODUCTION_ARCHITECT_ALIGNMENT_FIELDSET') }}</span>
+          <div class="grid gap-3">
+            <p-button (click)="addAlignment()"
+                      [disabled]="architectAlignmentInfo.length > 9">{{ fieldsService.getLabel('ADD_BUTTON') }}
+            </p-button>
+            <p-button (click)="removeAlignment()"
+                      [disabled]="architectAlignmentInfo.length < 2">{{ fieldsService.getLabel('REMOVE_BUTTON') }}
+            </p-button>
           </div>
-          <div class="col-12 xs:col-12 sm:col-12 lg:col-12 xl:col-12" *ngIf="architectAlignmentInfo.length > 0"
-               style="display: inline-flex;">
-            <div class="col-4 xs:col-4 sm:col-4 lg:col-4 xl:col-4">
-              <label for="email">{{ fieldsService.getLabel('INTRODUCTION_ARCHITECT_ALIGNMENT_EMAIL') }}</label>
-            </div>
-            <div class="col-8 xs:col-8 sm:col-8 lg:col-8 xl:col-8">
-              <label for="role">{{ fieldsService.getLabel('INTRODUCTION_ARCHITECT_ALIGNMENT_COMMENT') }}</label>
-            </div>
-          </div>
-
-          <div class="col-12 xs:col-12 sm:col-12 lg:col-12 xl:col-12"
-               style="display: inline-flex;" *ngFor="let item of architectAlignmentInfo">
-            <div class="col-4 xs:col-4 sm:col-4 lg:col-4 xl:col-4">
-              <input pInputText id="email" [(ngModel)]="item.email" type="email"
+        </div>
+      </ng-template>
+      <div class="grid">
+        <div class="col-12 grid p-fluid">
+          <span class="col-4 font-bold">Email</span>
+          <span class="col-8 font-bold">Comment</span>
+        </div>
+        <div class="col-12 m-0 p-0">
+          <p-divider styleClass="m-0"></p-divider>
+        </div>
+        <div class="col-12">
+          <div class="grid p-fluid" *ngFor="let architectAlignment of architectAlignmentInfo">
+            <div class="col-4">
+              <input class="w-full" pInputText [(ngModel)]="architectAlignment.email" type="email"
                      [pTooltip]="fieldsService.getToolTip('INTRODUCTION_ARCHITECT_ALIGNMENT_EMAIL')"
-                     (blur)="eventService.checkEmailValue(item.email)" size="40"
-                     aria-describedby="program-help"/>
+                     (blur)="eventService.checkEmailValue(architectAlignment.email)"/>
             </div>
-            <div class="col-8 xs:col-8 sm:col-8 lg:col-8 xl:col-8">
-              <input pInputText id="comment" [(ngModel)]="item.comment" size="100"
+            <div class="col-8">
+              <input class="w-full" pInputText [(ngModel)]="architectAlignment.comment"
                      [pTooltip]="fieldsService.getToolTip('INTRODUCTION_ARCHITECT_ALIGNMENT_COMMENT')"
                      aria-describedby="program-help"/>
             </div>
           </div>
         </div>
-      </p-fieldset>
-
-    </div>
-    <p-fieldset>
+      </div>
+    </p-panel>
+  </div>
+  <div class="col-12">
+    <p-fieldset [toggleable]="true">
       <ng-template pTemplate="header">
         <div class="flex align-items-center gap-2 px-2">
-          <span class="font-bold"
-                [pTooltip]="fieldsService.getToolTip('INTRODUCTION_FIELDSET')">{{ fieldsService.getLabel('INTRODUCTION_FIELDSET') }}</span>
+          <span class="font-bold" [pTooltip]="fieldsService.getToolTip('INTRODUCTION_FIELDSET')">
+            {{ fieldsService.getLabel('INTRODUCTION_FIELDSET') }}
+          </span>
         </div>
       </ng-template>
       <div class="grid">
-        <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-          <label for="title" class="asterisk-if-mandatory"
-                 style="width: 100px">{{ fieldsService.getLabel('INTRODUCTION_DEMAND_TITLE') }}</label>
+        <div class="col-3 align-content-center">
+          <label for="title" class="asterisk-if-mandatory">
+            {{ fieldsService.getLabel('INTRODUCTION_DEMAND_TITLE') }}</label>
         </div>
-        <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
-          <input required id="title" type="text" [(ngModel)]="demandInfo.title" size="70"
-                 [pTooltip]="fieldsService.getToolTip('INTRODUCTION_DEMAND_TITLE')" [escape]="false"
-                 class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary"/>
+        <div class="col-9 align-content-center">
+          <input pInputText required id="title" type="text" [(ngModel)]="demandInfo.title"
+                 [pTooltip]="fieldsService.getToolTip('INTRODUCTION_DEMAND_TITLE')" [escape]="false" class="w-full"/>
         </div>
-        <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-          <label for="description" class="asterisk-if-mandatory"
-                 style="width: 100px">{{ fieldsService.getLabel('INTRODUCTION_DEMAND_DESC') }}</label>
+        <div class="col-3 align-content-center">
+          <label for="description"
+                 class="asterisk-if-mandatory">{{ fieldsService.getLabel('INTRODUCTION_DEMAND_DESC') }}</label>
         </div>
-        <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
-          <textarea id="description" rows="3" cols="78" [(ngModel)]="demandInfo.description" pInputTextarea
-                    [pTooltip]="fieldsService.getToolTip('INTRODUCTION_DEMAND_DESC')"
-                    [escape]="false"></textarea>
+        <div class="col-9 align-content-center">
+          <textarea id="description" rows="3" cols="110" [(ngModel)]="demandInfo.description" pInputTextarea
+                    [pTooltip]="fieldsService.getToolTip('INTRODUCTION_DEMAND_DESC')" [escape]="false"
+                    class="w-full"></textarea>
         </div>
       </div>
     </p-fieldset>
   </div>
+  <div class="col-12">
+    <div *ngIf="visibleSaveButton" class="flex justify-content-between">
+      <p-button label="{{ fieldsService.getLabel('SAVE_FOR_LATER') }}" (onClick)="savePage(true)"
+                iconPos="left"></p-button>
+      <p-button label="{{ fieldsService.getLabel('NEXT_BUTTON') }}" (onClick)="validateIntroductionInfoAndSave(false)"
+                icon="pi pi-angle-right" iconPos="right"></p-button>
+    </div>
+    <div *ngIf="!visibleSaveButton" class="flex justify-content-between">
+      <p-button label="{{ fieldsService.getLabel('NEXT_BUTTON') }}" *ngIf="demandIntakeService.isNew"
+                (onClick)="validateIntroductionInfoAndSave(false)" icon="pi pi-angle-right" iconPos="right"></p-button>
+      <p-button label="{{ fieldsService.getLabel('NEXT_BUTTON') }}" *ngIf="!demandIntakeService.isNew"
+                (onClick)="nextPage()" icon="pi pi-angle-right" iconPos="right"></p-button>
+    </div>
+  </div>
+
 </div>
 
-<div class="grid grid-nogutter justify-content-between" *ngIf="visibleSaveButton">
-  <p-button label="{{ fieldsService.getLabel('SAVE_FOR_LATER') }}" (onClick)="savePage(true)" iconPos="left"></p-button>
-  <p-button label="{{ fieldsService.getLabel('NEXT_BUTTON') }}" (onClick)="validateIntroductionInfoAndSave(false)"
-            icon="pi pi-angle-right"
-            iconPos="right"></p-button>
-</div>
-<div class="grid grid-nogutter justify-content-end" *ngIf="!visibleSaveButton">
-  <p-button label="{{ fieldsService.getLabel('NEXT_BUTTON') }}" *ngIf="demandIntakeService.isNew"
-            (onClick)="validateIntroductionInfoAndSave(false)"
-            icon="pi pi-angle-right" iconPos="right"></p-button>
-  <p-button label="{{ fieldsService.getLabel('NEXT_BUTTON') }}" *ngIf="!demandIntakeService.isNew"
-            (onClick)="nextPage()" icon="pi pi-angle-right"
-            iconPos="right"></p-button>
-</div>

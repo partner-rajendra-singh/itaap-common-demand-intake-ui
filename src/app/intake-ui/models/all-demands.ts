@@ -1,7 +1,7 @@
-import { Demand } from "./demand";
+import {Demand} from "./demand";
 
 export class AllDemands {
-    myDemands!: Demand[];
-	pendingDemands!: Demand[];
-    stakeholderDemands!: Demand[];    
+  myDemands!: Demand[];
+  pendingDemands!: Demand[];
+  stakeholderDemands!: Demand[];
 }

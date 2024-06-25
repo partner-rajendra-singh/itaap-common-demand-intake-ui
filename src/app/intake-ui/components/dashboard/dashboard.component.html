@@ -1,4 +1,51 @@
+<p-toast></p-toast>
 <div class="col-12 grid">
+  <div class="col-12 md:col-6 lg:col-3">
+    <div class="card border-none surface-border m-0"
+         style="background: linear-gradient(226.42deg, #077abb 8.93%, #153375 110.98%);border-bottom-left-radius: inherit;border-bottom-right-radius: inherit;">
+      <div class="flex align-items-center justify-content-between">
+        <div class="flex align-items-center">
+          <p-avatar size="large" shape="circle" styleclass="demand-badge status-draft"
+                    class="p-element">
+            <div class="demand-badge status-draft p-avatar p-component p-avatar-circle p-avatar-lg">
+                                    <span class="material-symbols-outlined p-avatar-icon">
+                                        edit_document
+                                    </span>
+            </div>
+          </p-avatar>
+          <span class="text-white text-xl ml-2">Draft</span>
+        </div>
+        <div class="flex align-items-center">
+          <span class="block text-white font-bold text-6xl">{{ viewDraftDemands.length }}</span>
+        </div>
+      </div>
+    </div>
+    <div class="card p-3" style="border-top-left-radius: inherit;border-top-right-radius: inherit;">
+      <p-scrollPanel [style]="{ width: '100%', height: '250px' }">
+        <div *ngFor="let demand of viewDraftDemands">
+          <div (click)="populateDemand(demand)"
+               class="card-without-shadow mb-2 flex flex-column w-full border-1 surface-border px-2 py-2 hover:surface-ground cursor-pointer">
+            <div class="flex justify-content-between align-items-center mb-2">
+              <p-tag [rounded]="true" class="mr-2">{{ demand.demandIntakeId }}</p-tag>
+              <span class="text-900 font-semibold text-sm">
+                <i class="pi pi-clock text-700 mr-2"></i>
+                <span>{{ demand.requestedDate | date: 'MMM dd, yyyy' }}</span>
+              </span>
+            </div>
+            <div class="text-800 font-medium text-xl textOverflow mb-2">{{ demand.title }}</div>
+            <div class="flex justify-content-between align-items-center">
+              <p-avatar class="p-element" shape="circle" [pTooltip]="demand.requestedBy" [tooltipPosition]="'bottom'">
+                <img [src]="this.authService.profilePhoto" [alt]="demand.requestedBy"
+                     *ngIf="this.authService.profilePhoto">
+                <i class="pi pi-user"
+                   *ngIf="!this.authService.profilePhoto"> </i>
+              </p-avatar>
+            </div>
+          </div>
+        </div>
+      </p-scrollPanel>
+    </div>
+  </div>
   <div class="col-12 md:col-6 lg:col-3">
     <div class="card border-none surface-border m-0"
          style="background: linear-gradient(226.42deg, #c5741f 8.93%, #673a13 110.98%);border-bottom-left-radius: inherit;border-bottom-right-radius: inherit;">
@@ -16,22 +63,31 @@
           <span class="text-white text-xl ml-2">Pending</span>
         </div>
         <div class="flex align-items-center">
-          <span class="block text-white font-bold text-6xl">{{ allPendingDemands.length }}</span>
+          <span class="block text-white font-bold text-6xl">{{ viewPendingDemands.length }}</span>
         </div>
       </div>
     </div>
     <div class="card p-3" style="border-top-left-radius: inherit;border-top-right-radius: inherit;">
-      <p-scrollPanel [style]="{ width: '100%', height: '200px' }">
-        <div *ngFor="let demand of allPendingDemands">
-          <div
-            class="card-without-shadow mb-2 flex flex-column w-full border-1 surface-border px-2 py-2 hover:surface-ground">
-            <div class="flex justify-content-between align-items-center">
-              <p-tag severity="warning" [rounded]="true">{{ demand.introduction.demandIntakeId }}</p-tag>
-              <span
-                class="text-500 text-sm font-semibold">{{ demandIntakeService.getDemandStatusValue(demand.introduction.status) }}</span>
+      <p-scrollPanel [style]="{ width: '100%', height: '250px' }">
+        <div *ngFor="let demand of viewPendingDemands">
+          <div (click)="populateDemand(demand)"
+               class="card-without-shadow mb-2 flex flex-column w-full border-1 surface-border px-2 py-2 hover:surface-ground cursor-pointer">
+            <div class="mb-2 flex justify-content-between align-items-center">
+              <p-tag severity="warning" [rounded]="true" class="mr-2">{{ demand.demandIntakeId }}</p-tag>
+              <span class="text-900 font-semibold text-sm">
+                <i class="pi pi-clock text-700 mr-2"></i>
+                <span>{{ demand.requestedDate | date: 'MMM dd, yyyy' }}</span>
+              </span>
             </div>
-            <div>
-              <span class="text-800 font-medium text-xl textOverflow">{{ demand.introduction.title }}</span>
+            <div class="text-800 font-medium text-xl textOverflow mb-2">{{ demand.title }}</div>
+            <div class="flex justify-content-between align-items-center">
+              <p-avatar class="p-element" shape="circle" [pTooltip]="demand.requestedBy" [tooltipPosition]="'bottom'">
+                <i class="pi pi-user"> </i>
+              </p-avatar>
+              <span class="text-900 font-semibold">
+                <i class="pi pi-hourglass text-sm mr-2"></i>
+                <span class="text-500 text-sm">{{ demandIntakeService.getDemandStatusValue(demand.status) }}</span>
+              </span>
             </div>
           </div>
         </div>
@@ -40,34 +96,46 @@
   </div>
   <div class="col-12 md:col-6 lg:col-3">
     <div class="card border-none surface-border m-0"
-         style="background: linear-gradient(226.42deg, #077abb 8.93%, #153375 110.98%);border-bottom-left-radius: inherit;border-bottom-right-radius: inherit;">
+         style="background: linear-gradient(226.42deg, #a51a1a 8.93%, #6d1414 110.98%);border-bottom-left-radius: inherit;border-bottom-right-radius: inherit;">
       <div class="flex align-items-center justify-content-between">
         <div class="flex align-items-center">
-          <p-avatar size="large" shape="circle" styleclass="demand-badge status-draft"
+          <p-avatar size="large" shape="circle" styleclass="demand-badge status-dm_rejected"
                     class="p-element">
-            <div class="demand-badge status-draft p-avatar p-component p-avatar-circle p-avatar-lg">
+            <div
+              class="demand-badge status-rejected p-avatar p-component p-avatar-circle p-avatar-lg">
                                     <span class="material-symbols-outlined p-avatar-icon">
-                                        edit_document
+                                        manage_accounts
                                     </span>
             </div>
           </p-avatar>
-          <span class="text-white text-xl ml-2">Draft</span>
+          <span class="text-white text-xl ml-2">As a Stakeholder</span>
         </div>
         <div class="flex align-items-center">
-          <span class="block text-white font-bold text-6xl">{{ allDraftDemands.length }}</span>
+          <span class="block text-white font-bold text-6xl">{{ viewStakeholderDemands.length }}</span>
         </div>
       </div>
     </div>
     <div class="card p-3" style="border-top-left-radius: inherit;border-top-right-radius: inherit;">
-      <p-scrollPanel [style]="{ width: '100%', height: '200px' }">
-        <div *ngFor="let demand of allDraftDemands">
-          <div
-            class="card-without-shadow mb-2 flex flex-column w-full border-1 surface-border px-2 py-2 hover:surface-ground">
-            <div class="flex justify-content-between align-items-center">
-              <p-tag [rounded]="true">{{ demand.introduction.demandIntakeId }}</p-tag>
+      <p-scrollPanel [style]="{ width: '100%', height: '250px' }">
+        <div *ngFor="let demand of viewStakeholderDemands">
+          <div (click)="populateDemand(demand)"
+               class="card-without-shadow mb-2 flex flex-column w-full border-1 surface-border px-2 py-2 hover:surface-ground cursor-pointer">
+            <div class="mb-2 flex justify-content-between align-items-center">
+              <p-tag severity="danger" [rounded]="true" class="mr-2">{{ demand.demandIntakeId }}</p-tag>
+              <span class="text-900 font-semibold text-sm">
+                <i class="pi pi-clock text-700 mr-2"></i>
+                <span>{{ demand.requestedDate | date: 'MMM dd, yyyy' }}</span>
+              </span>
             </div>
-            <div>
-              <span class="text-800 font-medium text-xl textOverflow">{{ demand.introduction.title }}</span>
+            <div class="text-800 font-medium text-xl textOverflow mb-2">{{ demand.title }}</div>
+            <div class="flex justify-content-between align-items-center">
+              <p-avatar class="p-element" shape="circle" [pTooltip]="demand.requestedBy" [tooltipPosition]="'bottom'">
+                <i class="pi pi-user"> </i>
+              </p-avatar>
+              <span class="text-900 font-semibold">
+                <i class="pi pi-hourglass text-sm mr-2"></i>
+                <span class="text-500 text-sm">{{ demandIntakeService.getDemandStatusValue(demand.status) }}</span>
+              </span>
             </div>
           </div>
         </div>
@@ -88,750 +156,98 @@
                                     </span>
             </div>
           </p-avatar>
-          <span class="text-white text-xl ml-2">Accepted</span>
+          <span class="text-white text-xl ml-2">Completed</span>
         </div>
         <div class="flex align-items-center">
-          <span class="block text-white font-bold text-6xl">{{ allAcceptedDemands.length }}</span>
+          <span class="block text-white font-bold text-6xl">{{ viewCompletedDemands.length }}</span>
         </div>
       </div>
     </div>
     <div class="card p-3" style="border-top-left-radius: inherit;border-top-right-radius: inherit;">
-      <p-scrollPanel [style]="{ width: '100%', height: '200px' }">
-        <div *ngFor="let demand of allAcceptedDemands">
-          <div
-            class="card-without-shadow mb-2 flex flex-column w-full border-1 surface-border px-2 py-2 hover:surface-ground">
-            <div class="flex justify-content-between align-items-center">
-              <p-tag severity="success" [rounded]="true">{{ demand.introduction.demandIntakeId }}</p-tag>
+      <p-scrollPanel [style]="{ width: '100%', height: '250px' }">
+        <div *ngFor="let demand of viewCompletedDemands">
+          <div (click)="populateDemand(demand)"
+               class="card-without-shadow mb-2 flex flex-column w-full border-1 surface-border px-2 py-2 hover:surface-ground cursor-pointer">
+            <div class="mb-2 flex justify-content-between align-items-center">
+              <p-tag [severity]="demand.status=='ACCEPTED'?'success':'danger'" [rounded]="true"
+                     class="mr-2">{{ demand.demandIntakeId }}
+              </p-tag>
+              <span class="text-900 font-semibold text-sm">
+                <i class="pi pi-clock text-700 mr-2"></i>
+                <span>{{ demand.requestedDate | date: 'MMM dd, yyyy' }}</span>
+              </span>
             </div>
-            <div>
-              <span class="text-800 font-medium text-xl textOverflow">{{demand.introduction.title }}</span>
+            <div class="text-800 font-medium text-xl textOverflow mb-2">{{ demand.title }}</div>
+            <div class="flex justify-content-between align-items-center">
+              <p-avatar class="p-element" shape="circle" [pTooltip]="demand.requestedBy" [tooltipPosition]="'bottom'">
+                <i class="pi pi-user"> </i>
+              </p-avatar>
+              <span class="text-900 font-semibold" *ngIf="demand.status!='ACCEPTED'">
+                <i class="pi pi-times-circle text-sm mr-2"></i>
+                <span class="text-500 text-sm">{{ demandIntakeService.getDemandStatusValue(demand.status) }}</span>
+              </span>
+              <span class="text-900 font-semibold" *ngIf="demand.status=='ACCEPTED'">
+                <i class="pi pi-check-circle text-sm mr-2"></i>
+                <span class="text-500 text-sm">{{ demandIntakeService.getDemandStatusValue(demand.status) }}</span>
+              </span>
             </div>
           </div>
         </div>
       </p-scrollPanel>
     </div>
   </div>
-  <div class="col-12 md:col-6 lg:col-3">
-    <div class="card border-none surface-border m-0"
-         style="background: linear-gradient(226.42deg, #a51a1a 8.93%, #6d1414 110.98%);border-bottom-left-radius: inherit;border-bottom-right-radius: inherit;">
-      <div class="flex align-items-center justify-content-between">
-        <div class="flex align-items-center">
-          <p-avatar size="large" shape="circle" styleclass="demand-badge status-dm_rejected"
-                    class="p-element">
-            <div
-              class="demand-badge status-rejected p-avatar p-component p-avatar-circle p-avatar-lg">
-                                    <span class="material-symbols-outlined p-avatar-icon">
-                                        block
-                                    </span>
-            </div>
-          </p-avatar>
-          <span class="text-white text-xl ml-2">Rejected</span>
-        </div>
-        <div class="flex align-items-center">
-          <span class="block text-white font-bold text-6xl">{{ allRejectedDemands.length }}</span>
-        </div>
-      </div>
-    </div>
-    <div class="card p-3" style="border-top-left-radius: inherit;border-top-right-radius: inherit;">
-      <p-scrollPanel [style]="{ width: '100%', height: '200px' }">
-        <div *ngFor="let demand of allRejectedDemands">
-          <div
-            class="card-without-shadow mb-2 flex flex-column w-full border-1 surface-border px-2 py-2 hover:surface-ground">
-            <div class="flex justify-content-between align-items-center">
-              <p-tag severity="danger" [rounded]="true">{{ demand.introduction.demandIntakeId }}</p-tag>
-            </div>
-            <div>
-              <span class="text-800 font-medium text-xl textOverflow">{{ demand.introduction.title }}</span>
-            </div>
+</div>
+
+<div class="col-12">
+  <div class="grid">
+    <div class="col-12 md:col-12 lg:col-6">
+      <div class="card flex flex-wrap gap-3 p-fluid h-full">
+        <div class="col-12 grid gap-3">
+          <div class="flex-auto">
+            <label for="from" class="font-bold block mb-2"> From </label>
+            <p-calendar
+              inputId="from"
+              [(ngModel)]="fromDate" [iconDisplay]="'input'" [defaultDate]="fromDate" [maxDate]="todayDate"
+              dateFormat="M dd, yy" [showButtonBar]="true" [showIcon]="true"/>
+          </div>
+          <div class="flex-auto">
+            <label for="to" class="font-bold block mb-2"> To </label>
+            <p-inputGroup>
+              <p-calendar
+                [(ngModel)]="toDate" [iconDisplay]="'input'" [showButtonBar]="true" [showIcon]="true"
+                [minDate]="fromDate" [maxDate]="todayDate" dateFormat="M dd, yy" inputId="to"/>
+              <button type="button" (click)="updateChart()" pButton icon="pi pi-search"
+                      class="p-button-warning"></button>
+            </p-inputGroup>
           </div>
         </div>
-      </p-scrollPanel>
-    </div>
-  </div>
-  <div class="col-12 md:col-12 lg:col-12">
-    <div class="card h-full">
-      <p-chart type="bar" [data]="dataMonthITaaP" [options]="optionsQuarterITaaP" />
-    </div>
-  </div>
-
-  <!-- Integration/ITaaP -->
-  <div class="col-12" style="display: inline-flex;" *ngIf="demandIntakeService.getSDVisibility('integration')">
-  <div class="col-12 md:col-6 lg:col-3">
-    <div class="card border-none surface-border m-0" style="background: linear-gradient(226.42deg, #c5741f 8.93%, #673a13 110.98%);border-bottom-left-radius: inherit;border-bottom-right-radius: inherit;">
-      <div class="flex align-items-center justify-content-between">
-        <div class="flex align-items-center">
-          <span class="text-white text-xl ml-2">Integration/ITaaP - Quarter Wise</span>
+        <div class="col-12">
+          <p-chart type="bar" [data]="yearlyData" [options]="yearOptions"/>
         </div>
       </div>
     </div>
-    <div class="card p-3" style="border-top-left-radius: inherit;border-top-right-radius: inherit;">
-      <p-scrollPanel [style]="{ width: '100%', height: '300px' }">
-        <div class="card-without-shadow mb-2 flex flex-column w-full border-1 surface-border px-2 py-2 hover:surface-ground">
-          <p-chart type="bar" [data]="dataQuarterITaaP" [options]="optionsQuarterITaaP" />
+    <div class="col-12 md:col-12 lg:col-3">
+      <div class="card flex flex-wrap gap-3 p-fluid">
+        <div class="col-12 grid gap-3 align-text-center">
+          <div class="font-bold text-lg">Demands By Quarter</div>
         </div>
-      </p-scrollPanel>
-    </div>
-  </div>
-  <div class="col-12 md:col-6 lg:col-3">
-    <div class="card border-none surface-border m-0" style="background: linear-gradient(226.42deg, #c5741f 8.93%, #673a13 110.98%);border-bottom-left-radius: inherit;border-bottom-right-radius: inherit;">
-      <div class="flex align-items-center justify-content-between">
-        <div class="flex align-items-center">
-          <span class="text-white text-xl ml-2">Integration/ITaaP - Month Wise</span>
+        <div class="col-12 grid">
+          <div class="col-12">
+            <p-chart type="doughnut" [data]="quarterlyData" [options]="quarterOptions"/>
+          </div>
         </div>
       </div>
     </div>
-    <div class="card p-3" style="border-top-left-radius: inherit;border-top-right-radius: inherit;">
-      <p-scrollPanel [style]="{ width: '100%', height: '300px' }">
-        <div class="card-without-shadow mb-2 flex flex-column w-full border-1 surface-border px-2 py-2 hover:surface-ground">
-          <p-chart type="bar" [data]="dataMonthITaaP" [options]="optionsQuarterITaaP" />
-        </div>
-      </p-scrollPanel>
-    </div>
-  </div>
-  <div class="col-12 md:col-6 lg:col-3">
-    <div class="card border-none surface-border m-0" style="background: linear-gradient(226.42deg, #c5741f 8.93%, #673a13 110.98%);border-bottom-left-radius: inherit;border-bottom-right-radius: inherit;">
-      <div class="flex align-items-center justify-content-between">
-        <div class="flex align-items-center">
-          <span class="text-white text-xl ml-2">Integration/ITaaP - Stage</span>
+    <div class="col-12 md:col-12 lg:col-3">
+      <div class="card h-full">
+        <div class="h-full w-full text-2xl font-medium align-content-center text-align-center">
+          <svg xmlns="http://www.w3.org/2000/svg" height="48px" viewBox="0 -960 960 960" width="48px" fill="#cb3737">
+            <path
+              d="m467.93-321.78 50.29-50.29-121.7-122.39v-175.13h-72.04v203.35l143.45 144.46Zm260.59 189.76v-87.26q75.77-36.56 120.96-106.56 45.19-69.99 45.19-154.6t-45.19-155.17q-45.19-70.55-120.96-106.11v-87.26q108.85 42 176.15 136.76 67.31 94.75 67.31 211.29 0 116.54-66.81 211.73-66.8 95.18-176.65 137.18Zm-369.28 22.24q-76.71 0-144.32-29.36-67.61-29.35-117.9-79.52-50.29-50.18-79.64-117.9Q-11.98-404.29-11.98-481t29.36-144.44q29.35-67.72 79.64-117.9 50.29-50.17 117.95-79.52 67.65-29.36 144.27-29.36 76.71 0 144.44 29.36 67.72 29.35 117.89 79.51 50.17 50.15 79.65 117.89 29.48 67.73 29.48 144.45 0 76.72-29.48 144.46-29.48 67.74-79.65 117.9-50.17 50.16-117.89 79.51-67.73 29.36-144.44 29.36Zm.24-77.55q121.09 0 207.5-85.73 86.41-85.74 86.41-208.22 0-121.13-86.63-207.38t-207.71-86.25q-122.44 0-207.96 86.46-85.52 86.47-85.52 207.6 0 122.48 85.73 208 85.74 85.52 208.18 85.52ZM359.24-481Z"/>
+          </svg>
+          <div>Chart : Coming Soon</div>
         </div>
       </div>
     </div>
-    <div class="card p-3" style="border-top-left-radius: inherit;border-top-right-radius: inherit;">
-      <p-scrollPanel [style]="{ width: '100%', height: '300px' }">
-        <div class="card-without-shadow mb-2 flex flex-column w-full border-1 surface-border px-2 py-2 hover:surface-ground">
-          <p-chart type="doughnut" [data]="dataStageITaaP" [options]="optionsStageITaaP"></p-chart>
-        </div>
-      </p-scrollPanel>
-    </div>
   </div>
-  <div class="col-12 md:col-6 lg:col-3">
-    <div class="card border-none surface-border m-0" style="background: linear-gradient(226.42deg, #c5741f 8.93%, #673a13 110.98%);border-bottom-left-radius: inherit;border-bottom-right-radius: inherit;">
-      <div class="flex align-items-center justify-content-between">
-        <div class="flex align-items-center">
-          <span class="text-white text-xl ml-2">Integration/ITaaP - Status</span>
-        </div>
-      </div>
-    </div>
-    <div class="card p-3" style="border-top-left-radius: inherit;border-top-right-radius: inherit;">
-      <p-scrollPanel [style]="{ width: '100%', height: '300px' }">
-        <div class="card-without-shadow mb-2 flex flex-column w-full border-1 surface-border px-2 py-2 hover:surface-ground">
-          <p-chart type="doughnut" [data]="dataStatusITaaP" [options]="optionsStatusITaaP"></p-chart>
-        </div>
-      </p-scrollPanel>
-    </div>
-  </div>
-</div>
-
-  <!-- Data Modelling -->
-  <div class="col-12" style="display: inline-flex;" *ngIf="demandIntakeService.getSDVisibility('dataModelling')">
-  <div class="col-12 md:col-6 lg:col-3">
-    <div class="card border-none surface-border m-0" style="background: linear-gradient(226.42deg, #c5741f 8.93%, #673a13 110.98%);border-bottom-left-radius: inherit;border-bottom-right-radius: inherit;">
-      <div class="flex align-items-center justify-content-between">
-        <div class="flex align-items-center">
-          <span class="text-white text-xl ml-2">Data Modelling - Quarter Wise</span>
-        </div>
-      </div>
-    </div>
-    <div class="card p-3" style="border-top-left-radius: inherit;border-top-right-radius: inherit;">
-      <p-scrollPanel [style]="{ width: '100%', height: '300px' }">
-        <div class="card-without-shadow mb-2 flex flex-column w-full border-1 surface-border px-2 py-2 hover:surface-ground">
-          <p-chart type="bar" [data]="dataQuarterITaaP" [options]="optionsQuarterITaaP" />
-        </div>
-      </p-scrollPanel>
-    </div>
-  </div>
-  <div class="col-12 md:col-6 lg:col-3">
-    <div class="card border-none surface-border m-0" style="background: linear-gradient(226.42deg, #c5741f 8.93%, #673a13 110.98%);border-bottom-left-radius: inherit;border-bottom-right-radius: inherit;">
-      <div class="flex align-items-center justify-content-between">
-        <div class="flex align-items-center">
-          <span class="text-white text-xl ml-2">Data Modelling - Month Wise</span>
-        </div>
-      </div>
-    </div>
-    <div class="card p-3" style="border-top-left-radius: inherit;border-top-right-radius: inherit;">
-      <p-scrollPanel [style]="{ width: '100%', height: '300px' }">
-        <div class="card-without-shadow mb-2 flex flex-column w-full border-1 surface-border px-2 py-2 hover:surface-ground">
-          <p-chart type="bar" [data]="dataMonthITaaP" [options]="optionsQuarterITaaP" />
-        </div>
-      </p-scrollPanel>
-    </div>
-  </div>
-  <div class="col-12 md:col-6 lg:col-3">
-    <div class="card border-none surface-border m-0" style="background: linear-gradient(226.42deg, #c5741f 8.93%, #673a13 110.98%);border-bottom-left-radius: inherit;border-bottom-right-radius: inherit;">
-      <div class="flex align-items-center justify-content-between">
-        <div class="flex align-items-center">
-          <span class="text-white text-xl ml-2">Data Modelling - Stage</span>
-        </div>
-      </div>
-    </div>
-    <div class="card p-3" style="border-top-left-radius: inherit;border-top-right-radius: inherit;">
-      <p-scrollPanel [style]="{ width: '100%', height: '300px' }">
-        <div class="card-without-shadow mb-2 flex flex-column w-full border-1 surface-border px-2 py-2 hover:surface-ground">
-          <p-chart type="doughnut" [data]="dataStageITaaP" [options]="optionsStageITaaP"></p-chart>
-        </div>
-      </p-scrollPanel>
-    </div>
-  </div>
-  <div class="col-12 md:col-6 lg:col-3">
-    <div class="card border-none surface-border m-0" style="background: linear-gradient(226.42deg, #c5741f 8.93%, #673a13 110.98%);border-bottom-left-radius: inherit;border-bottom-right-radius: inherit;">
-      <div class="flex align-items-center justify-content-between">
-        <div class="flex align-items-center">
-          <span class="text-white text-xl ml-2">Data Modelling - Status</span>
-        </div>
-      </div>
-    </div>
-    <div class="card p-3" style="border-top-left-radius: inherit;border-top-right-radius: inherit;">
-      <p-scrollPanel [style]="{ width: '100%', height: '300px' }">
-        <div class="card-without-shadow mb-2 flex flex-column w-full border-1 surface-border px-2 py-2 hover:surface-ground">
-          <p-chart type="doughnut" [data]="dataStatusITaaP" [options]="optionsStatusITaaP"></p-chart>
-        </div>
-      </p-scrollPanel>
-    </div>
-  </div>
-</div>
-
-  <!-- ADL L1 -->
-  <div class="col-12" style="display: inline-flex;" *ngIf="demandIntakeService.getSDVisibility('adlL1')">
-  <div class="col-12 md:col-6 lg:col-3">
-    <div class="card border-none surface-border m-0" style="background: linear-gradient(226.42deg, #c5741f 8.93%, #673a13 110.98%);border-bottom-left-radius: inherit;border-bottom-right-radius: inherit;">
-      <div class="flex align-items-center justify-content-between">
-        <div class="flex align-items-center">
-          <span class="text-white text-xl ml-2">ADL L1 - Quarter Wise</span>
-        </div>
-      </div>
-    </div>
-    <div class="card p-3" style="border-top-left-radius: inherit;border-top-right-radius: inherit;">
-      <p-scrollPanel [style]="{ width: '100%', height: '300px' }">
-        <div class="card-without-shadow mb-2 flex flex-column w-full border-1 surface-border px-2 py-2 hover:surface-ground">
-          <p-chart type="bar" [data]="dataQuarterITaaP" [options]="optionsQuarterITaaP" />
-        </div>
-      </p-scrollPanel>
-    </div>
-  </div>
-  <div class="col-12 md:col-6 lg:col-3">
-    <div class="card border-none surface-border m-0" style="background: linear-gradient(226.42deg, #c5741f 8.93%, #673a13 110.98%);border-bottom-left-radius: inherit;border-bottom-right-radius: inherit;">
-      <div class="flex align-items-center justify-content-between">
-        <div class="flex align-items-center">
-          <span class="text-white text-xl ml-2">ADL L1 - Month Wise</span>
-        </div>
-      </div>
-    </div>
-    <div class="card p-3" style="border-top-left-radius: inherit;border-top-right-radius: inherit;">
-      <p-scrollPanel [style]="{ width: '100%', height: '300px' }">
-        <div class="card-without-shadow mb-2 flex flex-column w-full border-1 surface-border px-2 py-2 hover:surface-ground">
-          <p-chart type="bar" [data]="dataMonthITaaP" [options]="optionsQuarterITaaP" />
-        </div>
-      </p-scrollPanel>
-    </div>
-  </div>
-  <div class="col-12 md:col-6 lg:col-3">
-    <div class="card border-none surface-border m-0" style="background: linear-gradient(226.42deg, #c5741f 8.93%, #673a13 110.98%);border-bottom-left-radius: inherit;border-bottom-right-radius: inherit;">
-      <div class="flex align-items-center justify-content-between">
-        <div class="flex align-items-center">
-          <span class="text-white text-xl ml-2">ADL L1 - Stage</span>
-        </div>
-      </div>
-    </div>
-    <div class="card p-3" style="border-top-left-radius: inherit;border-top-right-radius: inherit;">
-      <p-scrollPanel [style]="{ width: '100%', height: '300px' }">
-        <div class="card-without-shadow mb-2 flex flex-column w-full border-1 surface-border px-2 py-2 hover:surface-ground">
-          <p-chart type="doughnut" [data]="dataStageITaaP" [options]="optionsStageITaaP"></p-chart>
-        </div>
-      </p-scrollPanel>
-    </div>
-  </div>
-  <div class="col-12 md:col-6 lg:col-3">
-    <div class="card border-none surface-border m-0" style="background: linear-gradient(226.42deg, #c5741f 8.93%, #673a13 110.98%);border-bottom-left-radius: inherit;border-bottom-right-radius: inherit;">
-      <div class="flex align-items-center justify-content-between">
-        <div class="flex align-items-center">
-          <span class="text-white text-xl ml-2">ADL L1 - Status</span>
-        </div>
-      </div>
-    </div>
-    <div class="card p-3" style="border-top-left-radius: inherit;border-top-right-radius: inherit;">
-      <p-scrollPanel [style]="{ width: '100%', height: '300px' }">
-        <div class="card-without-shadow mb-2 flex flex-column w-full border-1 surface-border px-2 py-2 hover:surface-ground">
-          <p-chart type="doughnut" [data]="dataStatusITaaP" [options]="optionsStatusITaaP"></p-chart>
-        </div>
-      </p-scrollPanel>
-    </div>
-  </div>
-  </div>
-
-  <!-- ADL L2 -->
-  <div class="col-12" style="display: inline-flex;" *ngIf="demandIntakeService.getSDVisibility('adlL2')">
-  <div class="col-12 md:col-6 lg:col-3">
-    <div class="card border-none surface-border m-0" style="background: linear-gradient(226.42deg, #c5741f 8.93%, #673a13 110.98%);border-bottom-left-radius: inherit;border-bottom-right-radius: inherit;">
-      <div class="flex align-items-center justify-content-between">
-        <div class="flex align-items-center">
-          <span class="text-white text-xl ml-2">ADL L2 - Quarter Wise</span>
-        </div>
-      </div>
-    </div>
-    <div class="card p-3" style="border-top-left-radius: inherit;border-top-right-radius: inherit;">
-      <p-scrollPanel [style]="{ width: '100%', height: '300px' }">
-        <div class="card-without-shadow mb-2 flex flex-column w-full border-1 surface-border px-2 py-2 hover:surface-ground">
-          <p-chart type="bar" [data]="dataQuarterITaaP" [options]="optionsQuarterITaaP" />
-        </div>
-      </p-scrollPanel>
-    </div>
-  </div>
-  <div class="col-12 md:col-6 lg:col-3">
-    <div class="card border-none surface-border m-0" style="background: linear-gradient(226.42deg, #c5741f 8.93%, #673a13 110.98%);border-bottom-left-radius: inherit;border-bottom-right-radius: inherit;">
-      <div class="flex align-items-center justify-content-between">
-        <div class="flex align-items-center">
-          <span class="text-white text-xl ml-2">ADL L2 - Month Wise</span>
-        </div>
-      </div>
-    </div>
-    <div class="card p-3" style="border-top-left-radius: inherit;border-top-right-radius: inherit;">
-      <p-scrollPanel [style]="{ width: '100%', height: '300px' }">
-        <div class="card-without-shadow mb-2 flex flex-column w-full border-1 surface-border px-2 py-2 hover:surface-ground">
-          <p-chart type="bar" [data]="dataMonthITaaP" [options]="optionsQuarterITaaP" />
-        </div>
-      </p-scrollPanel>
-    </div>
-  </div>
-  <div class="col-12 md:col-6 lg:col-3">
-    <div class="card border-none surface-border m-0" style="background: linear-gradient(226.42deg, #c5741f 8.93%, #673a13 110.98%);border-bottom-left-radius: inherit;border-bottom-right-radius: inherit;">
-      <div class="flex align-items-center justify-content-between">
-        <div class="flex align-items-center">
-          <span class="text-white text-xl ml-2">ADL L2 - Stage</span>
-        </div>
-      </div>
-    </div>
-    <div class="card p-3" style="border-top-left-radius: inherit;border-top-right-radius: inherit;">
-      <p-scrollPanel [style]="{ width: '100%', height: '300px' }">
-        <div class="card-without-shadow mb-2 flex flex-column w-full border-1 surface-border px-2 py-2 hover:surface-ground">
-          <p-chart type="doughnut" [data]="dataStageITaaP" [options]="optionsStageITaaP"></p-chart>
-        </div>
-      </p-scrollPanel>
-    </div>
-  </div>
-  <div class="col-12 md:col-6 lg:col-3">
-    <div class="card border-none surface-border m-0" style="background: linear-gradient(226.42deg, #c5741f 8.93%, #673a13 110.98%);border-bottom-left-radius: inherit;border-bottom-right-radius: inherit;">
-      <div class="flex align-items-center justify-content-between">
-        <div class="flex align-items-center">
-          <span class="text-white text-xl ml-2">ADL L2 - Status</span>
-        </div>
-      </div>
-    </div>
-    <div class="card p-3" style="border-top-left-radius: inherit;border-top-right-radius: inherit;">
-      <p-scrollPanel [style]="{ width: '100%', height: '300px' }">
-        <div class="card-without-shadow mb-2 flex flex-column w-full border-1 surface-border px-2 py-2 hover:surface-ground">
-          <p-chart type="doughnut" [data]="dataStatusITaaP" [options]="optionsStatusITaaP"></p-chart>
-        </div>
-      </p-scrollPanel>
-    </div>
-  </div>
-  </div>
-
-  <!-- Gold -->
-  <div class="col-12" style="display: inline-flex;" *ngIf="demandIntakeService.getSDVisibility('gold')">
-  <div class="col-12 md:col-6 lg:col-3">
-    <div class="card border-none surface-border m-0" style="background: linear-gradient(226.42deg, #c5741f 8.93%, #673a13 110.98%);border-bottom-left-radius: inherit;border-bottom-right-radius: inherit;">
-      <div class="flex align-items-center justify-content-between">
-        <div class="flex align-items-center">
-          <span class="text-white text-xl ml-2">Gold - Quarter Wise</span>
-        </div>
-      </div>
-    </div>
-    <div class="card p-3" style="border-top-left-radius: inherit;border-top-right-radius: inherit;">
-      <p-scrollPanel [style]="{ width: '100%', height: '300px' }">
-        <div class="card-without-shadow mb-2 flex flex-column w-full border-1 surface-border px-2 py-2 hover:surface-ground">
-          <p-chart type="bar" [data]="dataQuarterITaaP" [options]="optionsQuarterITaaP" />
-        </div>
-      </p-scrollPanel>
-    </div>
-  </div>
-  <div class="col-12 md:col-6 lg:col-3">
-    <div class="card border-none surface-border m-0" style="background: linear-gradient(226.42deg, #c5741f 8.93%, #673a13 110.98%);border-bottom-left-radius: inherit;border-bottom-right-radius: inherit;">
-      <div class="flex align-items-center justify-content-between">
-        <div class="flex align-items-center">
-          <span class="text-white text-xl ml-2">Gold - Month Wise</span>
-        </div>
-      </div>
-    </div>
-    <div class="card p-3" style="border-top-left-radius: inherit;border-top-right-radius: inherit;">
-      <p-scrollPanel [style]="{ width: '100%', height: '300px' }">
-        <div class="card-without-shadow mb-2 flex flex-column w-full border-1 surface-border px-2 py-2 hover:surface-ground">
-          <p-chart type="bar" [data]="dataMonthITaaP" [options]="optionsQuarterITaaP" />
-        </div>
-      </p-scrollPanel>
-    </div>
-  </div>
-  <div class="col-12 md:col-6 lg:col-3">
-    <div class="card border-none surface-border m-0" style="background: linear-gradient(226.42deg, #c5741f 8.93%, #673a13 110.98%);border-bottom-left-radius: inherit;border-bottom-right-radius: inherit;">
-      <div class="flex align-items-center justify-content-between">
-        <div class="flex align-items-center">
-          <span class="text-white text-xl ml-2">Gold - Stage</span>
-        </div>
-      </div>
-    </div>
-    <div class="card p-3" style="border-top-left-radius: inherit;border-top-right-radius: inherit;">
-      <p-scrollPanel [style]="{ width: '100%', height: '300px' }">
-        <div class="card-without-shadow mb-2 flex flex-column w-full border-1 surface-border px-2 py-2 hover:surface-ground">
-          <p-chart type="doughnut" [data]="dataStageITaaP" [options]="optionsStageITaaP"></p-chart>
-        </div>
-      </p-scrollPanel>
-    </div>
-  </div>
-  <div class="col-12 md:col-6 lg:col-3">
-    <div class="card border-none surface-border m-0" style="background: linear-gradient(226.42deg, #c5741f 8.93%, #673a13 110.98%);border-bottom-left-radius: inherit;border-bottom-right-radius: inherit;">
-      <div class="flex align-items-center justify-content-between">
-        <div class="flex align-items-center">
-          <span class="text-white text-xl ml-2">Gold - Status</span>
-        </div>
-      </div>
-    </div>
-    <div class="card p-3" style="border-top-left-radius: inherit;border-top-right-radius: inherit;">
-      <p-scrollPanel [style]="{ width: '100%', height: '300px' }">
-        <div class="card-without-shadow mb-2 flex flex-column w-full border-1 surface-border px-2 py-2 hover:surface-ground">
-          <p-chart type="doughnut" [data]="dataStatusITaaP" [options]="optionsStatusITaaP"></p-chart>
-        </div>
-      </p-scrollPanel>
-    </div>
-  </div>
-  </div>
-
-  <!-- MDM -->
-  <div class="col-12" style="display: inline-flex;" *ngIf="demandIntakeService.getSDVisibility('mdm')">
-  <div class="col-12 md:col-6 lg:col-3">
-    <div class="card border-none surface-border m-0" style="background: linear-gradient(226.42deg, #c5741f 8.93%, #673a13 110.98%);border-bottom-left-radius: inherit;border-bottom-right-radius: inherit;">
-      <div class="flex align-items-center justify-content-between">
-        <div class="flex align-items-center">
-          <span class="text-white text-xl ml-2">MDM - Quarter Wise</span>
-        </div>
-      </div>
-    </div>
-    <div class="card p-3" style="border-top-left-radius: inherit;border-top-right-radius: inherit;">
-      <p-scrollPanel [style]="{ width: '100%', height: '300px' }">
-        <div class="card-without-shadow mb-2 flex flex-column w-full border-1 surface-border px-2 py-2 hover:surface-ground">
-          <p-chart type="bar" [data]="dataQuarterITaaP" [options]="optionsQuarterITaaP" />
-        </div>
-      </p-scrollPanel>
-    </div>
-  </div>
-  <div class="col-12 md:col-6 lg:col-3">
-    <div class="card border-none surface-border m-0" style="background: linear-gradient(226.42deg, #c5741f 8.93%, #673a13 110.98%);border-bottom-left-radius: inherit;border-bottom-right-radius: inherit;">
-      <div class="flex align-items-center justify-content-between">
-        <div class="flex align-items-center">
-          <span class="text-white text-xl ml-2">MDM - Month Wise</span>
-        </div>
-      </div>
-    </div>
-    <div class="card p-3" style="border-top-left-radius: inherit;border-top-right-radius: inherit;">
-      <p-scrollPanel [style]="{ width: '100%', height: '300px' }">
-        <div class="card-without-shadow mb-2 flex flex-column w-full border-1 surface-border px-2 py-2 hover:surface-ground">
-          <p-chart type="bar" [data]="dataMonthITaaP" [options]="optionsQuarterITaaP" />
-        </div>
-      </p-scrollPanel>
-    </div>
-  </div>
-  <div class="col-12 md:col-6 lg:col-3">
-    <div class="card border-none surface-border m-0" style="background: linear-gradient(226.42deg, #c5741f 8.93%, #673a13 110.98%);border-bottom-left-radius: inherit;border-bottom-right-radius: inherit;">
-      <div class="flex align-items-center justify-content-between">
-        <div class="flex align-items-center">
-          <span class="text-white text-xl ml-2">MDM - Stage</span>
-        </div>
-      </div>
-    </div>
-    <div class="card p-3" style="border-top-left-radius: inherit;border-top-right-radius: inherit;">
-      <p-scrollPanel [style]="{ width: '100%', height: '300px' }">
-        <div class="card-without-shadow mb-2 flex flex-column w-full border-1 surface-border px-2 py-2 hover:surface-ground">
-          <p-chart type="doughnut" [data]="dataStageITaaP" [options]="optionsStageITaaP"></p-chart>
-        </div>
-      </p-scrollPanel>
-    </div>
-  </div>
-  <div class="col-12 md:col-6 lg:col-3">
-    <div class="card border-none surface-border m-0" style="background: linear-gradient(226.42deg, #c5741f 8.93%, #673a13 110.98%);border-bottom-left-radius: inherit;border-bottom-right-radius: inherit;">
-      <div class="flex align-items-center justify-content-between">
-        <div class="flex align-items-center">
-          <span class="text-white text-xl ml-2">MDM - Status</span>
-        </div>
-      </div>
-    </div>
-    <div class="card p-3" style="border-top-left-radius: inherit;border-top-right-radius: inherit;">
-      <p-scrollPanel [style]="{ width: '100%', height: '300px' }">
-        <div class="card-without-shadow mb-2 flex flex-column w-full border-1 surface-border px-2 py-2 hover:surface-ground">
-          <p-chart type="doughnut" [data]="dataStatusITaaP" [options]="optionsStatusITaaP"></p-chart>
-        </div>
-      </p-scrollPanel>
-    </div>
-  </div>
-  </div>
-
-  <!-- I&A -->
-  <div class="col-12" style="display: inline-flex;" *ngIf="demandIntakeService.getSDVisibility('ia')">
-  <div class="col-12 md:col-6 lg:col-3">
-    <div class="card border-none surface-border m-0" style="background: linear-gradient(226.42deg, #c5741f 8.93%, #673a13 110.98%);border-bottom-left-radius: inherit;border-bottom-right-radius: inherit;">
-      <div class="flex align-items-center justify-content-between">
-        <div class="flex align-items-center">
-          <span class="text-white text-xl ml-2">I&A - Quarter Wise</span>
-        </div>
-      </div>
-    </div>
-    <div class="card p-3" style="border-top-left-radius: inherit;border-top-right-radius: inherit;">
-      <p-scrollPanel [style]="{ width: '100%', height: '300px' }">
-        <div class="card-without-shadow mb-2 flex flex-column w-full border-1 surface-border px-2 py-2 hover:surface-ground">
-          <p-chart type="bar" [data]="dataQuarterITaaP" [options]="optionsQuarterITaaP" />
-        </div>
-      </p-scrollPanel>
-    </div>
-  </div>
-  <div class="col-12 md:col-6 lg:col-3">
-    <div class="card border-none surface-border m-0" style="background: linear-gradient(226.42deg, #c5741f 8.93%, #673a13 110.98%);border-bottom-left-radius: inherit;border-bottom-right-radius: inherit;">
-      <div class="flex align-items-center justify-content-between">
-        <div class="flex align-items-center">
-          <span class="text-white text-xl ml-2">I&A - Month Wise</span>
-        </div>
-      </div>
-    </div>
-    <div class="card p-3" style="border-top-left-radius: inherit;border-top-right-radius: inherit;">
-      <p-scrollPanel [style]="{ width: '100%', height: '300px' }">
-        <div class="card-without-shadow mb-2 flex flex-column w-full border-1 surface-border px-2 py-2 hover:surface-ground">
-          <p-chart type="bar" [data]="dataMonthITaaP" [options]="optionsQuarterITaaP" />
-        </div>
-      </p-scrollPanel>
-    </div>
-  </div>
-  <div class="col-12 md:col-6 lg:col-3">
-    <div class="card border-none surface-border m-0" style="background: linear-gradient(226.42deg, #c5741f 8.93%, #673a13 110.98%);border-bottom-left-radius: inherit;border-bottom-right-radius: inherit;">
-      <div class="flex align-items-center justify-content-between">
-        <div class="flex align-items-center">
-          <span class="text-white text-xl ml-2">I&A - Stage</span>
-        </div>
-      </div>
-    </div>
-    <div class="card p-3" style="border-top-left-radius: inherit;border-top-right-radius: inherit;">
-      <p-scrollPanel [style]="{ width: '100%', height: '300px' }">
-        <div class="card-without-shadow mb-2 flex flex-column w-full border-1 surface-border px-2 py-2 hover:surface-ground">
-          <p-chart type="doughnut" [data]="dataStageITaaP" [options]="optionsStageITaaP"></p-chart>
-        </div>
-      </p-scrollPanel>
-    </div>
-  </div>
-  <div class="col-12 md:col-6 lg:col-3">
-    <div class="card border-none surface-border m-0" style="background: linear-gradient(226.42deg, #c5741f 8.93%, #673a13 110.98%);border-bottom-left-radius: inherit;border-bottom-right-radius: inherit;">
-      <div class="flex align-items-center justify-content-between">
-        <div class="flex align-items-center">
-          <span class="text-white text-xl ml-2">I&A - Status</span>
-        </div>
-      </div>
-    </div>
-    <div class="card p-3" style="border-top-left-radius: inherit;border-top-right-radius: inherit;">
-      <p-scrollPanel [style]="{ width: '100%', height: '300px' }">
-        <div class="card-without-shadow mb-2 flex flex-column w-full border-1 surface-border px-2 py-2 hover:surface-ground">
-          <p-chart type="doughnut" [data]="dataStatusITaaP" [options]="optionsStatusITaaP"></p-chart>
-        </div>
-      </p-scrollPanel>
-    </div>
-  </div>
-  </div>
-
-  <!-- Data Quality -->
-  <div class="col-12" style="display: inline-flex;" *ngIf="demandIntakeService.getSDVisibility('dataQuality')">
-  <div class="col-12 md:col-6 lg:col-3">
-    <div class="card border-none surface-border m-0" style="background: linear-gradient(226.42deg, #c5741f 8.93%, #673a13 110.98%);border-bottom-left-radius: inherit;border-bottom-right-radius: inherit;">
-      <div class="flex align-items-center justify-content-between">
-        <div class="flex align-items-center">
-          <span class="text-white text-xl ml-2">Data Quality - Quarter Wise</span>
-        </div>
-      </div>
-    </div>
-    <div class="card p-3" style="border-top-left-radius: inherit;border-top-right-radius: inherit;">
-      <p-scrollPanel [style]="{ width: '100%', height: '300px' }">
-        <div class="card-without-shadow mb-2 flex flex-column w-full border-1 surface-border px-2 py-2 hover:surface-ground">
-          <p-chart type="bar" [data]="dataQuarterITaaP" [options]="optionsQuarterITaaP" />
-        </div>
-      </p-scrollPanel>
-    </div>
-  </div>
-  <div class="col-12 md:col-6 lg:col-3">
-    <div class="card border-none surface-border m-0" style="background: linear-gradient(226.42deg, #c5741f 8.93%, #673a13 110.98%);border-bottom-left-radius: inherit;border-bottom-right-radius: inherit;">
-      <div class="flex align-items-center justify-content-between">
-        <div class="flex align-items-center">
-          <span class="text-white text-xl ml-2">Data Quality - Month Wise</span>
-        </div>
-      </div>
-    </div>
-    <div class="card p-3" style="border-top-left-radius: inherit;border-top-right-radius: inherit;">
-      <p-scrollPanel [style]="{ width: '100%', height: '300px' }">
-        <div class="card-without-shadow mb-2 flex flex-column w-full border-1 surface-border px-2 py-2 hover:surface-ground">
-          <p-chart type="bar" [data]="dataMonthITaaP" [options]="optionsQuarterITaaP" />
-        </div>
-      </p-scrollPanel>
-    </div>
-  </div>
-  <div class="col-12 md:col-6 lg:col-3">
-    <div class="card border-none surface-border m-0" style="background: linear-gradient(226.42deg, #c5741f 8.93%, #673a13 110.98%);border-bottom-left-radius: inherit;border-bottom-right-radius: inherit;">
-      <div class="flex align-items-center justify-content-between">
-        <div class="flex align-items-center">
-          <span class="text-white text-xl ml-2">Data Quality - Stage</span>
-        </div>
-      </div>
-    </div>
-    <div class="card p-3" style="border-top-left-radius: inherit;border-top-right-radius: inherit;">
-      <p-scrollPanel [style]="{ width: '100%', height: '300px' }">
-        <div class="card-without-shadow mb-2 flex flex-column w-full border-1 surface-border px-2 py-2 hover:surface-ground">
-          <p-chart type="doughnut" [data]="dataStageITaaP" [options]="optionsStageITaaP"></p-chart>
-        </div>
-      </p-scrollPanel>
-    </div>
-  </div>
-  <div class="col-12 md:col-6 lg:col-3">
-    <div class="card border-none surface-border m-0" style="background: linear-gradient(226.42deg, #c5741f 8.93%, #673a13 110.98%);border-bottom-left-radius: inherit;border-bottom-right-radius: inherit;">
-      <div class="flex align-items-center justify-content-between">
-        <div class="flex align-items-center">
-          <span class="text-white text-xl ml-2">Data Quality - Status</span>
-        </div>
-      </div>
-    </div>
-    <div class="card p-3" style="border-top-left-radius: inherit;border-top-right-radius: inherit;">
-      <p-scrollPanel [style]="{ width: '100%', height: '300px' }">
-        <div class="card-without-shadow mb-2 flex flex-column w-full border-1 surface-border px-2 py-2 hover:surface-ground">
-          <p-chart type="doughnut" [data]="dataStatusITaaP" [options]="optionsStatusITaaP"></p-chart>
-        </div>
-      </p-scrollPanel>
-    </div>
-  </div>
-  </div>
-
-  <!-- Informatica PWC -->
-  <div class="col-12" style="display: inline-flex;" *ngIf="demandIntakeService.getSDVisibility('informatica')">
-  <div class="col-12 md:col-6 lg:col-3">
-    <div class="card border-none surface-border m-0" style="background: linear-gradient(226.42deg, #c5741f 8.93%, #673a13 110.98%);border-bottom-left-radius: inherit;border-bottom-right-radius: inherit;">
-      <div class="flex align-items-center justify-content-between">
-        <div class="flex align-items-center">
-          <span class="text-white text-xl ml-2">Informatica PWC - Quarter Wise</span>
-        </div>
-      </div>
-    </div>
-    <div class="card p-3" style="border-top-left-radius: inherit;border-top-right-radius: inherit;">
-      <p-scrollPanel [style]="{ width: '100%', height: '300px' }">
-        <div class="card-without-shadow mb-2 flex flex-column w-full border-1 surface-border px-2 py-2 hover:surface-ground">
-          <p-chart type="bar" [data]="dataQuarterITaaP" [options]="optionsQuarterITaaP" />
-        </div>
-      </p-scrollPanel>
-    </div>
-  </div>
-  <div class="col-12 md:col-6 lg:col-3">
-    <div class="card border-none surface-border m-0" style="background: linear-gradient(226.42deg, #c5741f 8.93%, #673a13 110.98%);border-bottom-left-radius: inherit;border-bottom-right-radius: inherit;">
-      <div class="flex align-items-center justify-content-between">
-        <div class="flex align-items-center">
-          <span class="text-white text-xl ml-2">Informatica PWC - Month Wise</span>
-        </div>
-      </div>
-    </div>
-    <div class="card p-3" style="border-top-left-radius: inherit;border-top-right-radius: inherit;">
-      <p-scrollPanel [style]="{ width: '100%', height: '300px' }">
-        <div class="card-without-shadow mb-2 flex flex-column w-full border-1 surface-border px-2 py-2 hover:surface-ground">
-          <p-chart type="bar" [data]="dataMonthITaaP" [options]="optionsQuarterITaaP" />
-        </div>
-      </p-scrollPanel>
-    </div>
-  </div>
-  <div class="col-12 md:col-6 lg:col-3">
-    <div class="card border-none surface-border m-0" style="background: linear-gradient(226.42deg, #c5741f 8.93%, #673a13 110.98%);border-bottom-left-radius: inherit;border-bottom-right-radius: inherit;">
-      <div class="flex align-items-center justify-content-between">
-        <div class="flex align-items-center">
-          <span class="text-white text-xl ml-2">Informatica PWC - Stage</span>
-        </div>
-      </div>
-    </div>
-    <div class="card p-3" style="border-top-left-radius: inherit;border-top-right-radius: inherit;">
-      <p-scrollPanel [style]="{ width: '100%', height: '300px' }">
-        <div class="card-without-shadow mb-2 flex flex-column w-full border-1 surface-border px-2 py-2 hover:surface-ground">
-          <p-chart type="doughnut" [data]="dataStageITaaP" [options]="optionsStageITaaP"></p-chart>
-        </div>
-      </p-scrollPanel>
-    </div>
-  </div>
-  <div class="col-12 md:col-6 lg:col-3">
-    <div class="card border-none surface-border m-0" style="background: linear-gradient(226.42deg, #c5741f 8.93%, #673a13 110.98%);border-bottom-left-radius: inherit;border-bottom-right-radius: inherit;">
-      <div class="flex align-items-center justify-content-between">
-        <div class="flex align-items-center">
-          <span class="text-white text-xl ml-2">Informatica PWC - Status</span>
-        </div>
-      </div>
-    </div>
-    <div class="card p-3" style="border-top-left-radius: inherit;border-top-right-radius: inherit;">
-      <p-scrollPanel [style]="{ width: '100%', height: '300px' }">
-        <div class="card-without-shadow mb-2 flex flex-column w-full border-1 surface-border px-2 py-2 hover:surface-ground">
-          <p-chart type="doughnut" [data]="dataStatusITaaP" [options]="optionsStatusITaaP"></p-chart>
-        </div>
-      </p-scrollPanel>
-    </div>
-  </div>
-  </div>
-
-  <!-- Azure Synapse DWH -->
-  <div class="col-12" style="display: inline-flex;" *ngIf="demandIntakeService.getSDVisibility('azureSynapse')">
-<div class="col-12 md:col-6 lg:col-3">
-    <div class="card border-none surface-border m-0" style="background: linear-gradient(226.42deg, #c5741f 8.93%, #673a13 110.98%);border-bottom-left-radius: inherit;border-bottom-right-radius: inherit;">
-      <div class="flex align-items-center justify-content-between">
-        <div class="flex align-items-center">
-          <span class="text-white text-xl ml-2">Azure Synapse DWH - Quarter Wise</span>
-        </div>
-      </div>
-    </div>
-    <div class="card p-3" style="border-top-left-radius: inherit;border-top-right-radius: inherit;">
-      <p-scrollPanel [style]="{ width: '100%', height: '300px' }">
-        <div class="card-without-shadow mb-2 flex flex-column w-full border-1 surface-border px-2 py-2 hover:surface-ground">
-          <p-chart type="bar" [data]="dataQuarterITaaP" [options]="optionsQuarterITaaP" />
-        </div>
-      </p-scrollPanel>
-    </div>
-  </div>
-  <div class="col-12 md:col-6 lg:col-3">
-    <div class="card border-none surface-border m-0" style="background: linear-gradient(226.42deg, #c5741f 8.93%, #673a13 110.98%);border-bottom-left-radius: inherit;border-bottom-right-radius: inherit;">
-      <div class="flex align-items-center justify-content-between">
-        <div class="flex align-items-center">
-          <span class="text-white text-xl ml-2">Azure Synapse DWH - Month Wise</span>
-        </div>
-      </div>
-    </div>
-    <div class="card p-3" style="border-top-left-radius: inherit;border-top-right-radius: inherit;">
-      <p-scrollPanel [style]="{ width: '100%', height: '300px' }">
-        <div class="card-without-shadow mb-2 flex flex-column w-full border-1 surface-border px-2 py-2 hover:surface-ground">
-          <p-chart type="bar" [data]="dataMonthITaaP" [options]="optionsQuarterITaaP" />
-        </div>
-      </p-scrollPanel>
-    </div>
-  </div>
-  <div class="col-12 md:col-6 lg:col-3">
-    <div class="card border-none surface-border m-0" style="background: linear-gradient(226.42deg, #c5741f 8.93%, #673a13 110.98%);border-bottom-left-radius: inherit;border-bottom-right-radius: inherit;">
-      <div class="flex align-items-center justify-content-between">
-        <div class="flex align-items-center">
-          <span class="text-white text-xl ml-2">Azure Synapse DWH - Stage</span>
-        </div>
-      </div>
-    </div>
-    <div class="card p-3" style="border-top-left-radius: inherit;border-top-right-radius: inherit;">
-      <p-scrollPanel [style]="{ width: '100%', height: '300px' }">
-        <div class="card-without-shadow mb-2 flex flex-column w-full border-1 surface-border px-2 py-2 hover:surface-ground">
-          <p-chart type="doughnut" [data]="dataStageITaaP" [options]="optionsStageITaaP"></p-chart>
-        </div>
-      </p-scrollPanel>
-    </div>
-  </div>
-  <div class="col-12 md:col-6 lg:col-3">
-    <div class="card border-none surface-border m-0" style="background: linear-gradient(226.42deg, #c5741f 8.93%, #673a13 110.98%);border-bottom-left-radius: inherit;border-bottom-right-radius: inherit;">
-      <div class="flex align-items-center justify-content-between">
-        <div class="flex align-items-center">
-          <span class="text-white text-xl ml-2">Azure Synapse DWH - Status</span>
-        </div>
-      </div>
-    </div>
-    <div class="card p-3" style="border-top-left-radius: inherit;border-top-right-radius: inherit;">
-      <p-scrollPanel [style]="{ width: '100%', height: '300px' }">
-        <div class="card-without-shadow mb-2 flex flex-column w-full border-1 surface-border px-2 py-2 hover:surface-ground">
-          <p-chart type="doughnut" [data]="dataStatusITaaP" [options]="optionsStatusITaaP"></p-chart>
-        </div>
-      </p-scrollPanel>
-    </div>
-  </div>
-  </div>
-
 </div>

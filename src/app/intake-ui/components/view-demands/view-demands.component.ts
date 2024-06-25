@@ -1,15 +1,17 @@
-import { Component, OnInit } from '@angular/core';
-import { DemandIntakeService } from '../../services/demand-intake.service';
-import { catchError, map, throwError } from 'rxjs';
-import { Demand } from '../../models/demand';
-import { MessageService } from 'primeng/api';
-import { Router } from '@angular/router';
-import { AuthService } from '../../auth/auth.service';
-import { AllDemands } from '../../models/all-demands';
-import { EventService } from '../../services/event.service';
-import { DemandCategory } from '../../enums/demand-category';
-import { DemandStatusFilter } from '../../enums/demand-status-filter';
-import { DemandStatus } from '../../enums/demand-status';
+import {Component, OnInit} from '@angular/core';
+import {DemandIntakeService} from '../../services/demand-intake.service';
+import {catchError, map, throwError} from 'rxjs';
+import {Demand} from '../../models/demand';
+import {MessageService} from 'primeng/api';
+import {Router} from '@angular/router';
+import {AuthService} from '../../auth/auth.service';
+import {AllDemands} from '../../models/all-demands';
+import {EventService} from '../../services/event.service';
+import {DemandCategory} from '../../enums/demand-category';
+import {DemandStatusFilter} from '../../enums/demand-status-filter';
+import {DemandStatus} from '../../enums/demand-status';
+import {ViewDemands} from "../../models/view-demands";
+import {Introduction} from "../../models/introduction";
 
 @Component({
   selector: 'app-view-demands',
@@ -17,24 +19,30 @@ import { DemandStatus } from '../../enums/demand-status';
 })
 export class ViewDemandsComponent implements OnInit {
   allDemands: AllDemands = new AllDemands;
+  viewDemands: ViewDemands = new ViewDemands;
   errorData: any;
   columns!: any;
   selectedDemand!: Demand;
+  selectedIntroduction!: Introduction;
   isRequester: boolean = false;
   demandCategories!: string[];
   selectedDemandCategory!: string;
   allCurrentMyDemands: Demand[] = [];
   allCurrentMyDemandsAsSH: Demand[] = [];
   allCurrentPendingDemands: Demand[] = [];
+  viewCurrentMyDemands: Introduction[] = [];
+  viewCurrentMyDemandsAsSH: Introduction[] = [];
+  viewCurrentPendingDemands: Introduction[] = [];
   demandStatusList!: string[];
   selectedDemandStatus!: string;
 
-  constructor(private authService: AuthService, public demandIntakeService: DemandIntakeService, private messageService: MessageService, private router: Router, public eventService: EventService) { }
+  constructor(private authService: AuthService, public demandIntakeService: DemandIntakeService, private messageService: MessageService, private router: Router, public eventService: EventService) {
+  }
 
   ngOnInit() {
-    this.fetchAllDemands();
+    this.viewAllDemands();
     this.demandCategories = Object.values(DemandCategory);
-    this.selectedDemandCategory = DemandCategory.ACTION_IN_PROGRESS;
+    this.selectedDemandCategory = DemandCategory.ALL;
     this.demandStatusList = Object.keys(DemandStatusFilter);
     this.selectedDemandStatus = DemandStatusFilter.ALL;
 
@@ -45,11 +53,12 @@ export class ViewDemandsComponent implements OnInit {
     }
   }
 
-  fetchAllDemands() {
-    this.demandIntakeService.getAllDemands().pipe(
+  viewAllDemands() {
+    this.eventService.progressBarEvent.emit(true);
+    this.demandIntakeService.getViewAllDemands().pipe(
       map((response: any) => {
         console.log('View getAllDemands() : Response -> ', response);
-        this.allDemands = response;
+        this.viewDemands = response;
         this.onCategoryChange();
         this.errorData = "";
         this.eventService.progressBarEvent.emit(false);
@@ -70,10 +79,14 @@ export class ViewDemandsComponent implements OnInit {
     this.allCurrentMyDemandsAsSH = this.allDemands.stakeholderDemands;
     this.allCurrentPendingDemands = this.allDemands.pendingDemands;
 
+    this.viewCurrentMyDemands = this.viewDemands.myDemands;
+    this.viewCurrentMyDemandsAsSH = this.viewDemands.stakeholderDemands;
+    this.viewCurrentPendingDemands = this.viewDemands.pendingDemands;
+
     if (this.selectedDemandStatus != 'ALL') {
-      this.allCurrentMyDemands = this.allCurrentMyDemands.filter(item => this.selectedDemandStatus === item.introduction.status);
-      this.allCurrentMyDemandsAsSH = this.allCurrentMyDemandsAsSH.filter(item => this.selectedDemandStatus === item.introduction.status);
-      this.allCurrentPendingDemands = this.allCurrentPendingDemands.filter(item => this.selectedDemandStatus === item.introduction.status);
+      this.viewCurrentMyDemands = this.viewCurrentMyDemands.filter(item => this.selectedDemandStatus === item.status);
+      this.viewCurrentMyDemandsAsSH = this.viewCurrentMyDemandsAsSH.filter(item => this.selectedDemandStatus === item.status);
+      this.viewCurrentPendingDemands = this.viewCurrentPendingDemands.filter(item => this.selectedDemandStatus === item.status);
     }
   }
 
@@ -98,10 +111,15 @@ export class ViewDemandsComponent implements OnInit {
     this.allCurrentMyDemandsAsSH = this.allDemands.stakeholderDemands;
     this.allCurrentPendingDemands = this.allDemands.pendingDemands;
 
+    this.viewCurrentMyDemands = this.viewDemands.myDemands;
+    this.viewCurrentMyDemandsAsSH = this.viewDemands.stakeholderDemands;
+    this.viewCurrentPendingDemands = this.viewDemands.pendingDemands;
+
+
     if (this.selectedDemandCategory == DemandCategory.ACTION_IN_PROGRESS) {
-      this.allCurrentMyDemands = this.allCurrentMyDemands.filter(item => myStatusList.find(s => s == item.introduction.status));
-      this.allCurrentMyDemandsAsSH = this.allCurrentMyDemandsAsSH.filter(item => myStatusList.find(s => s == item.introduction.status));
-      this.allCurrentPendingDemands = this.allCurrentPendingDemands.filter(item => statusList.find(s => s == item.introduction.status));
+      this.viewCurrentMyDemands = this.viewCurrentMyDemands.filter(item => myStatusList.find(s => s == item.status));
+      this.viewCurrentMyDemandsAsSH = this.viewCurrentMyDemandsAsSH.filter(item => myStatusList.find(s => s == item.status));
+      this.viewCurrentPendingDemands = this.viewCurrentPendingDemands.filter(item => statusList.find(s => s == item.status));
 
       let actionInProgressList: Demand[] = [];
       if (this.authService.isDM()) {
@@ -140,13 +158,11 @@ export class ViewDemandsComponent implements OnInit {
         });
         // console.log("actionDoneList", actionDoneList)
         this.allCurrentPendingDemands = actionDoneList;
-        // console.log("this.allCurrentPendingDemands 1", this.allCurrentPendingDemands)
+        // console.log("thi s.allCurrentPendingDemands 1", this.allCurrentPendingDemands)
       } else {
         this.allCurrentPendingDemands = this.allCurrentPendingDemands.filter(item => !statusList.find(s => s == item.introduction.status));
       }
-
     }
-
   }
 
   onTabChange(event: any) {
@@ -159,11 +175,26 @@ export class ViewDemandsComponent implements OnInit {
     this.eventService.isStakeholderDemand = isStakeholderDemand;
     this.eventService.isNewDemand = false;
     this.eventService.solutionDirectionValue = new Array();
-    this.eventService.selectedDemandTabIndex = 0;
+    // this.eventService.selectedDemandTabIndex = 0;
     this.eventService.selectedEADITabIndex = 0;
     this.eventService.selectedRequirementsTabIndex = 0;
 
-    this.demandIntakeService.setDemand(this.selectedDemand, false);
-    this.router.navigate(['/demand-intake/' + this.selectedDemand.introduction.demandIntakeId]);
+    this.demandIntakeService
+      .getDemandByDemandId(this.selectedIntroduction.demandIntakeId)
+      .subscribe(response => {
+        console.info("onDemandSelect() : SUCCESS : " + this.selectedIntroduction.demandIntakeId, response);
+        this.demandIntakeService.setDemand(response, false);
+        this.eventService.progressBarEvent.emit(false);
+        this.router.navigate(['/demand-intake/introduction/' + this.selectedIntroduction.demandIntakeId]);
+      }, error => {
+        console.info("onDemandSelect() : ERROR : " + this.selectedIntroduction.demandIntakeId, error)
+        this.eventService.progressBarEvent.emit(false);
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Error',
+          detail: 'Demand [' + this.selectedDemand.introduction.demandIntakeId + '] Failed to load : with error ' + error.statusText,
+          life: 3000
+        });
+      })
   }
 }

@@ -1,81 +1,91 @@
-<p-card>
-  <p-toast></p-toast>
-  <ng-template pTemplate="content">
-    <div class="grid">
-      <div class="col-12 xs:col-12 sm:col-12 lg:col-12 xl:col-12">
-        <p-tabView *ngIf="authService.isDM()">
-          <p-tabPanel header="Demand Manager ({{getDomainValueList(domain)}})">
-            <div class="grid">
-              <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                <label required class="asterisk-if-mandatory" for="decisionDate">{{ fieldsService.getLabel('DEMAND_MANAGER_DECISION_DATE') }}</label>
-              </div>
-              <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
-                <p-calendar dateFormat="dd/mm/yy" [(ngModel)]="demandManagerInfo.decisionDate" [disabled]="true"
-                [pTooltip]="fieldsService.getToolTip('DEMAND_MANAGER_DECISION_DATE')"
-                  [showIcon]="true"></p-calendar>
-              </div>
-              <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                <label required class="asterisk-if-mandatory" for="decision">{{ fieldsService.getLabel('DEMAND_MANAGER_DECISION') }}</label>
-              </div>
-              <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
-                <p-dropdown [options]="decisions" [(ngModel)]="selectedDecision" [disabled]="dmActionDone"
-                [pTooltip]="fieldsService.getToolTip('DEMAND_MANAGER_DECISION')"
-                  placeholder="Your decision"></p-dropdown>
-              </div>
-              <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                <label required class="asterisk-if-mandatory" for="remarks">{{ fieldsService.getLabel('DEMAND_MANAGER_REMARKS') }}</label>
-              </div>
-              <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
-                <textarea rows="2" cols="75" [pTooltip]="fieldsService.getToolTip('DEMAND_MANAGER_REMARKS')" [(ngModel)]="demandManagerInfo.remarks" pInputTextarea [disabled]="dmActionDone"></textarea>
-              </div>
-            </div>
-          </p-tabPanel>
-        </p-tabView>
+<p-toast></p-toast>
 
-        <p-tabView *ngIf="!authService.isDM()">
-          <p-tabPanel header="Demand Manager ({{getDomainValue(item.solution)}})"
-            *ngFor="let item of solutionDirectionList ; let i =index">
-            <div class="grid">
-              <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                <label required class="asterisk-if-mandatory" for="decisionDate">Decision Date</label>
-              </div>
-              <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
-                <p-calendar dateFormat="dd/mm/yy" [(ngModel)]="item.decisionDate" [disabled]="true"
-                  [showIcon]="true"></p-calendar>
-              </div>
-              <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                <label required class="asterisk-if-mandatory" for="dmEmail">Decision By</label>
-              </div>
-              <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
-                <input id="project" type="text" [(ngModel)]="item.dmEmail" size="60" disabled="true"
-                class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary">
-              </div>
+<div class="grid p-fluid">
+  <div class="col-12 xs:col-12 sm:col-12 lg:col-12 xl:col-12">
+    <p-tabView *ngIf="authService.isDM()">
+      <p-tabPanel header="Demand Manager ({{getDomainValueList(domain)}})">
+        <div class="grid">
+          <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
+            <label required class="asterisk-if-mandatory"
+                   for="decisionDate">{{ fieldsService.getLabel('DEMAND_MANAGER_DECISION_DATE') }}</label>
+          </div>
+          <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
+            <p-calendar dateFormat="dd/mm/yy" [(ngModel)]="demandManagerInfo.decisionDate" [disabled]="true"
+                        tooltipPosition="left" [pTooltip]="fieldsService.getToolTip('DEMAND_MANAGER_DECISION_DATE')"
+                        [showIcon]="true"></p-calendar>
+          </div>
+          <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
+            <label required class="asterisk-if-mandatory"
+                   for="decision">{{ fieldsService.getLabel('DEMAND_MANAGER_DECISION') }}</label>
+          </div>
+          <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
+            <p-dropdown [options]="decisions" [(ngModel)]="selectedDecision" [disabled]="dmActionDone"
+                        tooltipPosition="left" [pTooltip]="fieldsService.getToolTip('DEMAND_MANAGER_DECISION')"
+                        (onChange)="onDecisionSelect()"
+                        placeholder="Your decision"></p-dropdown>
+          </div>
+          <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
+            <label required class="asterisk-if-mandatory"
+                   for="remarks">{{ fieldsService.getLabel('DEMAND_MANAGER_REMARKS') }}</label>
+          </div>
+          <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
+                <textarea rows="2" cols="75" tooltipPosition="left"
+                          [pTooltip]="fieldsService.getToolTip('DEMAND_MANAGER_REMARKS')"
+                          [(ngModel)]="demandManagerInfo.remarks" pInputTextarea [disabled]="dmActionDone"></textarea>
+          </div>
+        </div>
+      </p-tabPanel>
+    </p-tabView>
 
-              <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                <label required class="asterisk-if-mandatory" for="decision">Decision</label>
-              </div>
-              <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
-                <!-- <p-dropdown [options]="decisions" [(ngModel)]="item.decision" [disabled]="true"
-                  placeholder="Your decision"></p-dropdown> -->
-                <span>{{item.decision}}</span>
-              </div>
-              <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
-                <label required class="asterisk-if-mandatory" for="remarks">Remarks</label>
-              </div>
-              <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
-                <textarea rows="2" cols="75" [(ngModel)]="item.remarks" [disabled]="true" pInputTextarea></textarea>
-              </div>
-            </div>
-          </p-tabPanel>
-        </p-tabView>
-      </div>
-    </div>
-  </ng-template>
-  <ng-template pTemplate="footer">
-    <div class="grid grid-nogutter justify-content-between">
-      <p-button label="{{ fieldsService.getLabel('BACK_BUTTON') }}" (onClick)="prevPage()" icon="pi pi-angle-left"></p-button>
-      <p-button label="{{ fieldsService.getLabel('NEXT_BUTTON') }}" *ngIf="visibleNextButton" (onClick)="nextPage()" icon="pi pi-angle-right"></p-button>
-      <p-button label="{{submitDemandLabel}}" *ngIf="visibleSubmitButton" (onClick)="submitPage()" iconPos="right"></p-button>
-    </div>
-  </ng-template>
-</p-card>
+    <p-tabView *ngIf="!authService.isDM()">
+      <p-tabPanel header="Demand Manager ({{getDomainValue(item.solution)}})"
+                  *ngFor="let item of solutionDirectionList ; let i =index">
+        <div class="grid">
+          <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
+            <label required class="asterisk-if-mandatory" for="decisionDate">Decision Date</label>
+          </div>
+          <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
+            <p-calendar dateFormat="dd/mm/yy" [(ngModel)]="item.decisionDate" [disabled]="true"
+                        [showIcon]="true"></p-calendar>
+          </div>
+          <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
+            <label required class="asterisk-if-mandatory" for="dmEmail">Decision By</label>
+          </div>
+          <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
+            <input id="project" type="text" [(ngModel)]="item.dmEmail" size="60" disabled="true"
+                   class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary">
+          </div>
+
+          <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
+            <label required class="asterisk-if-mandatory" for="decision">Decision</label>
+          </div>
+          <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
+            <!-- <p-dropdown [options]="decisions" [(ngModel)]="item.decision" [disabled]="true"
+              placeholder="Your decision"></p-dropdown> -->
+            <!--                <span>{{ item.decision }}</span>-->
+            <span
+              [class]="'align-self-center demand-badge status-' + demandIntakeService.getDemandStatusValueInLower(item.decision)">
+                    {{ item.decision }}
+                  </span>
+          </div>
+          <div class="col-3 xs:col-3 sm:col-3 lg:col-3 xl:col-3">
+            <label required class="asterisk-if-mandatory" for="remarks">Remarks</label>
+          </div>
+          <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
+            <textarea rows="2" cols="75" [(ngModel)]="item.remarks" [disabled]="true" pInputTextarea></textarea>
+          </div>
+        </div>
+      </p-tabPanel>
+    </p-tabView>
+  </div>
+</div>
+
+<div class="grid grid-nogutter justify-content-between">
+  <p-button label="{{ fieldsService.getLabel('BACK_BUTTON') }}" (onClick)="prevPage()"
+            icon="pi pi-angle-left"></p-button>
+  <p-button label="{{ fieldsService.getLabel('NEXT_BUTTON') }}" *ngIf="visibleNextButton" (onClick)="nextPage()"
+            icon="pi pi-angle-right"></p-button>
+  <p-button label="{{submitDemandLabel}}" *ngIf="visibleSubmitButton" (onClick)="submitPage()"
+            iconPos="right"></p-button>
+</div>
+

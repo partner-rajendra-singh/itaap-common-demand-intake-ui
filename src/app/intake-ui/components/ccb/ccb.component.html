@@ -23,7 +23,7 @@
               <label required class="asterisk-if-mandatory" for="decision">{{ fieldsService.getLabel('CCB_MEMBER_DECISION') }}</label>
             </div>
             <div class="col-9 xs:col-9 sm:col-9 lg:col-9 xl:col-9">
-              <p-dropdown appendTo="body" [options]="decisions" [(ngModel)]="selectedDecision"
+              <p-dropdown appendTo="body" [options]="decisions" [(ngModel)]="selectedDecision" (onChange)="onDecisionSelect()"
               [pTooltip]="fieldsService.getToolTip('CCB_MEMBER_DECISION')"
                 [disabled]="!authService.isCCB() || (authService.isCCB() && eventService.isMyDemand)"
                 placeholder="Your decision"></p-dropdown>

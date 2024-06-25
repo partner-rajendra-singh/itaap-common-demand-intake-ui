@@ -1,52 +1,70 @@
-<script src="../../../environments/environment.local.ts"></script>
-<div class="layout-topbar">
-  <a class="layout-topbar-logo" routerLink="/view">
-    <div class="flex" style="align-self: center; align-items: center;">
-      <img src="assets/images/philips-logo.png" alt="logo">
-      <div style="align-self: center; margin-left: 1rem;">
-        <span class="font-medium text-xl">EADI</span>
-        <div class="font-medium text-lg">Demand Intake Tool</div>
+<div>
+  <div class="layout-topbar" style="background: #002b5c">
+    <a class="layout-topbar-logo" routerLink="/view">
+      <div class="flex" style="align-self: center; align-items: center;">
+        <img src="assets/images/philips-logo.png" alt="logo">
+        <div style="align-self: center; margin-left: 1rem;">
+          <span class="text-color-white font-medium text-xl">EADI</span>
+          <div class="text-color-white font-medium text-lg">Demand Intake Tool</div>
+        </div>
+      </div>
+    </a>
+    <div class="flex">
+      <button #menubutton class="p-link layout-menu-button layout-topbar-button" (click)="layoutService.onMenuToggle()">
+        <i class="pi pi-bars text-color-white"></i>
+      </button>
+      <div class="flex flex-column h-full align-items-center ml-2">
+        <span class="text-color-white font-medium">Zoom In/Out</span>
+        <div class="flex h-full">
+          <button icon="pi pi-minus" type="button" pButton (click)="decrementScale()"
+                  class="p-button-rounded w-2rem h-2rem mr-2" [disabled]="scale === scales[0]"></button>
+          <div class="flex gap-2 align-items-center">
+            <i class="pi pi-circle-fill text-300" *ngFor="let s of scales"
+               [ngClass]="{'text-primary-500': s === scale}"></i>
+          </div>
+          <button icon="pi pi-plus" type="button" pButton (click)="incrementScale()"
+                  class="p-button-rounded w-2rem h-2rem ml-2"
+                  [disabled]="scale === scales[scales.length - 1]"></button>
+        </div>
       </div>
     </div>
-  </a>
-  <button #menubutton class="p-link layout-menu-button layout-topbar-button" (click)="layoutService.onMenuToggle()">
-    <i class="pi pi-bars"></i>
-  </button>
 
-  <button #topbarmenubutton class="p-link layout-topbar-menu-button layout-topbar-button"
-          (click)="layoutService.showProfileSidebar()">
-    <i class="pi pi-ellipsis-v"></i>
-  </button>
+    <button #topbarmenubutton class="p-link layout-topbar-menu-button layout-topbar-button"
+            (click)="layoutService.showProfileSidebar()">
+      <i class="pi pi-ellipsis-v"></i>
+    </button>
 
-  <div #topbarmenu class="layout-topbar-menu"
-       [ngClass]="{'layout-topbar-menu-mobile-active': layoutService.state.profileSidebarVisible}">
-    <div class="flex" style="align-self: center;">
-      <p-progressSpinner styleClass="w-4rem h-4rem" strokeWidth="8" fill="var(--surface-ground)" *ngIf="isProgressing"
-                         animationDuration=".5s"/>
-      <div class="mr-2" style="align-self: center; text-align: end">
-        <div class="font-medium text-xl">{{ username }}</div>
-        <span class="text-md">{{ user }}</span>
-        <div *ngIf="dmDomainList.length==0">{{ userRole }}</div>
-        <div *ngIf="dmDomainList.length>0">{{ userRole }} | {{ dmDomainList }}</div>
-      </div>
-      <div style="align-self: center;" *ngIf="!this.authService.profilePhoto">
-        <i class="pi pi-user" style="font-size: 1.5rem; margin: 0.4rem; margin-left: 1rem;"> </i>
-      </div>
-      <div style="align-self: center;" *ngIf="this.authService.profilePhoto">
-        <p-avatar class="p-element"
-                  styleClass="ml-2"
-                  shape="circle"
-                  size="xlarge">
-          <img [src]="this.authService.profilePhoto" alt="Profile Photo">
-        </p-avatar>
-      </div>
-      <div style="align-self: center;">
-        <button class="p-link layout-topbar-button" (click)="logout($event)">
-          <div (mouseover)="enableLogOutTooltip()" title="Sign Out">
-            <i class="pi pi-sign-out"></i>
-          </div>
-          <span>Sign Out</span>
-        </button>
+    <div #topbarmenu class="layout-topbar-menu" style="background: #002b5c;"
+         [ngClass]="{'layout-topbar-menu-mobile-active': layoutService.state.profileSidebarVisible}">
+      <div class="flex" style="align-self: center;">
+        <p-progressSpinner styleClass="w-4rem h-4rem" strokeWidth="8" fill="var(--surface-ground)" *ngIf="isProgressing"
+                           animationDuration=".5s"/>
+
+        <div class="mr-2" style="align-self: center; text-align: end">
+          <div class="text-color-white font-medium text-xl">{{ username }}</div>
+          <span class="text-color-white text-md">{{ user }}</span>
+          <div *ngIf="dmDomainList.length==0" class="text-color-white">{{ userRole }}</div>
+          <div *ngIf="dmDomainList.length>0" class="text-color-white">{{ userRole }} | {{ dmDomainList }}</div>
+        </div>
+        <div style="align-self: center;" *ngIf="!this.authService.profilePhoto">
+          <i class="pi pi-user text-color-white" style="font-size: 1.5rem; margin: 0.4rem; margin-left: 1rem;"> </i>
+        </div>
+        <div style="align-self: center;" *ngIf="this.authService.profilePhoto">
+          <p-avatar class="p-element"
+                    styleClass="ml-2 border-2 surface-border"
+                    shape="circle"
+                    size="xlarge">
+            <img [src]="this.authService.profilePhoto" alt="Profile Photo">
+          </p-avatar>
+        </div>
+        <div class="ml-2" style="align-self: center;">
+          <button class="p-link layout-topbar-button" (click)="logout($event)">
+            <div (mouseover)="enableLogOutTooltip()" title="Sign Out">
+              <i class="pi pi-sign-out text-color-white"></i>
+            </div>
+            <span class="text-color-white">Sign Out</span>
+          </button>
+        </div>
       </div>
     </div>
   </div>

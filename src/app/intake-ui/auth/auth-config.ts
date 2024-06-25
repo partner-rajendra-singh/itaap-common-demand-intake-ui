@@ -16,7 +16,7 @@ export const msalConfig: Configuration = {
     allowNativeBroker: false, // Disables native brokering support
     loggerOptions: {
       loggerCallback: (logLevel, message, piiEnabled) => {
-        console.log(message);
+        // console.log(message);
       },
       logLevel: LogLevel.Info,
       piiLoggingEnabled: false,
@@ -36,7 +36,7 @@ export const msalInterceptorConfig: MsalInterceptorConfiguration = {
 export const msalGuardConfig: MsalGuardConfiguration = {
   interactionType: InteractionType.Popup,
   authRequest: {
-    scopes: [environment.scope_demand_login]
+    scopes: [environment.scope_demand_login, environment.scope_default]
   }
 };
 

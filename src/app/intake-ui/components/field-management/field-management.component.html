@@ -1,3 +1,4 @@
+<p-toast></p-toast>
 <div class="card grid">
   <div class="col-12 xs:col-12 sm:col-12 lg:col-12 xl:col-12">
     <div class="grid">
@@ -5,108 +6,145 @@
         <p-fieldset legend="Field Label/Tooltip Management">
           <div class="grid">
             <div class="col-12 xs:col-12 sm:col-12 lg:col-12 xl:col-12">
-              <p-table styleClass="p-datatable-sm" [value]="fields" [paginator]="true" [rows]="10" dataKey="key" editMode="row" [tableStyle]="{ 'min-width': '50rem' }">
-                  <ng-template pTemplate="header">
-                      <tr>
-                          <th style="width:15%">Key</th>
-                          <th style="width:35%">Label</th>
-                          <th style="width:40%">Tooltip</th>
-                          <th style="width:10%">Mandatory?</th>
-                          <th style="width:10%">Action</th>
-                      </tr>
-                      <tr>
-                        <th><p-columnFilter type="text" field="key" [showClearButton]="false" /></th>
-                        <th><p-columnFilter type="text" field="label" [showClearButton]="false" /></th>
-                        <th><p-columnFilter type="text" field="tooltip" [showClearButton]="false" /></th>
-                        <th><p-columnFilter type="text" field="mandatory" [showClearButton]="false" /></th>
-                        <th></th>
-                      </tr>
-                  </ng-template>
-                  <ng-template pTemplate="body" let-field let-editing="editing" let-ri="rowIndex">
-                      <tr [pEditableRow]="field">
-                          <td>
-                              <p-cellEditor>
-                                  <ng-template pTemplate="input">
-                                      <input  pInputText  type="text"  [(ngModel)]="field.key" />
-                                  </ng-template>
-                                  <ng-template pTemplate="output">
-                                      {{ field.key }}
-                                  </ng-template>
-                              </p-cellEditor>
-                          </td>
-                          <td>
-                              <p-cellEditor>
-                                  <ng-template pTemplate="input">
-                                      <input
-                                          pInputText
-                                          type="text"
-                                          [(ngModel)]="field.label"
-                                          required />
-                                  </ng-template>
-                                  <ng-template pTemplate="output">
-                                      {{ field.label }}
-                                  </ng-template>
-                              </p-cellEditor>
-                          </td>
-                          <td >
-                              <p-cellEditor>
-                                  <ng-template pTemplate="input">
-                                      <input
-                                          pInputText
-                                          [(ngModel)]="field.tooltip" />
-                                  </ng-template>
-                                  <ng-template pTemplate="output">
-                                      {{ field.tooltip }}
-                                  </ng-template>
-                              </p-cellEditor>
-                          </td>
-                          <td>
-                              <p-cellEditor>
-                                  <ng-template pTemplate="input">
-                                      <input
-                                          pInputText type="text"
-                                          [(ngModel)]="field.mandatory" />
-                                  </ng-template>
-                                  <ng-template pTemplate="output">
-                                      {{ field.mandatory}}
-                                  </ng-template>
-                              </p-cellEditor>
-                          </td>
-                          <td>
-                            <div class="flex align-items-center justify-content-center gap-2">
-                              <button
-                                  *ngIf="!editing"
-                                  pButton
-                                  pRipple
-                                  type="button"
-                                  pInitEditableRow
-                                  icon="pi pi-pencil"
-                                  (click)="onRowEditInit(field)"
-                                  class="p-button-rounded p-button-text">
-                              </button>
-                              <button
-                                  *ngIf="editing"
-                                  pButton
-                                  pRipple
-                                  type="button"
-                                  pSaveEditableRow
-                                  icon="pi pi-check"
-                                  (click)="onRowEditSave(field)"
-                                  class="p-button-rounded p-button-text p-button-success mr-2">
-                              </button>
-                              <button
-                                  *ngIf="editing"
-                                  pButton pRipple
-                                  type="button"
-                                  pCancelEditableRow
-                                  icon="pi pi-times"
-                                  (click)="onRowEditCancel(field, ri)"
-                                  class="p-button-rounded p-button-text p-button-danger">
-                              </button>
-                          </div>
-                        </td>
-                      </tr>
-                  </ng-template>
+              <div class="p-inputgroup">
+                <span class="p-inputgroup-addon" style="background: #3B82F6;color: white;">
+                  <span>Key</span>
+                </span>
+                <input placeholder="Enter Key" type="text" pInputText [(ngModel)]="field.key"/>
+
+                <span class="p-inputgroup-addon" style="background: #3B82F6;color: white;">
+                  <span>Label</span>
+                </span>
+                <input placeholder="Enter Label" type="text" pInputText [(ngModel)]="field.label"/>
+
+                <span class="p-inputgroup-addon" style="background: #3B82F6;color: white;">
+                  <span>Tooltip</span>
+                </span>
+                <input placeholder="Enter Tooltip" type="text" pInputText [(ngModel)]="field.tooltip"/>
+
+                <span class="p-inputgroup-addon" style="background: #3B82F6;color: white;">
+                  <span>Mandatory?</span>
+                </span>
+                <span class="p-inputgroup-addon">
+                  <p-checkbox [binary]="true" [(ngModel)]="field.mandatory" inputId="binary"/>
+                  </span>
+                <button pButton type="button" (click)="addField()" severity="success" label="Save"
+                        icon="pi pi-check"></button>
+                <button pButton type="button" (click)="resetField()" severity="danger" label="Cancel" icon="pi pi-times"></button>
+              </div>
+            </div>
+            <div class="col-12 xs:col-12 sm:col-12 lg:col-12 xl:col-12">
+              <p-table styleClass="p-datatable-sm" [value]="fields" [paginator]="true" [rows]="10" dataKey="key"
+                       editMode="row" [tableStyle]="{ 'min-width': '50rem' }">
+                <ng-template pTemplate="header">
+                  <tr>
+                    <th style="width:15%">Key</th>
+                    <th style="width:35%">Label</th>
+                    <th style="width:40%">Tooltip</th>
+                    <th style="width:10%">Mandatory?</th>
+                    <th style="width:10%">Action</th>
+                  </tr>
+                  <tr>
+                    <th>
+                      <p-columnFilter type="text" field="key" [showClearButton]="false"/>
+                    </th>
+                    <th>
+                      <p-columnFilter type="text" field="label" [showClearButton]="false"/>
+                    </th>
+                    <th>
+                      <p-columnFilter type="text" field="tooltip" [showClearButton]="false"/>
+                    </th>
+                    <th>
+                      <p-columnFilter type="text" field="mandatory" [showClearButton]="false"/>
+                    </th>
+                    <th></th>
+                  </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-field let-editing="editing" let-ri="rowIndex">
+                  <tr [pEditableRow]="field">
+                    <td>
+                      <p-cellEditor>
+                        <ng-template pTemplate="input">
+                          <input pInputText type="text" [(ngModel)]="field.key"/>
+                        </ng-template>
+                        <ng-template pTemplate="output">
+                          {{ field.key }}
+                        </ng-template>
+                      </p-cellEditor>
+                    </td>
+                    <td>
+                      <p-cellEditor>
+                        <ng-template pTemplate="input">
+                          <input
+                            pInputText
+                            type="text"
+                            [(ngModel)]="field.label"
+                            required/>
+                        </ng-template>
+                        <ng-template pTemplate="output">
+                          {{ field.label }}
+                        </ng-template>
+                      </p-cellEditor>
+                    </td>
+                    <td>
+                      <p-cellEditor>
+                        <ng-template pTemplate="input">
+                          <input
+                            pInputText
+                            [(ngModel)]="field.tooltip"/>
+                        </ng-template>
+                        <ng-template pTemplate="output">
+                          {{ field.tooltip }}
+                        </ng-template>
+                      </p-cellEditor>
+                    </td>
+                    <td>
+                      <p-cellEditor>
+                        <ng-template pTemplate="input">
+                          <input
+                            pInputText type="text"
+                            [(ngModel)]="field.mandatory"/>
+                        </ng-template>
+                        <ng-template pTemplate="output">
+                          {{ field.mandatory }}
+                        </ng-template>
+                      </p-cellEditor>
+                    </td>
+                    <td>
+                      <div class="flex align-items-center justify-content-center gap-2">
+                        <button
+                          *ngIf="!editing"
+                          pButton
+                          pRipple
+                          type="button"
+                          pInitEditableRow
+                          icon="pi pi-pencil"
+                          (click)="onRowEditInit(field)"
+                          class="p-button-rounded p-button-text">
+                        </button>
+                        <button
+                          *ngIf="editing"
+                          pButton
+                          pRipple
+                          type="button"
+                          pSaveEditableRow
+                          icon="pi pi-check"
+                          (click)="onRowEditSave(field)"
+                          class="p-button-rounded p-button-text p-button-success mr-2">
+                        </button>
+                        <button
+                          *ngIf="editing"
+                          pButton pRipple
+                          type="button"
+                          pCancelEditableRow
+                          icon="pi pi-times"
+                          (click)="onRowEditCancel(field, ri)"
+                          class="p-button-rounded p-button-text p-button-danger">
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                </ng-template>
               </p-table>
             </div>
           </div>

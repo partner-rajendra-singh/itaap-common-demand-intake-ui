@@ -1,24 +1,26 @@
-import {Injectable} from '@angular/core';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {map} from 'rxjs/operators';
-import {environment} from 'src/environments/environment';
-import {Demand} from '../models/demand';
-import {Router} from '@angular/router';
-import {AuthService} from '../auth/auth.service';
-import {DM} from '../models/dm';
-import {CCB} from '../models/ccb';
-import {EADI} from '../models/eadi';
-import {throwError} from 'rxjs';
-import {MessageService} from 'primeng/api';
-import {AllDemands} from '../models/all-demands';
-import {EventService} from './event.service';
-import {Attachment} from '../models/attachment';
-import {Introduction} from '../models/introduction';
-import {DemandStatusFilter} from '../enums/demand-status-filter';
-import {ArchitectAlignment} from '../models/architect-alignment';
-import {ReportResult} from '../models/report-result';
-import {DemandStatus} from '../enums/demand-status';
-import {Constants} from "../constants";
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { map } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
+import { Demand } from '../models/demand';
+import { Router } from '@angular/router';
+import { AuthService } from '../auth/auth.service';
+import { DM } from '../models/dm';
+import { CCB } from '../models/ccb';
+import { EADI } from '../models/eadi';
+import { Observable, throwError } from 'rxjs';
+import { MessageService } from 'primeng/api';
+import { AllDemands } from '../models/all-demands';
+import { EventService } from './event.service';
+import { Attachment } from '../models/attachment';
+import { Introduction } from '../models/introduction';
+import { DemandStatusFilter } from '../enums/demand-status-filter';
+import { ArchitectAlignment } from '../models/architect-alignment';
+import { ReportResult } from '../models/report-result';
+import { DemandStatus } from '../enums/demand-status';
+import { Constants } from "../constants";
+import { ViewDemands } from "../models/view-demands";
+import { Spoc } from '../models/spoc';
 
 
 @Injectable({
@@ -33,10 +35,21 @@ export class DemandIntakeService {
   dmActionDone: boolean = false;
 
   constructor(public http: HttpClient,
-              private router: Router,
-              private constants: Constants,
-              private authService: AuthService, private messageService: MessageService,
-              private eventService: EventService) {
+    private router: Router,
+    private constants: Constants,
+    private authService: AuthService, private messageService: MessageService,
+    private eventService: EventService) {
+  }
+
+  isCurrentLoggedUserStakeholder(): boolean {
+    let isSH: boolean = false;
+    this.demandInformation.requesterInfo.spoc.forEach(spoc => {
+      if (spoc.email === this.authService.currentUserValue.email) {
+        isSH = true;
+      }
+    });
+
+    return isSH;
   }
 
   getDemandInformation() {
@@ -161,8 +174,13 @@ export class DemandIntakeService {
       if (demand.attachmentInfo == null) {
         demand.attachmentInfo = Array();
       }
+      
       if (demand.architectAlignmentInfo == null) {
         demand.architectAlignmentInfo = Array(new ArchitectAlignment);
+      }
+
+      if(demand.requesterInfo.spoc.length == 0){
+        demand.requesterInfo.spoc = Array(new Spoc);
       }
 
       demand.requesterInfo.requestedDate = new Date(demand.requesterInfo.requestedDate)
@@ -189,9 +207,7 @@ export class DemandIntakeService {
   validateAlignement(): boolean {
     var result = true;
     this.demandInformation.architectAlignmentInfo.forEach(s => {
-      if ((s.email != '' && s.comment == '') || (s.email == '' && s.comment != '')) {
-        result = false;
-      } else if (!this.eventService.checkEmailValue(s.email)) {
+      if (!this.eventService.checkEmailValue(s.email)) {
         result = false;
       }
     });
@@ -204,53 +220,53 @@ export class DemandIntakeService {
 
     if (isSave) {
       if (this.demandInformation.introduction.title == '' || this.demandInformation.introduction.description == '') {
-        this.messageService.add({severity: 'warn', summary: 'Error', detail: 'Please fill required fields!'});
+        this.messageService.add({ severity: 'warn', summary: 'Error', detail: 'Please fill required fields!' });
         this.router.navigate(['demand-intake/introduction']);
         return false;
       }
 
     } else {
       if (this.demandInformation.introduction.title == '' || this.demandInformation.introduction.description == '' || !this.validateAlignement()) {
-        this.messageService.add({severity: 'warn', summary: 'Error', detail: 'Please fill required fields!'});
+        this.messageService.add({ severity: 'warn', summary: 'Error', detail: 'Please fill required fields!' });
         this.router.navigate(['demand-intake/introduction']);
         return false;
 
       } else if (this.demandInformation.requesterInfo.requestedBy == '' && (this.demandInformation.requesterInfo.isDemandPOC && this.demandInformation.requesterInfo.project == '') && this.demandInformation.requesterInfo.requesterRole == '' || this.demandInformation.requesterInfo.market.length == 0 && this.demandInformation.requesterInfo.businessUnit.length == 0 && this.demandInformation.requesterInfo.domain == '' || !this.validateSpoc() || (this.demandInformation.requesterInfo.approvedBudget && this.demandInformation.requesterInfo.clarityProjectId == '')) {
-        this.messageService.add({severity: 'warn', summary: 'Error', detail: 'Please fill required fields!'});
+        this.messageService.add({ severity: 'warn', summary: 'Error', detail: 'Please fill required fields!' });
         this.router.navigate(['demand-intake/requester']);
         return false;
 
       } else if (this.demandInformation.requirementFunctionalInfo.statement == '' || this.demandInformation.requirementFunctionalInfo.scope == '' || this.demandInformation.requirementFunctionalInfo.businessValue == '' || this.demandInformation.requirementFunctionalInfo.goLiveApproach == '') {
-        this.messageService.add({severity: 'warn', summary: 'Error', detail: 'Please fill required fields!'});
+        this.messageService.add({ severity: 'warn', summary: 'Error', detail: 'Please fill required fields!' });
         this.router.navigate(['demand-intake/requirement']);
         return false;
       }
 
-      if (this.authService.isDM() || this.authService.isCCB()) {
-        let atleastOneSDSelected = this.demandInformation.solutionDirectionInfo.filter(item => item.value === true);
-        let adlL1 = this.demandInformation.solutionDirectionInfo.find(item => item.solution === 'adlL1');
-        let dataQuality = this.demandInformation.solutionDirectionInfo.find(item => item.solution === 'dataQuality');
-
-        if (this.authService.currentUserValue.domain.length > 0 && (atleastOneSDSelected.length == 0 || (adlL1 && adlL1.value && !this.eventService.checkEmailValue(this.demandInformation.eADIInfo.adlL1.sourceEmail)))) {
-          this.messageService.add({severity: 'warn', summary: 'Error', detail: 'Please fill required fields!'});
-          this.router.navigate(['demand-intake/checklist']);
-          return false;
-        } else if (this.authService.currentUserValue.domain.length > 0 && (atleastOneSDSelected.length == 0 || (dataQuality && dataQuality.value && (!this.eventService.checkEmailValue(this.demandInformation.eADIInfo.dataQuality.bpoEmail) || !this.eventService.checkEmailValue(this.demandInformation.eADIInfo.dataQuality.dataCleaningSpocEmail))))) {
-          this.messageService.add({severity: 'warn', summary: 'Error', detail: 'Please fill required fields!'});
-          this.router.navigate(['demand-intake/checklist']);
-          return false;
-        }
-      }
+      // if (this.authService.isDM() || this.authService.isCCB()) {
+      //   let atleastOneSDSelected = this.demandInformation.solutionDirectionInfo.filter(item => item.value === true);
+      //   let adlL1 = this.demandInformation.solutionDirectionInfo.find(item => item.solution === 'adlL1');
+      //   let dataQuality = this.demandInformation.solutionDirectionInfo.find(item => item.solution === 'dataQuality');
+      //
+      //   if (this.authService.currentUserValue.domain.length > 0 && (atleastOneSDSelected.length == 0 || (adlL1 && adlL1.value && !this.eventService.checkEmailValue(this.demandInformation.eADIInfo.adlL1.sourceEmail)))) {
+      //     this.messageService.add({severity: 'warn', summary: 'Error', detail: 'Please fill required fields!'});
+      //     this.router.navigate(['demand-intake/checklist']);
+      //     return false;
+      //   } else if (this.authService.currentUserValue.domain.length > 0 && (atleastOneSDSelected.length == 0 || (dataQuality && dataQuality.value && (!this.eventService.checkEmailValue(this.demandInformation.eADIInfo.dataQuality.bpoEmail) || !this.eventService.checkEmailValue(this.demandInformation.eADIInfo.dataQuality.dataCleaningSpocEmail))))) {
+      //     this.messageService.add({severity: 'warn', summary: 'Error', detail: 'Please fill required fields!'});
+      //     this.router.navigate(['demand-intake/checklist']);
+      //     return false;
+      //   }
+      // }
 
       if (this.authService.isDM() && !this.eventService.isNewDemand && !this.eventService.isMyDemand) {
         if (this.demandInformation.demandManagerInfo.decision == null || this.demandInformation.demandManagerInfo.remarks == '') {
-          this.messageService.add({severity: 'warn', summary: 'Error', detail: 'Please fill required fields!'});
+          this.messageService.add({ severity: 'warn', summary: 'Error', detail: 'Please fill required fields!' });
           this.router.navigate(['demand-intake/demandmanager']);
           return false;
         }
       } else if (this.authService.isCCB() && !this.eventService.isNewDemand && !this.eventService.isMyDemand) {
         if (this.demandInformation.ccbInfo.decision == '' || this.demandInformation.ccbInfo.remarks == '') {
-          this.messageService.add({severity: 'warn', summary: 'Error', detail: 'Please fill required fields!'});
+          this.messageService.add({ severity: 'warn', summary: 'Error', detail: 'Please fill required fields!' });
           this.router.navigate(['demand-intake/ccb']);
           return false;
         }
@@ -316,6 +332,19 @@ export class DemandIntakeService {
     return this.http.get<AllDemands>(url, this.constants.headerOptions);
   }
 
+  getViewAllDemands(): Observable<ViewDemands> {
+    this.eventService.progressBarEvent.emit(true);
+    let url = this.baseUrl + '/common/demand-intake/view';
+    return this.http.get<ViewDemands>(url, this.constants.headerOptions);
+  }
+
+  getDemandByDemandId(demandId: number): Observable<Demand> {
+    this.eventService.progressBarEvent.emit(true);
+    let url = this.baseUrl + '/common/demand-intake/' + demandId;
+    return this.http.get<Demand>(url, this.constants.headerOptions);
+  }
+
+
   getAllAttachmentsByDemandId(demandId: number) {
     this.eventService.progressBarEvent.emit(true);
     let url = this.baseUrl + '/common/demand-intake/attachment/fetch/all/' + demandId;
@@ -346,10 +375,22 @@ export class DemandIntakeService {
     return this.http.get<any>(url, this.constants.headerOptions);
   }
 
+  insertHyperLink(desc: string, hyperlink: string) {
+    return this.http.get<any>(this.getInsertHyperlinkURL(desc, hyperlink), this.constants.headerOptions);
+  }
+
   getRequesterDomain() {
     this.eventService.progressBarEvent.emit(true);
     let url = this.baseUrl + '/common/demand-intake/domain';
     return this.http.get(url, this.constants.headerOptions);
+  }
+
+  getInsertHyperlinkURL(desc: string, hyperlink: string) {
+    return this.baseUrl
+      + `/common/demand-intake/attachment/link/add/${this.demandInformation.introduction.demandIntakeId}` + '?'
+      + `description=${desc}` + '&'
+      + `hyperlink=${hyperlink}` + '&'
+      + `uploaderRole=${this.authService.currentUserValue.role}`;
   }
 
   getAttachmentUploadURL() {

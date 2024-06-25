@@ -10,6 +10,7 @@ import {Approver} from '../models/approver';
 import {throwError} from 'rxjs';
 import {FieldMgmt} from '../models/field-label-tooltip';
 import {Constants} from "../constants";
+import {ApproverDomain} from '../enums/approver-domain';
 
 @Injectable({
   providedIn: 'root'
@@ -47,6 +48,12 @@ export class AdminService {
         this.eventService.progressBarEvent.emit(false);
         return response;
       }));
+  }
+
+  addField(field: FieldMgmt) {
+    this.eventService.progressBarEvent.emit(true);
+    let url = this.baseUrl + '/common/demand-intake/field';
+    return this.http.post<any>(url, field, this.constants.headerOptions)
   }
 
   getAllFields() {
@@ -87,12 +94,18 @@ export class AdminService {
       }));
   }
 
+  getDMDomainValue(key: string): string {
+    const domain = Object.keys(ApproverDomain).indexOf(key as unknown as ApproverDomain);
+    let s = Object.values(ApproverDomain)[domain];
+    return s;
+  }
+
   setApprover(user: Approver) {
     this.approver.approverId = user.approverId;
     this.approver.email = user.email;
     this.approver.status = user.status;
     this.approver.role = user.role;
-    this.approver.domain = user.domain;
+    this.approver.domain = this.getDMDomainValue(user.domain);
     this.approver.createdDate = user.createdDate;
     this.approver.updatedDate = user.updatedDate;
   }

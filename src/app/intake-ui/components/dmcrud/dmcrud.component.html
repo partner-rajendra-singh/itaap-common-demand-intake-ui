@@ -26,12 +26,12 @@
                     <td>
                       <span
                         [class]="'align-self-center approver-badge status-' + demandIntakeService.getApproverStatusValue(dm.status)">
-                        {{dm.status}}
+                        {{ dm.status }}
                       </span>
                     </td>
                     <td><span class="text-900 font-medium">{{ getValue(dm.domain) }}</span></td>
-                    <td>{{ dm.createdDate | date: 'MMM dd, yyyy'}} </td>
-                    <td>{{ dm.updatedDate | date: 'MMM dd, yyyy'}}</td>
+                    <td>{{ dm.createdDate | date: 'MMM dd, yyyy' }}</td>
+                    <td>{{ dm.updatedDate | date: 'MMM dd, yyyy' }}</td>
                     <td>
                       <p-button icon="pi pi-user-edit" (onClick)="showUpdateDMDialog(dm)"></p-button>
                     </td>
@@ -49,82 +49,74 @@
   </div>
 </div>
 
-<p-dialog [(visible)]="visibleAddDMDialog" header="Add Demand Manager" modal="true" style="width:50% !important; height:80% !important; top:25% !important; left: 30% !important;">
-  <div class="flex flex-column px-8 py-5 gap-4" style="border-radius: 12px; background-color: #5c5c77;">
+<p-dialog [(visible)]="visibleAddDMDialog" header="Add Demand Manager" modal="true">
+  <div class="card flex flex-column px-8 py-5 gap-4">
     <div class="inline-flex flex-column gap-2">
-      <label for="email" class="text-primary-50 font-semibold">Email</label>
+      <label for="email" class="font-semibold">Email</label>
       <input pInputText id="email" [(ngModel)]="adminService.approver.email" type="email" size="40"
-        (blur)="eventService.checkEmailValue(adminService.approver.email)"
-        class="bg-black-alpha-20 border-none p-2 text-primary-50" />
+             (blur)="eventService.checkEmailValue(adminService.approver.email)"
+      />
     </div>
 
     <div class="inline-flex flex-column gap-3">
-      <label for="domain" class="text-primary-50 font-semibold">Domain</label>
+      <label for="domain" class="font-semibold">Domain</label>
       <p-dropdown [options]="domains" [(ngModel)]="adminService.approver.domain" placeholder="Your Domain"></p-dropdown>
     </div>
-    
+
     <div class="inline-flex flex-column gap-3">
-      <label for="status" class="text-primary-50 font-semibold">Status</label>
+      <label for="status" class="font-semibold">Status</label>
       <div class="flex flex-wrap gap-3">
         <div class="flex align-items-center">
           <p-radioButton name="status" value="ACTIVE" [(ngModel)]="adminService.approver.status"></p-radioButton>
-          <label class="text-primary-50 font-semibold">Active</label>
+          <label class="font-semibold">Active</label>
         </div>
         <div class="flex align-items-center">
           <p-radioButton name="status" value="INACTIVE" [(ngModel)]="adminService.approver.status"></p-radioButton>
-          <label class="text-primary-50 font-semibold">Inactive</label>
+          <label class="font-semibold">Inactive</label>
         </div>
       </div>
     </div>
     <div></div>
 
-    <div class="flex align-items-center gap-3">
-      <p-button label="Save" (click)="onSubmit()" type="submit"
-        styleClass="w-full text-primary-50 border-1 border-black-alpha-30 hover:bg-black-alpha-10 !important"
-        class="w-full"></p-button>
-      <p-button label="Cancel" (click)="closeAddDMDialog()"
-        styleClass="w-full text-primary-50 border-1 border-black-alpha-30 hover:bg-black-alpha-10"
-        class="w-full"></p-button>
+    <div class="flex align-items-center gap-3 w-full">
+      <p-button label="Save" (click)="onSubmit()" type="submit"></p-button>
+      <p-button label="Cancel" (click)="closeAddDMDialog()"></p-button>
     </div>
     <div></div>
   </div>
 </p-dialog>
 
 <p-dialog [(visible)]="visibleUpdateDMDialog" header="Update Demand Manager" modal="true">
-  <div class="flex flex-column px-8 py-5 gap-4" style="border-radius: 12px; background-color: #5c5c77;">
+  <div class="card flex flex-column px-8 py-5 gap-4">
     <div class="inline-flex flex-column gap-2">
-      <label for="email" class="text-primary-50 font-semibold">Email</label>
+      <label for="email" class="font-semibold">Email</label>
       <input pInputText id="email" [(ngModel)]="adminService.approver.email" type="email" size="40"
-        (blur)="eventService.checkEmailValue(adminService.approver.email)" [disabled]="true"
-        class="bg-black-alpha-20 border-none p-2 text-primary-50" />
+             (blur)="eventService.checkEmailValue(adminService.approver.email)" [disabled]="true"
+      />
     </div>
     <div class="inline-flex flex-column gap-2">
-      <label for="domain" class="text-primary-50 font-semibold">Domain</label>
+      <label for="domain" class="font-semibold">Domain</label>
       <p-dropdown [options]="domains" [(ngModel)]="adminService.approver.domain" placeholder="Your Domain"></p-dropdown>
     </div>
 
     <div class="inline-flex flex-column gap-2">
-      <label for="status" class="text-primary-50 font-semibold">Status</label>
+      <label for="status" class="font-semibold">Status</label>
       <div class="flex flex-wrap gap-3">
         <div class="flex align-items-center">
           <p-radioButton name="status" value="ACTIVE" [(ngModel)]="adminService.approver.status"></p-radioButton>
-          <label class="text-primary-50 font-semibold">Active</label>
+          <label class="font-semibold">Active</label>
         </div>
         <div class="flex align-items-center">
           <p-radioButton name="status" value="INACTIVE" [(ngModel)]="adminService.approver.status"></p-radioButton>
-          <label class="text-primary-50 font-semibold">Inactive</label>
+          <label class="font-semibold">Inactive</label>
         </div>
       </div>
     </div>
     <div></div>
 
-    <div class="flex align-items-center gap-2">
-      <p-button label="Save" (click)="onUpdate()" type="submit"
-        styleClass="w-full text-primary-50 border-1 border-black-alpha-30 hover:bg-black-alpha-10 !important"
-        class="w-full"></p-button>
-      <p-button label="Cancel" (click)="closeUpdateDMDialog()"
-        styleClass="w-full text-primary-50 border-1 border-black-alpha-30 hover:bg-black-alpha-10"
-        class="w-full"></p-button>
+    <div class="flex align-items-center gap-2 w-full">
+      <p-button label="Save" (click)="onUpdate()" type="submit"></p-button>
+      <p-button label="Cancel" (click)="closeUpdateDMDialog()"></p-button>
     </div>
     <div></div>
   </div>

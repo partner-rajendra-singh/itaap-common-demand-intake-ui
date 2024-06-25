@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {MessageService} from 'primeng/api';
 import {AuthService} from '../auth.service';
 import {EventService} from '../../services/event.service';
+import {FieldsService} from "../../services/fields.service";
 
 @Component({
   selector: 'app-login',
@@ -11,7 +12,6 @@ export class LoginComponent implements OnInit {
   title = 'itaap-demand-intake-ui';
   email !: string;
   token !: string;
-  otpSent: boolean = false;
 
   isProgressing = false;
 

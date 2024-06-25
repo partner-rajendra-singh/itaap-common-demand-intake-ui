@@ -14,6 +14,8 @@ export class RequesterInfo {
   cpAPI: boolean = false;
   cpReport: boolean = false;
   cpTransactionPlatform: boolean = false;
+  cpDataModel: boolean = false;
+  cpDataProduct: boolean = false;
   approvedBudget: boolean = false;
   clarityProjectId: string = "";
   spoc: Spoc[] = Array(new Spoc);

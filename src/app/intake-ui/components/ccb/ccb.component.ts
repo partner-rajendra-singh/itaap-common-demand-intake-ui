@@ -42,6 +42,11 @@ export class CCBComponent implements OnInit {
     }
   }
 
+  onDecisionSelect(){
+    this.ccbInfo.decision = this.getStatusKey(this.selectedDecision);
+    this.demandIntakeService.getDemandInformation().ccbInfo = this.ccbInfo;
+  }
+
   prevPage() {
     if (this.eventService.isNewDemand) {
       this.router.navigate(['demand-intake/demandmanager']);

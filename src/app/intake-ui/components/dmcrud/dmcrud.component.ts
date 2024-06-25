@@ -62,7 +62,7 @@ export class DMCRUDComponent {
 
   showUpdateDMDialog(dm: Approver) {
     this.selectedDomain = this.getValue(dm.domain);
-    dm.domain = this.getKey(this.selectedDomain);
+    
     this.adminService.setApprover(dm);
     this.visibleUpdateDMDialog = true;
   }

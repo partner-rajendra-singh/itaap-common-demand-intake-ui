@@ -23,10 +23,10 @@
                   <tr>
                     <td>{{ ccb.email }}</td>
                     <td>
-                      <span
-                        [class]="'align-self-center approver-badge status-' + demandIntakeService.getApproverStatusValue(ccb.status)">
-                        {{ccb.status}}
-                      </span>
+<span
+  [class]="'align-self-center approver-badge status-' + demandIntakeService.getApproverStatusValue(ccb.status)">
+{{ ccb.status }}
+</span>
                     </td>
                     <td>{{ ccb.createdDate | date: 'MMM dd, yyyy' }}</td>
                     <td>{{ ccb.updatedDate | date: 'MMM dd, yyyy' }}</td>
@@ -48,67 +48,59 @@
 </div>
 
 <p-dialog [(visible)]="visibleAddCCBDialog" header="Add CCB Member" modal="true">
-  <div class="flex flex-column px-8 py-5 gap-4" style="border-radius: 12px; background-color: #5c5c77;">
+  <div class="card flex flex-column px-8 py-5 gap-4">
     <div class="inline-flex flex-column gap-2">
-      <label for="email" class="text-primary-50 font-semibold">Email</label>
+      <label for="email" class="font-semibold">Email</label>
       <input pInputText id="email" [(ngModel)]="adminService.approver.email" type="email" size="40"
-        (blur)="eventService.checkEmailValue(adminService.approver.email)"
-        class="bg-black-alpha-20 border-none p-2 text-primary-50" />
+             (blur)="eventService.checkEmailValue(adminService.approver.email)"
+             class="p-2"/>
     </div>
     <div class="inline-flex flex-column gap-2">
-      <label for="status" class="text-primary-50 font-semibold">Status</label>
+      <label for="status" class="font-semibold">Status</label>
       <div class="flex flex-wrap gap-3">
         <div class="flex align-items-center">
           <p-radioButton name="status" value="ACTIVE" [(ngModel)]="adminService.approver.status"></p-radioButton>
-          <label class="text-primary-50 font-semibold">Active</label>
+          <label class="font-semibold">Active</label>
         </div>
         <div class="flex align-items-center">
           <p-radioButton name="status" value="INACTIVE" [(ngModel)]="adminService.approver.status"></p-radioButton>
-          <label class="text-primary-50 font-semibold">Inactive</label>
+          <label class="font-semibold">Inactive</label>
         </div>
       </div>
     </div>
 
-    <div class="flex align-items-center gap-2">
-      <p-button label="Save" (click)="onSubmit()" type="submit"
-        styleClass="w-full text-primary-50 border-1 border-black-alpha-30 hover:bg-black-alpha-10 !important"
-        class="w-full"></p-button>
-      <p-button label="Cancel" (click)="closeAddCCBDialog()"
-        styleClass="w-full text-primary-50 border-1 border-black-alpha-30 hover:bg-black-alpha-10"
-        class="w-full"></p-button>
+    <div class="flex align-items-center gap-2 w-full">
+      <p-button label="Save" (click)="onSubmit()" type="submit"></p-button>
+      <p-button label="Cancel" (click)="closeAddCCBDialog()"></p-button>
     </div>
   </div>
 </p-dialog>
 
 <p-dialog [(visible)]="visibleUpdateCCBDialog" header="Update CCB Member" modal="true">
-  <div class="flex flex-column px-8 py-5 gap-4" style="border-radius: 12px; background-color: #5c5c77;">
+  <div class="card flex flex-column px-8 py-5 gap-4">
     <div class="inline-flex flex-column gap-2">
-      <label for="email" class="text-primary-50 font-semibold">Email</label>
+      <label for="email" class="font-semibold">Email</label>
       <input pInputText id="email" [(ngModel)]="adminService.approver.email" type="email" size="40"
-        (blur)="eventService.checkEmailValue(adminService.approver.email)" [disabled]="true"
-        class="bg-black-alpha-20 border-none p-2 text-primary-50" />
+             (blur)="eventService.checkEmailValue(adminService.approver.email)" [disabled]="true"
+             class="p-2 "/>
     </div>
     <div class="inline-flex flex-column gap-2">
-      <label for="status" class="text-primary-50 font-semibold">Status</label>
+      <label for="status" class="font-semibold">Status</label>
       <div class="flex flex-wrap gap-3">
         <div class="flex align-items-center">
           <p-radioButton name="status" value="ACTIVE" [(ngModel)]="adminService.approver.status"></p-radioButton>
-          <label class="text-primary-50 font-semibold">Active</label>
+          <label class="font-semibold">Active</label>
         </div>
         <div class="flex align-items-center">
           <p-radioButton name="status" value="INACTIVE" [(ngModel)]="adminService.approver.status"></p-radioButton>
-          <label class="text-primary-50 font-semibold">Inactive</label>
+          <label class="font-semibold">Inactive</label>
         </div>
       </div>
     </div>
 
-    <div class="flex align-items-center gap-2">
-      <p-button label="Save" (click)="onUpdate()" type="submit"
-        styleClass="w-full text-primary-50 border-1 border-black-alpha-30 hover:bg-black-alpha-10 !important"
-        class="w-full"></p-button>
-      <p-button label="Cancel" (click)="closeUpdateCCBDialog()"
-        styleClass="w-full text-primary-50 border-1 border-black-alpha-30 hover:bg-black-alpha-10"
-        class="w-full"></p-button>
+    <div class="flex align-items-center gap-2 w-full">
+      <p-button label="Save" (click)="onUpdate()" type="submit"></p-button>
+      <p-button label="Cancel" (click)="closeUpdateCCBDialog()"></p-button>
     </div>
   </div>
 </p-dialog>

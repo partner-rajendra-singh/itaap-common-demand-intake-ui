@@ -1,14 +1,14 @@
-import {Component, OnInit} from '@angular/core';
-import {Router} from '@angular/router';
-import {DemandIntakeService} from '../../services/demand-intake.service';
-import {MessageService} from 'primeng/api';
-import {Introduction} from '../../models/introduction';
-import {first} from 'rxjs';
-import {AuthService} from '../../auth/auth.service';
-import {EventService} from '../../services/event.service';
-import {ArchitectAlignment} from '../../models/architect-alignment';
-import {DemandStatus} from '../../enums/demand-status';
-import {FieldsService} from "../../services/fields.service";
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { DemandIntakeService } from '../../services/demand-intake.service';
+import { MessageService } from 'primeng/api';
+import { Introduction } from '../../models/introduction';
+import { first } from 'rxjs';
+import { AuthService } from '../../auth/auth.service';
+import { EventService } from '../../services/event.service';
+import { ArchitectAlignment } from '../../models/architect-alignment';
+import { DemandStatus } from '../../enums/demand-status';
+import { FieldsService } from "../../services/fields.service";
 
 @Component({
   selector: 'app-introduction',
@@ -21,24 +21,26 @@ export class IntroductionComponent implements OnInit {
   architectAlignmentInfo!: ArchitectAlignment[];
 
   constructor(public eventService: EventService,
-              private authService: AuthService,
-              public fieldsService: FieldsService,
-              public demandIntakeService: DemandIntakeService, private router: Router, private messageService: MessageService) {
-    if (authService.isRequester()) {
-      if (this.demandIntakeService.getDemandInformation().introduction.status != DemandStatus.DRAFT && this.demandIntakeService.getDemandInformation().introduction.status != null) {
-        this.visibleSaveButton = false;
-      } else {
-        this.visibleSaveButton = true;
-      }
-    } else {
+    private authService: AuthService,
+    public fieldsService: FieldsService,
+    public demandIntakeService: DemandIntakeService, private router: Router, private messageService: MessageService) {
+    if (this.demandIntakeService.getDemandInformation().introduction.status != DemandStatus.DRAFT && this.demandIntakeService.getDemandInformation().introduction.status != null) {
       this.visibleSaveButton = false;
+    } else {
+      this.visibleSaveButton = true;
     }
+
   }
 
   ngOnInit() {
     this.demandIntakeService.getDemandInformation().introduction.updatedBy = this.authService.currentUserValue.email;
     this.demandInfo = this.demandIntakeService.getDemandInformation().introduction;
     this.architectAlignmentInfo = this.demandIntakeService.getDemandInformation().architectAlignmentInfo;
+
+    if(this.eventService.isNewDemand){
+      this.demandIntakeService.getDemandInformation().introduction.requestedBy = this.authService.currentUserValue.email;
+    }
+    
   }
 
   addAlignment() {
@@ -53,8 +55,8 @@ export class IntroductionComponent implements OnInit {
 
     let movenext = true;
     this.architectAlignmentInfo.forEach(item => {
-      if ((this.demandInfo.architectAligned) && (!this.eventService.checkEmailValue(item.email) || item.comment == '')) {
-        this.messageService.add({severity: 'warn', summary: 'Error', detail: 'Please fill alignment properly!'});
+      if ((this.demandInfo.architectAligned) && (!this.eventService.checkEmailValue(item.email))) {
+        this.messageService.add({ severity: 'warn', summary: 'Error', detail: 'Please fill alignment properly!' });
         movenext = false;
       }
     });
@@ -73,7 +75,7 @@ export class IntroductionComponent implements OnInit {
         this.router.navigate(['demand-intake/requester/' + this.demandIntakeService.demandInformation.introduction.demandIntakeId]);
       }
     } else {
-      this.messageService.add({severity: 'warn', summary: 'Error', detail: 'Please fill required fields!'});
+      this.messageService.add({ severity: 'warn', summary: 'Error', detail: 'Please fill required fields!' });
     }
 
   }
@@ -82,7 +84,7 @@ export class IntroductionComponent implements OnInit {
     // console.log("Introduction : ", this.demandIntakeService.demandInformation)
     let movenext = true;
     this.architectAlignmentInfo.forEach(item => {
-      if ((this.demandInfo.architectAligned) && (!this.eventService.checkEmailValue(item.email) || item.comment == '')) {
+      if ((this.demandInfo.architectAligned) && (!this.eventService.checkEmailValue(item.email))) {
         movenext = false;
       }
     });
@@ -102,7 +104,7 @@ export class IntroductionComponent implements OnInit {
         this.router.navigate(['demand-intake/requester/' + this.demandIntakeService.demandInformation.introduction.demandIntakeId]);
       }
     } else {
-      this.messageService.add({severity: 'warn', summary: 'Error', detail: 'Please fill required fields!'});
+      this.messageService.add({ severity: 'warn', summary: 'Error', detail: 'Please fill required fields!' });
     }
   }
 

@@ -1,0 +1,13 @@
+<p-autoComplete [(ngModel)]="graphService.assignee" [suggestions]="filteredAssignee"
+                (completeMethod)="filterAssignee($event)" placeholder="Choose assignees"
+                [styleClass]="'h-4rem'">
+  <ng-template let-assignee pTemplate="selectedItem">
+    <div class="flex align-items-center gap-3 border-round">
+      <p-avatar icon="pi pi-user" styleClass="mr-2" shape="circle"></p-avatar>
+      <div class="grid">
+        <span>{{ assignee.name }}</span>
+        <span>{{ assignee.email }}</span>
+      </div>
+    </div>
+  </ng-template>
+</p-autoComplete>

@@ -9,7 +9,8 @@
     "build:prod": "echo 'Building Production environment' && ng build --configuration=prod",
     "ng": "ng",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "start": "ng serve"
   },
   "private": true,
   "dependencies": {

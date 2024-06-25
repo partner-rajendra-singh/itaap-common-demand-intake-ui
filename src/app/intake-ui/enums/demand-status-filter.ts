@@ -2,12 +2,12 @@ export enum DemandStatusFilter {
   ALL = 'All',
   DRAFT = 'Draft',
   PENDING_WITH_DM = 'Pending with Demand Manager',
-  DM_HOLD = 'Demand Manager kept on Hold',
+  DM_HOLD = 'On Hold By DM',
   PENDING_WITH_CCB = 'Pending with CCB',
-  CCB_HOLD = 'CCB Member kept on Hold',
+  CCB_HOLD = 'On Hold By CCB',
   ACCEPTED = 'Accepted',
-  DM_REJECTED = 'Rejected By Demand Manager',
-  CCB_REJECTED = 'Reject By CCB Member',
-  DM_MODIFICATION = 'Modification Requested by DM',
-  CCB_MODIFICATION = 'Modification Requested by CCB'
+  DM_REJECTED = 'DM Rejected',
+  CCB_REJECTED = 'CCB Rejected',
+  DM_MODIFICATION = 'DM Modification',
+  CCB_MODIFICATION = 'CCB Modification'
 }

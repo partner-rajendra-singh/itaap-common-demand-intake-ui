@@ -5,7 +5,10 @@ import { MessageService } from 'primeng/api';
 import { EventService } from '../../services/event.service';
 import { RefreshFrequency } from '../../enums/refreshFrequency';
 import { LoadStrategy } from '../../enums/loadStrategy';
-import {FieldsService} from "../../services/fields.service";
+import { FieldsService } from "../../services/fields.service";
+import { first } from 'rxjs';
+import { DemandStatus } from '../../enums/demand-status';
+import { DemandReferenceTool } from '../../enums/demand-reference-tool';
 
 
 @Component({
@@ -20,8 +23,18 @@ export class ChecklistComponent implements OnInit {
   loadStrategies!: string[];
   selectedLoadStrategy!: string;
   visibleTabs: any = [];
+  visibleSaveButton!: boolean;
+  referenceTools!: string[];
+  selectedTool!: string;
+  otherTool!: string;
 
-  constructor(public demandIntakeService: DemandIntakeService,public fieldsService: FieldsService, private router: Router, private messageService: MessageService, public eventService: EventService) { }
+  constructor(public demandIntakeService: DemandIntakeService, public fieldsService: FieldsService, private router: Router, private messageService: MessageService, public eventService: EventService) {
+    if (this.demandIntakeService.getDemandInformation().introduction.status != DemandStatus.DRAFT && this.demandIntakeService.getDemandInformation().introduction.status != null) {
+      this.visibleSaveButton = false;
+    } else {
+      this.visibleSaveButton = true;
+    }
+  }
 
   ngOnInit() {
     // console.log("ChecklistComponent ", this.eventService.solutionDirectionValue);
@@ -32,12 +45,17 @@ export class ChecklistComponent implements OnInit {
         this.router.navigate(['demand-intake/solution-direction/' + this.demandIntakeService.demandInformation.introduction.demandIntakeId]);
       }
     }
-    this.visibleTabs = this.eventService.solutionDirectionValue.filter(item => item.value === true);
+    this.visibleTabs = this.eventService.solutionDirectionValue.filter(item => item.value);
 
     this.eADIInfo = this.demandIntakeService.getDemandInformation().eADIInfo;
     this.refreshFrequencies = Object.values(RefreshFrequency);
+    this.referenceTools = Object.values(DemandReferenceTool);
     if (this.demandIntakeService.getDemandInformation().eADIInfo.adlL1 != null && this.demandIntakeService.getDemandInformation().eADIInfo.adlL1.frequency != '') {
       this.selectedFrequency = this.getFrequencyValue(this.demandIntakeService.getDemandInformation().eADIInfo.adlL1.frequency);
+    }
+
+    if (this.demandIntakeService.getDemandInformation().eADIInfo.ia != null && this.demandIntakeService.getDemandInformation().eADIInfo.ia.reportTool != '') {
+      this.selectedTool = this.getToolValue(this.demandIntakeService.getDemandInformation().eADIInfo.ia.reportTool);
     }
 
     this.loadStrategies = Object.values(LoadStrategy);
@@ -46,10 +64,34 @@ export class ChecklistComponent implements OnInit {
     }
   }
 
+  onToolSelect() {
+    this.demandIntakeService.getDemandInformation().eADIInfo = this.eADIInfo;
+    this.eADIInfo.ia.reportTool = this.getToolKey(this.selectedTool);
+
+    if (this.selectedTool == 'Other') {
+      this.eADIInfo.ia.reportTool = this.otherTool;
+    }
+  }
+
+  onLoadStrategySelect() {
+    this.demandIntakeService.getDemandInformation().eADIInfo = this.eADIInfo;
+    this.eADIInfo.adlL1.loadStrategy = this.getStrategyKey(this.selectedLoadStrategy);
+  }
+
+  onFrequencySelect() {
+    this.demandIntakeService.getDemandInformation().eADIInfo = this.eADIInfo;
+    this.eADIInfo.adlL1.frequency = this.getFrequencyKey(this.selectedFrequency);
+  }
+
   nextPage() {
     this.demandIntakeService.getDemandInformation().eADIInfo = this.eADIInfo;
     this.eADIInfo.adlL1.frequency = this.getFrequencyKey(this.selectedFrequency);
     this.eADIInfo.adlL1.loadStrategy = this.getStrategyKey(this.selectedLoadStrategy);
+
+    this.eADIInfo.adlL1.reportTool = this.getToolKey(this.selectedTool);
+    if (this.selectedTool == 'Other') {
+      this.eADIInfo.adlL1.reportTool = this.otherTool;
+    }
 
     if (this.eventService.selectedEADITabIndex < this.visibleTabs.length - 1) {
       this.eventService.selectedEADITabIndex += 1;
@@ -64,6 +106,18 @@ export class ChecklistComponent implements OnInit {
 
   onTabChange(event: any) {
     this.eventService.selectedEADITabIndex = event.index;
+  }
+
+  onDatasetChange() {
+    if (!this.eADIInfo.ia.datasetConsumed) {
+      this.eADIInfo.ia.datasetConsumedText = "";
+    }
+  }
+
+  onCDMChange() {
+    if (!this.eADIInfo.ia.cdmConsumed) {
+      this.eADIInfo.ia.cdmConsumedText = "";
+    }
   }
 
   prevPage() {
@@ -107,6 +161,35 @@ export class ChecklistComponent implements OnInit {
     const status = Object.keys(LoadStrategy).indexOf(key as unknown as LoadStrategy);
     let s = Object.values(LoadStrategy)[status];
     return s;
+  }
+
+  getToolKey(value: string): string {
+    const index = Object.values(DemandReferenceTool).indexOf(value as unknown as DemandReferenceTool);
+    return Object.keys(DemandReferenceTool)[index];
+  }
+
+  getToolValue(key: string): string {
+    const status = Object.keys(DemandReferenceTool).indexOf(key as unknown as DemandReferenceTool);
+    let tool = Object.values(DemandReferenceTool)[status];
+    if (!tool && !this.eventService.isNewDemand) {
+      return DemandReferenceTool.Other;
+    }
+    return tool;
+  }
+
+  savePage() {
+    this.demandIntakeService.saveDemand()
+      .pipe(first())
+      .subscribe(
+        response => {
+          console.log("saveDemand() : Response -> ", response)
+          this.messageService.add({ key: 'success', severity: 'success', summary: 'Success', detail: 'Demand Saved Successfully!' });
+          this.router.navigate(['view']);
+        },
+        error => {
+          console.log("saveDemand() : ERROR -> ", error)
+          this.messageService.add({ key: 'error', severity: 'error', summary: 'Error', detail: 'Demand Failed to Save!' });
+        });
   }
 
 

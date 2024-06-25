@@ -27,9 +27,18 @@ export class ConfirmComponent {
 
         let path = 'demand-intake/attachment';
         if (this.authService.isDM()) {
-          path = 'demand-intake/demandmanager';
+          if (this.eventService.isNewDemand) {
+            path = 'demand-intake/attachment';
+          } else {
+            path = 'demand-intake/demandmanager';
+          }
+
         } else if (this.authService.isCCB()) {
-          path = 'demand-intake/ccb';
+          if (this.eventService.isNewDemand) {
+            path = 'demand-intake/attachment';
+          } else {
+            path = 'demand-intake/ccb';
+          }
         }
 
         this.router.navigate([path]);

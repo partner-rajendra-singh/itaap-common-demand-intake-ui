@@ -1,16 +1,16 @@
-import {Component, OnInit} from '@angular/core';
-import {Router} from '@angular/router';
-import {DemandIntakeService} from '../../services/demand-intake.service';
-import {MessageService} from 'primeng/api';
-import {catchError, first, map, throwError} from 'rxjs';
-import {AuthService} from '../../auth/auth.service';
-import {EventService} from '../../services/event.service';
-import {Market} from '../../enums/market';
-import {BusinessUnit} from '../../enums/businessUnit';
-import {RequesterInfo} from '../../models/requester-info';
-import {Spoc} from '../../models/spoc';
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { DemandIntakeService } from '../../services/demand-intake.service';
+import { MessageService } from 'primeng/api';
+import { catchError, first, map, throwError } from 'rxjs';
+import { AuthService } from '../../auth/auth.service';
+import { EventService } from '../../services/event.service';
+import { Market } from '../../enums/market';
+import { BusinessUnit } from '../../enums/businessUnit';
+import { RequesterInfo } from '../../models/requester-info';
+import { Spoc } from '../../models/spoc';
 import { DemandStatus } from '../../enums/demand-status';
-import {FieldsService} from "../../services/fields.service";
+import { FieldsService } from "../../services/fields.service";
 
 interface Domain {
   key: string;
@@ -33,27 +33,26 @@ export class RequesterComponent implements OnInit {
   businessUnitList!: string[];
   selectedBusinessUnit: string[] = [];
   otherBusinessUnit!: string;
-  isAnotherRequester!: boolean;
 
-  constructor(public authService: AuthService, public demandIntakeService: DemandIntakeService,public fieldsService: FieldsService, private router: Router, private messageService: MessageService, public eventService: EventService) {
-    if (authService.isRequester()) {
-      if (this.demandIntakeService.getDemandInformation().introduction.status != DemandStatus.DRAFT && this.demandIntakeService.getDemandInformation().introduction.status != null) {
-        this.visibleSaveButton = false;
-      } else {
-        this.visibleSaveButton = true;
-      }
-    } else {
+
+  constructor(public authService: AuthService, public demandIntakeService: DemandIntakeService, public fieldsService: FieldsService, private router: Router, private messageService: MessageService, public eventService: EventService) {
+    if (this.demandIntakeService.getDemandInformation().introduction.status != DemandStatus.DRAFT && this.demandIntakeService.getDemandInformation().introduction.status != null) {
       this.visibleSaveButton = false;
+    } else {
+      this.visibleSaveButton = true;
     }
   }
 
   ngOnInit() {
-    if (!this.isAnotherRequester && this.eventService.isNewDemand) {
+    this.requesterInfo = this.demandIntakeService.getDemandInformation().requesterInfo;
+
+    if (!this.requesterInfo.isAnotherRequester && this.eventService.isNewDemand) {
       this.demandIntakeService.getDemandInformation().requesterInfo.requestedBy = this.authService.currentUserValue.email;
       this.demandIntakeService.getDemandInformation().introduction.requestedBy = this.authService.currentUserValue.email;
+    } else {
+      this.demandIntakeService.getDemandInformation().introduction.requestedBy = this.demandIntakeService.getDemandInformation().requesterInfo.requestedBy;
     }
 
-    this.requesterInfo = this.demandIntakeService.getDemandInformation().requesterInfo;
     this.marketList = Object.values(Market);
     this.businessUnitList = Object.values(BusinessUnit);
     this.selectedMarket = this.getMarketValueArray(this.demandIntakeService.getDemandInformation().requesterInfo.market);
@@ -76,23 +75,58 @@ export class RequesterComponent implements OnInit {
   }
 
   requesterChange(event: any) {
-    if (!this.isAnotherRequester) {
+    if (!this.requesterInfo.isAnotherRequester) {
       this.demandIntakeService.getDemandInformation().requesterInfo.requestedBy = this.authService.currentUserValue.email;
       this.demandIntakeService.getDemandInformation().introduction.requestedBy = this.authService.currentUserValue.email;
     } else {
-      this.demandIntakeService.getDemandInformation().requesterInfo.requestedBy = "";
-      this.demandIntakeService.getDemandInformation().introduction.requestedBy = "";
+      this.demandIntakeService.getDemandInformation().requesterInfo.requestedBy = this.requesterInfo.requestedBy;
+      this.demandIntakeService.getDemandInformation().introduction.requestedBy = this.requesterInfo.requestedBy;
     }
   }
 
   getSelectedDomain(): Domain {
     let platform = this.domainList.find(item => item.key === this.demandIntakeService.getDemandInformation().requesterInfo.domain);
     if (!platform && !this.eventService.isNewDemand) {
-      return {key: 'Other', value: 'Other'};
+      return { key: 'Other', value: 'Other' };
     } else if (!platform) {
-      return {key: '', value: ''};
+      return { key: '', value: '' };
     }
     return JSON.parse(JSON.stringify(platform)) as Domain;
+  }
+
+  onMarketSelect() {
+    let other = this.getMarketKeyArray(this.selectedMarket).find(item => item == 'Other');
+    if (other) {
+      const indexOther = this.selectedMarket.indexOf('Other');
+      this.selectedMarket.splice(indexOther, 1);
+      this.requesterInfo.market.push(this.otherMarket);
+    }
+
+    this.selectedMarket.forEach(item => this.requesterInfo.market.push(this.getMarketKey(item)));
+    this.selectedMarket = Array.from(new Set(this.selectedMarket))
+    this.requesterInfo.market = Array.from(new Set(this.requesterInfo.market))
+    this.demandIntakeService.demandInformation.requesterInfo = this.requesterInfo;
+  }
+
+  onDomainSelect() {
+    if (this.selectedDomain.key != 'Other') {
+      this.requesterInfo.domain = this.selectedDomain.key;
+    }
+    this.demandIntakeService.demandInformation.requesterInfo = this.requesterInfo;
+  }
+
+  onBUSelect() {
+    let other1 = this.getBUKeyArray(this.selectedBusinessUnit).find(item => item == 'Other');
+    if (other1) {
+      const indexOther = this.selectedBusinessUnit.indexOf('Other');
+      this.selectedBusinessUnit.splice(indexOther, 1);
+      this.requesterInfo.businessUnit.push(this.otherBusinessUnit);
+    }
+
+    this.selectedBusinessUnit.forEach(item => this.requesterInfo.businessUnit.push(this.getBUKey(item)));
+    this.selectedBusinessUnit = Array.from(new Set(this.selectedBusinessUnit));
+    this.requesterInfo.businessUnit = Array.from(new Set(this.requesterInfo.businessUnit));
+    this.demandIntakeService.demandInformation.requesterInfo = this.requesterInfo;
   }
 
   addSpoc() {
@@ -107,7 +141,7 @@ export class RequesterComponent implements OnInit {
     let movenext = true;
     this.requesterInfo.spoc.forEach(item => {
       if ((item.role != '' && item.email == '') || (item.role == '' && item.email != '')) {
-        this.messageService.add({severity: 'warn', summary: 'Error', detail: 'Please fill stakeholder(s) properly!'});
+        this.messageService.add({ severity: 'warn', summary: 'Error', detail: 'Please fill stakeholder(s) properly!' });
         movenext = false;
       }
     });
@@ -125,8 +159,9 @@ export class RequesterComponent implements OnInit {
         this.requesterInfo.market.push(this.otherMarket);
       }
       this.selectedMarket.forEach(item => this.requesterInfo.market.push(this.getMarketKey(item)));
-      this.selectedMarket = Array.from(new Set(this.selectedMarket))
+      this.selectedMarket = Array.from(new Set(this.selectedMarket));
       this.requesterInfo.market = Array.from(new Set(this.requesterInfo.market))
+      this.demandIntakeService.demandInformation.requesterInfo.market = this.requesterInfo.market;
 
       let other1 = this.getBUKeyArray(this.selectedBusinessUnit).find(item => item == 'Other');
       if (other1) {
@@ -135,8 +170,9 @@ export class RequesterComponent implements OnInit {
         this.requesterInfo.businessUnit.push(this.otherBusinessUnit);
       }
       this.selectedBusinessUnit.forEach(item => this.requesterInfo.businessUnit.push(this.getBUKey(item)));
-      this.selectedBusinessUnit = Array.from(new Set(this.selectedBusinessUnit));
-      this.requesterInfo.businessUnit = Array.from(new Set(this.requesterInfo.businessUnit));
+      this.selectedBusinessUnit = Array.from(new Set(this.selectedBusinessUnit))
+      this.requesterInfo.businessUnit = Array.from(new Set(this.requesterInfo.businessUnit))
+      this.demandIntakeService.demandInformation.requesterInfo.businessUnit = this.requesterInfo.businessUnit;
 
       this.demandIntakeService.demandInformation.requesterInfo = this.requesterInfo;
 
@@ -151,7 +187,7 @@ export class RequesterComponent implements OnInit {
         this.router.navigate(['demand-intake/requirement/' + this.demandIntakeService.demandInformation.introduction.demandIntakeId]);
       }
     } else {
-      this.messageService.add({severity: 'warn', summary: 'Error', detail: 'Please fill required fields!'});
+      this.messageService.add({ severity: 'warn', summary: 'Error', detail: 'Please fill required fields!' });
     }
 
   }
@@ -192,7 +228,9 @@ export class RequesterComponent implements OnInit {
       this.requesterInfo.market.push(this.otherMarket);
     }
     this.selectedMarket.forEach(item => this.requesterInfo.market.push(this.getMarketKey(item)));
-    this.selectedMarket = Array.from(new Set(this.selectedMarket))
+    this.selectedMarket = Array.from(new Set(this.selectedMarket));
+    this.requesterInfo.market = Array.from(new Set(this.requesterInfo.market))
+    this.demandIntakeService.demandInformation.requesterInfo.market = this.requesterInfo.market;
 
     let other1 = this.getBUKeyArray(this.selectedBusinessUnit).find(item => item == 'Other');
     if (other1) {
@@ -202,6 +240,8 @@ export class RequesterComponent implements OnInit {
     }
     this.selectedBusinessUnit.forEach(item => this.requesterInfo.businessUnit.push(this.getBUKey(item)));
     this.selectedBusinessUnit = Array.from(new Set(this.selectedBusinessUnit))
+    this.requesterInfo.businessUnit = Array.from(new Set(this.requesterInfo.businessUnit))
+    this.demandIntakeService.demandInformation.requesterInfo.businessUnit = this.requesterInfo.businessUnit;
 
     this.demandIntakeService.saveDemand()
       .pipe(first())

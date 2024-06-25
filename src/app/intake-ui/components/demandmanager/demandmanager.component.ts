@@ -82,7 +82,7 @@ export class DemandManagerComponent implements OnInit {
         this.visibleNextButton = false;
         this.visibleSubmitButton = true;
       } else if ((!this.eventService.isNewDemand && !this.eventService.isMyDemand && this.authService.isCCB())
-        && (this.demandIntakeService.demandInformation.introduction.status == DemandStatus.PENDING_WITH_CCB || this.demandIntakeService.demandInformation.introduction.status == DemandStatus.CCB_HOLD || this.demandIntakeService.demandInformation.introduction.status == DemandStatus.ACCEPTED || this.demandIntakeService.demandInformation.introduction.status == DemandStatus.CCB_REJECTED)) {
+        && (this.demandIntakeService.demandInformation.introduction.status == DemandStatus.PENDING_WITH_CCB || this.demandIntakeService.demandInformation.introduction.status == DemandStatus.CCB_HOLD || this.demandIntakeService.demandInformation.introduction.status == DemandStatus.ACCEPTED || this.demandIntakeService.demandInformation.introduction.status == DemandStatus.CCB_REJECTED || this.demandIntakeService.demandInformation.introduction.status == DemandStatus.CCB_MODIFICATION)) {
         this.visibleNextButton = true;
       } else if ((!this.eventService.isNewDemand && this.eventService.isMyDemand && this.authService.isCCB())
         && (this.demandIntakeService.demandInformation.introduction.status == DemandStatus.CCB_HOLD || this.demandIntakeService.demandInformation.introduction.status == DemandStatus.ACCEPTED || this.demandIntakeService.demandInformation.introduction.status == DemandStatus.CCB_REJECTED)) {
@@ -102,8 +102,12 @@ export class DemandManagerComponent implements OnInit {
     this.solutionDirectionList = this.demandIntakeService.getDemandInformation().solutionDirectionInfo.filter(item => item.value);
     this.solutionDirectionList.forEach(item => {
       item.decisionDate = new Date(item.decisionDate);
-      item.decision = this.getDecisionValue(item.decision);
     })
+  }
+
+  onDecisionSelect(){
+    this.demandManagerInfo.decision = this.getDecisionKey(this.selectedDecision);
+    this.demandIntakeService.getDemandInformation().demandManagerInfo = this.demandManagerInfo;
   }
 
   prevPage() {
